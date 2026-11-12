@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overnight Tider | Live Lobster, Blue Crab &amp; Shrimp, Retail and Bulk</title>
+<meta name="description" content="Live lobster, blue crabs, head-on shrimp, oysters, octopus and whole fish. Fresh and frozen seafood by the pound or by the case, with delivery and shipping. Build your order and send it in one tap.">
+<meta property="og:title" content="Overnight Tider | Fresh &amp; Frozen Seafood">
+<meta property="og:description" content="Lobster, crab, shrimp, oysters, fish and octopus. Retail and bulk orders, delivery and shipping.">
+<meta property="og:image" content="img/lobster.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#13202e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2313202e'/%3E%3Cpath d='M8 38c6-6 10-6 16 0s10 6 16 0 10-6 16 0' stroke='%23f2c230' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='44' cy='20' r='6' fill='%23eef3f2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Store","name":"Overnight Tider","description":"Fresh and frozen seafood: lobsters, crabs, shrimp, oysters, fish and octopus. Retail and bulk orders, delivery and shipping.","sameAs":["https://www.instagram.com/overnight_tider/"],"image":"img/lobster.jpg"}
+</script>
+<style>
+:root{
+  --ink:#13202e;--ink-2:#1d3044;--ink-3:#2a4058;
+  --ice:#eef3f2;--ice-2:#dfe8e6;--paper:#f7f6f1;
+  --shell:#cf4b1f;--shell-dk:#a8380f;
+  --band:#f2c230;--claw:#3e6fa6;
+  --muted:#596876;--body:#2c3a48;--line:#cfd8d6;
+  --f-display:"Big Shoulders Display","Arial Narrow",sans-serif;
+  --f-body:"Instrument Sans",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+[hidden]{display:none!important}
+
+/* buttons and links */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:14px 24px;font-weight:600;font-size:16px;line-height:1.2;text-decoration:none;transition:background-color .15s}
+.btn-shell{background:var(--shell);color:#fff}.btn-shell:hover{background:var(--shell-dk)}
+.btn-ink{background:var(--ink);color:var(--paper)}.btn-ink:hover{background:var(--ink-3)}
+.btn-ice{background:var(--ice-2);color:var(--ink)}.btn-ice:hover{background:#cfdcd9}
+.btn-band{background:var(--band);color:var(--ink)}.btn-band:hover{background:#e3b31f}
+.btn-sm{padding:10px 17px;font-size:15px}
+.tl{font-weight:600;text-decoration:underline;text-decoration-color:var(--band);text-decoration-thickness:4px;text-underline-offset:5px}
+.tl:hover{text-decoration-color:var(--shell)}
+
+/* special bar */
+.special{background:var(--band);font-size:15px}
+.special .wrap{display:flex;gap:6px 14px;align-items:center;justify-content:center;flex-wrap:wrap;padding:9px 0;text-align:center}
+.special b{font-weight:600}
+.special .count{font-family:var(--f-mono);font-size:13.5px}
+.special button{background:var(--ink);color:var(--band);border:0;border-radius:999px;padding:5px 14px;font-size:14px;font-weight:600}
+
+/* header */
+.top{position:sticky;top:0;z-index:30;background:rgba(247,246,241,.96);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.mark svg{width:34px;height:34px;flex:none}
+.mark span{font-family:var(--f-display);font-weight:900;font-size:24px;line-height:1;white-space:nowrap}
+.nav{display:none;gap:26px;font-size:15px}
+.nav a{text-decoration:none;color:var(--muted)}.nav a:hover{color:var(--ink)}
+.top-acts{display:flex;align-items:center;gap:14px}
+.callnum{display:none;font-family:var(--f-mono);font-size:14px;text-decoration:none}
+
+/* hero */
+.hero{padding:38px 0 70px;position:relative;overflow:hidden}
+.hero .wrap{display:grid;gap:44px}
+.kicker{font-family:var(--f-mono);font-size:13.5px;color:var(--muted);margin:0 0 16px}
+.hero h1{font-family:var(--f-display);font-weight:900;font-size:clamp(54px,13vw,108px);line-height:.88;margin:0 0 22px;letter-spacing:-.3px}
+.band-u{position:relative;white-space:nowrap;isolation:isolate}
+.band-u::after{content:"";position:absolute;left:-3%;right:-3%;bottom:.07em;height:.17em;background:var(--band);z-index:-1;border-radius:2px}
+.lede{font-size:19px;max-width:34ch;margin:0 0 28px;color:var(--body)}
+.paths{display:grid;gap:10px;max-width:440px}
+.paths .btn{padding:16px 24px;font-size:17px}
+.facts{list-style:none;margin:26px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14.5px;color:var(--muted)}
+.facts li::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--claw);margin-right:8px;vertical-align:2px}
+.stack{position:relative;margin-bottom:34px}
+.stack .p1{width:80%;margin-left:auto;border-radius:6px;aspect-ratio:1/1;object-fit:cover}
+.stack .p2{position:absolute;left:0;bottom:-34px;width:42%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;border:6px solid var(--paper)}
+.ticket{position:absolute;right:-4px;bottom:-22px;background:var(--ink);color:var(--ice);padding:14px 16px 12px;border-radius:4px;font-family:var(--f-mono);font-size:13px;line-height:1.55;max-width:210px;transform:rotate(1.5deg)}
+.ticket strong{display:block;font-family:var(--f-display);font-weight:800;font-size:22px;color:var(--band);margin-bottom:2px}
+.tide{position:absolute;left:0;right:0;bottom:-1px;height:36px;color:var(--ice)}
+
+/* section heads */
+.sec{padding:80px 0}
+.head{display:grid;gap:12px;margin-bottom:34px;max-width:660px}
+.head h2{font-family:var(--f-display);font-weight:900;font-size:clamp(44px,8vw,70px);line-height:.92;margin:0}
+.head p{margin:0;color:var(--muted);font-size:18px}
+
+/* price board */
+#board{background:var(--ice)}
+.board{background:var(--paper);border-radius:10px;overflow:hidden}
+.row{display:grid;grid-template-columns:80px 1fr;gap:0 16px;padding:16px;border-bottom:1px solid var(--line);align-items:start}
+.row:last-child{border-bottom:0}
+.row img{width:80px;height:80px;object-fit:cover;border-radius:6px}
+.row h3{font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;margin:2px 0 4px}
+.row .note{margin:0;font-size:14.5px;color:var(--body)}
+.row .ctl{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-top:12px}
+.row .ctl .qty{margin-left:auto}
+.price{font-family:var(--f-mono);font-size:14px}
+.price.hot{color:var(--shell-dk);font-weight:500}
+.price.ask{color:var(--muted)}
+select.unit{padding:8px 10px;border-radius:6px;border:1px solid var(--line);background:#fff;font-size:15px;color:var(--ink)}
+.qty{display:flex;align-items:center;gap:8px}
+.qty .add{background:var(--ink);color:var(--paper);border:0;border-radius:999px;padding:9px 18px;font-weight:600;font-size:15px}
+.qty .add:hover{background:var(--ink-3)}
+.qty .st{width:38px;height:38px;border-radius:50%;border:0;background:var(--ice-2);font-size:20px;line-height:1;color:var(--ink)}
+.qty .n{font-family:var(--f-mono);font-size:14px;min-width:64px;text-align:center}
+.board-foot{margin:22px 0 0;font-size:15px;color:var(--muted);max-width:62ch}
+.board-foot b{color:var(--ink)}
+
+/* bundles */
+.bundles{display:grid;gap:18px}
+.bun{border-radius:10px;overflow:hidden;background:var(--ice);display:grid}
+.bun img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.bun .in{padding:20px 22px 22px;display:grid;gap:8px;align-content:start}
+.bun h3{font-family:var(--f-display);font-weight:900;font-size:34px;line-height:.95;margin:0}
+.bun ul{margin:0;padding:0;list-style:none;font-family:var(--f-mono);font-size:14px;color:var(--body)}
+.bun p{margin:0;font-size:15px;color:var(--muted)}
+.bun .btn{justify-self:start;margin-top:8px}
+.bun.big{background:var(--ink);color:var(--ice)}
+.bun.big ul{color:var(--ice)}
+.bun.big p{color:#a9b9c7}
+.bun.big h3{font-size:46px}
+.calc{margin-top:28px;background:var(--paper);border:2px solid var(--ink);border-radius:10px;padding:22px;display:grid;gap:14px}
+.calc h3{margin:0;font-size:20px}
+.calc .r{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+.calc input[type=number]{width:96px;font-family:var(--f-mono);font-size:20px;padding:8px 10px;border:1px solid var(--line);border-radius:6px}
+.chk{display:inline-flex;align-items:center;gap:8px;font-size:15.5px}
+.chk input{width:18px;height:18px;accent-color:var(--shell)}
+.calc-out{font-family:var(--f-mono);font-size:15px;margin:0;color:var(--shell-dk)}
+.calc small{color:var(--muted);font-size:13.5px}
+
+/* how */
+#how{background:var(--ice)}
+.steps{display:grid;gap:28px;margin:0;padding:0;list-style:none}
+.steps li{display:grid;grid-template-columns:56px 1fr;gap:14px}
+.steps .num{font-family:var(--f-display);font-weight:900;font-size:62px;line-height:.8;color:var(--shell)}
+.steps h3{margin:2px 0 6px;font-size:20px}
+.steps p{margin:0;color:var(--body)}
+.sched{margin-top:30px;font-size:17px;background:var(--band);display:inline-block;padding:10px 16px;border-radius:6px;font-weight:600}
+
+/* bulk */
+#bulk{background:var(--ink);color:var(--ice)}
+#bulk .head p{color:#b3c1cd}
+.bulk-g{display:grid;gap:40px}
+.supply{list-style:none;margin:0 0 24px;padding:0;display:grid;gap:12px}
+.supply li{display:grid;gap:2px}
+.supply b{font-family:var(--f-display);font-weight:800;font-size:24px;color:var(--band);line-height:1}
+.supply span{color:#c8d3dc;font-size:15.5px}
+.bulk-photo{border-radius:8px;aspect-ratio:3/2;object-fit:cover;width:100%}
+form.f{display:grid;gap:14px}
+.f label{display:grid;gap:6px;font-size:14.5px;font-weight:500}
+.f input,.f select,.f textarea{font-size:16px;padding:12px 14px;border-radius:6px;border:1px solid #3b526b;background:var(--ink-2);color:var(--ice)}
+.f textarea{min-height:92px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus,select.unit:focus,.calc input:focus{outline:2px solid var(--band);outline-offset:1px}
+.two{display:grid;gap:14px}
+.msg{margin:0;min-height:22px;font-size:14.5px}
+
+/* photos */
+.reel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
+.reel img{flex:none;width:230px;height:290px;object-fit:cover;border-radius:6px;scroll-snap-align:start}
+.reel img:nth-child(odd){height:250px;margin-top:40px}
+
+/* guides */
+#guides{background:var(--ice)}
+.guides{display:grid;gap:34px}
+.guide h3{font-family:var(--f-display);font-weight:800;font-size:32px;line-height:1;margin:0 0 10px}
+.guide p{margin:0 0 10px;color:var(--body)}
+.guide dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:15.5px}
+.guide dt{font-family:var(--f-mono);font-size:14px;color:var(--shell-dk)}
+.guide dd{margin:0;color:var(--body)}
+
+/* faq */
+.faq{max-width:780px}
+.faq details{border-top:1px solid var(--line);padding:18px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;font-weight:600;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:20px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--f-mono);color:var(--shell)}
+.faq details[open] summary::after{content:"\2212"}
+.faq details p{margin:10px 0 0;color:var(--body)}
+
+/* list signup + closer */
+.closer{background:var(--shell);color:#fff;padding:70px 0}
+.closer .wrap{display:grid;gap:30px;align-items:center}
+.closer h2{font-family:var(--f-display);font-weight:900;font-size:clamp(46px,8vw,80px);line-height:.9;margin:0;max-width:13ch}
+.closer p{margin:14px 0 0;font-size:18px;max-width:40ch}
+.alert-f{display:flex;flex-wrap:wrap;gap:10px}
+.alert-f input{flex:1 1 220px;padding:14px 16px;border-radius:999px;border:0;font-size:16px}
+.closer .msg{color:#fff;margin-top:8px}
+.closer small{display:block;margin-top:10px;opacity:.85;font-size:13px}
+
+footer{background:var(--ink);color:#b3c1cd;padding:44px 0 110px;font-size:14.5px}
+footer .wrap{display:grid;gap:22px}
+footer .mark span{color:var(--ice)}
+.fcols{display:grid;gap:18px}
+.fcols div{display:grid;gap:4px;align-content:start}
+.fcols b{color:var(--ice);font-weight:600}
+.flinks{display:flex;flex-wrap:wrap;gap:18px}
+.linkish{background:none;border:0;color:#b3c1cd;text-decoration:underline;padding:0;font-size:14.5px}
+
+/* order bar + dialogs */
+.obar{position:fixed;left:12px;right:12px;bottom:12px;z-index:40;background:var(--ink);color:var(--paper);border-radius:999px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 8px 8px 22px;box-shadow:0 10px 30px rgba(19,32,46,.35);transform:translateY(150%);transition:transform .25s ease}
+.obar.show{transform:none}
+.obar .c{font-size:15px}.obar .c b{color:var(--band);font-weight:600}
+dialog{border:0;padding:0;border-radius:14px;width:min(560px,100% - 24px);max-height:92vh;color:var(--ink);background:var(--paper)}
+dialog::backdrop{background:rgba(19,32,46,.6)}
+.sheet{padding:26px 22px 22px;display:grid;gap:14px;position:relative}
+.sheet h2{font-family:var(--f-display);font-weight:900;font-size:40px;line-height:1;margin:0}
+.x{position:absolute;top:14px;right:14px;border:0;background:var(--ice-2);width:40px;height:40px;border-radius:50%;font-size:22px;line-height:1}
+.lines{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.lines li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+.lines .m{font-family:var(--f-mono);font-size:14px}
+.lines .rm{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:13.5px;padding:0;margin-left:10px}
+.sheet label{display:grid;gap:5px;font-size:14.5px;font-weight:500}
+.sheet input,.sheet select,.sheet textarea{padding:11px 13px;border-radius:6px;border:1px solid var(--line);background:#fff;font-size:16px}
+.sheet textarea{min-height:70px}
+.prev{font-family:var(--f-mono);font-size:12.5px;background:var(--ice);border-radius:8px;padding:12px;white-space:pre-wrap;margin:0;max-height:150px;overflow:auto}
+.acts{display:grid;gap:10px}
+.legal{padding:28px 24px;display:grid;gap:10px;font-size:15px;position:relative}
+.legal h2{font-family:var(--f-display);font-size:36px;margin:0}
+.legal p{margin:0}
+
+@media (min-width:760px){
+  .nav{display:flex}
+  .callnum{display:inline}
+  .mark span{font-size:27px}
+  .hero{padding:60px 0 96px}
+  .hero .wrap{grid-template-columns:1.05fr 1fr;align-items:center}
+  .paths{grid-template-columns:auto auto;justify-content:start}
+  .stack{margin-bottom:0}
+  .row{grid-template-columns:120px 1.3fr 1.4fr;gap:0 22px;padding:18px 22px;align-items:center}
+  .row img{width:120px;height:96px;grid-row:auto}
+  .row .ctl{grid-column:3;margin:0;justify-content:flex-end}
+  .row .ctl .qty{margin-left:0}
+  .supply li{grid-template-columns:auto 1fr;gap:12px;align-items:baseline}
+  .bundles{grid-template-columns:1.25fr 1fr;grid-template-rows:auto auto}
+  .bun.big{grid-row:span 2}
+  .bun.big img{aspect-ratio:4/3}
+  .bun.sm{grid-template-columns:150px 1fr}
+  .bun.sm img{aspect-ratio:auto;height:100%}
+  .steps{grid-template-columns:repeat(3,1fr);gap:40px}
+  .bulk-g{grid-template-columns:1fr 1.05fr;align-items:start}
+  .two{grid-template-columns:1fr 1fr}
+  .guides{grid-template-columns:1.2fr 1fr 1fr;gap:44px}
+  .closer .wrap{grid-template-columns:1fr 1fr}
+  footer .wrap{grid-template-columns:1.2fr 2fr}
+  .fcols{grid-template-columns:repeat(3,1fr)}
+  .obar{left:auto;right:24px;bottom:24px;width:400px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<div class="special" id="special" hidden>
+  <div class="wrap">
+    <span id="specialText"></span>
+    <span class="count" id="countdown" hidden></span>
+    <button type="button" id="specialAdd">Add to my order</button>
+  </div>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="Overnight Tider home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#13202e"/><path d="M8 38c6-6 10-6 16 0s10 6 16 0 10-6 16 0" stroke="#f2c230" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="44" cy="20" r="6" fill="#eef3f2"/></svg>
+      <span>Overnight Tider</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#board">This week</a>
+      <a href="#bundles">Party bundles</a>
+      <a href="#bulk">Bulk &amp; restaurants</a>
+      <a href="#faq">Questions</a>
+    </nav>
+    <div class="top-acts">
+      <a class="callnum" id="callTop" href="#" hidden></a>
+      <a class="btn btn-shell btn-sm" href="#board">Order</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="kicker">Fresh &amp; frozen seafood &middot; retail and bulk</p>
+      <h1>Live lobster, blue crab and shrimp. By the pound or the <span class="band-u">case.</span></h1>
+      <p class="lede">Pick what you want, send us the list in one tap, and we'll confirm your price and get it to you.</p>
+      <div class="paths">
+        <a class="btn btn-shell" href="#board">Order for home</a>
+        <a class="btn btn-ink" href="#bulk">Order for my business</a>
+      </div>
+      <ul class="facts" id="facts">
+        <li>Live, fresh &amp; frozen</li>
+        <li>Retail &amp; bulk orders</li>
+        <li>Delivery &amp; shipping</li>
+      </ul>
+    </div>
+    <div class="stack">
+      <img class="p1" src="img/lobster.jpg" alt="Live calico lobster with yellow claw bands on crushed ice" width="612" height="612" fetchpriority="high">
+      <img class="p2" src="img/crabs.jpg" alt="Live blue crabs" width="655" height="655">
+      <div class="ticket"><strong>On ice this week</strong>lobster &middot; blue crab<br>head-on shrimp &middot; oysters<br>red snapper &middot; octopus</div>
+    </div>
+  </div>
+  <svg class="tide" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20 C100 6 200 6 300 20 S500 34 600 20 800 6 900 20 1100 34 1200 20 V36 H0Z" fill="currentColor"/></svg>
+</section>
+
+<section class="sec" id="board">
+  <div class="wrap">
+    <div class="head">
+      <h2>On ice this week</h2>
+      <p>Choose an amount and tap Add. Nothing is charged here. Your list comes to us as a message and we reply with the price and a time.</p>
+    </div>
+    <div class="board" id="boardList"></div>
+    <p class="board-foot" id="boardFoot">Prices follow the market, so we confirm every order before you pay. Want something that isn't listed? Put it in the notes when you send your order.</p>
+  </div>
+</section>
+
+<section class="sec" id="bundles">
+  <div class="wrap">
+    <div class="head">
+      <h2>Feeding a crowd?</h2>
+      <p>Start from a bundle and change anything before you send it.</p>
+    </div>
+    <div class="bundles">
+      <article class="bun big">
+        <img src="img/crabs.jpg" alt="Live blue crabs piled together" loading="lazy" width="655" height="655">
+        <div class="in">
+          <h3>Crab boil for 10</h3>
+          <ul><li>1 bushel blue crabs</li><li>5 lb head-on shrimp</li></ul>
+          <p>About 6 crabs a person plus shrimp, with corn and potatoes on the side.</p>
+          <button class="btn btn-band" type="button" data-bundle="boil10">Add the crab boil</button>
+        </div>
+      </article>
+      <article class="bun sm">
+        <img src="img/lobster.jpg" alt="Lobster on ice" loading="lazy" width="612" height="612">
+        <div class="in">
+          <h3>Lobster night for 2</h3>
+          <ul><li>2 lobsters, 1&frac12; lb each</li><li>1 dozen oysters</li></ul>
+          <button class="btn btn-ink btn-sm" type="button" data-bundle="lobster2">Add for two</button>
+        </div>
+      </article>
+      <article class="bun sm">
+        <img src="img/shrimp.jpg" alt="Head-on shrimp" loading="lazy" width="401" height="682">
+        <div class="in">
+          <h3>Shrimp boil for 6</h3>
+          <ul><li>4 lb head-on shrimp</li><li>1 dozen blue crabs</li></ul>
+          <button class="btn btn-ink btn-sm" type="button" data-bundle="shrimp6">Add the shrimp boil</button>
+        </div>
+      </article>
+    </div>
+
+    <div class="calc" id="calc">
+      <h3>Different headcount? Size it here.</h3>
+      <div class="r">
+        <label class="chk" for="cGuests" style="font-weight:600">People</label>
+        <input type="number" id="cGuests" min="1" max="500" value="10" inputmode="numeric">
+        <label class="chk"><input type="checkbox" value="crab" class="cp" checked>Crabs</label>
+        <label class="chk"><input type="checkbox" value="lobster" class="cp">Lobster</label>
+        <label class="chk"><input type="checkbox" value="shrimp" class="cp" checked>Shrimp</label>
+        <label class="chk"><input type="checkbox" value="oyster" class="cp">Oysters</label>
+        <label class="chk"><input type="checkbox" id="cMain">Seafood is the whole meal</label>
+      </div>
+      <p class="calc-out" id="cOut"></p>
+      <div><button class="btn btn-shell btn-sm" type="button" id="cAdd">Use these amounts</button></div>
+      <small>Rule of thumb: about 6 crabs a person with sides, 8 to 12 if crabs are the meal. A bushel is roughly 5 dozen depending on size. We double-check your amounts when we confirm.</small>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="head"><h2>How ordering works</h2></div>
+    <ol class="steps">
+      <li><span class="num">1</span><div><h3>Build your list</h3><p>Add seafood from the board or start with a bundle. Pick live, fresh or frozen in the notes.</p></div></li>
+      <li><span class="num">2</span><div><h3>Send it in one tap</h3><p>We copy your order for you and open our messages. Paste it and send.</p></div></li>
+      <li><span class="num">3</span><div><h3>We confirm and deliver</h3><p>A real person replies with your price and sets up delivery or shipping for the day you need it.</p></div></li>
+    </ol>
+    <p class="sched" id="sched" hidden></p>
+  </div>
+</section>
+
+<section class="sec" id="bulk">
+  <div class="wrap bulk-g">
+    <div>
+      <div class="head">
+        <h2>Bulk for kitchens, caterers and big events</h2>
+        <p>Tell us what you go through and how often. We'll quote it and set up a standing order so you're not chasing seafood every week.</p>
+      </div>
+      <ul class="supply">
+        <li><b>Shrimp</b><span>head-on and tails, by the pound or the case</span></li>
+        <li><b>Crab</b><span>live blue crabs by the dozen or bushel</span></li>
+        <li><b>Lobster</b><span>live, by the piece or the crate</span></li>
+        <li><b>Oysters, fish, octopus</b><span>by the dozen, box or pound</span></li>
+      </ul>
+      <p id="bulkTerms" style="color:#c8d3dc;margin:0 0 24px" hidden></p>
+      <img class="bulk-photo" src="img/tails.jpg" alt="Red shrimp tails piled in a tray" loading="lazy" width="401" height="540">
+    </div>
+    <form class="f" id="bulkForm" novalidate>
+      <div class="two">
+        <label>Your name<input name="name" autocomplete="name" required></label>
+        <label>Business name<input name="biz" autocomplete="organization"></label>
+      </div>
+      <div class="two">
+        <label>You're buying for<select name="who"><option>A restaurant</option><option>Catering or events</option><option>A store or market</option><option>A big family cookout</option><option>Something else</option></select></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel" placeholder="So we can reach you fast"></label>
+      </div>
+      <label>What do you need?<textarea name="need" required placeholder="e.g. 40 lb head-on shrimp, 2 bushels blue crab, 100 oysters"></textarea></label>
+      <div class="two">
+        <label>How often<select name="freq"><option>One time</option><option>Every week</option><option>A few times a week</option><option>Not sure yet</option></select></label>
+        <label>First delivery<input name="when" type="date"></label>
+      </div>
+      <button class="btn btn-band" type="submit">Get a bulk quote</button>
+      <p class="msg" id="bulkMsg" style="color:var(--band)"></p>
+    </form>
+  </div>
+</section>
+
+<section class="sec" id="photos">
+  <div class="wrap">
+    <div class="head">
+      <h2>What actually came in</h2>
+      <p>Real photos of real stock, posted on <a class="tl" href="https://www.instagram.com/overnight_tider/" rel="noopener">@overnight_tider</a>. No stock photography.</p>
+    </div>
+    <div class="reel">
+      <img src="img/oysters.jpg" alt="Shucked oysters" loading="lazy" width="401" height="676">
+      <img src="img/snapper.jpg" alt="Red snapper on ice" loading="lazy" width="836" height="1200">
+      <img src="img/octopus.jpg" alt="Whole octopus on ice" loading="lazy" width="655" height="655">
+      <img src="img/shrimp.jpg" alt="Head-on shrimp in a gloved hand" loading="lazy" width="401" height="682">
+      <img src="img/tails.jpg" alt="Red shrimp tails" loading="lazy" width="401" height="540">
+      <img src="img/crabs.jpg" alt="Blue crabs" loading="lazy" width="655" height="655">
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="guides">
+  <div class="wrap">
+    <div class="head"><h2>Get it home and get it right</h2></div>
+    <div class="guides">
+      <div class="guide">
+        <h3>Keeping them alive</h3>
+        <p>Live crabs and lobsters want cold and damp, not wet. Keep them in the fridge or a cooler with ice under a towel, never sitting in melted ice or tap water, and cook them the day you get them.</p>
+        <p>Cook only the ones that are still moving.</p>
+      </div>
+      <div class="guide">
+        <h3>Steaming</h3>
+        <dl>
+          <dt>Blue crabs</dt><dd>20 to 30 minutes, lid on, until bright orange</dd>
+          <dt>Lobster</dt><dd>around 12 to 15 min for a 1&frac12; lb, until bright red</dd>
+          <dt>Shrimp</dt><dd>2 to 4 minutes, pull them as soon as they curl and turn pink</dd>
+        </dl>
+      </div>
+      <div class="guide">
+        <h3>How much per person</h3>
+        <dl>
+          <dt>Crabs</dt><dd>6 with sides, 8 to 12 as the meal</dd>
+          <dt>Lobster</dt><dd>1 each</dd>
+          <dt>Shrimp</dt><dd>&frac12; lb head-on with sides</dd>
+          <dt>Oysters</dt><dd>half a dozen as a starter</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="head"><h2>Questions</h2></div>
+    <div class="faq" id="faqList">
+      <details><summary>Do you deliver or ship?</summary><p>Yes, both. Tell us your ZIP when you send your order and we'll confirm the options, cost and day.</p></details>
+      <details><summary>Can I buy a small amount, or is it bulk only?</summary><p>Both. Two lobsters for dinner is as welcome as a case of shrimp for a restaurant.</p></details>
+      <details><summary>Why don't you list every price?</summary><p>Seafood prices move with the market and the season. Rather than post a number that's wrong by Friday, we confirm your price when you order. Specials are posted at the top of this page.</p></details>
+      <details><summary>Fresh or frozen?</summary><p>We carry both. Lobsters and crabs come live, shrimp come fresh head-on or as tails, and frozen is there when you want to stock up. Say which you want in your order notes.</p></details>
+      <details><summary>How much should I order for a party?</summary><p>Start with a <a class="tl" href="#bundles">bundle</a> or the size helper under it. If you're unsure, send what you have and we'll help you size it.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="closer">
+  <div class="wrap">
+    <div>
+      <h2>Get first pick every week</h2>
+      <p>The good stuff goes fast. Get the weekly list and specials before they hit Instagram.</p>
+    </div>
+    <div>
+      <form class="alert-f" id="alertForm" hidden>
+        <label class="vh" for="alertPhone">Mobile number</label>
+        <input id="alertPhone" type="tel" autocomplete="tel" placeholder="Your mobile number" required>
+        <button class="btn btn-ink" type="submit">Text me the list</button>
+      </form>
+      <small id="alertNote" hidden>One text a week, plus specials. Reply STOP anytime.</small>
+      <a class="btn btn-ink" id="alertFallback" href="https://www.instagram.com/overnight_tider/" rel="noopener">Follow @overnight_tider</a>
+      <p class="msg" id="alertMsg"></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="mark" href="#top"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1d3044"/><path d="M8 38c6-6 10-6 16 0s10 6 16 0 10-6 16 0" stroke="#f2c230" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="44" cy="20" r="6" fill="#eef3f2"/></svg><span>Overnight Tider</span></a>
+      <p style="margin:12px 0 0">Fresh &amp; frozen seafood. Retail and bulk orders, delivery and shipping.</p>
+    </div>
+    <div class="fcols">
+      <div id="fWhere" hidden><b>Find us</b><span id="fAddr"></span><span id="fHours"></span></div>
+      <div><b>Order</b><a href="#board">This week's board</a><a href="#bulk">Bulk quotes</a><a href="https://ig.me/m/overnight_tider" rel="noopener">Message us</a><a id="fCall" href="#" hidden></a></div>
+      <div><b>More</b><a href="https://www.instagram.com/overnight_tider/" rel="noopener">Instagram</a><button class="linkish" type="button" data-legal="privacy" style="text-align:left">Privacy</button><button class="linkish" type="button" data-legal="terms" style="text-align:left">Terms</button></div>
+    </div>
+    <p style="margin:0">&copy; <span id="yr">2026</span> Overnight Tider</p>
+  </div>
+</footer>
+
+<div class="obar" id="obar" aria-live="polite">
+  <span class="c" id="obarC"></span>
+  <button class="btn btn-shell btn-sm" type="button" id="openSheet">Review &amp; send</button>
+</div>
+
+<dialog id="sheet" aria-labelledby="sheetT">
+  <div class="sheet">
+    <button class="x" type="button" data-close aria-label="Close">&times;</button>
+    <h2 id="sheetT">Your order</h2>
+    <ul class="lines" id="lines"></ul>
+    <div class="two">
+      <label>Your name<input id="oName" autocomplete="name"></label>
+      <label>How do you want it?<select id="oHow"></select></label>
+    </div>
+    <div class="two">
+      <label>Date you need it<input id="oWhen" type="date"></label>
+      <label>ZIP code<input id="oZip" autocomplete="postal-code" inputmode="numeric"></label>
+    </div>
+    <label>Notes<textarea id="oNotes" placeholder="Live or frozen, sizes, anything else"></textarea></label>
+    <pre class="prev" id="prev"></pre>
+    <div class="acts">
+      <a class="btn btn-shell" id="sendIG" href="https://ig.me/m/overnight_tider" target="_blank" rel="noopener">Copy order &amp; open Instagram</a>
+      <a class="btn btn-ink" id="sendSMS" href="#" hidden>Text the order instead</a>
+      <button class="btn btn-ice" type="button" id="copyOnly">Just copy the text</button>
+    </div>
+    <p class="msg" id="sheetMsg" style="color:var(--claw)"></p>
+  </div>
+</dialog>
+
+<dialog id="legal"><div class="legal" id="legalBody"></div></dialog>
+
+<script>
+/* ============================================================
+   SHOP SETTINGS. Fill these in once the owner confirms them.
+   Anything left empty stays hidden on the page.
+   ============================================================ */
+const SHOP={
+  phone:"",            // e.g. "(555) 123-4567"  -> tap-to-call + "Text the order"
+  address:"",          // e.g. "123 Dock St, Tampa, FL"
+  hours:"",            // e.g. "Thu to Sun, 9 AM to 6 PM"
+  pickup:false,        // true once pickup is confirmed
+  cutoff:null,         // e.g. {day:3,hour:17,label:"Wednesday 5 PM",fulfil:"Thursday"}  (day: 0=Sun ... 6=Sat)
+  bulkTerms:"",        // e.g. "Restaurant delivery Tue and Fri. $150 minimum."
+  alertsEndpoint:"",   // Google Apps Script web app URL for the text list
+  special:{on:true,text:"<b>Lobster special, Thu to Sun:</b> 1&frac12; lb lobsters at $7.99/lb.",item:"lobster",unit:"lobster (1½ lb)"}
+};
+
+const ITEMS=[
+  {id:"lobster",name:"Live lobster",img:"img/lobster.jpg",note:"Hard-shell, banded and lively. Ask about the odd colored ones.",
+   units:[{u:"lobster (1½ lb)",short:"lobster",price:"$7.99/lb, ~$11.99 each",hot:true},{u:"lb",price:"Ask"}]},
+  {id:"crab",name:"Blue crabs",img:"img/crabs.jpg",note:"Live, sold by the dozen, half bushel or bushel.",
+   units:[{u:"dozen",price:"Ask"},{u:"half bushel",price:"Ask"},{u:"bushel",price:"Ask"}]},
+  {id:"shrimp",name:"Head-on shrimp",img:"img/shrimp.jpg",note:"Big, fresh, shell-on. Built for boils and the grill.",
+   units:[{u:"lb",price:"Ask"},{u:"case",price:"Ask"}]},
+  {id:"tails",name:"Red shrimp tails",img:"img/tails.jpg",note:"Sweet tails, easy to peel.",
+   units:[{u:"lb",price:"Ask"},{u:"case",price:"Ask"}]},
+  {id:"oyster",name:"Oysters",img:"img/oysters.jpg",note:"By the dozen or by the box.",
+   units:[{u:"dozen",price:"Ask"},{u:"box",price:"Ask"}]},
+  {id:"octopus",name:"Octopus",img:"img/octopus.jpg",note:"Whole, ready for the grill.",units:[{u:"lb",price:"Ask"}]},
+  {id:"fish",name:"Whole fish",img:"img/snapper.jpg",note:"Red snapper and whatever else came in. Ask what's fresh.",units:[{u:"lb",price:"Ask"}]}
+];
+const BUNDLES={
+  boil10:[["crab","bushel",1],["shrimp","lb",5]],
+  lobster2:[["lobster","lobster (1½ lb)",2],["oyster","dozen",1]],
+  shrimp6:[["shrimp","lb",4],["crab","dozen",1]]
+};
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let cart={}; // key "id|unit" -> qty
+try{cart=JSON.parse(localStorage.getItem("ot-cart2")||"{}")||{}}catch(e){}
+const save=()=>{try{localStorage.setItem("ot-cart2",JSON.stringify(cart))}catch(e){}};
+const item=id=>ITEMS.find(i=>i.id===id);
+const label=(u,q)=>{if(u==="lb")return q+" lb";if(u.startsWith("lobster"))return q+(q===1?" lobster":" lobsters")+" (1½ lb)";const pl={box:"boxes",bushel:"bushels","half bushel":"half bushels",dozen:"dozen",case:"cases"};return q+" "+(q===1?u:(pl[u]||u+"s"))};
+
+/* ---------- board ---------- */
+const sel={};
+function renderBoard(){
+  $("boardList").innerHTML=ITEMS.map(it=>{
+    sel[it.id]=sel[it.id]||it.units[0].u;
+    const opts=it.units.length>1?`<label class="vh" for="u-${it.id}">Unit for ${it.name}</label><select class="unit" id="u-${it.id}" data-unit="${it.id}">${it.units.map(x=>`<option${x.u===sel[it.id]?" selected":""}>${esc(x.u)}</option>`).join("")}</select>`:`<span class="price ask">per ${esc(it.units[0].u)}</span>`;
+    return `<div class="row" data-id="${it.id}"><img src="${it.img}" alt="" loading="lazy" width="120" height="96">
+      <div><h3>${it.name}</h3><p class="note">${it.note}</p></div>
+      <div class="ctl">${opts}<span class="price" data-price="${it.id}"></span><div class="qty" data-q="${it.id}"></div></div></div>`}).join("");
+  ITEMS.forEach(drawRow);
+}
+function drawRow(it){
+  const u=sel[it.id],unit=it.units.find(x=>x.u===u),q=cart[it.id+"|"+u]||0;
+  const p=document.querySelector(`[data-price="${it.id}"]`);
+  p.textContent=unit.price==="Ask"?"Ask for price":unit.price;p.className="price "+(unit.hot?"hot":"ask");
+  document.querySelector(`[data-q="${it.id}"]`).innerHTML=q
+    ?`<button class="st" type="button" data-dec="${it.id}" aria-label="One less">&minus;</button><span class="n">${label(u,q).replace(" (1½ lb)","")}</span><button class="st" type="button" data-inc="${it.id}" aria-label="One more">+</button>`
+    :`<button class="add" type="button" data-inc="${it.id}">Add</button>`;
+}
+function bump(id,unit,d){
+  const k=id+"|"+unit,q=Math.max(0,(cart[k]||0)+d);
+  if(q)cart[k]=q;else delete cart[k];
+  save();if(sel[id]===unit)drawRow(item(id));bar();
+}
+function bar(){
+  const n=Object.values(cart).length;
+  $("obar").classList.toggle("show",n>0);
+  $("obarC").innerHTML=`Your order: <b>${n} ${n===1?"line":"lines"}</b>`;
+}
+
+/* ---------- sheet ---------- */
+function linesArr(){return Object.entries(cart).map(([k,q])=>{const[id,u]=k.split("|");return{k,name:item(id).name,txt:label(u,q)}})}
+function message(){
+  const v=id=>$(id).value.trim();
+  let m=`Hi Overnight Tider! I'd like to order:\n${linesArr().map(l=>`- ${l.name}: ${l.txt}`).join("\n")}\n\n${v("oHow")}`;
+  if(v("oWhen"))m+=` for ${new Date(v("oWhen")+"T12:00").toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"})}`;
+  if(v("oZip"))m+=`\nZIP: ${v("oZip")}`;
+  if(v("oNotes"))m+=`\nNotes: ${v("oNotes")}`;
+  if(v("oName"))m+=`\n\nThanks, ${v("oName")}`;
+  return m;
+}
+function renderSheet(){
+  $("lines").innerHTML=linesArr().map(l=>`<li><span>${l.name}</span><span><span class="m">${l.txt}</span><button class="rm" type="button" data-rm="${l.k}">remove</button></span></li>`).join("")||"<li>Nothing added yet.</li>";
+  $("prev").textContent=message();
+  if(SHOP.phone)$("sendSMS").href="sms:"+SHOP.phone.replace(/[^\d+]/g,"")+"?&body="+encodeURIComponent(message());
+}
+async function copy(t,el,ok){try{await navigator.clipboard.writeText(t);el.textContent=ok}catch(e){el.textContent="Couldn't copy automatically. Select the text above and copy it."}}
+const sheet=$("sheet");
+const openSheet=()=>{renderSheet();sheet.showModal()};
+
+/* ---------- calculator ---------- */
+function plan(){
+  const g=Math.max(1,Math.min(500,parseInt($("cGuests").value)||1)),main=$("cMain").checked;
+  const p=[...document.querySelectorAll(".cp:checked")].map(i=>i.value),share=p.length>2?1.5:1,out=[];
+  if(p.includes("crab")){const dz=Math.max(1,Math.ceil(g*(main?10:6)/share/12));const b=Math.floor(dz/5),rest=dz%5;
+    if(b)out.push(["crab","bushel",b]);if(rest)out.push(["crab","dozen",rest]);}
+  if(p.includes("lobster"))out.push(["lobster","lobster (1½ lb)",Math.max(1,Math.ceil(g*(main?1:.5)))]);
+  if(p.includes("shrimp"))out.push(["shrimp","lb",Math.max(1,Math.ceil(g*(main?.75:.5)/share))]);
+  if(p.includes("oyster"))out.push(["oyster","dozen",Math.max(1,Math.ceil(g/2))]);
+  return out;
+}
+function renderCalc(){const p=plan();$("cOut").textContent=p.length?p.map(([id,u,q])=>`${item(id).name}: ${label(u,q)}`).join("  ·  "):"Pick at least one thing to serve."}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-inc],[data-dec],[data-bundle],[data-close],[data-legal],[data-rm]");if(!t)return;
+  if(t.dataset.inc)bump(t.dataset.inc,sel[t.dataset.inc],1);
+  if(t.dataset.dec)bump(t.dataset.dec,sel[t.dataset.dec],-1);
+  if(t.dataset.bundle){BUNDLES[t.dataset.bundle].forEach(([id,u,q])=>{cart[id+"|"+u]=(cart[id+"|"+u]||0)+q});save();ITEMS.forEach(drawRow);bar();openSheet()}
+  if(t.dataset.rm){delete cart[t.dataset.rm];save();ITEMS.forEach(drawRow);bar();renderSheet()}
+  if(t.dataset.close!==undefined)t.closest("dialog").close();
+  if(t.dataset.legal)openLegal(t.dataset.legal);
+});
+document.addEventListener("change",e=>{if(e.target.dataset.unit){sel[e.target.dataset.unit]=e.target.value;drawRow(item(e.target.dataset.unit))}});
+$("openSheet").onclick=openSheet;
+["oName","oHow","oWhen","oZip","oNotes"].forEach(id=>$(id).addEventListener("input",renderSheet));
+$("sendIG").addEventListener("click",()=>copy(message(),$("sheetMsg"),"Order copied. Paste it in the chat and hit send."));
+$("copyOnly").onclick=()=>copy(message(),$("sheetMsg"),"Copied. Send it to @overnight_tider on Instagram.");
+["cGuests","cMain"].forEach(id=>$(id).addEventListener("input",renderCalc));
+document.querySelectorAll(".cp").forEach(i=>i.addEventListener("change",renderCalc));
+$("cAdd").onclick=()=>{plan().forEach(([id,u,q])=>{cart[id+"|"+u]=q});save();ITEMS.forEach(drawRow);bar();openSheet()};
+
+$("bulkForm").addEventListener("submit",async e=>{
+  e.preventDefault();const f=new FormData(e.target),m=$("bulkMsg");
+  if(!f.get("name")||!f.get("need")){m.textContent="Add your name and what you need first.";return}
+  const when=f.get("when")?new Date(f.get("when")+"T12:00").toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"}):"flexible";
+  const txt=`Hi Overnight Tider! Bulk quote request.\nName: ${f.get("name")}${f.get("biz")?" ("+f.get("biz")+")":""}\nBuying for: ${f.get("who")}\nNeed: ${f.get("need")}\nHow often: ${f.get("freq")}\nFirst delivery: ${when}${f.get("phone")?"\nPhone: "+f.get("phone"):""}`;
+  await copy(txt,m,"Request copied. Opening our messages, paste it in and send.");
+  const a=document.createElement("a");a.href="https://ig.me/m/overnight_tider";a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
+});
+
+/* ---------- settings-driven pieces ---------- */
+(function applyShop(){
+  const how=["Delivery","Shipping"];if(SHOP.pickup)how.unshift("Pickup");
+  $("oHow").innerHTML=how.map(h=>`<option>${h}</option>`).join("");
+  if(SHOP.pickup)$("facts").insertAdjacentHTML("beforeend","<li>Pickup</li>");
+  if(SHOP.phone){const tel="tel:"+SHOP.phone.replace(/[^\d+]/g,"");
+    [$("callTop"),$("fCall")].forEach(a=>{a.href=tel;a.textContent=SHOP.phone;a.hidden=false});
+    $("sendSMS").hidden=false;}
+  if(SHOP.address||SHOP.hours){$("fWhere").hidden=false;$("fAddr").textContent=SHOP.address;$("fHours").textContent=SHOP.hours}
+  if(SHOP.bulkTerms){$("bulkTerms").textContent=SHOP.bulkTerms;$("bulkTerms").hidden=false}
+  if(SHOP.special&&SHOP.special.on){$("special").hidden=false;$("specialText").innerHTML=SHOP.special.text;
+    $("specialAdd").onclick=()=>{sel[SHOP.special.item]=SHOP.special.unit;renderBoard();bump(SHOP.special.item,SHOP.special.unit,1);$("board").scrollIntoView()}}
+  if(SHOP.cutoff){
+    $("sched").textContent=`Order by ${SHOP.cutoff.label} for ${SHOP.cutoff.fulfil}.`;$("sched").hidden=false;
+    const tick=()=>{const now=new Date(),c=new Date(now);c.setHours(SHOP.cutoff.hour,0,0,0);
+      c.setDate(c.getDate()+((SHOP.cutoff.day-now.getDay()+7)%7));if(c<=now)c.setDate(c.getDate()+7);
+      const ms=c-now,d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),mi=Math.floor(ms%36e5/6e4);
+      $("countdown").textContent=`${SHOP.cutoff.fulfil} orders close in ${d?d+"d ":""}${h}h ${mi}m`;$("countdown").hidden=false;$("special").hidden=false};
+    tick();setInterval(tick,30000);}
+  if(SHOP.alertsEndpoint){$("alertForm").hidden=false;$("alertNote").hidden=false;$("alertFallback").hidden=true;
+    $("alertForm").addEventListener("submit",async e=>{e.preventDefault();const ph=$("alertPhone").value.trim();
+      if(ph.replace(/\D/g,"").length<10){$("alertMsg").textContent="That number looks short. Check it and try again.";return}
+      try{await fetch(SHOP.alertsEndpoint,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify({phone:ph,ts:new Date().toISOString()})});
+        $("alertMsg").textContent="You're on the list. Watch for this week's text.";e.target.reset()}
+      catch(err){$("alertMsg").textContent="That didn't go through. Message us on Instagram and we'll add you."}})}
+})();
+
+/* ---------- legal ---------- */
+const LEGAL={
+  privacy:`<h2>Privacy</h2><p>Your order details stay in your own browser until you copy them and send them to us yourself.</p><p>If you join the text list, we keep your number only to send you the weekly list and specials. Reply STOP to leave. We don't sell or share your information.</p><p>Questions: message @overnight_tider on Instagram.</p>`,
+  terms:`<h2>Terms</h2><p>What's listed changes with the catch. An order is confirmed only when we reply with a price and you agree to it.</p><p>Specials run on the days listed while supplies last. Live and fresh seafood is perishable: keep it cold and cook or freeze it promptly once you have it.</p>`
+};
+const legal=$("legal");
+function openLegal(k){$("legalBody").innerHTML=`<button class="x" type="button" data-close aria-label="Close">&times;</button>`+LEGAL[k];legal.showModal()}
+[sheet,legal].forEach(d=>d.addEventListener("click",e=>{if(e.target===d)d.close()}));
+$("yr").textContent=new Date().getFullYear();
+renderBoard();bar();renderCalc();
+</script>
+</body>
+</html>
