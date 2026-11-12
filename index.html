@@ -9,13 +9,13 @@
 <meta property="og:description" content="Lobster, crab, shrimp, oysters, fish and octopus. Retail and bulk orders, delivery and shipping.">
 <meta property="og:image" content="img/lobster.jpg">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#13202e">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2313202e'/%3E%3Cpath d='M8 38c6-6 10-6 16 0s10 6 16 0 10-6 16 0' stroke='%23f2c230' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='44' cy='20' r='6' fill='%23eef3f2'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#2f6b3d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f6b3d'/%3E%3Cpath d='M8 38c6-6 10-6 16 0s10 6 16 0 10-6 16 0' stroke='%23f2c230' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='44' cy='20' r='6' fill='%23eef3f2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Store","name":"Overnight Tider","description":"Fresh and frozen seafood: lobsters, crabs, shrimp, oysters, fish and octopus. Retail and bulk orders, delivery and shipping.","sameAs":["https://www.instagram.com/overnight_tider/"],"image":"img/lobster.jpg"}
+{"@context":"https://schema.org","@type":"Store","name":"Overnight Tider","description":"Fresh and frozen seafood: lobsters, crabs, shrimp, oysters, fish and octopus. Retail and bulk orders, delivery and shipping.","sameAs":["https://www.instagram.com/overnight_tider/"],"image":"img/building.jpg"}
 </script>
 <style>
 :root{
@@ -23,6 +23,7 @@
   --ice:#eef3f2;--ice-2:#dfe8e6;--paper:#f7f6f1;
   --shell:#b9441d;--shell-dk:#963410;
   --band:#f2c230;--claw:#3e6fa6;
+  --sign:#2f6b3d;--sign-dk:#24552f;--sign-lt:#86b991;
   --muted:#596876;--body:#2c3a48;--line:#cfd8d6;
   --f-display:"Big Shoulders Display","Arial Narrow",sans-serif;
   --f-body:"Instrument Sans",system-ui,sans-serif;
@@ -41,7 +42,7 @@ button{cursor:pointer}
 
 /* buttons and links */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:8px;padding:14px 24px;letter-spacing:.1px;font-weight:600;font-size:16px;line-height:1.2;text-decoration:none;transition:background-color .15s}
-.btn-shell{background:var(--shell);color:#fff}.btn-shell:hover{background:var(--shell-dk)}
+.btn-shell{background:var(--sign);color:#fff}.btn-shell:hover{background:var(--sign-dk)}
 .btn-ink{background:var(--ink);color:var(--paper)}.btn-ink:hover{background:var(--ink-3)}
 .btn-ice{background:var(--ice-2);color:var(--ink)}.btn-ice:hover{background:#cfdcd9}
 .btn-band{background:var(--band);color:var(--ink)}.btn-band:hover{background:#e3b31f}
@@ -62,7 +63,7 @@ button{cursor:pointer}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
 .mark{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
 .mark svg{width:28px;height:28px;flex:none}
-.mark span{font-family:var(--f-display);font-weight:800;font-size:23px;letter-spacing:.2px;line-height:1;white-space:nowrap}
+.mark span{font-family:var(--f-display);font-weight:900;font-size:23px;letter-spacing:.4px;color:var(--sign);display:inline-block;transform:skewX(-9deg);line-height:1;white-space:nowrap}
 .nav{display:none;gap:26px;font-size:15px}
 .nav a{text-decoration:none;color:var(--muted)}.nav a:hover{color:var(--ink)}
 .top-acts{display:flex;align-items:center;gap:14px}
@@ -74,7 +75,7 @@ button{cursor:pointer}
 .kicker{font-family:var(--f-mono);font-size:13.5px;color:var(--muted);margin:0 0 16px}
 .hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(48px,11vw,84px);line-height:.94;margin:0 0 24px;letter-spacing:.2px;max-width:11ch}
 .band-u{position:relative;white-space:nowrap;isolation:isolate}
-.band-u::after{content:"";position:absolute;left:-2%;right:-2%;bottom:.06em;height:.11em;background:var(--band);z-index:-1;border-radius:2px}
+.band-u::after{background:var(--band)!important;content:"";position:absolute;left:-2%;right:-2%;bottom:.06em;height:.11em;background:var(--band);z-index:-1;border-radius:2px}
 .lede{font-size:19px;max-width:36ch;margin:0 0 30px;color:var(--body);line-height:1.5}
 .paths{display:grid;gap:10px;max-width:440px}
 .paths .btn{padding:16px 24px;font-size:17px}
@@ -89,6 +90,12 @@ button{cursor:pointer}
 .promise{background:var(--ice);border-top:1px solid var(--ice-2)}
 .promise .wrap{display:grid;gap:22px;padding:36px 0 8px}
 .promise div{display:grid;gap:4px}
+.us{margin:0;display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center}
+.us img{width:96px;height:96px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--ice-2)}
+.us figcaption{display:grid;gap:4px}
+.us b{font-weight:600;font-size:16.5px}
+.us span{color:var(--muted);font-size:15px;line-height:1.5}
+.us #usAddr{color:var(--ink);font-family:var(--f-mono);font-size:13.5px}
 .promise b{font-weight:600;font-size:16.5px}
 .promise span{color:var(--muted);font-size:15px;line-height:1.5}
 /* section heads */
@@ -145,7 +152,7 @@ select.unit{padding:8px 10px;border-radius:6px;min-width:96px;border:1px solid v
 #how{background:var(--ice)}
 .steps{display:grid;gap:28px;margin:0;padding:0;list-style:none}
 .steps li{display:grid;grid-template-columns:56px 1fr;gap:14px}
-.steps .num{font-family:var(--f-display);font-weight:800;font-size:54px;line-height:.8;color:var(--shell)}
+.steps .num{font-family:var(--f-display);font-weight:800;font-size:54px;line-height:.8;color:var(--sign)}
 .steps h3{margin:2px 0 6px;font-size:20px}
 .steps p{margin:0;color:var(--body)}
 .sched{margin-top:30px;font-size:17px;background:var(--band);display:inline-block;padding:10px 16px;border-radius:6px;font-weight:600}
@@ -187,7 +194,7 @@ form.f{display:grid;gap:14px}
 .faq details:last-child{border-bottom:1px solid var(--line)}
 .faq summary{cursor:pointer;font-weight:600;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:20px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-family:var(--f-mono);color:var(--shell)}
+.faq summary::after{content:"+";font-family:var(--f-mono);color:var(--sign)}
 .faq details[open] summary::after{content:"\2212"}
 .faq details p{margin:10px 0 0;color:var(--body)}
 
@@ -203,7 +210,7 @@ form.f{display:grid;gap:14px}
 
 footer{background:var(--ink);color:#b3c1cd;padding:44px 0 110px;font-size:14.5px}
 footer .wrap{display:grid;gap:22px}
-footer .mark span{color:var(--ice)}
+footer .mark span{color:var(--sign-lt)}
 .fcols{display:grid;gap:18px}
 .fcols div{display:grid;gap:4px;align-content:start}
 .fcols b{color:var(--ice);font-weight:600}
@@ -251,7 +258,9 @@ dialog::backdrop{background:rgba(19,32,46,.6)}
   .bun.sm{grid-template-columns:150px 1fr}
   .bun.sm img{aspect-ratio:auto;height:100%}
   .steps{grid-template-columns:repeat(3,1fr);gap:40px}
-  .promise .wrap{grid-template-columns:1fr 1fr 1fr;gap:48px;padding:40px 0 4px}
+  .promise .wrap{grid-template-columns:1.35fr 1fr 1fr 1fr;gap:40px;padding:40px 0 4px;align-items:start}
+  .us{grid-template-columns:110px 1fr}
+  .us img{width:110px;height:110px}
   .bulk-g{grid-template-columns:1fr 1.05fr;align-items:start}
   .two{grid-template-columns:1fr 1fr}
   .guides{grid-template-columns:1.2fr 1fr 1fr;gap:44px}
@@ -276,7 +285,7 @@ dialog::backdrop{background:rgba(19,32,46,.6)}
 <header class="top">
   <div class="wrap">
     <a class="mark" href="#top" aria-label="Overnight Tider home">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#13202e"/><path d="M8 38c6-6 10-6 16 0s10 6 16 0 10-6 16 0" stroke="#f2c230" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="44" cy="20" r="6" fill="#eef3f2"/></svg>
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#2f6b3d"/><path d="M8 38c6-6 10-6 16 0s10 6 16 0 10-6 16 0" stroke="#f2c230" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="44" cy="20" r="6" fill="#eef3f2"/></svg>
       <span>Overnight Tider</span>
     </a>
     <nav class="nav" aria-label="Main">
@@ -318,9 +327,10 @@ dialog::backdrop{background:rgba(19,32,46,.6)}
 </section>
 
 
-<section class="promise" aria-label="How we work">
+<section class="promise" aria-label="Who you're buying from">
   <div class="wrap">
-    <div><b>Nothing is charged online.</b><span>You send us a list. We reply with the price before anything is final.</span></div>
+    <figure class="us"><img src="img/building.jpg" alt="The Overnight Tider building with the name painted on the front and a white work truck parked outside" width="440" height="440" loading="lazy"><figcaption><b>That's us.</b><span>Our name is on the building. When you message us, you're talking to the people inside it.</span><span id="usAddr" hidden></span></figcaption></figure>
+    <div><b>Nothing is charged online.</b><span>Send us your list. We reply with the price before anything is final.</span></div>
     <div><b>A person answers every order.</b><span>You message the business directly. No bots, no call center.</span></div>
     <div><b>Real photos, no stock library.</b><span>Every picture here comes straight from our own Instagram.</span></div>
   </div>
@@ -706,6 +716,7 @@ $("bulkForm").addEventListener("submit",async e=>{
   if(SHOP.phone){const tel="tel:"+SHOP.phone.replace(/[^\d+]/g,"");
     [$("callTop"),$("fCall")].forEach(a=>{a.href=tel;a.textContent=SHOP.phone;a.hidden=false});
     $("sendSMS").hidden=false;}
+  if(SHOP.address){$("usAddr").textContent=SHOP.address+(SHOP.hours?" \u00b7 "+SHOP.hours:"");$("usAddr").hidden=false}
   if(SHOP.address||SHOP.hours){$("fWhere").hidden=false;$("fAddr").textContent=SHOP.address;$("fHours").textContent=SHOP.hours}
   if(SHOP.bulkTerms){$("bulkTerms").textContent=SHOP.bulkTerms;$("bulkTerms").hidden=false}
   if(SHOP.special&&SHOP.special.on){$("special").hidden=false;$("specialText").innerHTML=SHOP.special.text;
