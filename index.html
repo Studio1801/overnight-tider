@@ -21,7 +21,7 @@
 :root{
   --ink:#13202e;--ink-2:#1d3044;--ink-3:#2a4058;
   --ice:#eef3f2;--ice-2:#dfe8e6;--paper:#f7f6f1;
-  --shell:#cf4b1f;--shell-dk:#a8380f;
+  --shell:#b9441d;--shell-dk:#963410;
   --band:#f2c230;--claw:#3e6fa6;
   --muted:#596876;--body:#2c3a48;--line:#cfd8d6;
   --f-display:"Big Shoulders Display","Arial Narrow",sans-serif;
@@ -40,7 +40,7 @@ button{cursor:pointer}
 [hidden]{display:none!important}
 
 /* buttons and links */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:14px 24px;font-weight:600;font-size:16px;line-height:1.2;text-decoration:none;transition:background-color .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:8px;padding:14px 24px;letter-spacing:.1px;font-weight:600;font-size:16px;line-height:1.2;text-decoration:none;transition:background-color .15s}
 .btn-shell{background:var(--shell);color:#fff}.btn-shell:hover{background:var(--shell-dk)}
 .btn-ink{background:var(--ink);color:var(--paper)}.btn-ink:hover{background:var(--ink-3)}
 .btn-ice{background:var(--ice-2);color:var(--ink)}.btn-ice:hover{background:#cfdcd9}
@@ -50,51 +50,56 @@ button{cursor:pointer}
 .tl:hover{text-decoration-color:var(--shell)}
 
 /* special bar */
-.special{background:var(--band);font-size:15px}
-.special .wrap{display:flex;gap:6px 14px;align-items:center;justify-content:center;flex-wrap:wrap;padding:9px 0;text-align:center}
+.special{background:var(--ink);color:var(--ice);font-size:14px}
+.special .wrap{display:flex;gap:6px 16px;align-items:center;justify-content:center;flex-wrap:wrap;padding:8px 0;text-align:center}
+.special b{color:var(--band)}
 .special b{font-weight:600}
 .special .count{font-family:var(--f-mono);font-size:13.5px}
-.special button{background:var(--ink);color:var(--band);border:0;border-radius:999px;padding:5px 14px;font-size:14px;font-weight:600}
+.special button{background:none;color:var(--ice);border:0;padding:0;font-size:14px;font-weight:600;text-decoration:underline;text-decoration-color:var(--band);text-underline-offset:4px}
 
 /* header */
 .top{position:sticky;top:0;z-index:30;background:rgba(247,246,241,.96);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
 .mark{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
-.mark svg{width:34px;height:34px;flex:none}
-.mark span{font-family:var(--f-display);font-weight:900;font-size:24px;line-height:1;white-space:nowrap}
+.mark svg{width:28px;height:28px;flex:none}
+.mark span{font-family:var(--f-display);font-weight:800;font-size:23px;letter-spacing:.2px;line-height:1;white-space:nowrap}
 .nav{display:none;gap:26px;font-size:15px}
 .nav a{text-decoration:none;color:var(--muted)}.nav a:hover{color:var(--ink)}
 .top-acts{display:flex;align-items:center;gap:14px}
 .callnum{display:none;font-family:var(--f-mono);font-size:14px;text-decoration:none}
 
 /* hero */
-.hero{padding:38px 0 70px;position:relative;overflow:hidden}
+.hero{padding:44px 0 72px;position:relative;overflow:hidden}
 .hero .wrap{display:grid;gap:44px}
 .kicker{font-family:var(--f-mono);font-size:13.5px;color:var(--muted);margin:0 0 16px}
-.hero h1{font-family:var(--f-display);font-weight:900;font-size:clamp(54px,13vw,108px);line-height:.88;margin:0 0 22px;letter-spacing:-.3px}
+.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(48px,11vw,84px);line-height:.94;margin:0 0 24px;letter-spacing:.2px;max-width:11ch}
 .band-u{position:relative;white-space:nowrap;isolation:isolate}
-.band-u::after{content:"";position:absolute;left:-3%;right:-3%;bottom:.07em;height:.17em;background:var(--band);z-index:-1;border-radius:2px}
-.lede{font-size:19px;max-width:34ch;margin:0 0 28px;color:var(--body)}
+.band-u::after{content:"";position:absolute;left:-2%;right:-2%;bottom:.06em;height:.11em;background:var(--band);z-index:-1;border-radius:2px}
+.lede{font-size:19px;max-width:36ch;margin:0 0 30px;color:var(--body);line-height:1.5}
 .paths{display:grid;gap:10px;max-width:440px}
 .paths .btn{padding:16px 24px;font-size:17px}
 .facts{list-style:none;margin:26px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14.5px;color:var(--muted)}
-.facts li::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--claw);margin-right:8px;vertical-align:2px}
-.stack{position:relative;margin-bottom:34px}
-.stack .p1{width:80%;margin-left:auto;border-radius:6px;aspect-ratio:1/1;object-fit:cover}
-.stack .p2{position:absolute;left:0;bottom:-34px;width:42%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;border:6px solid var(--paper)}
-.ticket{position:absolute;right:-4px;bottom:-22px;background:var(--ink);color:var(--ice);padding:14px 16px 12px;border-radius:4px;font-family:var(--f-mono);font-size:13px;line-height:1.55;max-width:210px;transform:rotate(1.5deg)}
-.ticket strong{display:block;font-family:var(--f-display);font-weight:800;font-size:22px;color:var(--band);margin-bottom:2px}
+.facts{gap:6px 22px}
+.stack{margin:0}
+.stack .p1{width:100%;border-radius:4px;aspect-ratio:1/1;object-fit:cover}
+.stack figcaption{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
 .tide{position:absolute;left:0;right:0;bottom:-1px;height:36px;color:var(--ice)}
 
+/* promise */
+.promise{background:var(--ice);border-top:1px solid var(--ice-2)}
+.promise .wrap{display:grid;gap:22px;padding:36px 0 8px}
+.promise div{display:grid;gap:4px}
+.promise b{font-weight:600;font-size:16.5px}
+.promise span{color:var(--muted);font-size:15px;line-height:1.5}
 /* section heads */
 .sec{padding:80px 0}
 .head{display:grid;gap:12px;margin-bottom:34px;max-width:660px}
-.head h2{font-family:var(--f-display);font-weight:900;font-size:clamp(44px,8vw,70px);line-height:.92;margin:0}
+.head h2{font-family:var(--f-display);font-weight:800;font-size:clamp(40px,6.5vw,60px);line-height:.95;margin:0;letter-spacing:.2px}
 .head p{margin:0;color:var(--muted);font-size:18px}
 
 /* price board */
 #board{background:var(--ice)}
-.board{background:var(--paper);border-radius:10px;overflow:hidden}
+.board{background:var(--paper);border-radius:6px;overflow:hidden;border:1px solid var(--ice-2)}
 .row{display:grid;grid-template-columns:80px 1fr;gap:0 16px;padding:16px;border-bottom:1px solid var(--line);align-items:start}
 .row:last-child{border-bottom:0}
 .row img{width:80px;height:80px;object-fit:cover;border-radius:6px}
@@ -105,9 +110,9 @@ button{cursor:pointer}
 .price{font-family:var(--f-mono);font-size:14px}
 .price.hot{color:var(--shell-dk);font-weight:500}
 .price.ask{color:var(--muted)}
-select.unit{padding:8px 10px;border-radius:6px;border:1px solid var(--line);background:#fff;font-size:15px;color:var(--ink)}
+select.unit{padding:8px 10px;border-radius:6px;min-width:96px;border:1px solid var(--line);background:#fff;font-size:15px;color:var(--ink)}
 .qty{display:flex;align-items:center;gap:8px}
-.qty .add{background:var(--ink);color:var(--paper);border:0;border-radius:999px;padding:9px 18px;font-weight:600;font-size:15px}
+.qty .add{background:var(--ink);color:var(--paper);border:0;border-radius:8px;padding:9px 18px;font-weight:600;font-size:15px}
 .qty .add:hover{background:var(--ink-3)}
 .qty .st{width:38px;height:38px;border-radius:50%;border:0;background:var(--ice-2);font-size:20px;line-height:1;color:var(--ink)}
 .qty .n{font-family:var(--f-mono);font-size:14px;min-width:64px;text-align:center}
@@ -116,18 +121,18 @@ select.unit{padding:8px 10px;border-radius:6px;border:1px solid var(--line);back
 
 /* bundles */
 .bundles{display:grid;gap:18px}
-.bun{border-radius:10px;overflow:hidden;background:var(--ice);display:grid}
+.bun{border-radius:6px;overflow:hidden;background:var(--ice);display:grid}
 .bun img{width:100%;aspect-ratio:16/10;object-fit:cover}
 .bun .in{padding:20px 22px 22px;display:grid;gap:8px;align-content:start}
-.bun h3{font-family:var(--f-display);font-weight:900;font-size:34px;line-height:.95;margin:0}
+.bun h3{font-family:var(--f-display);font-weight:800;font-size:34px;line-height:.95;margin:0}
 .bun ul{margin:0;padding:0;list-style:none;font-family:var(--f-mono);font-size:14px;color:var(--body)}
 .bun p{margin:0;font-size:15px;color:var(--muted)}
 .bun .btn{justify-self:start;margin-top:8px}
 .bun.big{background:var(--ink);color:var(--ice)}
 .bun.big ul{color:var(--ice)}
 .bun.big p{color:#a9b9c7}
-.bun.big h3{font-size:46px}
-.calc{margin-top:28px;background:var(--paper);border:2px solid var(--ink);border-radius:10px;padding:22px;display:grid;gap:14px}
+.bun.big h3{font-size:42px}
+.calc{margin-top:28px;background:var(--ice);border:0;border-radius:6px;padding:22px;display:grid;gap:14px}
 .calc h3{margin:0;font-size:20px}
 .calc .r{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
 .calc input[type=number]{width:96px;font-family:var(--f-mono);font-size:20px;padding:8px 10px;border:1px solid var(--line);border-radius:6px}
@@ -140,7 +145,7 @@ select.unit{padding:8px 10px;border-radius:6px;border:1px solid var(--line);back
 #how{background:var(--ice)}
 .steps{display:grid;gap:28px;margin:0;padding:0;list-style:none}
 .steps li{display:grid;grid-template-columns:56px 1fr;gap:14px}
-.steps .num{font-family:var(--f-display);font-weight:900;font-size:62px;line-height:.8;color:var(--shell)}
+.steps .num{font-family:var(--f-display);font-weight:800;font-size:54px;line-height:.8;color:var(--shell)}
 .steps h3{margin:2px 0 6px;font-size:20px}
 .steps p{margin:0;color:var(--body)}
 .sched{margin-top:30px;font-size:17px;background:var(--band);display:inline-block;padding:10px 16px;border-radius:6px;font-weight:600}
@@ -187,12 +192,12 @@ form.f{display:grid;gap:14px}
 .faq details p{margin:10px 0 0;color:var(--body)}
 
 /* list signup + closer */
-.closer{background:var(--shell);color:#fff;padding:70px 0}
+.closer{background:var(--ink-2);color:var(--ice);padding:72px 0}
 .closer .wrap{display:grid;gap:30px;align-items:center}
-.closer h2{font-family:var(--f-display);font-weight:900;font-size:clamp(46px,8vw,80px);line-height:.9;margin:0;max-width:13ch}
+.closer h2{font-family:var(--f-display);font-weight:800;font-size:clamp(42px,7vw,66px);line-height:.9;margin:0;max-width:13ch}
 .closer p{margin:14px 0 0;font-size:18px;max-width:40ch}
 .alert-f{display:flex;flex-wrap:wrap;gap:10px}
-.alert-f input{flex:1 1 220px;padding:14px 16px;border-radius:999px;border:0;font-size:16px}
+.alert-f input{flex:1 1 220px;padding:14px 16px;border-radius:8px;border:0;font-size:16px}
 .closer .msg{color:#fff;margin-top:8px}
 .closer small{display:block;margin-top:10px;opacity:.85;font-size:13px}
 
@@ -230,9 +235,9 @@ dialog::backdrop{background:rgba(19,32,46,.6)}
 @media (min-width:760px){
   .nav{display:flex}
   .callnum{display:inline}
-  .mark span{font-size:27px}
+  .mark span{font-size:25px}
   .hero{padding:60px 0 96px}
-  .hero .wrap{grid-template-columns:1.05fr 1fr;align-items:center}
+  .hero .wrap{grid-template-columns:1.1fr .9fr;align-items:center;gap:64px}
   .paths{grid-template-columns:auto auto;justify-content:start}
   .stack{margin-bottom:0}
   .row{grid-template-columns:120px 1.3fr 1.4fr;gap:0 22px;padding:18px 22px;align-items:center}
@@ -246,6 +251,7 @@ dialog::backdrop{background:rgba(19,32,46,.6)}
   .bun.sm{grid-template-columns:150px 1fr}
   .bun.sm img{aspect-ratio:auto;height:100%}
   .steps{grid-template-columns:repeat(3,1fr);gap:40px}
+  .promise .wrap{grid-template-columns:1fr 1fr 1fr;gap:48px;padding:40px 0 4px}
   .bulk-g{grid-template-columns:1fr 1.05fr;align-items:start}
   .two{grid-template-columns:1fr 1fr}
   .guides{grid-template-columns:1.2fr 1fr 1fr;gap:44px}
@@ -303,13 +309,21 @@ dialog::backdrop{background:rgba(19,32,46,.6)}
         <li>Delivery &amp; shipping</li>
       </ul>
     </div>
-    <div class="stack">
+    <figure class="stack">
       <img class="p1" src="img/lobster.jpg" alt="Live calico lobster with yellow claw bands on crushed ice" width="612" height="612" fetchpriority="high">
-      <img class="p2" src="img/crabs.jpg" alt="Live blue crabs" width="655" height="655">
-      <div class="ticket"><strong>On ice this week</strong>lobster &middot; blue crab<br>head-on shrimp &middot; oysters<br>red snapper &middot; octopus</div>
-    </div>
+      <figcaption><span>Live lobster, this week</span><span>From @overnight_tider</span></figcaption>
+    </figure>
   </div>
   <svg class="tide" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20 C100 6 200 6 300 20 S500 34 600 20 800 6 900 20 1100 34 1200 20 V36 H0Z" fill="currentColor"/></svg>
+</section>
+
+
+<section class="promise" aria-label="How we work">
+  <div class="wrap">
+    <div><b>Nothing is charged online.</b><span>You send us a list. We reply with the price before anything is final.</span></div>
+    <div><b>A person answers every order.</b><span>You message the business directly. No bots, no call center.</span></div>
+    <div><b>Real photos, no stock library.</b><span>Every picture here comes straight from our own Instagram.</span></div>
+  </div>
 </section>
 
 <section class="sec" id="board">
@@ -493,10 +507,10 @@ dialog::backdrop{background:rgba(19,32,46,.6)}
       <form class="alert-f" id="alertForm" hidden>
         <label class="vh" for="alertPhone">Mobile number</label>
         <input id="alertPhone" type="tel" autocomplete="tel" placeholder="Your mobile number" required>
-        <button class="btn btn-ink" type="submit">Text me the list</button>
+        <button class="btn btn-band" type="submit">Text me the list</button>
       </form>
       <small id="alertNote" hidden>One text a week, plus specials. Reply STOP anytime.</small>
-      <a class="btn btn-ink" id="alertFallback" href="https://www.instagram.com/overnight_tider/" rel="noopener">Follow @overnight_tider</a>
+      <a class="btn btn-band" id="alertFallback" href="https://www.instagram.com/overnight_tider/" rel="noopener">Follow @overnight_tider</a>
       <p class="msg" id="alertMsg"></p>
     </div>
   </div>
@@ -507,7 +521,7 @@ dialog::backdrop{background:rgba(19,32,46,.6)}
   <div class="wrap">
     <div>
       <a class="mark" href="#top"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1d3044"/><path d="M8 38c6-6 10-6 16 0s10 6 16 0 10-6 16 0" stroke="#f2c230" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="44" cy="20" r="6" fill="#eef3f2"/></svg><span>Overnight Tider</span></a>
-      <p style="margin:12px 0 0">Fresh &amp; frozen seafood. Retail and bulk orders, delivery and shipping.</p>
+      <p style="margin:12px 0 0;max-width:38ch">Fresh &amp; frozen seafood, retail and bulk. Every order is confirmed by a person before you pay.</p>
     </div>
     <div class="fcols">
       <div id="fWhere" hidden><b>Find us</b><span id="fAddr"></span><span id="fHours"></span></div>
