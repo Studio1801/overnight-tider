@@ -108,8 +108,8 @@ button{cursor:pointer}
 .show.still .dot.on b{animation:none;width:100%}
 @keyframes fill{from{width:0}to{width:100%}}
 @media (max-width:520px){.dot span{font-size:11.5px}}
-.kicker{font-family:var(--f-mono);font-size:13.5px;color:var(--muted);margin:0 0 14px}
-.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(50px,12vw,92px);line-height:.94;margin:0 0 22px;letter-spacing:.2px;max-width:10ch}
+.kicker{font-family:var(--f-mono);font-size:13.5px;color:var(--sign);margin:0 0 14px}
+.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(48px,11vw,80px);line-height:.93;margin:0 0 20px;letter-spacing:.2px;max-width:11ch}
 .hero h1 .bl{color:var(--sign)}
 .band-u{position:relative;white-space:nowrap;isolation:isolate}
 .band-u::after{content:"";position:absolute;left:-2%;right:-2%;bottom:.05em;height:.11em;background:var(--band);z-index:-1;border-radius:2px}
@@ -289,6 +289,36 @@ dialog[open]{animation:pop .3s var(--ease)}
 .done p{margin:0;color:var(--body)}
 .done .oid{font-family:var(--f-mono);background:var(--ice);padding:2px 8px;border-radius:4px;color:var(--ink)}
 .next{margin:0;padding-left:20px;color:var(--body);display:grid;gap:6px}
+/* why-we-built-it mode */
+.why-btn{position:fixed;left:16px;bottom:16px;z-index:45;display:flex;align-items:center;gap:10px;background:var(--band);color:var(--ink);border:0;border-radius:999px;padding:10px 16px 10px 12px;font-weight:600;font-size:14.5px;box-shadow:0 8px 22px rgba(19,32,46,.22)}
+.why-btn i{width:34px;height:20px;border-radius:999px;background:rgba(19,32,46,.25);position:relative;transition:background-color .2s}
+.why-btn i::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .2s var(--ease)}
+.why-btn[aria-pressed="true"] i{background:var(--ink)}
+.why-btn[aria-pressed="true"] i::after{transform:translateX(14px)}
+.why-note,.why-roi{display:none}
+body.why .why-note{display:grid}
+body.why .why-roi{display:block}
+body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-radius:4px}
+.why-note{grid-template-columns:auto 1fr;gap:4px 12px;background:#fff8dc;border:1px solid #ecd27a;border-radius:8px;padding:14px 16px;margin:0 0 18px;color:var(--ink);font-size:15px;line-height:1.5;text-align:left;max-width:720px}
+.why-note .wn{grid-row:span 3;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--band);font-family:var(--f-mono);font-size:13px;display:grid;place-items:center}
+.why-note b{font-size:15.5px}
+.why-note p{margin:0;color:var(--body)}
+.why-note .roi{color:var(--sign-dk);font-weight:600}
+#bulk .why-note,#how .why-note{background:#fff8dc}
+.why-wrap{padding-top:22px}
+@media (max-width:759px){.why-btn{bottom:84px}}
+.why-roi{background:var(--ink);color:var(--ice);padding:28px 0}
+.why-roi h2{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,5vw,48px);line-height:1;margin:0 0 8px;color:#fff}
+.why-roi .sub{margin:0 0 20px;color:#b3c1cd;max-width:70ch}
+.roi-g{display:grid;gap:14px}
+.roi-g label{display:grid;gap:6px;font-size:14px;color:#c8d3dc}
+.roi-g input{font-family:var(--f-mono);font-size:18px;padding:10px 12px;border-radius:6px;border:1px solid #3b526b;background:var(--ink-2);color:#fff;width:100%}
+.roi-out{display:grid;gap:4px;align-content:center;background:var(--ink-2);border-radius:8px;padding:16px 18px}
+.roi-out b{font-family:var(--f-display);font-weight:800;font-size:44px;line-height:1;color:var(--band)}
+.roi-out span{color:#b3c1cd;font-size:14px}
+.roi-small{margin:14px 0 0;font-size:13px;color:#8fa1b1}
+@media (min-width:760px){.roi-g{grid-template-columns:repeat(3,1fr) 1.3fr;align-items:end}}
+@media print{.why-btn{display:none}}
 /* entrance + reveals */
 .js .rv{opacity:0;transform:translateY(14px)}
 .js.ready .rv{opacity:1;transform:none;transition:opacity .7s var(--ease) var(--d,0ms),transform .7s var(--ease) var(--d,0ms)}
@@ -306,7 +336,7 @@ dialog[open]{animation:pop .3s var(--ease)}
   .callnum{display:inline}
   .mark span{font-size:26px}
       .hero .wrap{grid-template-columns:1.1fr .9fr;align-items:center;gap:64px}
-  .hero .wrap{padding:64px 0 110px}
+  .hero .wrap{padding:44px 0 96px}
   .paths{grid-template-columns:auto auto;justify-content:start}
   .promise .wrap{grid-template-columns:1.35fr 1fr 1fr 1fr;gap:40px;padding:36px 0 6px;align-items:start}
   .row{grid-template-columns:120px 1.15fr 1.5fr;gap:0 24px;padding:18px 22px}
@@ -323,6 +353,7 @@ dialog[open]{animation:pop .3s var(--ease)}
   footer .wrap{grid-template-columns:1.1fr 2fr}
   .fcols{grid-template-columns:repeat(3,1fr)}
   .obar{left:auto;right:24px;bottom:24px;width:400px}
+  .why-btn{left:24px;bottom:24px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
@@ -348,13 +379,12 @@ dialog[open]{animation:pop .3s var(--ease)}
     <nav class="nav" aria-label="Main">
       <a href="#board">This week</a>
       <a href="#bundles">Party sizes</a>
-      <a href="#how">How it works</a>
       <a href="#bulk">Wholesale</a>
       <a href="#faq">Questions</a>
     </nav>
     <div class="top-acts">
       <a class="callnum" id="callTop" href="#" hidden></a>
-      <a class="btn btn-green btn-sm" href="#board">Order</a>
+      <a class="btn btn-green btn-sm" href="#board" id="topOrder">Order</a>
     </div>
   </div>
 </header>
@@ -363,17 +393,17 @@ dialog[open]{animation:pop .3s var(--ease)}
 <section class="hero">
   <div class="wrap">
     <div class="hero-copy">
-    <p class="kicker rv" style="--d:0ms">Retail and wholesale &middot; delivery and shipping</p>
-    <h1 class="h1-anim"><span class="ln"><span style="--d:80ms">Fresh and frozen</span></span> <span class="ln"><span style="--d:190ms">seafood, <span class="band-u">delivered.</span></span></span></h1>
-    <p class="lede rv" style="--d:380ms">Lobster, blue crab, shrimp, oysters, fish, squid and octopus, by the pound or by the case. Send us your list and we'll confirm the price before anything is final.</p>
+    <p class="kicker rv" style="--d:0ms">For home cooks and restaurants</p>
+    <h1 class="h1-anim"><span class="ln"><span style="--d:80ms">Live lobster and</span></span> <span class="ln"><span style="--d:160ms">fresh seafood,</span></span> <span class="ln"><span style="--d:240ms"><span class="band-u">delivered.</span></span></span></h1>
+    <p class="lede rv" style="--d:380ms">Blue crab, head-on shrimp, oysters, snapper, squid and octopus too. Order by the pound for dinner or by the case for your kitchen. We confirm the price before you pay.</p>
     <div class="paths rv" style="--d:480ms">
       <a class="btn btn-green" href="#board">Order for home</a>
       <a class="btn btn-ink" href="#bulk">Order for my business</a>
     </div>
     <ul class="facts rv" id="facts" style="--d:580ms">
       <li>Live, fresh &amp; frozen</li>
-      <li>Retail &amp; wholesale</li>
-      <li>Price confirmed before you pay</li>
+      <li>Delivery &amp; shipping</li>
+      <li>A real person on every order</li>
     </ul>
     </div>
     <figure class="hero-fig show" id="show" aria-roledescription="carousel" aria-label="Photos of our stock">
@@ -652,6 +682,7 @@ const SHOP={
   depositLink:"",      // Optional Square payment link, shown after an order is sent
   policy:"",           // Refund and live seafood policy in the owner's own words. Adds a Refunds link in the footer
   ga4:"",              // Optional Google Analytics 4 ID, e.g. "G-XXXXXXX"
+  pitch:true,          // Shows the "Why we built it this way" toggle. Set to false before launch (or open the site with ?why to see it anyway)
   siteUrl:"https://overnight-tider.vercel.app",
   special:{on:true,text:"<b>Lobster special, Thu to Sun:</b> 1&frac12; lb lobsters at $7.99/lb.",item:"lobster",unit:"lobster (1½ lb)"}
 };
@@ -730,6 +761,7 @@ function bar(n){
   const c=Object.values(cart).length;
   $("obar").classList.toggle("show",c>0);
   $("obarC").innerHTML=`Your order: <b>${c} ${c===1?"item":"items"}</b>`;
+  const t=$("topOrder");if(t)t.textContent=c?`Review order (${c})`:"Order";
   if(n){const b=$("obar");b.classList.remove("nudge");void b.offsetWidth;b.classList.add("nudge")}
 }
 function fly(src,fromEl){
@@ -760,6 +792,7 @@ async function copy(t,el,ok){try{await navigator.clipboard.writeText(t);el.textC
 const sheet=$("sheet");
 const openSheet=()=>{$("sheetForm").hidden=false;$("done").hidden=true;$("sheetMsg").textContent="";renderSheet();sheet.showModal();track("begin_checkout",{lines:Object.keys(cart).length})};
 $("openSheet").onclick=openSheet;
+$("topOrder").addEventListener("click",e=>{if(Object.keys(cart).length){e.preventDefault();openSheet()}});
 ["oName","oPhone","oHow","oWhen","oZip","oNotes"].forEach(id=>$(id).addEventListener("input",renderSheet));
 $("sendIG").addEventListener("click",()=>{track("order_instagram",{lines:Object.keys(cart).length})});
 $("sendIG").addEventListener("click",()=>copy(message(),$("sheetMsg"),"Order copied. Paste it in the chat and hit send."));
@@ -927,6 +960,61 @@ async function loadStock(){
   document.addEventListener("visibilitychange",schedule);
   if(calm)$("ppIcon").setAttribute("d","M5 3l8 5-8 5z"),$("showPP").setAttribute("aria-label","Play slideshow");
   schedule();
+})();
+
+/* ---------- "why we built it this way" (pitch mode) ---------- */
+const WHY=[
+ ["#special","Weekly special bar","Gives every visitor a reason to order this week instead of someday. You change the text from your Google Sheet in seconds.","Specials move stock you already bought before it loses value."],
+ [".top","Order button that remembers the cart","The Order button is always on screen and changes to \"Review order (3)\" once something is added, so nobody loses an order halfway.","Fewer half-finished orders means more finished ones."],
+ [".hero-copy h1","A headline that says what you sell","Live lobster, fresh seafood, delivered. A stranger understands what you do in about three seconds. Vague or clever headlines make people leave.","Every visitor who stays past the first screen is a possible order."],
+ [".paths","Two doors: home and business","Home cooks go straight to this week's list. Restaurants and caterers go to the wholesale form, where the big repeat orders are.","Each buyer gets to the right place in one tap instead of guessing."],
+ ["#show","Your real crates, not stock photos","The slideshow shows what is actually in your crates and coolers this week. The biggest doubt about buying seafood online is \"is this real and is it fresh\".","Proof of real stock is what turns a curious visitor into a buyer."],
+ [".promise","Answering the three doubts before they're asked","Are you a real business? Will I get charged online? Is there a person? Your building, \"nothing charged online\" and \"a person answers\" settle all three.","Trust is the cheapest way to raise how many visitors order."],
+ ["#boardList","Every item, size and price in one list","Customers see everything in one scroll and add it without messaging you first. Prices come from your sheet, so \"Ask for price\" disappears once you fill them in.","Posted prices cut the back-and-forth DMs that make people give up."],
+ [".planner","Party sizes","Turns \"how much do I need for 15 people?\" into a ready order. Party and event buyers order more per order than anyone else.","Bigger orders from the same number of customers."],
+ ["#how .steps","How ordering works","Three plain steps. People don't order when they don't know what happens after they press the button.","Removing uncertainty removes a reason not to order."],
+ ["#bulk .bulk-g","Wholesale quotes","One restaurant on a weekly standing order can be worth more than dozens of one-time orders. The form collects business, volume and frequency so you can quote fast.","This is where the steady, repeat revenue comes from."],
+ [".reel","Real photos again, lower down","People who scroll this far are close to deciding. More real product right before the order buttons keeps them confident.","Supports the decision at the moment it's being made."],
+ ["#guides .guides","Care and cooking guides","Fewer dead crabs and fewer complaints, and these pages show up when people search things like \"how to keep crabs alive\".","Free traffic from Google, and fewer refunds."],
+ ["#faq .faq","Questions answered in advance","Covers delivery, small orders, pricing and fresh vs frozen, the questions that otherwise stall an order in your DMs.","Every answered question is one less reason to wait."],
+ [".closer .wrap","Your own text list","Instagram decides who sees your posts. A text list reaches every customer every week, for free, and you own it.","Repeat orders without paying for ads."],
+ ["#obar","Orders straight to your Google Sheet","Every order arrives with an order number, the customer's phone, items, date and ZIP, and you get an email. Nothing lost in DMs.","You see every order, can follow up, and can track what the site actually earns."]
+];
+(function whyMode(){
+  if(!(SHOP.pitch||/[?&]why\b/.test(location.search)||location.hash==="#why"))return;
+  const btn=document.createElement("button");btn.type="button";btn.className="why-btn";btn.setAttribute("aria-pressed","false");btn.innerHTML="<i></i>Why we built it this way";
+  document.body.appendChild(btn);
+  const roi=document.createElement("section");roi.className="why-roi";roi.setAttribute("aria-label","Return on investment");
+  roi.innerHTML=`<div class="wrap"><h2>How this site pays for itself</h2><p class="sub">Every part of this page has one job: get more people from \"looking\" to \"ordered\", and bring them back. Put in your own numbers.</p>
+  <div class="roi-g"><label>Average order ($)<input type="number" id="roiAvg" value="120" min="0" inputmode="decimal"></label>
+  <label>Extra orders per week from the site<input type="number" id="roiN" value="5" min="0" inputmode="numeric"></label>
+  <label>Wholesale accounts won<input type="number" id="roiW" value="1" min="0" inputmode="numeric"></label>
+  <div class="roi-out"><b id="roiOut">$0</b><span id="roiTxt">extra revenue a month</span></div></div>
+  <p class="roi-small">Example numbers, not a promise. Wholesale accounts are counted at 4 orders a month at 5 times your average order. The order sheet shows the real numbers once the site is live.</p></div>`;
+  document.querySelector("main").prepend(roi);
+  const money=n=>"$"+Math.round(n).toLocaleString("en-US");
+  const calc=()=>{const a=+$("roiAvg").value||0,n=+$("roiN").value||0,w=+$("roiW").value||0;const m=a*n*4.33+w*4*a*5;$("roiOut").textContent=money(m);$("roiTxt").textContent=`extra revenue a month, about ${money(m*12)} a year`};
+  ["roiAvg","roiN","roiW"].forEach(id=>$(id).addEventListener("input",calc));calc();
+  let built=false;
+  function build(){
+    if(built)return;built=true;
+    const topBox=document.createElement("div");const hc=document.querySelector(".hero-copy");hc.insertBefore(topBox,hc.firstChild);
+    WHY.forEach(([sel,title,text,roiLine],i)=>{
+      const el=document.querySelector(sel);if(!el)return;
+      const n=document.createElement("div");n.className="why-note";n.setAttribute("role","note");
+      n.innerHTML=`<span class="wn">${i+1}</span><b>${esc(title)}</b><p>${esc(text)}</p><p class="roi">${esc(roiLine)}</p>`;
+      el.setAttribute("data-why-on","");
+      if(sel==="#special"||sel===".top"){topBox.appendChild(n)}
+      else if(sel==="#obar"){document.querySelector("#how .wrap").appendChild(n)}
+      else if(sel==="#show"){el.prepend(n)}
+      else if(["SECTION","MAIN","BODY"].includes(el.parentNode.tagName)){const w=document.createElement("div");w.className="wrap why-wrap";w.appendChild(n);el.parentNode.insertBefore(w,el)}
+      else el.parentNode.insertBefore(n,el);
+    });
+    document.querySelectorAll(".why-note").forEach(x=>{const p=x.closest(".io");if(p)p.classList.add("in")});
+  }
+  function set(on){if(on)build();document.body.classList.toggle("why",on);btn.setAttribute("aria-pressed",on);track("why_mode",{on})}
+  btn.onclick=()=>{const on=btn.getAttribute("aria-pressed")!=="true";set(on);if(on)scrollTo({top:0,behavior:calm?"auto":"smooth"})};
+  if(location.hash==="#why")set(true);
 })();
 
 /* ---------- boot ---------- */
