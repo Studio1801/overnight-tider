@@ -145,7 +145,7 @@ button{cursor:pointer}
 .card{flex:none;width:250px;scroll-snap-align:start;background:#fff;border-radius:10px;padding:20px 18px 18px;display:grid;gap:4px;align-content:start;position:relative}
 .plate{position:relative;height:190px;display:grid;place-items:center;margin-bottom:12px}
 .plate::before{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:var(--frost);box-shadow:inset 0 0 0 6px #f4f7f6}
-.plate img{position:relative;max-width:220px;max-height:185px;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 14px 12px rgba(19,32,46,.18));transition:transform .5s var(--ease);user-select:none;-webkit-user-drag:none}
+.plate img{position:relative;max-width:236px;max-height:170px;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 14px 12px rgba(19,32,46,.18));transition:transform .5s var(--ease);user-select:none;-webkit-user-drag:none}
 .plate.photo img{width:160px;height:160px;max-width:none;border-radius:50%;object-fit:cover;filter:none;box-shadow:inset 0 0 0 6px #f4f7f6}
 .card:hover .plate img{transform:translateY(-6px) rotate(-3deg) scale(1.04)}
 .card:hover .plate.photo img{transform:scale(1.05)}
@@ -423,7 +423,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
     <div class="hero-copy">
     <p class="kicker rv" style="--d:0ms">For home cooks and restaurants</p>
     <h1 class="h1-anim"><span class="ln"><span style="--d:80ms">Live lobster and</span></span> <span class="ln"><span style="--d:160ms">fresh seafood,</span></span> <span class="ln"><span style="--d:240ms"><span class="band-u">delivered.</span></span></span></h1>
-    <p class="lede rv" style="--d:380ms">Blue crab, head-on shrimp, oysters, snapper, squid and octopus too. Order by the pound for dinner or by the case for your kitchen. We confirm the price before you pay.</p>
+    <p class="lede rv" style="--d:380ms">Blue and Dungeness crab, crawfish, head-on shrimp, oysters, salmon, snapper, squid and octopus too. Order by the pound for dinner or by the case for your kitchen. We confirm the price before you pay.</p>
     <div class="paths rv" style="--d:480ms">
       <a class="btn btn-green" href="#board">Order for home</a>
       <a class="btn btn-ink" href="#bulk">Order for my business</a>
@@ -438,7 +438,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
     <div class="frame">
       <img src="img/crate.webp" alt="A crate of live lobsters with banded claws, one bright orange" width="1080" height="1080" fetchpriority="high" class="sl on" data-i="0">
       <img src="img/shrimp-tray.webp" alt="A steel tray full of fresh head-on shrimp" width="1080" height="1080" loading="lazy" class="sl" data-i="1">
-      <img src="img/snapper-box.webp" alt="Whole red snapper packed in a cooler" width="1080" height="1080" loading="lazy" class="sl" data-i="2">
+      <img src="img/snapper-box.webp" alt="Whole red porgy packed in a cooler" width="1080" height="1080" loading="lazy" class="sl" data-i="2">
       <img src="img/squid.webp" alt="Whole fresh squid piled together" width="1080" height="1080" loading="lazy" class="sl" data-i="3">
       <img src="img/lobster-hero.webp" alt="A calico lobster with yellow claw bands on crushed ice" width="1080" height="1080" loading="lazy" class="sl" data-i="4">
       <button type="button" class="pp" id="showPP" aria-label="Pause slideshow"><svg viewBox="0 0 16 16" aria-hidden="true"><path id="ppIcon" d="M5 3h2v10H5zM9 3h2v10H9z" fill="currentColor"/></svg></button>
@@ -446,7 +446,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
     <div class="dots" role="group" aria-label="Choose a photo">
       <button type="button" class="dot on" data-go="0" aria-label="Show live lobster" aria-current="true"><i><b></b></i><span>Live lobster</span></button>
       <button type="button" class="dot" data-go="1" aria-label="Show head-on shrimp" aria-current="false"><i><b></b></i><span>Head-on shrimp</span></button>
-      <button type="button" class="dot" data-go="2" aria-label="Show red snapper" aria-current="false"><i><b></b></i><span>Red snapper</span></button>
+      <button type="button" class="dot" data-go="2" aria-label="Show red porgy" aria-current="false"><i><b></b></i><span>Red porgy</span></button>
       <button type="button" class="dot" data-go="3" aria-label="Show squid" aria-current="false"><i><b></b></i><span>Squid</span></button>
       <button type="button" class="dot" data-go="4" aria-label="Show calico lobster" aria-current="false"><i><b></b></i><span>Calico lobster</span></button>
     </div>
@@ -461,7 +461,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
     <div class="carry-nav"><button type="button" id="cPrev" aria-label="Scroll back"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" id="cNext" aria-label="Scroll forward"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7.5 4 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
   </div>
   <div class="track" id="track" tabindex="0" aria-label="Seafood we carry, scroll sideways"></div>
-  <p class="wrap carry-foot">Every picture is our own stock. Tap Add and it goes straight into your order.</p>
+  <p class="wrap carry-foot">Product shots show the species. For what actually came in this week, see our photos below. Tap Add and it goes straight into your order.</p>
 </section>
 
 <section class="promise" aria-label="Who you're buying from">
@@ -469,7 +469,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
     <figure class="us io"><img src="img/building.webp" alt="The Overnight Tider building with the name painted on the front and a white work truck outside" width="440" height="440" loading="lazy"><figcaption><b>That's us.</b><span>Our name is on the building. When you message us, you're talking to the people inside it.</span><span id="usAddr" hidden></span></figcaption></figure>
     <div class="io" style="--d:90ms"><b>Nothing is charged online.</b><span>Send us your list. We reply with the price before anything is final.</span></div>
     <div class="io" style="--d:180ms"><b>A person answers every order.</b><span>You message the business directly. No bots, no call center.</span></div>
-    <div class="io" style="--d:270ms"><b>Real photos, no stock library.</b><span>Every picture here comes straight from our own Instagram.</span></div>
+    <div class="io" style="--d:270ms"><b>Real photos of real stock.</b><span>The slideshow and photo strip come straight from our own Instagram.</span></div>
   </div>
 </section>
 
@@ -532,7 +532,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
     <div class="head io">
       <p class="eyebrow">Our photos</p>
       <h2>What actually came in</h2>
-      <p>Real stock, posted on <a class="tl" href="https://www.instagram.com/overnight_tider/" rel="noopener">@overnight_tider</a>. No stock photography.</p>
+      <p>Real stock, posted on <a class="tl" href="https://www.instagram.com/overnight_tider/" rel="noopener">@overnight_tider</a>. Unedited, straight from our tables.</p>
     </div>
     <div class="reel io">
       <img src="img/oysters.webp" alt="Shucked oysters" loading="lazy" width="401" height="676">
@@ -729,6 +729,10 @@ const ITEMS=[
    units:[{u:"lobster (1½ lb)",label:"1½ lb lobster",price:"$7.99/lb special, about $11.99 each",hot:true},{u:"lb",label:"By the lb",price:"Ask for price"}]},
   {id:"crab",name:"Blue crabs",img:"img/crabs.webp",note:"Live, sold by the dozen, half bushel or bushel.",tag:"Live",
    units:[{u:"dozen",label:"Dozen"},{u:"half bushel",label:"Half bushel"},{u:"bushel",label:"Bushel"}]},
+  {id:"dungeness",name:"Dungeness crab",img:"img/p-dungeness.webp",note:"Big, sweet and meaty. Sold whole.",tag:"Fresh",
+   units:[{u:"each",label:"Each"},{u:"lb",label:"By the lb"}]},
+  {id:"crawfish",name:"Crawfish",img:"img/p-crawfish.webp",note:"Live crawfish for a proper boil.",tag:"Live",
+   units:[{u:"lb",label:"By the lb"},{u:"sack",label:"Sack"}]},
   {id:"shrimp",name:"Head-on shrimp",img:"img/shrimp.webp",note:"Big, fresh, shell-on. Built for boils and the grill.",tag:"Fresh",
    units:[{u:"lb",label:"By the lb"},{u:"case",label:"Case"}]},
   {id:"tails",name:"Red shrimp tails",img:"img/tails.webp",note:"Sweet tails, easy to peel.",tag:"Fresh or frozen",
@@ -737,7 +741,10 @@ const ITEMS=[
    units:[{u:"dozen",label:"Dozen"},{u:"box",label:"Box"}]},
   {id:"squid",name:"Squid",img:"img/squid.webp",note:"Whole, fresh. Good for frying or the grill.",tag:"Fresh",units:[{u:"lb",label:"By the lb"}]},
   {id:"octopus",name:"Octopus",img:"img/octopus.webp",note:"Whole, ready for the grill.",tag:"Fresh or frozen",units:[{u:"lb",label:"By the lb"}]},
-  {id:"fish",name:"Whole fish",img:"img/snapper.webp",note:"Red snapper and whatever else came in. Ask what's fresh.",tag:"Fresh",units:[{u:"lb",label:"By the lb"}]}
+  {id:"salmon",name:"Whole salmon",img:"img/p-salmon.webp",note:"Whole fish, cleaned or left as is. Ask about fillets.",tag:"Fresh",units:[{u:"lb",label:"By the lb"},{u:"each",label:"Whole fish"}]},
+  {id:"snapper",name:"Red snapper",img:"img/p-snapper.webp",note:"Whole red snapper, great fried or on the grill.",tag:"Fresh",units:[{u:"lb",label:"By the lb"}]},
+  {id:"porgy",name:"Red porgy",img:"img/p-porgy.webp",note:"Also called red sea bream. Sweet white meat, best whole.",tag:"Fresh",units:[{u:"lb",label:"By the lb"}]},
+  {id:"fish",name:"Other whole fish",img:"img/snapper.webp",note:"Whatever else came in this week. Ask what's fresh.",tag:"Fresh",units:[{u:"lb",label:"By the lb"}]}
 ];
 
 const $=id=>document.getElementById(id);
@@ -750,7 +757,7 @@ const EP=SHOP.endpoint||SHOP.alertsEndpoint||"";
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function track(name,params={}){try{(window.dataLayer=window.dataLayer||[]).push({event:name,...params});if(window.gtag)gtag("event",name,params);if(window.va)window.va("event",{name,data:params})}catch(e){}}
 async function post(type,data){if(!EP)throw new Error("no endpoint");await fetch(EP,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({type,...data,page:location.href,ts:new Date().toISOString()})})}
-const label=(u,q)=>{if(u==="lb")return q+" lb";if(u.startsWith("lobster"))return q+(q===1?" lobster":" lobsters")+" (1½ lb)";const pl={box:"boxes",bushel:"bushels","half bushel":"half bushels",dozen:"dozen",case:"cases"};return q+" "+(q===1?u:(pl[u]||u+"s"))};
+const label=(u,q)=>{if(u==="lb")return q+" lb";if(u.startsWith("lobster"))return q+(q===1?" lobster":" lobsters")+" (1½ lb)";const pl={each:"",sack:"sacks",box:"boxes",bushel:"bushels","half bushel":"half bushels",dozen:"dozen",case:"cases"};return u==="each"?q+(q===1?" whole":" whole"):q+" "+(q===1?u:(pl[u]||u+"s"))};
 
 /* ---------- this week's board ---------- */
 let cur=ITEMS[0].id;const unitSel={};
@@ -1006,7 +1013,7 @@ const WHY=[
  [".hero-copy h1","A headline that says what you sell","Live lobster, fresh seafood, delivered. A stranger understands what you do in about three seconds. Vague or clever headlines make people leave.","Every visitor who stays past the first screen is a possible order."],
  [".paths","Two doors: home and business","Home cooks go straight to this week's list. Restaurants and caterers go to the wholesale form, where the big repeat orders are.","Each buyer gets to the right place in one tap instead of guessing."],
  ["#show","Your real crates, not stock photos","The slideshow shows what is actually in your crates and coolers this week. The biggest doubt about buying seafood online is \"is this real and is it fresh\".","Proof of real stock is what turns a curious visitor into a buyer."],
- ["#track","What we carry, at a glance","A sideways row of everything you sell, right under the first screen. Visitors see the full range in seconds and can add any of it without scrolling down.","Shows the whole menu early, so more people find the thing they came for."],
+ ["#track","What we carry, at a glance","A sideways row of everything you sell, shown as clean product shots so each species is easy to recognize, right under the first screen. Visitors see the full range in seconds and can add any of it without scrolling down.","Shows the whole menu early, so more people find the thing they came for."],
  [".promise","Answering the three doubts before they're asked","Are you a real business? Will I get charged online? Is there a person? Your building, \"nothing charged online\" and \"a person answers\" settle all three.","Trust is the cheapest way to raise how many visitors order."],
  ["#boardList","Every item, size and price in one list","Customers see everything in one scroll and add it without messaging you first. Prices come from your sheet, so \"Ask for price\" disappears once you fill them in.","Posted prices cut the back-and-forth DMs that make people give up."],
  [".planner","Party sizes","Turns \"how much do I need for 15 people?\" into a ready order. Party and event buyers order more per order than anyone else.","Bigger orders from the same number of customers."],
@@ -1056,10 +1063,10 @@ const WHY=[
 })();
 
 /* ---------- what we carry ---------- */
-const CARRY={lobster:{cut:"img/cut-lobster.webp"},crab:{photo:"img/crabs.webp"},shrimp:{photo:"img/shrimp-tray.webp"},tails:{photo:"img/tails.webp"},oyster:{cut:"img/cut-oyster.webp"},fish:{cut:"img/cut-snapper.webp",name:"Red snapper"},squid:{photo:"img/squid.webp"},octopus:{cut:"img/cut-octopus.webp"}};
+const CARRY={lobster:{cut:"img/p-lobster.webp"},crab:{cut:"img/p-bluecrab.webp"},dungeness:{cut:"img/p-dungeness.webp"},crawfish:{cut:"img/p-crawfish.webp"},shrimp:{cut:"img/p-shrimp.webp"},tails:{photo:"img/tails.webp"},oyster:{cut:"img/p-oyster.webp"},salmon:{cut:"img/p-salmon.webp"},snapper:{cut:"img/p-snapper.webp"},porgy:{cut:"img/p-porgy.webp"},squid:{cut:"img/p-squid.webp"},octopus:{cut:"img/cut-octopus.webp"}};
 function renderCarry(){
   const t=$("track");if(!t)return;
-  t.innerHTML=ITEMS.filter(it=>CARRY[it.id]).map(it=>{const c=CARRY[it.id],out=it.status==="out",u=it.units[0],hot=u.hot&&!out;
+  t.innerHTML=Object.keys(CARRY).map(item).filter(Boolean).map(it=>{const c=CARRY[it.id],out=it.status==="out",u=it.units[0],hot=u.hot&&!out;
     return `<article class="card" data-id="${it.id}">${out?'<span class="tag out">Sold out this week</span>':hot?'<span class="tag">This week’s special</span>':it.status==="limited"?'<span class="tag">Going fast</span>':""}
       <div class="plate${c.photo?" photo":""}"><img src="${c.cut||c.photo}" alt="${esc(c.name||it.name)}" loading="lazy" draggable="false"></div>
       <h3>${esc(c.name||it.name)}</h3><p class="how">${it.units.map(x=>x.label.toLowerCase()).join(" · ")}</p>
