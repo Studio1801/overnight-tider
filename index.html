@@ -92,7 +92,22 @@ button{cursor:pointer}
 .hero{position:relative;background:var(--paper);overflow:hidden}
 .hero .wrap{position:relative;z-index:2;display:grid;gap:40px;padding:40px 0 96px}
 .hero-fig{margin:0}
-.hero-fig img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:50% 40%;border-radius:4px}
+.show .frame{position:relative;aspect-ratio:1/1;border-radius:4px;overflow:hidden;background:var(--frost);touch-action:pan-y}
+.show .sl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity 1.1s ease,transform 7s linear}
+.show .sl.on{opacity:1;transform:scale(1)}
+.show .pp{position:absolute;right:12px;bottom:12px;width:36px;height:36px;border:0;border-radius:50%;background:rgba(19,32,46,.72);color:#fff;display:grid;place-items:center;padding:0}
+.show .pp svg{width:14px;height:14px}
+.dots{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+.dot{background:none;border:0;padding:6px 0 0;text-align:left;color:var(--muted);font-size:13px;line-height:1.25;display:grid;gap:7px}
+.dot i{display:block;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.dot b{display:block;height:100%;width:0;background:var(--sign)}
+.dot.on{color:var(--ink);font-weight:600}
+.dot.seen b{width:100%}
+.dot.on b{animation:fill var(--dur,5.5s) linear forwards}
+.show.paused .dot.on b{animation-play-state:paused}
+.show.still .dot.on b{animation:none;width:100%}
+@keyframes fill{from{width:0}to{width:100%}}
+@media (max-width:520px){.dot span{font-size:11.5px}}
 .kicker{font-family:var(--f-mono);font-size:13.5px;color:var(--muted);margin:0 0 14px}
 .hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(50px,12vw,92px);line-height:.94;margin:0 0 22px;letter-spacing:.2px;max-width:10ch}
 .hero h1 .bl{color:var(--sign)}
@@ -311,7 +326,7 @@ dialog[open]{animation:pop .3s var(--ease)}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
-  .js .rv,.js .h1-anim .ln>span,.js .band-u::after,.js .hero-fig img,.js .io{opacity:1!important;transform:none!important}
+  .js .rv,.js .h1-anim .ln>span,.js .band-u::after,.js .hero-fig .frame,.js .io{opacity:1!important;transform:none!important}
   .fly{display:none}
 }
 </style>
@@ -350,7 +365,7 @@ dialog[open]{animation:pop .3s var(--ease)}
     <div class="hero-copy">
     <p class="kicker rv" style="--d:0ms">Retail and wholesale &middot; delivery and shipping</p>
     <h1 class="h1-anim"><span class="ln"><span style="--d:80ms">Fresh and frozen</span></span> <span class="ln"><span style="--d:190ms">seafood, <span class="band-u">delivered.</span></span></span></h1>
-    <p class="lede rv" style="--d:380ms">Lobster, blue crab, shrimp, oysters, fish and octopus, by the pound or by the case. Send us your list and we'll confirm the price before anything is final.</p>
+    <p class="lede rv" style="--d:380ms">Lobster, blue crab, shrimp, oysters, fish, squid and octopus, by the pound or by the case. Send us your list and we'll confirm the price before anything is final.</p>
     <div class="paths rv" style="--d:480ms">
       <a class="btn btn-green" href="#board">Order for home</a>
       <a class="btn btn-ink" href="#bulk">Order for my business</a>
@@ -361,7 +376,23 @@ dialog[open]{animation:pop .3s var(--ease)}
       <li>Price confirmed before you pay</li>
     </ul>
     </div>
-    <figure class="hero-fig"><img src="img/lobster-hero.webp" alt="Live calico lobster with yellow claw bands on crushed ice" width="1092" height="1088" fetchpriority="high"></figure>
+    <figure class="hero-fig show" id="show" aria-roledescription="carousel" aria-label="Photos of our stock">
+    <div class="frame">
+      <img src="img/crate.webp" alt="A crate of live lobsters with banded claws, one bright orange" width="1080" height="1080" fetchpriority="high" class="sl on" data-i="0">
+      <img src="img/shrimp-tray.webp" alt="A steel tray full of fresh head-on shrimp" width="1080" height="1080" loading="lazy" class="sl" data-i="1">
+      <img src="img/snapper-box.webp" alt="Whole red snapper packed in a cooler" width="1080" height="1080" loading="lazy" class="sl" data-i="2">
+      <img src="img/squid.webp" alt="Whole fresh squid piled together" width="1080" height="1080" loading="lazy" class="sl" data-i="3">
+      <img src="img/lobster-hero.webp" alt="A calico lobster with yellow claw bands on crushed ice" width="1080" height="1080" loading="lazy" class="sl" data-i="4">
+      <button type="button" class="pp" id="showPP" aria-label="Pause slideshow"><svg viewBox="0 0 16 16" aria-hidden="true"><path id="ppIcon" d="M5 3h2v10H5zM9 3h2v10H9z" fill="currentColor"/></svg></button>
+    </div>
+    <div class="dots" role="group" aria-label="Choose a photo">
+      <button type="button" class="dot on" data-go="0" aria-label="Show live lobster" aria-current="true"><i><b></b></i><span>Live lobster</span></button>
+      <button type="button" class="dot" data-go="1" aria-label="Show head-on shrimp" aria-current="false"><i><b></b></i><span>Head-on shrimp</span></button>
+      <button type="button" class="dot" data-go="2" aria-label="Show red snapper" aria-current="false"><i><b></b></i><span>Red snapper</span></button>
+      <button type="button" class="dot" data-go="3" aria-label="Show squid" aria-current="false"><i><b></b></i><span>Squid</span></button>
+      <button type="button" class="dot" data-go="4" aria-label="Show calico lobster" aria-current="false"><i><b></b></i><span>Calico lobster</span></button>
+    </div>
+  </figure>
   </div>
   <svg class="edge" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20 C100 6 200 6 300 20 S500 34 600 20 800 6 900 20 1100 34 1200 20 V36 H0Z" fill="currentColor"/></svg>
 </section>
@@ -636,6 +667,7 @@ const ITEMS=[
    units:[{u:"lb",label:"By the lb"},{u:"case",label:"Case"}]},
   {id:"oyster",name:"Oysters",img:"img/oysters.webp",note:"By the dozen or by the box.",tag:"Fresh",
    units:[{u:"dozen",label:"Dozen"},{u:"box",label:"Box"}]},
+  {id:"squid",name:"Squid",img:"img/squid.webp",note:"Whole, fresh. Good for frying or the grill.",tag:"Fresh",units:[{u:"lb",label:"By the lb"}]},
   {id:"octopus",name:"Octopus",img:"img/octopus.webp",note:"Whole, ready for the grill.",tag:"Fresh or frozen",units:[{u:"lb",label:"By the lb"}]},
   {id:"fish",name:"Whole fish",img:"img/snapper.webp",note:"Red snapper and whatever else came in. Ask what's fresh.",tag:"Fresh",units:[{u:"lb",label:"By the lb"}]}
 ];
@@ -865,11 +897,43 @@ async function loadStock(){
   }catch(e){}
 }
 
+/* ---------- hero slideshow ---------- */
+(function slideshow(){
+  const root=$("show");if(!root)return;
+  const slides=[...root.querySelectorAll(".sl")],dots=[...root.querySelectorAll(".dot")],DUR=5500;
+  let i=0,timer=null,paused=calm,hover=false;
+  root.style.setProperty("--dur",DUR+"ms");
+  if(calm)root.classList.add("still");
+  function go(n,user){
+    i=(n+slides.length)%slides.length;
+    slides.forEach((im,k)=>{if(k===i&&im.loading==="lazy")im.loading="eager";im.classList.toggle("on",k===i)});
+    dots.forEach((d,k)=>{d.classList.toggle("on",k===i);d.classList.toggle("seen",k<i);d.setAttribute("aria-current",k===i?"true":"false");
+      const b=d.querySelector("b");b.style.animation="none";void b.offsetWidth;b.style.animation=""});
+    const nx=slides[(i+1)%slides.length];if(nx.loading==="lazy")nx.loading="eager";
+    if(user)track("hero_slide",{slide:i});
+    schedule();
+  }
+  function schedule(){clearTimeout(timer);if(!paused&&!hover&&!document.hidden)timer=setTimeout(()=>go(i+1),DUR)}
+  function setPaused(v){paused=v;root.classList.toggle("paused",v);$("showPP").setAttribute("aria-label",v?"Play slideshow":"Pause slideshow");
+    $("ppIcon").setAttribute("d",v?"M5 3l8 5-8 5z":"M5 3h2v10H5zM9 3h2v10H9z");if(!v)root.classList.remove("still");schedule()}
+  dots.forEach(d=>d.addEventListener("click",()=>go(+d.dataset.go,true)));
+  $("showPP").onclick=()=>setPaused(!paused);
+  const frame=root.querySelector(".frame");
+  frame.addEventListener("mouseenter",()=>{hover=true;root.classList.add("paused");clearTimeout(timer)});
+  frame.addEventListener("mouseleave",()=>{hover=false;if(!paused)root.classList.remove("paused");schedule()});
+  let x0=null;frame.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});
+  frame.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(i+(dx<0?1:-1),true);x0=null});
+  root.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();go(i+1,true)}if(e.key==="ArrowLeft"){e.preventDefault();go(i-1,true)}});
+  document.addEventListener("visibilitychange",schedule);
+  if(calm)$("ppIcon").setAttribute("d","M5 3l8 5-8 5z"),$("showPP").setAttribute("aria-label","Play slideshow");
+  schedule();
+})();
+
 /* ---------- boot ---------- */
 renderSpecies();select(cur,true);renderPlan();bar();loadStock();
 (function motion(){
   const root=document.documentElement,go=()=>requestAnimationFrame(()=>root.classList.add("ready"));
-  const hero=document.querySelector(".hero-fig img");
+  const hero=document.querySelector(".hero-fig .sl");
   if(hero&&!hero.complete){hero.addEventListener("load",go,{once:true});setTimeout(go,1000)}else go();
   const targets=document.querySelectorAll(".io");
   if("IntersectionObserver" in window){
