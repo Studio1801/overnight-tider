@@ -148,6 +148,38 @@ select.unit{padding:9px 10px;border:1px solid var(--line);border-radius:6px;back
 .qty .n.bump{animation:tick .28s var(--ease)}
 .board-foot{margin:22px 0 0;font-size:15px;color:var(--muted);max-width:64ch}
 
+/* spotlight */
+#spot{background:#eef1f0;overflow:hidden}
+#spot .wrap{display:grid;gap:34px;position:relative}
+.sp-text h2{font-family:var(--f-display);font-weight:800;font-size:clamp(52px,8vw,84px);line-height:.9;margin:6px 0 20px;color:var(--ink)}
+.sp-text p{margin:0 0 14px;color:var(--body);max-width:44ch}
+.spec{width:100%;max-width:470px;border-collapse:collapse;margin:22px 0 22px;font-size:15.5px}
+.spec td{padding:12px 10px 12px 0;border-bottom:1px dotted #b9c4c3;vertical-align:baseline}
+.spec td:first-child{color:var(--ink);font-weight:500}
+.spec .w{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.spec .pr{font-family:var(--f-mono);font-weight:500;text-align:right;white-space:nowrap;border-left:1px solid #b9c4c3;padding-left:16px;padding-right:0}
+.spec .pr.hot{color:var(--shell-dk)}
+.sp-buy{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.step{display:flex;align-items:center;background:#fff;border:1px solid var(--line);border-radius:8px}
+.step button{width:46px;height:48px;border:0;background:none;font-size:22px;color:var(--ink)}
+@media (max-width:759px){.spec .w{display:none}.spec .pr{white-space:normal;font-size:14px}.spec td:first-child{white-space:nowrap}}
+#spCountTxt{font-weight:600}
+.step output{min-width:36px;text-align:center;font-family:var(--f-mono);font-size:17px;display:inline-block}
+.sp-art{position:relative}
+.sp-art .wave{position:absolute;left:4%;right:0;top:12%;width:96%;color:#dde4e2;z-index:0}
+.sp-art img{position:relative;z-index:1;width:100%;max-width:640px;margin-left:auto;filter:drop-shadow(0 26px 22px rgba(19,32,46,.16))}
+.sp-feats{display:grid;gap:26px;list-style:none;margin:10px 0 0;padding:0}
+.sp-feats li{display:grid;grid-template-columns:64px 1fr;gap:4px 16px;align-items:start}
+.sp-feats svg{width:64px;height:48px;grid-row:span 2;display:block}
+.sp-feats li{align-content:start}
+.sp-feats b{font-weight:600;font-size:16px;line-height:1.3}
+.sp-feats span{color:#7a8a96;font-size:14.5px;line-height:1.4}
+.badge{font-family:var(--f-mono);font-size:11px}
+.js #spot .sp-art img{opacity:0;transform:translateX(60px) rotate(-3deg)}
+.js #spot.in .sp-art img{opacity:1;transform:none;transition:opacity .9s var(--ease),transform 1.3s var(--ease)}
+.js #spot .sp-feats li{opacity:0;transform:translateY(12px)}
+.js #spot.in .sp-feats li{opacity:1;transform:none;transition:opacity .6s var(--ease) calc(500ms + var(--i)*120ms),transform .6s var(--ease) calc(500ms + var(--i)*120ms)}
+
 /* party planner */
 #bundles{background:var(--ice)}
 .planner{display:grid;gap:22px;background:var(--paper);border-radius:8px;overflow:hidden}
@@ -308,6 +340,11 @@ dialog[open]{animation:pop .3s var(--ease)}
   .row{grid-template-columns:120px 1.15fr 1.5fr;gap:0 24px;padding:18px 22px}
   .row img{width:120px;height:90px}
   .ctl{grid-column:auto;justify-content:flex-end}
+  #spot .wrap{grid-template-columns:1fr 1.15fr;grid-template-rows:auto auto;gap:20px 56px;align-items:center}
+  .sp-text{grid-row:1/3}
+  .sp-feats{grid-template-columns:repeat(3,1fr);gap:22px}
+  .sp-feats li{grid-template-columns:1fr;gap:6px}
+  .sp-feats svg{grid-row:auto;margin-bottom:6px}
   .planner{grid-template-columns:1fr 1fr;gap:0}
   .pl-photo{aspect-ratio:auto;min-height:100%}
   .pl-body{padding:34px 36px}
@@ -329,6 +366,7 @@ dialog[open]{animation:pop .3s var(--ease)}
   .obar{left:auto;right:24px;bottom:24px;width:400px}
 }
 @media (prefers-reduced-motion:reduce){
+  .js #spot .sp-art img,.js #spot .sp-feats li{opacity:1!important;transform:none!important}
   *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
   .js .rv,.js .h1-anim .ln>span,.js .band-u::after,.js .hero-photo img,.js .io{opacity:1!important;transform:none!important}
   .js .lines path{stroke-dashoffset:0!important}.js .orbit .lines circle{opacity:1!important}
@@ -402,6 +440,31 @@ dialog[open]{animation:pop .3s var(--ease)}
     </div>
     <div class="board io" id="boardList" style="--d:100ms"></div>
     <p class="board-foot">Prices follow the market, so we confirm every order before you pay. Want something that isn't listed? Put it in the notes when you send your order.</p>
+  </div>
+</section>
+
+<section class="sec" id="spot">
+  <div class="wrap">
+    <div class="sp-text io">
+      <p class="eyebrow">This week's special</p>
+      <h2>Live lobster</h2>
+      <p>Hard-shell lobsters, banded and lively. The calico in this picture is one of ours. Ask about the odd colored ones when you order.</p>
+      <p>The special runs Thursday to Sunday while they last.</p>
+      <table class="spec" id="spec"></table>
+      <div class="sp-buy">
+        <div class="step"><button type="button" id="spMinus" aria-label="One fewer lobster">&minus;</button><output id="spQty">2</output><button type="button" id="spPlus" aria-label="One more lobster">+</button></div>
+        <button class="btn btn-green" type="button" id="spAdd">Add lobsters to my order</button>
+      </div>
+    </div>
+    <div class="sp-art">
+      <svg class="wave" viewBox="0 0 400 120" aria-hidden="true"><path d="M0 60c33-37 67-37 100 0s67 37 100 0 67-37 100 0 67 37 100 0" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round"/></svg>
+      <img src="img/lobster-cut.webp" alt="Live calico lobster with yellow claw bands" width="1070" height="743" loading="lazy">
+    </div>
+    <ul class="sp-feats">
+      <li style="--i:0"><svg viewBox="0 0 64 48" aria-hidden="true"><path d="M4 34h38V14H4z" fill="#f6d9cf" stroke="#13202e" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 22h38" stroke="#b9441d" stroke-width="1.4"/><path d="M42 20h9l7 8v6H42z" fill="#fff" stroke="#13202e" stroke-width="1.6" stroke-linejoin="round"/><path d="M45 23h5l4 5h-9z" fill="#dbe7f1" stroke="#13202e" stroke-width="1.2"/><circle cx="14" cy="36" r="4.2" fill="#fff" stroke="#13202e" stroke-width="1.6"/><circle cx="50" cy="36" r="4.2" fill="#fff" stroke="#13202e" stroke-width="1.6"/><path d="M2 43h60" stroke="#13202e" stroke-width="1.2" stroke-dasharray="2 3"/></svg><b>Delivery and shipping</b><span>Set for the day you need it</span></li>
+      <li style="--i:1"><svg viewBox="0 0 64 48" aria-hidden="true"><path d="M6 26c6-9 18-12 28-9 5 1.5 9 4 12 7l9-7v18l-9-6c-3 3-7 5.5-12 7-10 3-22 0-28-9z" fill="#f6d9cf" stroke="#13202e" stroke-width="1.6" stroke-linejoin="round"/><circle cx="16" cy="24" r="1.8" fill="#13202e"/><path d="M26 18c2 4 2 10 0 15M33 17c2 5 2 12 0 17" stroke="#b9441d" stroke-width="1.4" fill="none"/><circle cx="55" cy="9" r="7.5" fill="#fff" stroke="#13202e" stroke-width="1.3"/><text x="55" y="12.2" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#13202e" id="spCount">7</text></svg><b><span id="spCountTxt">7</span> kinds of seafood this week</b><span>Lobster, crab, shrimp, oysters, fish, octopus</span></li>
+      <li style="--i:2"><svg viewBox="0 0 64 48" aria-hidden="true"><path d="M16 4h32v40l-4-3-4 3-4-3-4 3-4-3-4 3-4-3-4 3z" fill="#fff" stroke="#13202e" stroke-width="1.6" stroke-linejoin="round"/><path d="M22 13h20M22 19h14M22 25h17" stroke="#13202e" stroke-width="1.3" stroke-linecap="round"/><circle cx="44" cy="31" r="9" fill="#2f6b3d"/><path d="M39.5 31l3 3 6-6.5" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Price confirmed before you pay</b><span>Nothing is charged online</span></li>
+    </ul>
   </div>
 </section>
 
@@ -887,17 +950,32 @@ async function loadStock(){
       if(o.note)it.note=o.note;
       if(o.price){const un=o.unit?it.units.find(x=>x.u===o.unit.toLowerCase()||x.label.toLowerCase()===o.unit.toLowerCase()):it.units[0];if(un){un.price=o.price;un.hot=/special|sale/i.test(o.price)}}
     });
-    renderSpecies();
+    renderSpecies();drawSpec();
   }catch(e){}
 }
 
+/* ---------- spotlight ---------- */
+let spQty=2;
+function drawSpec(){
+  const it=item("lobster"),rows=[];
+  it.units.forEach(u=>rows.push(`<tr><td>${u.u==="lb"?"By the pound":"Whole, live"}</td><td class="w">${u.u==="lb"?"sizes vary":"1½ lb each"}</td><td class="pr${u.hot&&it.status!=="out"?" hot":""}">${it.status==="out"?"Sold out":esc((u.price||"Ask").replace(/\s*special,?\s*/i," · ").replace(/^\$([\d.]+)\/lb · about /,"$$$1/lb · ~"))}</td></tr>`));
+  rows.push(`<tr><td>Lobster night for 2</td><td class="w">2 lobsters, 1 dozen oysters</td><td class="pr"><a class="tl" href="#bundles">Size it</a></td></tr>`);
+  $("spec").innerHTML=`<caption class="vh">Live lobster sizes and prices</caption><tbody>${rows.join("")}</tbody>`;
+  $("spAdd").disabled=it.status==="out";$("spAdd").textContent=it.status==="out"?"Sold out this week":"Add lobsters to my order";
+  const n=ITEMS.filter(x=>x.status!=="out").length;$("spCount").textContent=n;$("spCountTxt").textContent=n;
+}
+$("spMinus").onclick=()=>{spQty=Math.max(1,spQty-1);$("spQty").textContent=spQty};
+$("spPlus").onclick=()=>{spQty=Math.min(50,spQty+1);$("spQty").textContent=spQty};
+$("spAdd").onclick=()=>{const u=item("lobster").units[0].u;add("lobster",u,spQty,document.querySelector("#spot .sp-art img"));unitSel.lobster=u;drawRow(item("lobster"));
+  const b=$("spAdd");b.textContent=`Added ${spQty} to your order`;setTimeout(drawSpec,1400)};
+
 /* ---------- boot ---------- */
-renderSpecies();select(cur,true);renderPlan();bar();loadStock();
+renderSpecies();select(cur,true);renderPlan();bar();drawSpec();loadStock();
 (function motion(){
   const root=document.documentElement,go=()=>requestAnimationFrame(()=>root.classList.add("ready"));
   const hero=document.querySelector(".hero-photo img");
   if(hero&&!hero.complete){hero.addEventListener("load",go,{once:true});setTimeout(go,1000)}else go();
-  const targets=document.querySelectorAll(".io,#orbit");
+  const targets=document.querySelectorAll(".io,#orbit,#spot");
   if("IntersectionObserver" in window){
     const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const t=e.target;io.unobserve(t);if(t.id==="orbit"){drawLines();requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add("in")))}else t.classList.add("in")}}),{rootMargin:"0px 0px -10% 0px"});
     targets.forEach(el=>io.observe(el));
