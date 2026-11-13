@@ -130,6 +130,34 @@ button{cursor:pointer}
 .us figcaption{display:grid;gap:4px}
 .us #usAddr{color:var(--ink);font-family:var(--f-mono);font-size:13.5px}
 
+/* what we carry: horizontal showcase */
+#carry{background:var(--ice);padding:56px 0 64px;overflow:hidden}
+.carry-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:26px}
+.carry-head h2{font-family:var(--f-display);font-weight:800;font-size:clamp(40px,6vw,58px);line-height:.95;margin:4px 0 0}
+.carry-nav{display:none;gap:8px}
+.carry-nav button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);display:grid;place-items:center;transition:background-color .15s,opacity .2s}
+.carry-nav button:hover{background:var(--ice-2)}
+.carry-nav button:disabled{opacity:.35;cursor:default}
+.carry-nav svg{width:18px;height:18px}
+.track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:max(20px,calc((100vw - 1180px)/2));padding:8px max(20px,calc((100vw - 1180px)/2)) 18px;scrollbar-width:none;cursor:grab}
+.track::-webkit-scrollbar{display:none}
+.track.drag{cursor:grabbing;scroll-snap-type:none}
+.card{flex:none;width:250px;scroll-snap-align:start;background:#fff;border-radius:10px;padding:20px 18px 18px;display:grid;gap:4px;align-content:start;position:relative}
+.plate{position:relative;height:190px;display:grid;place-items:center;margin-bottom:12px}
+.plate::before{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:var(--frost);box-shadow:inset 0 0 0 6px #f4f7f6}
+.plate img{position:relative;max-width:220px;max-height:185px;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 14px 12px rgba(19,32,46,.18));transition:transform .5s var(--ease);user-select:none;-webkit-user-drag:none}
+.plate.photo img{width:160px;height:160px;max-width:none;border-radius:50%;object-fit:cover;filter:none;box-shadow:inset 0 0 0 6px #f4f7f6}
+.card:hover .plate img{transform:translateY(-6px) rotate(-3deg) scale(1.04)}
+.card:hover .plate.photo img{transform:scale(1.05)}
+.card h3{font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;margin:0}
+.card .how{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);margin:0}
+.card .tag{position:absolute;top:14px;left:14px;font-family:var(--f-mono);font-size:11.5px;background:var(--band);color:var(--ink);padding:3px 8px;border-radius:4px}
+.card .tag.out{background:var(--ice-2);color:var(--muted)}
+.card .go{margin-top:12px;justify-self:start;background:var(--ink);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:600;font-size:14.5px;transition:background-color .15s}
+.card .go:hover{background:var(--sign)}
+.card .go:disabled{background:var(--ice-2);color:var(--muted);cursor:not-allowed}
+.carry-foot{margin-top:6px;font-size:14px;color:var(--muted)}
+@media (min-width:760px){.carry-nav{display:flex}.card{width:270px}}
 /* section heads */
 .sec{padding:84px 0;position:relative}
 .head{display:grid;gap:12px;margin-bottom:36px;max-width:640px}
@@ -425,6 +453,15 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
   </figure>
   </div>
   <svg class="edge" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20 C100 6 200 6 300 20 S500 34 600 20 800 6 900 20 1100 34 1200 20 V36 H0Z" fill="currentColor"/></svg>
+</section>
+
+<section id="carry" aria-labelledby="carryT">
+  <div class="wrap carry-head">
+    <div><p class="eyebrow">On ice now</p><h2 id="carryT">What we carry</h2></div>
+    <div class="carry-nav"><button type="button" id="cPrev" aria-label="Scroll back"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" id="cNext" aria-label="Scroll forward"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7.5 4 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+  </div>
+  <div class="track" id="track" tabindex="0" aria-label="Seafood we carry, scroll sideways"></div>
+  <p class="wrap carry-foot">Every picture is our own stock. Tap Add and it goes straight into your order.</p>
 </section>
 
 <section class="promise" aria-label="Who you're buying from">
@@ -926,7 +963,7 @@ async function loadStock(){
       if(o.note)it.note=o.note;
       if(o.price){const un=o.unit?it.units.find(x=>x.u===o.unit.toLowerCase()||x.label.toLowerCase()===o.unit.toLowerCase()):it.units[0];if(un){un.price=o.price;un.hot=/special|sale/i.test(o.price)}}
     });
-    renderSpecies();
+    renderSpecies();renderCarry();
   }catch(e){}
 }
 
@@ -969,6 +1006,7 @@ const WHY=[
  [".hero-copy h1","A headline that says what you sell","Live lobster, fresh seafood, delivered. A stranger understands what you do in about three seconds. Vague or clever headlines make people leave.","Every visitor who stays past the first screen is a possible order."],
  [".paths","Two doors: home and business","Home cooks go straight to this week's list. Restaurants and caterers go to the wholesale form, where the big repeat orders are.","Each buyer gets to the right place in one tap instead of guessing."],
  ["#show","Your real crates, not stock photos","The slideshow shows what is actually in your crates and coolers this week. The biggest doubt about buying seafood online is \"is this real and is it fresh\".","Proof of real stock is what turns a curious visitor into a buyer."],
+ ["#track","What we carry, at a glance","A sideways row of everything you sell, right under the first screen. Visitors see the full range in seconds and can add any of it without scrolling down.","Shows the whole menu early, so more people find the thing they came for."],
  [".promise","Answering the three doubts before they're asked","Are you a real business? Will I get charged online? Is there a person? Your building, \"nothing charged online\" and \"a person answers\" settle all three.","Trust is the cheapest way to raise how many visitors order."],
  ["#boardList","Every item, size and price in one list","Customers see everything in one scroll and add it without messaging you first. Prices come from your sheet, so \"Ask for price\" disappears once you fill them in.","Posted prices cut the back-and-forth DMs that make people give up."],
  [".planner","Party sizes","Turns \"how much do I need for 15 people?\" into a ready order. Party and event buyers order more per order than anyone else.","Bigger orders from the same number of customers."],
@@ -1017,8 +1055,39 @@ const WHY=[
   if(location.hash==="#why")set(true);
 })();
 
+/* ---------- what we carry ---------- */
+const CARRY={lobster:{cut:"img/cut-lobster.webp"},crab:{photo:"img/crabs.webp"},shrimp:{photo:"img/shrimp-tray.webp"},tails:{photo:"img/tails.webp"},oyster:{cut:"img/cut-oyster.webp"},fish:{cut:"img/cut-snapper.webp",name:"Red snapper"},squid:{photo:"img/squid.webp"},octopus:{cut:"img/cut-octopus.webp"}};
+function renderCarry(){
+  const t=$("track");if(!t)return;
+  t.innerHTML=ITEMS.filter(it=>CARRY[it.id]).map(it=>{const c=CARRY[it.id],out=it.status==="out",u=it.units[0],hot=u.hot&&!out;
+    return `<article class="card" data-id="${it.id}">${out?'<span class="tag out">Sold out this week</span>':hot?'<span class="tag">This week’s special</span>':it.status==="limited"?'<span class="tag">Going fast</span>':""}
+      <div class="plate${c.photo?" photo":""}"><img src="${c.cut||c.photo}" alt="${esc(c.name||it.name)}" loading="lazy" draggable="false"></div>
+      <h3>${esc(c.name||it.name)}</h3><p class="how">${it.units.map(x=>x.label.toLowerCase()).join(" · ")}</p>
+      <button class="go" type="button" data-carry="${it.id}"${out?" disabled":""}>${out?"Sold out":"Add to order"}</button></article>`}).join("");
+  carryNav();
+}
+function carryNav(){const t=$("track");if(!$("cPrev"))return;$("cPrev").disabled=t.scrollLeft<8;$("cNext").disabled=t.scrollLeft+t.clientWidth>=t.scrollWidth-8}
+(function carryUI(){
+  const t=$("track");if(!t)return;
+  const step=()=>(t.querySelector(".card")?.offsetWidth||260)+16;
+  $("cPrev").onclick=()=>t.scrollBy({left:-step()*2,behavior:calm?"auto":"smooth"});
+  $("cNext").onclick=()=>t.scrollBy({left:step()*2,behavior:calm?"auto":"smooth"});
+  t.addEventListener("scroll",()=>{cancelAnimationFrame(t._r);t._r=requestAnimationFrame(carryNav)},{passive:true});
+  addEventListener("resize",carryNav);
+  t.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();t.scrollBy({left:step(),behavior:"smooth"})}if(e.key==="ArrowLeft"){e.preventDefault();t.scrollBy({left:-step(),behavior:"smooth"})}});
+  let down=false,x0=0,s0=0,moved=false;
+  t.addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse"||e.target.closest("button"))return;down=true;moved=false;x0=e.clientX;s0=t.scrollLeft;t.classList.add("drag")});
+  addEventListener("pointermove",e=>{if(!down)return;const dx=e.clientX-x0;if(Math.abs(dx)>4)moved=true;t.scrollLeft=s0-dx});
+  addEventListener("pointerup",()=>{if(!down)return;down=false;t.classList.remove("drag");if(moved){const w=step(),i=Math.round(t.scrollLeft/w);t.scrollTo({left:i*w,behavior:calm?"auto":"smooth"})}});
+  t.addEventListener("click",e=>{
+    const b=e.target.closest("[data-carry]");if(!b)return;const id=b.dataset.carry,it=item(id);if(it.status==="out")return;
+    const u=unitSel[id]||it.units[0].u;add(id,u,1,b.closest(".card").querySelector("img"));drawRow(it);
+    b.textContent="Added";setTimeout(()=>{b.textContent="Add to order"},1300);
+  });
+})();
+
 /* ---------- boot ---------- */
-renderSpecies();select(cur,true);renderPlan();bar();loadStock();
+renderSpecies();select(cur,true);renderCarry();renderPlan();bar();loadStock();
 (function motion(){
   const root=document.documentElement,go=()=>requestAnimationFrame(()=>root.classList.add("ready"));
   const hero=document.querySelector(".hero-fig .sl");
