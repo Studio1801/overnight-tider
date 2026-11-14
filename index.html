@@ -500,11 +500,24 @@ form.f{display:grid;gap:14px;background:var(--ice);padding:24px;border-radius:8p
 .faq details[open] summary i{background:var(--ink);transform:rotate(180deg)}
 .faq details[open] summary i::before,.faq details[open] summary i::after{background:#fff}
 .faq details[open] summary i::after{transform:rotate(0deg)}
-.faq details p{margin:0;padding:0 52px 24px 0;color:var(--body);font-size:16.5px;line-height:1.6;max-width:60ch}
-.faq details[open] p{animation:faqIn .35s var(--ease)}
+.fa{display:grid;justify-items:start;gap:14px;padding:0 52px 24px 0}
+.fa p{margin:0;color:var(--body);font-size:16.5px;line-height:1.6;max-width:60ch}
+.fa-go{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:var(--ink);text-decoration:none;background:var(--ice);border-radius:999px;padding:9px 16px;transition:background-color .2s}
+.fa-go::after{content:"";width:14px;height:14px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8h10m-4-4 4 4-4 4' fill='none' stroke='black' stroke-width='1.8'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8h10m-4-4 4 4-4 4' fill='none' stroke='black' stroke-width='1.8'/%3E%3C/svg%3E") center/contain no-repeat;transition:transform .25s var(--ease)}
+.fa-go:hover{background:var(--band)}
+.fa-go:hover::after{transform:translateX(3px)}
+.faq details{position:relative}
+.faq details::before{content:"";position:absolute;left:-26px;top:20px;bottom:20px;width:3px;border-radius:0 3px 3px 0;background:var(--band);transform:scaleY(0);transition:transform .35s var(--ease)}
+.faq details[open]::before{transform:scaleY(1)}
+.faq-facts{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);max-width:460px}
+.faq-facts li{display:grid;gap:6px;align-content:start;padding:16px 12px 0 0}
+.faq-facts li+li{padding-left:14px;border-left:1px solid var(--line)}
+.faq-facts b{font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;color:var(--ink)}
+.faq-facts span{font-size:13px;color:var(--muted);line-height:1.35}
+.faq details[open] .fa{animation:faqIn .35s var(--ease)}
 @keyframes faqIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @media (min-width:900px){.faq-grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:72px;align-items:start}.faq-side{position:sticky;top:110px}}
-@media (max-width:520px){.faq{padding:2px 18px}.faq summary{font-size:16.5px;padding:18px 0}.faq details p{padding-right:0;font-size:15.5px}}
+@media (max-width:520px){.faq{padding:2px 18px}.faq summary{font-size:16.5px;padding:18px 0}.fa{padding-right:0}.fa p{font-size:15.5px}.faq details::before{left:-18px}.faq-facts b{font-size:24px}}
 
 /* closer */
 .closer{background:var(--sign);color:#fff;padding:84px 0;position:relative;overflow:hidden}
@@ -1023,6 +1036,11 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
     <div class="faq-side io">
       <p class="eyebrow">Questions</p><h2>Before you order</h2>
       <p class="faq-lede">The things people ask us most. Anything else, just message us.</p>
+      <ul class="faq-facts">
+        <li><b>1 lb</b><span>Smallest order. No minimum</span></li>
+        <li><b>$0</b><span>Charged online. Pay after you say yes</span></li>
+        <li><b>2 ways</b><span>Delivery or shipping, set by your ZIP</span></li>
+      </ul>
       <a class="faq-ask" href="https://ig.me/m/overnight_tider" target="_blank" rel="noopener">
         <img src="img/building.webp" alt="" width="56" height="56" loading="lazy">
         <span><b>Still wondering?</b><small>Ask us on Instagram. A real person answers.</small></span>
@@ -1030,12 +1048,12 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
       </a>
     </div>
     <div class="faq io" style="--d:80ms">
-      <details><summary>Do you deliver or ship?<i aria-hidden="true"></i></summary><p>Yes, both. Tell us your ZIP when you send your order and we'll confirm the options, cost and day.</p></details>
-      <details><summary>Can I buy a small amount, or is it wholesale only?<i aria-hidden="true"></i></summary><p>Both. Two lobsters for dinner is as welcome as a case of shrimp for a restaurant.</p></details>
-      <details><summary>Why don't you list every price?<i aria-hidden="true"></i></summary><p>Seafood prices move with the market and the season. Rather than post a number that's wrong by Friday, we confirm your price when you order. Specials are posted at the top of this page.</p></details>
-      <details><summary>How do I pay?<i aria-hidden="true"></i></summary><p>Nothing is charged on this site. Send your order, we confirm the items and the total with you, then tell you how to pay. You only pay once you've said yes.</p></details>
-      <details><summary>Fresh or frozen?<i aria-hidden="true"></i></summary><p>We carry both. Lobsters and crabs come live, shrimp come fresh head-on or as tails, and frozen is there when you want to stock up. Say which you want in your order notes.</p></details>
-      <details><summary>How much should I order for a party?<i aria-hidden="true"></i></summary><p>Use the <a class="tl" href="#bundles">party sizes</a> tool. If you're unsure, send what you have and we'll help you size it.</p></details>
+      <details open><summary>Do you deliver or ship?<i aria-hidden="true"></i></summary><div class="fa"><p>Yes, both. Tell us your ZIP when you send your order and we'll confirm the options, cost and day.</p><a class="fa-go" href="#shop">See what's on ice</a></div></details>
+      <details><summary>Can I buy a small amount, or is it wholesale only?<i aria-hidden="true"></i></summary><div class="fa"><p>Both. Two lobsters for dinner is as welcome as a case of shrimp for a restaurant.</p><a class="fa-go" href="#bulk">Buying for a business? Get a quote</a></div></details>
+      <details><summary>Why don't you list every price?<i aria-hidden="true"></i></summary><div class="fa"><p>Seafood prices move with the market and the season. Rather than post a number that's wrong by Friday, we confirm your price when you order. Specials are posted at the top of this page.</p></div></details>
+      <details><summary>How do I pay?<i aria-hidden="true"></i></summary><div class="fa"><p>Nothing is charged on this site. Send your order, we confirm the items and the total with you, then tell you how to pay. You only pay once you've said yes.</p><a class="fa-go" href="#how">How ordering works</a></div></details>
+      <details><summary>Fresh or frozen?<i aria-hidden="true"></i></summary><div class="fa"><p>We carry both. Lobsters and crabs come live, shrimp come fresh head-on or as tails, and frozen is there when you want to stock up. Say which you want in your order notes.</p></div></details>
+      <details><summary>How much should I order for a party?<i aria-hidden="true"></i></summary><div class="fa"><p>Use the party planner and it does the math per guest. If you're unsure, send what you have and we'll help you size it.</p><a class="fa-go" href="#bundles">Open the party planner</a></div></details>
     </div>
   </div>
 </section>
@@ -1824,6 +1842,9 @@ function renderShop(anim){
 (function(){const band=$("tband");if(!band||calm)return;const bg=band.querySelector(".tb-bg");let raf=0;
   const go=()=>{raf=0;const r=band.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;const p=(r.top+r.height/2-innerHeight/2)/innerHeight;bg.style.transform=`translate3d(0,${(p*-60).toFixed(1)}px,0) scale(1.04)`};
   addEventListener("scroll",()=>{if(!raf)raf=requestAnimationFrame(go)},{passive:true});go()})();
+
+/* ---------- FAQ: one open at a time ---------- */
+document.querySelectorAll("#faq details").forEach(d=>d.addEventListener("toggle",()=>{if(d.open){document.querySelectorAll("#faq details[open]").forEach(o=>{if(o!==d)o.open=false});track("faq_open",{q:d.querySelector("summary").textContent.trim()})}}));
 
 /* ---------- order again ---------- */
 function rememberOrder(){try{if(Object.keys(cart).length)localStorage.setItem("ot-last",JSON.stringify({cart,at:Date.now()}))}catch(e){}}
