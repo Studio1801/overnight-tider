@@ -238,44 +238,54 @@ button{cursor:pointer}
 #shop{background:var(--paper);padding-bottom:64px}
 .shop-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
 .shop-head h2{font-family:var(--f-display);font-weight:800;font-size:clamp(38px,5.4vw,56px);line-height:.95;margin:6px 0 0}
-.shop-arrows{display:none;gap:6px}
-.shop-arrows button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);display:grid;place-items:center}
-.shop-arrows button:hover{background:var(--ice)}
-.shop-arrows button:disabled{opacity:.3;cursor:default}
-.shop-arrows svg{width:18px;height:18px}
 .shop-tabs{display:flex;gap:28px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin-bottom:8px}
 .shop-tabs::-webkit-scrollbar{display:none}
+.shop-tabs .ct{font-weight:400;color:#97a3ab;font-size:14px;margin-left:2px}
 .shop-tabs button{background:none;border:0;padding:10px 0 12px;font-size:16px;font-weight:600;color:var(--muted);white-space:nowrap;position:relative}
 .shop-tabs button::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
 .shop-tabs button[aria-selected="true"]{color:var(--ink)}
 .shop-tabs button[aria-selected="true"]::after{transform:scaleX(1)}
 .shop-tabs button:hover{color:var(--ink)}
-.shop-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:22px max(20px,calc((100vw - 1180px)/2)) 30px;scroll-padding-left:max(20px,calc((100vw - 1180px)/2))}
-.shop-track::-webkit-scrollbar{display:none}
-.pcard{flex:none;width:250px;scroll-snap-align:start;background:#fff;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;text-align:left;position:relative;transition:box-shadow .3s ease,transform .3s var(--ease)}
-.pcard:hover{box-shadow:0 18px 40px rgba(19,32,46,.12);transform:translateY(-3px)}
-.pc-photo{display:block;aspect-ratio:1/1;overflow:hidden;background:var(--frost);position:relative}
-.pc-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--ease)}
-.pcard:hover .pc-photo img{transform:scale(1.05)}
-.pc-body{flex:1;display:flex;flex-direction:column;gap:3px;padding:14px 16px 16px}
-.pcard h3{font-size:16.5px;font-weight:600;margin:0;line-height:1.25}
-.pc-unit{font-size:13px;color:var(--muted)}
-.pc-src{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
-.pc-src:hover{color:var(--sign);text-decoration:underline}
-.pc-tag{position:absolute;top:10px;left:10px;font-size:11.5px;font-weight:600;background:var(--band);color:var(--ink);padding:3px 8px;border-radius:4px;z-index:1}
+.nar{display:none}@media (max-width:520px){.wide{display:none}.nar{display:inline}}
+.shop-sub{margin:10px 0 0;color:var(--body);max-width:52ch}
+.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:20px 0 8px}
+.pcard{background:#fff;border:1px solid #e3e6e1;border-radius:10px;overflow:hidden;display:grid;grid-template-rows:auto 1fr;position:relative;transition:box-shadow .25s ease,border-color .25s}
+.pcard:hover{box-shadow:0 12px 30px rgba(19,32,46,.09);border-color:#d5dad6}
+.pcard.flash{box-shadow:0 0 0 3px var(--band)}
+.pc-photo{display:block;overflow:hidden;background:var(--frost);position:relative;aspect-ratio:1/1}
+.pc-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
+.pcard:hover .pc-photo img{transform:scale(1.04)}
+.pcard.out .pc-photo img{filter:grayscale(1);opacity:.6}
+.pc-body{display:flex;flex-direction:column;gap:4px;padding:12px 14px 14px;min-width:0}
+.pcard h3{font-size:17px;font-weight:600;margin:0;line-height:1.25}
+.pc-note{margin:0;font-size:13.5px;line-height:1.4;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pc-stock{font-size:13px;font-weight:600;color:var(--sign);display:flex;align-items:center;gap:6px}
+.pc-stock::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.pc-stock.lim{color:var(--shell-dk)}.pc-stock.out{color:var(--muted)}
+.pc-tag{position:absolute;top:8px;left:8px;font-size:11.5px;font-weight:600;background:var(--band);color:var(--ink);padding:3px 8px;border-radius:4px;z-index:1}
 .pc-tag.out{background:var(--ice-2);color:var(--muted)}
-.pc-buy{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:14px}
-.pc-price{font-family:var(--f-display);font-weight:800;font-size:22px;line-height:1}
-.pc-price.ask{font-family:var(--f-body);font-weight:500;font-size:13.5px;color:var(--muted);line-height:1.3;max-width:9ch}
-.pc-price.hot{color:var(--shell-dk)}
-.pc-price small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted);margin-top:3px}
-.pc-add{background:var(--ink);color:#fff;border:0;border-radius:999px;padding:10px 16px;font-weight:600;font-size:14.5px;white-space:nowrap;transition:background-color .15s}
-.pc-add:hover{background:var(--sign)}
-.pc-add.in{background:var(--sign)}
-.pc-add:disabled{background:var(--ice-2);color:var(--muted);cursor:not-allowed}
+.pc-src{font-size:12px;color:var(--muted);text-decoration:none;margin-top:6px}
+a.pc-src:hover{color:var(--sign);text-decoration:underline}
+.pcard .ctl{display:grid;grid-template-columns:1fr;gap:8px;margin-top:8px}
+.pcard .ctl .add,.pcard .ctl .qty{margin-left:0}
+.pcard select.unit{width:100%;padding:9px 34px 9px 12px;border-radius:8px;border:1px solid #cfd6d3;font-size:14.5px;background:#f7f8f6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%2313202e' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 10px center/14px;appearance:none;-webkit-appearance:none}
+.pcard .per{font-family:var(--f-body);font-size:13.5px;color:var(--muted)}
+.pr{display:grid;gap:1px}
+.pr b{font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1;color:var(--ink)}
+.pr.hot b{color:var(--shell-dk)}
+.pr small{font-size:12.5px;color:var(--muted)}
+.pr.ask b{font-family:var(--f-body);font-weight:600;font-size:16px}
+.pcard .add{width:100%;background:var(--band);color:var(--ink);border-radius:999px;padding:11px 16px;font-size:15px}
+.pcard .add:hover{background:#ffd447}
+.pcard .add:disabled{background:var(--ice-2);color:var(--muted)}
+.pcard .qty{justify-content:space-between;border-radius:999px;background:var(--ice)}
+.pcard .qty .n{font-family:var(--f-body);font-weight:600;font-size:14.5px;min-width:0}
+.pcard .qty .n i{font-style:normal}
 @keyframes pcIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.shop-track.anim .pcard{animation:pcIn .5s var(--ease) both;animation-delay:calc(var(--i)*55ms)}
-@media (min-width:760px){.shop-arrows{display:flex}}
+.shop-grid.anim .pcard{animation:pcIn .45s var(--ease) both;animation-delay:calc(var(--i)*40ms)}
+@media (max-width:599px){.pc-note{display:none}.pc-body{padding:10px 10px 12px}.pcard h3{font-size:15px}.pc-stock{font-size:12px}.pr b{font-size:21px}.pr.ask b{font-size:14.5px}.pr small{font-size:11.5px}.pcard select.unit{font-size:13.5px;padding:8px 28px 8px 10px;background-position:right 8px center}.pcard .add{font-size:14px;padding:10px 8px}.pcard .qty .st{width:34px;height:38px}.pcard .qty .n{font-size:13px}.pcard .qty .n i{display:none}.pc-tag{font-size:10.5px}.pcard .ctl{margin-top:auto;padding-top:8px}}
+@media (min-width:600px){.shop-grid{gap:16px}.pc-body{padding:14px 16px 16px}.pcard h3{font-size:18px}.pcard .ctl{margin-top:auto;padding-top:12px}}
+@media (min-width:960px){.shop-grid{grid-template-columns:repeat(4,1fr);gap:18px}}
 
 .again{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;background:#fff;border:1px solid var(--line);border-left:0;border-radius:12px;padding:14px 16px;margin:0 0 18px;font-size:15px;position:relative}
 .again b{font-weight:600}
@@ -306,20 +316,6 @@ button{cursor:pointer}
 .head h2{font-family:var(--f-display);font-weight:800;font-size:clamp(42px,6.5vw,62px);line-height:.95;margin:0;letter-spacing:.2px}
 .head p{margin:0;color:var(--muted);font-size:18px}
 
-/* this week's board */
-#board{background:var(--paper)}
-.board{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.row{display:grid;grid-template-columns:76px 1fr;gap:12px 16px;padding:16px;border-bottom:1px solid var(--line);align-items:center;transition:background-color .8s ease}
-.row:last-child{border-bottom:0}
-.row.flash{background:#fbf3d3}
-.rph{margin:0;display:grid;gap:5px;justify-items:center}
-.rph img{width:76px;height:76px;object-fit:cover;border-radius:6px;display:block;transition:transform .2s}
-.rph a:hover img{transform:scale(1.03)}
-.rph figcaption{font-size:11px;color:var(--muted);white-space:nowrap}
-.rph a{display:block;border-radius:6px}
-.row h3{font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;margin:0 0 4px}
-.row .note{margin:0;font-size:14.5px;color:var(--body)}
-.row.out img{filter:grayscale(1);opacity:.6}
 .ctl{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
 .ctl .add,.ctl .qty{margin-left:auto}
 select.unit{padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;font-size:15px;color:var(--ink)}
@@ -544,11 +540,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
   .tpoints{grid-template-columns:repeat(3,1fr);gap:40px}
   .treviews{grid-template-columns:repeat(3,1fr)}
   .tf-grid{grid-template-columns:repeat(5,1fr);gap:12px}
-  .row{grid-template-columns:120px 1.15fr 1.5fr;gap:0 24px;padding:18px 22px}
-  .rph img{width:120px;height:120px}
-  .rph figcaption{font-size:12px}
-  .ctl{grid-column:auto;justify-content:flex-end}
-  .planner{grid-template-columns:1fr 1fr;gap:0}
+        .planner{grid-template-columns:1fr 1fr;gap:0}
   .pl-photo{aspect-ratio:auto;min-height:100%}
   .pl-body{padding:34px 36px}
   .steps{grid-template-columns:repeat(3,1fr);gap:40px}
@@ -583,14 +575,14 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
   <div class="wrap">
     <a class="mark" href="#top" aria-label="Overnight Tider home"><img src="brand/mark.svg" alt="" width="32" height="32"><span>Overnight Tider</span></a>
     <nav class="nav" aria-label="Main">
-      <a href="#board">This week</a>
+      <a href="#shop">This week</a>
       <a href="#bundles">Party sizes</a>
       <a href="#bulk">Wholesale</a>
       <a href="#faq">Questions</a>
     </nav>
     <div class="top-acts">
       <a class="callnum" id="callTop" href="#" hidden></a>
-      <a class="btn btn-green btn-sm" href="#board" id="topOrder">Order</a>
+      <a class="btn btn-green btn-sm" href="#shop" id="topOrder">Order</a>
     </div>
   </div>
 </header>
@@ -602,7 +594,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
     <h1 class="h1-anim"><span class="ln"><span style="--d:80ms">Fresh seafood and</span></span> <span class="ln"><span style="--d:170ms">live lobster, <span class="band-u" id="heroWhere">delivered.</span></span></span></h1>
     <p class="lede rv" style="--d:380ms">Your seafood supplier for crab, shrimp, crawfish, oysters and whole fish, by the pound or by the case. Send us your list and we confirm the price before you pay.</p>
     <div class="paths rv" style="--d:480ms">
-      <a class="btn btn-green" href="#board">Order for home</a>
+      <a class="btn btn-green" href="#shop">Order for home</a>
       <a class="btn btn-ink" href="#bulk">Order for my business</a>
     </div>
     <a class="hero-proof rv" style="--d:580ms" href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener"><img src="img/building.webp" alt="" width="44" height="44"><span><b>A real business with real stock.</b> Our building, our trucks, our photos. <u>See @overnight_tider</u></span></a>
@@ -648,7 +640,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
     </div>
     <div class="film" id="film" tabindex="0" aria-roledescription="carousel" aria-label="Seafood we carry"><div class="film-in" id="filmIn"></div></div>
     <div class="wrap oc-rail"><ul id="ocRail" aria-label="Jump to a species"></ul><i class="oc-ind" id="ocInd" aria-hidden="true"></i></div>
-    <div class="wrap oc-foot"><span>Nothing is charged online. We confirm your price first.</span><a class="tl" href="#board">Full price list</a></div>
+    <div class="wrap oc-foot"><span>Nothing is charged online. We confirm your price first.</span><a class="tl" href="#shop">Full price list</a></div>
   </div>
 </section>
 
@@ -689,10 +681,10 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
     <div class="tfeed io">
       <div class="tf-head"><h3>Fresh from our Instagram</h3><a class="tl" href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener">@overnight_tider</a></div>
       <div class="tf-grid">
-        <a href="https://www.instagram.com/p/Deu_R4OImak/" target="_blank" rel="noopener"><img src="img/ig-spiny.webp" alt="Spiny lobsters on ice" loading="lazy"><span>Spiny lobster</span></a>
-        <a href="https://www.instagram.com/p/DfBGTVboKdd/" target="_blank" rel="noopener"><img src="img/ig-crawfish.webp" alt="Crawfish in a steel tray" loading="lazy"><span>Crawfish</span></a>
-        <a href="https://www.instagram.com/p/Deu_LG1ojfT/" target="_blank" rel="noopener"><img src="img/ig-dungeness.webp" alt="Dungeness crabs" loading="lazy"><span>Dungeness crab</span></a>
-        <a href="https://www.instagram.com/p/Deu_pEzoF0b/" target="_blank" rel="noopener"><img src="img/ig-salmon.webp" alt="Whole salmon on ice" loading="lazy"><span>Whole salmon</span></a>
+        <a href="https://www.instagram.com/p/Deu_R4OImak/" target="_blank" rel="noopener"><img src="img/ig-spiny.webp?v=2" alt="Spiny lobsters on ice" loading="lazy"><span>Spiny lobster</span></a>
+        <a href="https://www.instagram.com/p/DfBGTVboKdd/" target="_blank" rel="noopener"><img src="img/ig-crawfish.webp?v=2" alt="Crawfish in a steel tray" loading="lazy"><span>Crawfish</span></a>
+        <a href="https://www.instagram.com/p/Deu_LG1ojfT/" target="_blank" rel="noopener"><img src="img/ig-dungeness.webp?v=2" alt="Dungeness crabs" loading="lazy"><span>Dungeness crab</span></a>
+        <a href="https://www.instagram.com/p/Deu_pEzoF0b/" target="_blank" rel="noopener"><img src="img/ig-salmon.webp?v=2" alt="Whole salmon on ice" loading="lazy"><span>Whole salmon</span></a>
         <a href="https://www.instagram.com/p/DfH2kHTiEbV/" target="_blank" rel="noopener"><img src="img/snapper-box.webp" alt="Red porgy packed in a cooler" loading="lazy"><span>Red porgy</span></a>
       </div>
     </div>
@@ -702,26 +694,15 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
 <section class="sec" id="shop" aria-labelledby="shopT">
   <div class="wrap">
     <div class="shop-head io">
-      <div><p class="eyebrow">Shop by type</p><h2 id="shopT">Pick what you need</h2></div>
-      <div class="shop-arrows"><button type="button" id="sPrev" aria-label="Scroll back"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" id="sNext" aria-label="Scroll forward"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7.5 4 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <div><p class="eyebrow">This week</p><h2 id="shopT">What&rsquo;s on ice</h2><p class="shop-sub">Pick an amount and tap Add. Nothing is charged online. We confirm your price before you pay.</p></div>
     </div>
     <div class="again" id="again" hidden><div><b>Welcome back.</b> <span id="againTxt"></span></div><button class="btn btn-green btn-sm" type="button" id="againBtn">Add my last order</button><button class="again-x" type="button" id="againX" aria-label="Dismiss">&times;</button></div>
     <div class="shop-tabs io" role="tablist" aria-label="Seafood type" id="shopTabs"></div>
-  </div>
-  <div class="shop-track" id="shopTrack" role="tabpanel" aria-labelledby="shopT"></div>
-</section>
-
-<section class="sec" id="board">
-  <div class="wrap">
-    <div class="head io">
-      <p class="eyebrow">This week</p>
-      <h2>What's on ice</h2>
-      <p>Choose an amount and tap Add. Nothing is charged here. Your list comes to us as a message and we reply with the price.</p>
-    </div>
-    <div class="board io" id="boardList" style="--d:100ms"></div>
+    <div class="shop-grid" id="shopTrack" role="tabpanel" aria-labelledby="shopT"></div>
     <p class="board-foot">Prices follow the market, so we confirm every order before you pay. Want something that isn't listed? Put it in the notes when you send your order.</p>
   </div>
 </section>
+
 
 <section class="sec" id="bundles">
   <div class="wrap">
@@ -757,7 +738,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
   <div class="wrap">
     <div class="head io"><p class="eyebrow">Three steps</p><h2>How ordering works</h2></div>
     <ol class="steps io">
-      <li><span class="num">1</span><div><h3>Build your list</h3><p>Add seafood from this week's board or start from a party size.</p></div></li>
+      <li><span class="num">1</span><div><h3>Build your list</h3><p>Add seafood from what's on ice this week, or start from a party size.</p></div></li>
       <li><span class="num">2</span><div><h3>Send it in one tap</h3><p>Your order comes straight to us with your number. No account, no card online.</p></div></li>
       <li><span class="num">3</span><div><h3>We confirm and deliver</h3><p>A real person replies with your price and sets delivery or shipping for the day you need it.</p></div></li>
     </ol>
@@ -890,7 +871,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
       <p style="margin:14px 0 0;max-width:38ch">Fresh &amp; frozen seafood, retail and wholesale. Every order is confirmed by a person before you pay.</p>
     </div>
     <div class="fcols">
-      <div><b>Order</b><a href="#board">This week</a><a href="#bundles">Party sizes</a><a href="#bulk">Wholesale quotes</a><a href="https://ig.me/m/overnight_tider" rel="noopener">Message us</a><a id="fCall" href="#" hidden></a></div>
+      <div><b>Order</b><a href="#shop">This week</a><a href="#bundles">Party sizes</a><a href="#bulk">Wholesale quotes</a><a href="https://ig.me/m/overnight_tider" rel="noopener">Message us</a><a id="fCall" href="#" hidden></a></div>
       <div id="fWhere" hidden><b>Find us</b><span id="fAddr"></span><span id="fHours"></span></div>
       <div><b>More</b><a href="https://www.instagram.com/overnight_tider/" rel="noopener">Instagram</a><button class="linkish" type="button" data-legal="privacy">Privacy</button><button class="linkish" type="button" data-legal="terms">Terms</button><button class="linkish" type="button" data-legal="refunds" id="refundLink" hidden>Refunds</button><span>&copy; <span id="yr">2026</span> Overnight Tider</span></div>
     </div>
@@ -962,7 +943,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
         <h2>Here&rsquo;s your code</h2>
         <div class="off-code"><b id="offCode">TIDE10</b><button type="button" id="offCopy">Copy</button></div>
         <p>It&rsquo;s already saved to your order on this device. We take it off when we confirm your price.</p>
-        <a class="btn btn-green" href="#board" id="offGo" style="margin-top:20px">Start my order</a>
+        <a class="btn btn-green" href="#shop" id="offGo" style="margin-top:20px">Start my order</a>
       </div>
     </div>
   </div>
@@ -998,7 +979,7 @@ const SHOP={
 const ITEMS=[
   {id:"lobster",name:"Live lobster",img:"img/lobster-hero.webp",thumb:"img/lobster.webp",note:"Hard-shell, banded and lively. Ask about the odd colored ones.",tag:"Live, on ice",
    units:[{u:"lobster (1½ lb)",label:"1½ lb lobster",price:"$7.99/lb special, about $11.99 each",hot:true},{u:"lb",label:"By the lb",price:"Ask for price"}]},
-  {id:"spiny",name:"Spiny lobster",img:"img/ig-spiny.webp",note:"Warm-water rock lobster. No claws, all tail meat.",tag:"Live",units:[{u:"each",label:"Each"},{u:"lb",label:"By the lb"}]},
+  {id:"spiny",name:"Spiny lobster",img:"img/ig-spiny.webp?v=2",note:"Warm-water rock lobster. No claws, all tail meat.",tag:"Live",units:[{u:"each",label:"Each"},{u:"lb",label:"By the lb"}]},
   {id:"crab",name:"Blue crabs",img:"img/crabs.webp",note:"Live, sold by the dozen, half bushel or bushel.",tag:"Live",
    units:[{u:"dozen",label:"Dozen"},{u:"half bushel",label:"Half bushel"},{u:"bushel",label:"Bushel"}]},
   {id:"dungeness",name:"Dungeness crab",img:"img/p-dungeness.webp",note:"Big, sweet and meaty. Sold whole.",tag:"Fresh",
@@ -1033,34 +1014,26 @@ const label=(u,q)=>{if(u==="lb")return q+" lb";if(u.startsWith("lobster"))return
 
 /* ---------- this week's board ---------- */
 let cur=ITEMS[0].id;const unitSel={};
-const REAL={lobster:{src:"img/lobster.webp",post:"DffXxxrFr2q"},crab:{src:"img/crabs.webp",post:"Deu-pqVIezu"},dungeness:{src:"img/ig-dungeness.webp",post:"Deu_LG1ojfT"},crawfish:{src:"img/ig-crawfish.webp",post:"DfBGTVboKdd"},shrimp:{src:"img/shrimp.webp",post:"DfSSdvQIGNF"},tails:{src:"img/tails.webp",post:"DfSO68zI0R7"},oyster:{src:"img/oysters.webp",post:"Dfhk-5HIRHr"},squid:{src:"img/squid.webp",post:""},octopus:{src:"img/octopus.webp",post:"DfM8cPnMPn_"},salmon:{src:"img/ig-salmon.webp",post:"Deu_pEzoF0b"},snapper:{src:"img/snapper.webp",post:""},porgy:{src:"img/snapper-box.webp",post:"DfH2kHTiEbV"},fish:{src:"img/ig-silverporgy.webp",post:"DfM8l13MwZR"},spiny:{src:"img/ig-spiny.webp",post:"Deu_R4OImak"}};
-function renderSpecies(){
-  $("boardList").innerHTML=ITEMS.map(it=>`<div class="row${it.status==="out"?" out":""}" data-id="${it.id}">${(()=>{const R=REAL[it.id]||{src:it.thumb||it.img,post:""};const img=`<img src="${R.src}" alt="${esc(it.name)}, photographed by Overnight Tider" width="120" height="120" loading="lazy">`;return `<figure class="rph">${R.post?`<a href="https://www.instagram.com/p/${R.post}/" target="_blank" rel="noopener" aria-label="See the ${esc(it.name)} post on Instagram">${img}</a>`:img}<figcaption>${R.post?"Our photo \u00b7 see post":"Our photo"}</figcaption></figure>`})()}<div><h3>${it.name}</h3><p class="note">${esc(it.note)}</p></div><div class="ctl" data-ctl="${it.id}"></div></div>`).join("");
-  ITEMS.forEach(drawRow);
-}
+const REAL={lobster:{src:"img/lobster.webp",post:"DffXxxrFr2q"},crab:{src:"img/crabs.webp",post:"Deu-pqVIezu"},dungeness:{src:"img/ig-dungeness.webp?v=2",post:"Deu_LG1ojfT"},crawfish:{src:"img/ig-crawfish.webp?v=2",post:"DfBGTVboKdd"},shrimp:{src:"img/shrimp.webp",post:"DfSSdvQIGNF"},tails:{src:"img/tails.webp",post:"DfSO68zI0R7"},oyster:{src:"img/oysters.webp",post:"Dfhk-5HIRHr"},squid:{src:"img/squid.webp",post:""},octopus:{src:"img/octopus.webp",post:"DfM8cPnMPn_"},salmon:{src:"img/ig-salmon.webp?v=2",post:"Deu_pEzoF0b"},snapper:{src:"img/snapper.webp",post:""},porgy:{src:"img/snapper-box.webp",post:"DfH2kHTiEbV"},fish:{src:"img/ig-silverporgy.webp?v=2",post:"DfM8l13MwZR"},spiny:{src:"img/ig-spiny.webp?v=2",post:"Deu_R4OImak"}};
 function drawRow(it){
   unitSel[it.id]=unitSel[it.id]||it.units[0].u;
-  const u=unitSel[it.id],un=it.units.find(x=>x.u===u)||it.units[0],q=cart[it.id+"|"+u]||0,out=it.status==="out",lim=it.status==="limited";
+  const u=unitSel[it.id],un=it.units.find(x=>x.u===u)||it.units[0],q=cart[it.id+"|"+u]||0,out=it.status==="out";
   const unitUI=it.units.length>1
     ?`<label class="vh" for="u-${it.id}">How ${it.name.toLowerCase()} are sold</label><select class="unit" id="u-${it.id}" data-unit="${it.id}">${it.units.map(x=>`<option value="${x.u}"${x.u===u?" selected":""}>${x.label}</option>`).join("")}</select>`
-    :`<span class="per">${it.units[0].label.toLowerCase()}</span>`;
-  const price=out?"Sold out this week":esc(un.price||"Ask for price")+(lim?" · going fast":"");
+    :`<span class="per">Sold ${it.units[0].label.toLowerCase()}</span>`;
+  const pp=(un.price||"").split(",");
+  const price=out?`<div class="pr ask"><b>Sold out</b><small>Back soon. Ask us about next week.</small></div>`
+    :un.price&&!/ask/i.test(un.price)?`<div class="pr${un.hot?" hot":""}"><b>${esc(pp[0].replace(/ special/i,""))}</b><small>${esc((pp[1]||"").trim()||(un.hot?"This week’s special":"Confirmed before you pay"))}</small></div>`
+    :`<div class="pr ask"><b>Market price</b><small>Confirmed before you pay</small></div>`;
   const ctl=out?`<button class="add" type="button" disabled>Sold out</button>`
-    :q?`<div class="qty"><button class="st" type="button" data-dec="${it.id}" aria-label="One less">&minus;</button><span class="n">${label(u,q).replace(" (1½ lb)","")}</span><button class="st" type="button" data-inc="${it.id}" aria-label="One more">+</button></div>`
-    :`<button class="add" type="button" data-inc="${it.id}">Add</button>`;
+    :q?`<div class="qty"><button class="st" type="button" data-dec="${it.id}" aria-label="One less">&minus;</button><span class="n">${label(u,q).replace(" (1½ lb)","")}<i> in order</i></span><button class="st" type="button" data-inc="${it.id}" aria-label="One more">+</button></div>`
+    :`<button class="add" type="button" data-inc="${it.id}">Add to order</button>`;
   const el=document.querySelector(`[data-ctl="${it.id}"]`);if(!el)return;
-  el.innerHTML=`${unitUI}<span class="price${un.hot&&!out?" hot":""}">${price}</span>${ctl}`;
+  el.innerHTML=`${price}${unitUI}${ctl}`;
 }
-function drawDetail(){ITEMS.forEach(drawRow);if(typeof ocBuy==="function"&&ocList.length)ocBuy();if(typeof renderShop==="function"&&$("shopTrack"))$("shopTrack").querySelectorAll(".pcard").forEach((c,i)=>{const it=item(c.dataset.sid);if(it)c.outerHTML=shopCard(it,i)})}
-function select(id,quiet){cur=id;if(quiet)return;const r=document.querySelector(`.row[data-id="${id}"]`);if(r){r.classList.add("flash");setTimeout(()=>r.classList.remove("flash"),1400)}}
-$("boardList").addEventListener("change",e=>{const id=e.target.dataset.unit;if(id){unitSel[id]=e.target.value;drawRow(item(id));track("view_item",{item_id:id,unit:e.target.value})}});
-$("boardList").addEventListener("click",e=>{
-  const inc=e.target.closest("[data-inc]"),dec=e.target.closest("[data-dec]");
-  if(inc){const id=inc.dataset.inc;if(item(id).status==="out")return;const first=!cart[id+"|"+unitSel[id]];
-    add(id,unitSel[id],1,first?document.querySelector(`.row[data-id="${id}"] img`):null);drawRow(item(id));
-    const n=document.querySelector(`[data-ctl="${id}"] .n`);if(n)n.classList.add("bump")}
-  if(dec){const id=dec.dataset.dec,k=id+"|"+unitSel[id];cart[k]=(cart[k]||0)-1;if(cart[k]<=0)delete cart[k];save();bar();drawRow(item(id))}
-});
+function drawDetail(){ITEMS.forEach(drawRow);if(typeof ocBuy==="function"&&ocList.length)ocBuy()}
+function select(id,quiet){cur=id;if(quiet)return;const r=document.querySelector(`.pcard[data-sid="${id}"]`);if(r){r.classList.add("flash");setTimeout(()=>r.classList.remove("flash"),1400)}}
+
 
 function swapImg(aId,bId,src,alt,front){
   const back=front===aId?bId:aId,f=$(front),b=$(back);
@@ -1078,7 +1051,7 @@ function bar(n){
   const c=Object.values(cart).length;
   $("obar").classList.toggle("show",c>0);
   $("obarC").innerHTML=`Your order: <b>${c} ${c===1?"item":"items"}</b>`;
-  const t=$("topOrder");if(t)t.textContent=c?`Review order (${c})`:"Order";
+  const t=$("topOrder");if(t)t.innerHTML=c?`<span class="wide">Review order</span><span class="nar">Order</span> (${c})`:"Order";
   if(n){const b=$("obar");b.classList.remove("nudge");void b.offsetWidth;b.classList.add("nudge")}
 }
 function fly(src,fromEl){
@@ -1196,7 +1169,7 @@ $("bulkForm").addEventListener("submit",async e=>{
   if(SHOP.city){$("heroWhere").textContent="delivered in "+SHOP.city+"."}
   if(SHOP.bulkTerms){$("bulkTerms").textContent=SHOP.bulkTerms;$("bulkTerms").hidden=false}
   if(SHOP.special&&SHOP.special.on){$("special").hidden=false;$("specialText").innerHTML=SHOP.special.text;
-    $("specialAdd").onclick=()=>{unitSel[SHOP.special.item]=SHOP.special.unit;drawDetail();$("board").scrollIntoView({behavior:calm?"auto":"smooth"});setTimeout(()=>select(SHOP.special.item),calm?0:500)}}
+    $("specialAdd").onclick=()=>{unitSel[SHOP.special.item]=SHOP.special.unit;if(shopTab!=="all"){shopTab="all";renderShop()}drawDetail();$("shop").scrollIntoView({behavior:calm?"auto":"smooth"});setTimeout(()=>select(SHOP.special.item),calm?0:500)}}
   if(SHOP.cutoff){
     $("sched").textContent=`Order by ${SHOP.cutoff.label} for ${SHOP.cutoff.fulfil}.`;$("sched").hidden=false;
     const tick=()=>{const now=new Date(),c=new Date(now);c.setHours(SHOP.cutoff.hour,0,0,0);
@@ -1249,7 +1222,7 @@ async function loadStock(){
       if(o.note)it.note=o.note;
       if(o.price){const un=o.unit?it.units.find(x=>x.u===o.unit.toLowerCase()||x.label.toLowerCase()===o.unit.toLowerCase()):it.units[0];if(un){un.price=o.price;un.hot=/special|sale/i.test(o.price)}}
     });
-    renderSpecies();renderCarry();renderShop();
+    renderCarry();renderShop();
   }catch(e){}
 }
 
@@ -1323,7 +1296,7 @@ function welcomeCode(){try{return SHOP.welcome&&localStorage.getItem("ot-code")|
     $("offForm").hidden=true;$("offDone").hidden=false;
   });
   $("offCopy").onclick=()=>copy(W.code,$("offCopy"),"Copied");
-  $("offGo").onclick=e=>{e.preventDefault();dlg.close();const b=$("board");if(b)b.scrollIntoView({behavior:calm?"auto":"smooth"})};
+  $("offGo").onclick=e=>{e.preventDefault();dlg.close();const b=$("shop");if(b)b.scrollIntoView({behavior:calm?"auto":"smooth"})};
 })();
 
 /* ---------- "why we built it this way" (pitch mode) ---------- */
@@ -1337,9 +1310,8 @@ const WHY=[
  ["#clients","Who already buys here","A row of real restaurants and caterers that buy from you, right under the first screen. Nothing makes a new buyer trust a supplier faster than seeing other kitchens they know already use it. Placeholders now, real names before launch.","Social proof from other businesses is what wins wholesale accounts."],
  ["#film","One species at a time, made to look premium","Right after the first screen, the catalog slides past one product at a time. Each gets the whole stage: its name, a clean shot, how it is sold, the price and an Add button. It feels like a real seafood brand, and the buyer only has one decision to make at a time.","Looking expensive lets you hold your prices. Showing one item at a time gets more of them added to orders."],
  ["#again","Order again in one tap","Returning customers see their last order and can add it back with one button. Most seafood buyers order the same things every week.","Repeat orders with almost no effort from the customer, and none from you."],
- ["#shopTrack","Shop by type","Cards grouped the way buyers think: crab and lobster, shrimp, whole fish, the rest. Someone who came for one thing finds it in one tap, and sees what else sits next to it.","Easy browsing turns a one-item order into a two or three-item order."],
+ ["#shopTrack","One store, laid out like a marketplace","Every item in one grid with a real photo, stock status, price, size and an Add button, the way people already shop on Amazon. Filters by type for anyone who came for one thing. Replaces the separate price list, so there is one place to buy, not two.","Fewer steps from seeing to adding means more orders and bigger baskets."],
  [".tcard","Answering the three doubts before they're asked","Are you a real business? Will I get charged online? Is there a person? Your real building, direct contact, nothing charged online, and real Instagram posts as proof settle all three.","Trust is the cheapest way to raise how many visitors order."],
- ["#boardList","Every item, size and price in one list","Customers see everything in one scroll and add it without messaging you first. Prices come from your sheet, so \"Ask for price\" disappears once you fill them in.","Posted prices cut the back-and-forth DMs that make people give up."],
  [".planner","Party sizes","Turns \"how much do I need for 15 people?\" into a ready order. Party and event buyers order more per order than anyone else.","Bigger orders from the same number of customers."],
  ["#how .steps","How ordering works","Three plain steps. People don't order when they don't know what happens after they press the button.","Removing uncertainty removes a reason not to order."],
  ["#bulk .bulk-g","Wholesale quotes","One restaurant on a weekly standing order can be worth more than dozens of one-time orders. The form collects business, volume and frequency so you can quote fast.","This is where the steady, repeat revenue comes from."],
@@ -1487,40 +1459,39 @@ function carryNav(){}
 })();
 
 /* ---------- shop by type ---------- */
-const SHOP_TABS=[["shell","Crab & lobster",["lobster","spiny","crab","dungeness"]],["shrimp","Shrimp & crawfish",["shrimp","tails","crawfish"]],["fish","Whole fish",["salmon","snapper","porgy","fish"]],["more","Oysters, squid & octopus",["oyster","squid","octopus"]],["all","Everything",null]];
-let shopTab="shell";
+const SHOP_TABS=[["all","All seafood",null],["shell","Crab & lobster",["lobster","spiny","crab","dungeness"]],["shrimp","Shrimp & crawfish",["shrimp","tails","crawfish"]],["fish","Whole fish",["salmon","snapper","porgy","fish"]],["more","Oysters, squid & octopus",["oyster","squid","octopus"]]]; 
+let shopTab="all";
 function shopCard(it,i){
-  const R=REAL[it.id]||{src:it.img,post:""},out=it.status==="out";
-  const u=unitSel[it.id]||it.units[0].u,un=it.units.find(x=>x.u===u)||it.units[0],hot=un.hot&&!out;
-  const tag=out?'<span class="pc-tag out">Sold out</span>':hot?'<span class="pc-tag">Special</span>':it.status==="limited"?'<span class="pc-tag">Going fast</span>':"";
-  const qty=it.units.reduce((n,x)=>n+(cart[it.id+"|"+x.u]||0),0);
-  const price=out?'<span class="pc-price ask">Sold out this week</span>':un.price?`<span class="pc-price${hot?" hot":""}">${esc(un.price.split(",")[0].replace(/ special/i,""))}<small>${esc(un.label.toLowerCase())}</small></span>`:`<span class="pc-price ask">Price on request</span>`;
-  const img=`<img src="${R.src}" alt="${esc(it.name)}, photographed by Overnight Tider" width="250" height="250" loading="lazy">`;
-  return `<article class="pcard" data-sid="${it.id}" style="--i:${i}">${tag}${R.post?`<a class="pc-photo" href="https://www.instagram.com/p/${R.post}/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${img}</a>`:`<div class="pc-photo">${img}</div>`}
-    <div class="pc-body"><h3>${esc(it.name)}</h3><span class="pc-unit">${it.units.map(x=>x.label.toLowerCase()).join(" · ")}</span>${R.post?`<a class="pc-src" href="https://www.instagram.com/p/${R.post}/" target="_blank" rel="noopener">Our photo, see the post</a>`:`<span class="pc-src">Our photo</span>`}
-    <div class="pc-buy">${price}<button class="pc-add${qty?" in":""}" type="button"${out?" disabled":""} aria-label="Add ${esc(it.name)} to order">${out?"Sold out":qty?`In order (${qty}) +`:"Add"}</button></div></div></article>`;
+  const R=REAL[it.id]||{src:it.img,post:""},out=it.status==="out",lim=it.status==="limited",hot=it.units.some(x=>x.hot)&&!out;
+  const tag=out?'<span class="pc-tag out">Sold out</span>':hot?'<span class="pc-tag">This week&rsquo;s special</span>':"";
+  const img=`<img src="${R.src}" alt="${esc(it.name)}, photographed by Overnight Tider" width="300" height="300" loading="lazy">`;
+  const ig=R.post?`https://www.instagram.com/p/${R.post}/`:"";
+  return `<article class="pcard${out?" out":""}" data-sid="${it.id}" style="--i:${i}">${tag}${ig?`<a class="pc-photo" href="${ig}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${img}</a>`:`<div class="pc-photo">${img}</div>`}
+    <div class="pc-body"><h3>${esc(it.name)}</h3><p class="pc-note">${esc(it.note)}</p>
+    <span class="pc-stock${out?" out":lim?" lim":""}">${out?"Sold out this week":lim?"Going fast this week":"In stock this week"}</span>
+    <div class="ctl" data-ctl="${it.id}"></div>
+    ${ig?`<a class="pc-src" href="${ig}" target="_blank" rel="noopener">Our photo, see the post</a>`:`<span class="pc-src">Our photo</span>`}</div></article>`;
 }
 function renderShop(anim){
   const t=$("shopTabs"),tr=$("shopTrack");if(!t)return;
-  t.innerHTML=SHOP_TABS.map(([k,l])=>`<button type="button" role="tab" data-tab="${k}" aria-selected="${k===shopTab}" tabindex="${k===shopTab?0:-1}">${l}</button>`).join("");
+  t.innerHTML=SHOP_TABS.map(([k,l,ids])=>`<button type="button" role="tab" data-tab="${k}" aria-selected="${k===shopTab}" tabindex="${k===shopTab?0:-1}">${l} <span class="ct">${(ids||ITEMS).length}</span></button>`).join("");
   const ids=(SHOP_TABS.find(x=>x[0]===shopTab)||[])[2]||ITEMS.map(i=>i.id);
   tr.innerHTML=ids.map(item).filter(Boolean).map(shopCard).join("");
+  ids.map(item).filter(Boolean).forEach(drawRow);
   if(anim&&!calm){tr.classList.remove("anim");void tr.offsetWidth;tr.classList.add("anim")}
-  tr.scrollLeft=0;shopArrows();
 }
-function shopArrows(){const tr=$("shopTrack");if(!tr||!$("sPrev"))return;$("sPrev").disabled=tr.scrollLeft<8;$("sNext").disabled=tr.scrollLeft+tr.clientWidth>=tr.scrollWidth-8}
 (function shopUI(){
   const tr=$("shopTrack");if(!tr)return;
   $("shopTabs").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(!b||b.dataset.tab===shopTab)return;shopTab=b.dataset.tab;renderShop(true);track("shop_tab",{tab:shopTab})});
   $("shopTabs").addEventListener("keydown",e=>{const i=SHOP_TABS.findIndex(x=>x[0]===shopTab);let n=null;if(e.key==="ArrowRight")n=(i+1)%SHOP_TABS.length;if(e.key==="ArrowLeft")n=(i-1+SHOP_TABS.length)%SHOP_TABS.length;if(n!==null){shopTab=SHOP_TABS[n][0];renderShop(true);$("shopTabs").querySelector(`[data-tab="${shopTab}"]`).focus()}});
-  const step=()=>((tr.querySelector(".pcard")||{}).offsetWidth||230)+18;
-  $("sPrev").onclick=()=>tr.scrollBy({left:-step()*2,behavior:calm?"auto":"smooth"});
-  $("sNext").onclick=()=>tr.scrollBy({left:step()*2,behavior:calm?"auto":"smooth"});
-  tr.addEventListener("scroll",()=>{cancelAnimationFrame(tr._r);tr._r=requestAnimationFrame(shopArrows)},{passive:true});
-  addEventListener("resize",shopArrows);
-  tr.addEventListener("click",e=>{const b=e.target.closest(".pc-add");if(!b)return;const card=b.closest(".pcard"),it=item(card.dataset.sid);if(it.status==="out")return;
-    add(it.id,unitSel[it.id]||it.units[0].u,1,card.querySelector("img"));drawRow(it);if(typeof ocFill==="function")ocFill(it);
-    const i=[...tr.children].indexOf(card);card.outerHTML=shopCard(it,i)});
+  tr.addEventListener("change",e=>{const id=e.target.dataset.unit;if(id){unitSel[id]=e.target.value;drawRow(item(id));if(typeof ocFill==="function")ocFill(item(id));track("view_item",{item_id:id,unit:e.target.value})}});
+  tr.addEventListener("click",e=>{
+    const inc=e.target.closest("[data-inc]"),dec=e.target.closest("[data-dec]");
+    if(inc){const id=inc.dataset.inc;if(item(id).status==="out")return;const first=!cart[id+"|"+unitSel[id]];
+      add(id,unitSel[id],1,first?document.querySelector(`.pcard[data-sid="${id}"] img`):null);drawRow(item(id));if(typeof ocFill==="function")ocFill(item(id));
+      const n=document.querySelector(`[data-ctl="${id}"] .n`);if(n)n.classList.add("bump")}
+    if(dec){const id=dec.dataset.dec,k=id+"|"+unitSel[id];cart[k]=(cart[k]||0)-1;if(cart[k]<=0)delete cart[k];save();bar();drawRow(item(id));if(typeof ocFill==="function")ocFill(item(id))}
+  });
 })();
 
 /* ---------- order again ---------- */
@@ -1552,7 +1523,7 @@ function rememberOrder(){try{if(Object.keys(cart).length)localStorage.setItem("o
 })();
 
 /* ---------- boot ---------- */
-renderSpecies();select(cur,true);renderCarry();renderShop();renderPlan();bar();loadStock();
+select(cur,true);renderCarry();renderShop();renderPlan();bar();loadStock();
 (function motion(){
   const root=document.documentElement,go=()=>requestAnimationFrame(()=>root.classList.add("ready"));
   const hero=document.querySelector(".hero-fig .sl");
