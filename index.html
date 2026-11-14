@@ -341,28 +341,59 @@ select.unit{padding:9px 10px;border:1px solid var(--line);border-radius:6px;back
 
 /* party planner */
 #bundles{background:var(--ice)}
-.planner{display:grid;gap:22px;background:var(--paper);border-radius:8px;overflow:hidden}
-.pl-photo{position:relative;aspect-ratio:4/3;background:var(--frost)}
+.planner{display:grid;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 0 rgba(19,32,46,.04),0 30px 60px -36px rgba(19,32,46,.35)}
+.pl-photo{position:relative;aspect-ratio:4/3;background:var(--frost);overflow:hidden}
 .pl-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s var(--ease),transform 1.4s var(--ease)}
 .pl-photo img.out{opacity:0;transform:scale(1.05)}
-.pl-body{padding:4px 22px 26px;display:grid;gap:18px;align-content:start}
-.occ{display:flex;flex-wrap:wrap;gap:8px}
-.occ button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 16px;font-size:15px;font-weight:500;color:var(--ink);transition:background-color .2s,color .2s,border-color .2s}
-.occ button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.ppl{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.ppl .lab{font-weight:600}
-.big-step{display:flex;align-items:center;gap:6px}
-.big-step button{width:48px;height:48px;border-radius:50%;border:0;background:var(--ice);font-size:24px;line-height:1;color:var(--ink)}
-.big-step output{font-family:var(--f-display);font-weight:800;font-size:54px;line-height:1;min-width:70px;text-align:center;display:inline-block}
-input[type=range]{width:100%;accent-color:var(--sign)}
-.chk{display:inline-flex;align-items:center;gap:9px;font-size:15.5px}
-.chk input{width:18px;height:18px;accent-color:var(--sign)}
-.pl-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.pl-list li{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
-.pl-list b{font-family:var(--f-mono);font-weight:500;font-size:16px;color:var(--sign-dk)}
+.pl-serves{position:absolute;left:16px;bottom:16px;display:flex;align-items:baseline;gap:10px;background:var(--ink);color:#fff;border-radius:10px;padding:10px 16px 12px}
+.pl-serves b{font-family:var(--f-display);font-weight:800;font-size:44px;line-height:.9;color:var(--band);font-variant-numeric:tabular-nums}
+.pl-serves span{font-size:14px;color:#c3cfd8}
+.pl-serves.bump b{animation:tick .3s var(--ease)}
+.pl-body{padding:24px 20px 26px;display:grid;gap:26px;align-content:start}
+.pl-q{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-weight:600;font-size:16px}
+.pl-q span{width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;font-size:12.5px;display:grid;place-items:center;flex:none}
+.occ{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.occ button{display:grid;gap:8px;justify-items:start;text-align:left;background:#fff;border:0;border-radius:12px;padding:8px 8px 10px;box-shadow:0 0 0 1px var(--line);color:var(--ink);transition:box-shadow .2s,transform .2s var(--ease)}
+.occ button:hover{box-shadow:0 0 0 1px #bfc9c6,0 8px 18px -10px rgba(19,32,46,.3);transform:translateY(-2px)}
+.occ button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
+.occ img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;transition:filter .2s}
+.occ button[aria-pressed="false"] img{filter:saturate(.75)}
+.occ b{display:block;font-size:14.5px;font-weight:600;line-height:1.2}
+.occ small{display:block;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.3}
+.ppl{display:grid;grid-template-columns:44px auto 44px 1fr;align-items:center;gap:6px 10px}
+.pb{width:44px;height:44px;border-radius:50%;border:0;background:var(--ice);font-size:22px;line-height:1;color:var(--ink);transition:background-color .15s,transform .15s}
+.pb:hover{background:var(--ice-2)}.pb:active{transform:scale(.92)}
+.ppl output{font-family:var(--f-display);font-weight:800;font-size:56px;line-height:1;min-width:1.4em;text-align:center;font-variant-numeric:tabular-nums}
+.pr-wrap{grid-column:1/-1;padding-top:10px}
+.pr-marks{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px;padding:0 2px}
+#pRange{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:none;margin:0;--fill:14%}
+#pRange::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--sign) var(--fill),var(--ice-2) var(--fill))}
+#pRange::-moz-range-track{height:6px;border-radius:6px;background:var(--ice-2)}
+#pRange::-moz-range-progress{height:6px;border-radius:6px;background:var(--sign)}
+#pRange::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid var(--ink);margin-top:-9px;box-shadow:0 2px 6px rgba(19,32,46,.25);transition:transform .15s}
+#pRange::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
+#pRange:active::-webkit-slider-thumb{transform:scale(1.15)}
+.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;background:var(--ice);border-radius:999px;padding:4px}
+.seg button{position:relative;z-index:1;background:none;border:0;border-radius:999px;padding:10px 12px;font-size:14.5px;font-weight:600;color:var(--muted);transition:color .25s}
+.seg button[aria-pressed="true"]{color:var(--ink)}
+.seg-ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);background:#fff;border-radius:999px;box-shadow:0 2px 8px rgba(19,32,46,.14);transition:transform .35s var(--ease)}
+.seg.r .seg-ind{transform:translateX(100%)}
+.pl-out{background:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.pl-oh{margin:0 0 6px;font-size:14px;color:var(--muted)}
+.pl-oh b{color:var(--ink);font-weight:600}
+.pl-list{list-style:none;margin:0 0 16px;padding:0}
+.pl-list li{display:grid;grid-template-columns:1fr auto;gap:0 12px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.pl-list li>span{font-size:16px;font-weight:500}
+.pl-list b{font-family:var(--f-display);font-weight:800;font-size:24px;line-height:1;color:var(--ink);text-align:right}
+.pl-list small{grid-column:1/-1;font-size:12.5px;color:var(--muted);margin-top:2px}
+.pl-out .btn{width:100%;justify-content:center}
+.pl-safe{margin:10px 0 0;font-size:13px;color:var(--muted);text-align:center}
 .roll{display:inline-block;animation:roll .35s var(--ease)}
 @keyframes roll{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
-.pl-note{margin:0;font-size:13.5px;color:var(--muted)}
+.pl-how summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--ink);list-style:none;display:inline-flex;align-items:center;gap:8px;text-decoration:underline;text-decoration-color:var(--band);text-decoration-thickness:2px;text-underline-offset:4px}
+.pl-how summary::-webkit-details-marker{display:none}
+.pl-how p{margin:10px 0 0;font-size:14px;color:var(--body);line-height:1.55}
+@media (max-width:420px){.occ small{display:none}.pl-serves b{font-size:36px}}
 
 /* how it works */
 #how{background:var(--ice)}
@@ -596,6 +627,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
         .planner{grid-template-columns:1fr 1fr;gap:0}
   .pl-photo{aspect-ratio:auto;min-height:100%}
   .pl-body{padding:34px 36px}
+  .pl-serves{left:24px;bottom:auto;top:24px}
   .steps{grid-template-columns:repeat(3,1fr);gap:40px}
   .bulk-g{grid-template-columns:1fr 1.1fr;align-items:start}
   .two{grid-template-columns:1fr 1fr}
@@ -759,23 +791,48 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
       <p>Pick the occasion and the headcount. We'll size it, you can still change anything before you send.</p>
     </div>
     <div class="planner io" style="--d:100ms">
-      <div class="pl-photo"><img id="plA" src="img/crabs.webp" alt="Live blue crabs" loading="lazy"><img id="plB" class="out" alt=""></div>
+      <div class="pl-photo">
+        <img id="plA" src="img/crabs.webp" alt="Live blue crabs" loading="lazy"><img id="plB" class="out" alt="">
+        <div class="pl-serves" aria-hidden="true"><b id="plServes">10</b><span id="plServesT">people, crab boil</span></div>
+      </div>
       <div class="pl-body">
-        <div class="occ" role="group" aria-label="Occasion">
-          <button type="button" data-occ="boil" aria-pressed="true">Crab boil</button>
-          <button type="button" data-occ="lobster" aria-pressed="false">Lobster night</button>
-          <button type="button" data-occ="shrimp" aria-pressed="false">Shrimp boil</button>
+        <div class="pl-step">
+          <p class="pl-q"><span>1</span>What&rsquo;s the occasion?</p>
+          <div class="occ" role="group" aria-label="Occasion">
+            <button type="button" data-occ="boil" aria-pressed="true"><img src="img/crabs.webp" alt="" loading="lazy"><span><b>Crab boil</b><small>Blue crabs and shrimp</small></span></button>
+            <button type="button" data-occ="lobster" aria-pressed="false"><img src="img/lobster-hero.webp" alt="" loading="lazy"><span><b>Lobster night</b><small>Lobster and oysters</small></span></button>
+            <button type="button" data-occ="shrimp" aria-pressed="false"><img src="img/shrimp-tray.webp" alt="" loading="lazy"><span><b>Shrimp boil</b><small>Shrimp and crabs</small></span></button>
+          </div>
         </div>
-        <div class="ppl">
-          <span class="lab" id="pplLab">People</span>
-          <div class="big-step"><button type="button" id="pMinus" aria-label="Fewer people">&minus;</button><output id="pN" aria-labelledby="pplLab">10</output><button type="button" id="pPlus" aria-label="More people">+</button></div>
+        <div class="pl-step">
+          <p class="pl-q" id="pplLab"><span>2</span>How many people?</p>
+          <div class="ppl">
+            <button type="button" class="pb" id="pMinus" aria-label="Fewer people">&minus;</button>
+            <output id="pN" aria-labelledby="pplLab">10</output>
+            <button type="button" class="pb" id="pPlus" aria-label="More people">+</button>
+            <div class="pr-wrap">
+              <label class="vh" for="pRange">Number of people</label>
+              <input type="range" id="pRange" min="2" max="60" value="10">
+              <div class="pr-marks" aria-hidden="true"><span>2</span><span>20</span><span>40</span><span>60</span></div>
+            </div>
+          </div>
         </div>
-        <label class="vh" for="pRange">Number of people</label>
-        <input type="range" id="pRange" min="2" max="60" value="10">
-        <label class="chk"><input type="checkbox" id="pMain">Seafood is the whole meal, no big sides</label>
-        <ul class="pl-list" id="plList"></ul>
-        <button class="btn btn-green" type="button" id="plAdd">Add this to my order</button>
-        <p class="pl-note">Rule of thumb: about 6 crabs a person with sides, 8 to 12 if crabs are the meal, one lobster each. A bushel is roughly 5 dozen depending on size. We double-check amounts when we confirm.</p>
+        <div class="pl-step">
+          <p class="pl-q"><span>3</span>How hungry is the crowd?</p>
+          <input type="checkbox" id="pMain" class="vh" tabindex="-1" aria-hidden="true">
+          <div class="seg" role="group" aria-label="How hungry">
+            <button type="button" data-main="0" aria-pressed="true">With sides</button>
+            <button type="button" data-main="1" aria-pressed="false">Seafood only</button>
+            <i class="seg-ind" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="pl-out">
+          <p class="pl-oh">Your list for <b id="plFor">10 people</b></p>
+          <ul class="pl-list" id="plList"></ul>
+          <button class="btn btn-green" type="button" id="plAdd">Add this to my order</button>
+          <p class="pl-safe">Nothing is charged. We check the amounts with you when we confirm.</p>
+        </div>
+        <details class="pl-how"><summary>How we size it</summary><p>About 6 crabs a person with sides, 8 to 12 if crabs are the meal, one lobster each. A bushel is roughly 5 dozen depending on size. Half a pound of head-on shrimp a person with sides, a full pound if it&rsquo;s the meal.</p></details>
       </div>
     </div>
   </div>
@@ -1155,24 +1212,37 @@ $("copyOnly").onclick=()=>copy(message(),$("sheetMsg"),"Copied. Send it to @over
 
 /* ---------- party planner ---------- */
 const OCC={
-  boil:{img:"img/crabs.webp",alt:"Live blue crabs",def:10,plan:(g,m)=>{const out=[];const dz=Math.max(1,Math.ceil(g*(m?10:6)/12)),b=Math.floor(dz/5),r=dz%5;if(b)out.push(["crab","bushel",b]);if(r)out.push(["crab","dozen",r]);out.push(["shrimp","lb",Math.max(1,Math.ceil(g*(m?.75:.5)))]);return out}},
-  lobster:{img:"img/lobster-hero.webp",alt:"Live lobster on ice",def:2,plan:(g,m)=>[["lobster","lobster (1½ lb)",Math.max(1,Math.ceil(g*(m?1.5:1)))],["oyster","dozen",Math.max(1,Math.ceil(g/2))]]},
-  shrimp:{img:"img/shrimp.webp",alt:"Head-on shrimp",def:6,plan:(g,m)=>[["shrimp","lb",Math.max(1,Math.ceil(g*(m?1:.66)))],["crab","dozen",Math.max(1,Math.ceil(g/6))]]}
+  boil:{img:"img/crabs.webp",alt:"Live blue crabs",name:"crab boil",def:10,plan:(g,m)=>{const out=[];const dz=Math.max(1,Math.ceil(g*(m?10:6)/12)),b=Math.floor(dz/5),r=dz%5;if(b)out.push(["crab","bushel",b]);if(r)out.push(["crab","dozen",r]);out.push(["shrimp","lb",Math.max(1,Math.ceil(g*(m?.75:.5)))]);return out}},
+  lobster:{img:"img/lobster-hero.webp",alt:"Live lobster on ice",name:"lobster night",def:4,plan:(g,m)=>[["lobster","lobster (1½ lb)",Math.max(1,Math.ceil(g*(m?1.5:1)))],["oyster","dozen",Math.max(1,Math.ceil(g/2))]]},
+  shrimp:{img:"img/shrimp-tray.webp",alt:"Head-on shrimp in a tray",name:"shrimp boil",def:8,plan:(g,m)=>[["shrimp","lb",Math.max(1,Math.ceil(g*(m?1:.66)))],["crab","dozen",Math.max(1,Math.ceil(g/6))]]}
 };
 let occ="boil",people=10,touched=false,plFront="plA",lastRows={};
+const each=(n)=>{const r=Math.round(n*2)/2;return (r%1?`${Math.floor(r)||""}½`:String(r))};
+function hint(id,u,q,rows){
+  if(id==="crab"){const all=rows.filter(r=>r[0]==="crab"),first=all[0]===rows.find(r=>r[0]==="crab"&&r[1]===u);if(rows.findIndex(r=>r[0]==="crab")!==rows.findIndex(r=>r[0]==="crab"&&r[1]===u))return"";
+    const n=all.reduce((t,[,uu,qq])=>t+qq*(uu==="bushel"?60:12),0);return `About ${n} crabs, ${Math.round(n/people)} a person`}
+  if(id==="shrimp")return `About ${each(q/people)} lb a person`;
+  if(id==="lobster")return `${each(q/people)} a person, about 1½ lb each`;
+  if(id==="oyster")return `About ${Math.round(q*12/people)} a person`;
+  return ""}
 function renderPlan(){
   const rows=OCC[occ].plan(people,$("pMain").checked);
-  $("plList").innerHTML=rows.map(([id,u,q])=>{const key=id+u,txt=label(u,q),ch=lastRows[key]!==txt;lastRows[key]=txt;
-    return `<li><span>${item(id).name}</span><b><span class="${ch?"roll":""}">${txt}</span></b></li>`}).join("");
-  $("pN").textContent=people;$("pRange").value=people;
+  $("plList").innerHTML=rows.map(([id,u,q])=>{const key=id+u,txt=label(u,q).replace(" (1½ lb)",""),ch=lastRows[key]!==txt;lastRows[key]=txt;
+    const h=hint(id,u,q,rows);
+    return `<li><span>${item(id).name}</span><b><span class="${ch?"roll":""}">${txt}</span></b>${h?`<small>${h}</small>`:""}</li>`}).join("");
+  $("pN").textContent=people;$("pRange").value=people;$("pRange").style.setProperty("--fill",((people-2)/58*100)+"%");
+  $("plFor").textContent=people+" people";$("plServes").textContent=people;$("plServesT").textContent="people, "+OCC[occ].name;
+  const sv=document.querySelector(".pl-serves");sv.classList.remove("bump");void sv.offsetWidth;sv.classList.add("bump");
 }
 function setPeople(n){people=Math.max(2,Math.min(60,n));touched=true;renderPlan()}
 document.querySelectorAll("[data-occ]").forEach(b=>b.onclick=()=>{
   if(b.dataset.occ===occ)return;occ=b.dataset.occ;
   document.querySelectorAll("[data-occ]").forEach(x=>x.setAttribute("aria-pressed",x===b));
   if(!touched)people=OCC[occ].def;lastRows={};
-  plFront=swapImg("plA","plB",OCC[occ].img,OCC[occ].alt,plFront);renderPlan();
+  plFront=swapImg("plA","plB",OCC[occ].img,OCC[occ].alt,plFront);renderPlan();track("planner_occasion",{occ});
 });
+document.querySelectorAll("[data-main]").forEach(b=>b.onclick=()=>{const m=b.dataset.main==="1";$("pMain").checked=m;
+  document.querySelectorAll("[data-main]").forEach(x=>x.setAttribute("aria-pressed",x===b));b.parentNode.classList.toggle("r",m);renderPlan()});
 $("pMinus").onclick=()=>setPeople(people-1);
 $("pPlus").onclick=()=>setPeople(people+1);
 $("pRange").oninput=e=>setPeople(+e.target.value);
@@ -1347,26 +1417,65 @@ function welcomeCode(){try{return SHOP.welcome&&localStorage.getItem("ot-code")|
 
 /* ---------- "why we built it this way" (pitch mode) ---------- */
 const WHY=[
- ["#special","Weekly special bar","Gives every visitor a reason to order this week instead of someday. You change the text from your Google Sheet in seconds.","Specials move stock you already bought before it loses value."],
- [".top","Order button that remembers the cart","The Order button is always on screen and changes to \"Review order (3)\" once something is added, so nobody loses an order halfway.","Fewer half-finished orders means more finished ones."],
+ ["#special","Weekly special bar","Gives every visitor a reason to order this week instead of someday. You change the text from your Google Sheet in seconds.","Specials move stock you already bought before it loses value.","top"],
+ ["#special","The special adds itself","\"Add to my order\" in the top bar jumps to the lobster card and highlights it. No hunting for the deal.","Turns a glance at the special into an item in the cart.","top"],
+ [".top","Logo taken from your sign","The logo and wordmark copy the slanted green letters painted on your building, so the site and the building match.","People who have driven past your building recognize you instantly.","top"],
+ [".top","Only four menu links","This week, party sizes, wholesale, questions. No About page, no blog, nothing that pulls people away from ordering.","Fewer exits means more orders.","top"],
+ [".top","Order button that remembers the cart","The Order button is always on screen and changes to \"Review order (3)\" once something is added, so nobody loses an order halfway.","Fewer half-finished orders means more finished ones.","top"],
  [".hero-copy h1","A headline that says what you sell","Live lobster, fresh seafood, delivered. A stranger understands what you do in about three seconds. Vague or clever headlines make people leave.","Every visitor who stays past the first screen is a possible order."],
+ [".hero-copy .lede","Written for Google too","The words people actually search, fresh seafood, live lobster, seafood supplier, crab, shrimp, are in the headline, the first line, the page title and the description.","Free search traffic instead of paying for ads."],
+ [".hero-copy .lede","One line that answers the basics","What you sell, by the pound or by the case, and how pricing works. No slogans, no fluff.","Fewer \"how does this work?\" messages before people order."],
  [".paths","Two doors: home and business","Home cooks go straight to this week's list. Restaurants and caterers go to the wholesale form, where the big repeat orders are.","Each buyer gets to the right place in one tap instead of guessing."],
- ["#offer .off-in","First-order email offer","Shows once, only after someone scrolls halfway, stays 28 seconds, or moves to leave. Never on arrival, so it doesn't block the page or hurt search ranking.","Turns visitors who aren't ready to buy into an email list you own, and the code pulls them back for a first order."],
+ [".hero-proof","Proof right under the buttons","A small photo of your building and \"A real business with real stock\" sit exactly where people hesitate, right below the order buttons.","Answers \"is this legit?\" at the moment of doubt."],
+ ["#facts","Three facts, no hype","Nothing charged online, retail and wholesale, delivery and shipping. Short facts people can check work better than big claims.","Removes the three most common reasons to leave."],
  ["#show","Your real crates, not stock photos","The slideshow shows what is actually in your crates and coolers this week. The biggest doubt about buying seafood online is \"is this real and is it fresh\".","Proof of real stock is what turns a curious visitor into a buyer."],
- ["#clients","Who already buys here","A row of real restaurants and caterers that buy from you, right under the first screen. Nothing makes a new buyer trust a supplier faster than seeing other kitchens they know already use it. Placeholders now, real names before launch.","Social proof from other businesses is what wins wholesale accounts."],
- ["#film","One species at a time, made to look premium","Right after the first screen, the catalog slides past one product at a time. Each gets the whole stage: its name, a clean shot, how it is sold, the price and an Add button. It feels like a real seafood brand, and the buyer only has one decision to make at a time.","Looking expensive lets you hold your prices. Showing one item at a time gets more of them added to orders."],
- ["#again","Order again in one tap","Returning customers see their last order and can add it back with one button. Most seafood buyers order the same things every week.","Repeat orders with almost no effort from the customer, and none from you."],
- ["#shopTrack","One store, laid out like a marketplace","Every item in one grid with a real photo, stock status, price, size and an Add button, the way people already shop on Amazon. Filters by type for anyone who came for one thing. Replaces the separate price list, so there is one place to buy, not two.","Fewer steps from seeing to adding means more orders and bigger baskets."],
+ [".hero-fig .cap","The first photo already sells","The caption names what is in the photo and has its own Add to order link that changes with every slide.","Some visitors order straight from the first screen."],
+ [".hero-fig .cap","A slideshow that waits for you","It pauses on hover, has back and next arrows and a pause button, and stops for people who prefer less motion.","Nobody gets annoyed and leaves on the first screen."],
+ ["#clients","Who already buys here","A row of real restaurants and caterers that buy from you, right under the first screen. Nothing makes a new buyer more comfortable than seeing others already do.","Borrowed trust from names people already know."],
+ ["#clients","Real names only","Until you send real client names, the placeholders only show in this pitch mode and are clearly labeled. Fake logos on a live site backfire.","Protects your reputation while still showing the idea."],
+ ["#film","One species at a time, made to look premium","Right after the first screen, the catalog slides past one product at a time. Each gets a big clean photo, its name, a price and an Add button.","A premium look lets you hold your prices instead of competing on cheap."],
+ ["#film","Same light, same size, every species","Every product is cut out and shown at the same scale, like a high-end fishmonger catalog. It looks expensive without a photo shoot.","Premium presentation for the cost of nothing."],
+ ["#film","Each product links to your real post","Under every cutout, \"See ours on Instagram\" opens the real post of that product.","The pretty photo sells, the real post proves it."],
+ [".oc-rail","Jump straight to a species","The row of names under the showcase lets people go right to what they came for instead of clicking through twelve.","Faster to the product means more adds."],
+ [".oc-rail","Swipe, drag or skip","Works with touch, trackpad, arrows and keyboard, and never locks the page, so anyone can scroll right past it.","Engaging for browsers, never a trap for people in a hurry."],
+ [".oc-foot","The same promise at every buy point","\"Nothing is charged online. We confirm your price first\" repeats wherever people add things.","Reassurance at the exact moment people decide."],
  [".tcard","Answering the three doubts before they're asked","Are you a real business? Will I get charged online? Is there a person? Your real building, direct contact, nothing charged online, and real Instagram posts as proof settle all three.","Trust is the cheapest way to raise how many visitors order."],
- [".planner","Party sizes","Turns \"how much do I need for 15 people?\" into a ready order. Party and event buyers order more per order than anyone else.","Bigger orders from the same number of customers."],
- ["#how .steps","How ordering works","Three plain steps. People don't order when they don't know what happens after they press the button.","Removing uncertainty removes a reason not to order."],
- ["#bulk .bulk-g","Wholesale quotes","One restaurant on a weekly standing order can be worth more than dozens of one-time orders. The form collects business, volume and frequency so you can quote fast.","This is where the steady, repeat revenue comes from."],
- [".reel","Real photos again, lower down","People who scroll this far are close to deciding. More real product right before the order buttons keeps them confident.","Supports the decision at the moment it's being made."],
- ["#guides .guides","Care and cooking guides","Fewer dead crabs and fewer complaints, and these pages show up when people search things like \"how to keep crabs alive\".","Free traffic from Google, and fewer refunds."],
+ [".tc-copy h2","A claim anyone can check","\"Our name is on the building\" can be verified by driving past. Checkable beats impressive.","Trust you don't have to argue for."],
+ [".tc-copy .tc-acts","Message us, not a contact form","The button opens your Instagram messages, where you already answer customers. No new inbox to watch.","Leads land where you already work."],
+ [".tc-copy .tc-acts","Three promises you can keep","Straight from us, price before you pay, only our own photos. All three are true today, so none of them can backfire.","Promises that hold build repeat customers."],
+ [".tfeed","Instagram as live proof","Five recent posts, each opening the real post. People can check dates, likes and comments themselves.","Social proof you never have to fake."],
+ ["#again","Order again in one tap","Returning customers see their last order and can add it back with one button. Most seafood buyers order the same things again.","Repeat orders with zero effort from you."],
+ [".shop-head","Honest about market prices","Where you haven't set a price, cards say \"Market price, confirmed before you pay\" instead of hiding it. Seafood buyers know prices move.","Honesty keeps people ordering instead of leaving to ask."],
+ [".shop-tabs","Filters with counts","All seafood 14, crab and lobster 4, and so on. People see how much you carry before they even scroll.","A full counter looks like a serious supplier."],
+ ["#shopTrack","One store, laid out like a marketplace","Every item in one grid with a real photo, stock status, price, size and an Add button, the way people already shop on Amazon.","Fewer steps from seeing to adding means more orders and bigger baskets."],
+ ["#shopTrack","Stock status from your sheet","In stock, going fast or sold out on every card, controlled from your Google Sheet. Sold out items stay visible so people know you carry them.","\"Going fast\" moves stock now, \"sold out\" brings people back next week."],
+ ["#shopTrack","Sizes picked on the card","Dozen, half bushel, bushel or by the pound, chosen right on the card. No product pages to click into.","One less step on every item."],
+ ["#shopTrack","One color means add","Every Add button in the store is the same yellow, and yellow is used for nothing else there. People learn in a second what to press.","Clear buttons get pressed more."],
+ ["#shopTrack","A real photo on every product","Every card shows your own Instagram photo and links to the post it came from.","Proof on every single product, not just the homepage."],
+ [".board-foot","Not listed? Ask in the notes","A line at the end tells people to add anything else to their order notes.","Special requests become orders instead of lost messages."],
+ [".planner","Party sizes","Turns \"how much do I need for 15 people?\" into a ready order. Party and event buyers order more per order than anyone else.","Bigger orders from the customers who spend the most."],
+ [".pl-body .occ","Pick by occasion, not by product","People think \"crab boil for 10\", not \"two bushels\". The planner speaks their language and does the math.","Hosts order the right amount instead of guessing low."],
+ [".ppl","Headcount you can slide","Plus, minus or drag. The list updates instantly as the number changes.","Playing with the number keeps people on the page longer."],
+ [".pl-out","Per-person amounts","Each line says what it means per guest, like \"6 crabs a person\", so the host trusts the amount.","Confidence to order the full amount."],
+ [".pl-out","The whole list in one tap","One button adds everything and opens the order sheet.","From idea to sent order in under a minute."],
+ ["#how .steps","How ordering works","Three plain steps. People don't order when they don't know what happens after they press the button.","Clear next steps means more people press it."],
+ ["#how .steps","No account, no card","Nobody has to sign up or type a card number. The biggest friction points of online ordering are gone.","More first-time buyers finish their order."],
+ ["#obar","Orders straight to your Google Sheet","Every order arrives with an order number, the customer's phone, items, date and ZIP, and you get an email. Nothing lost in DMs.","You see every order, can follow up, and can track what the site actually earns.","how"],
+ ["#obar","A backup that never loses an order","If the form isn't connected or someone prefers it, the order copies itself and opens your Instagram messages ready to paste.","No order lost to a tech hiccup.","how"],
+ ["#obar","An order number and what happens next","After sending, customers get an order number and the three next steps. People who know what happens next don't send \"did you get my order?\" messages.","Less back and forth for you.","how"],
+ [".reel","Real photos again, lower down","People who scroll this far are close to deciding. More real product right before the order button helps them decide.","A second push for people still on the fence."],
+ ["#bulk .bulk-g","Wholesale quotes","One restaurant on a weekly standing order can be worth more than dozens of one-time orders. The form collects exactly what you need to quote.","Steady weekly revenue you can plan around."],
+ ["#bulkForm","Only the questions you need","Business, what they buy, how much, how often, first delivery. Short enough to finish, enough for you to price.","Real wholesale leads, not tire kickers.","in"],
+ ["#guides .guides","Care and cooking guides","Fewer dead crabs and fewer complaints, and these pages show up when people search things like \"how long to steam crabs\".","Fewer refunds and more people finding you on Google."],
+ ["#guides .guides","Amounts per person, again","The per-person table backs up the party planner, so the numbers people saw earlier feel trustworthy.","Consistent advice makes bigger orders feel safe."],
  ["#faq .faq","Questions answered in advance","Covers delivery, small orders, pricing and fresh vs frozen, the questions that otherwise stall an order in your DMs.","Every answered question is one less reason to wait."],
+ ["#faq .faq","Questions search engines can read","The questions are marked up in a format search engines and AI assistants read, so they can quote your answers directly.","Your answers show up where people search, for free."],
  [".closer .wrap","Your own text list","Instagram decides who sees your posts. A text list reaches every customer every week, for free, and you own it.","Repeat orders without paying for ads."],
- ["#obar","Orders straight to your Google Sheet","Every order arrives with an order number, the customer's phone, items, date and ZIP, and you get an email. Nothing lost in DMs.","You see every order, can follow up, and can track what the site actually earns."]
-];
+ [".closer .wrap","Never an empty spot","Until the text list is connected, the same spot sends people to follow you on Instagram.","Every visitor leaves with a way to come back."],
+ ["footer","Policies one tap away","Privacy and terms are in the footer, and your refund policy joins them once you write it. Missing policies are a red flag for careful buyers and for payment providers.","Removes a quiet reason not to buy."],
+ ["footer","Fast on a weak signal","Compressed photos, the whole site in one file, no heavy frameworks. It loads quickly on a phone in a parking lot.","Every second of loading loses buyers."],
+ ["footer","Every step is measured","Adds, sent orders, quotes and signups are tracked, so you can see which part of the site brings in money.","You spend time and money on what actually works."],
+ ["#offer .off-in","First-order email offer","Shows once, only after someone scrolls halfway, stays 28 seconds, or moves to leave. Never on arrival, so it doesn't block the page or hurt search ranking.","Turns visitors who aren't ready to buy into an email list you own, and the code pulls them back for a first order."]];
 (function whyMode(){
   if(!(SHOP.pitch||/[?&]why\b/.test(location.search)||location.hash==="#why"))return;
   const NW=WHY.filter(w=>{const e=document.querySelector(w[0]);return e&&!e.closest("dialog")}).length;
@@ -1390,18 +1499,19 @@ const WHY=[
     if(built)return;built=true;
     const topBox=document.createElement("div");const hc=document.querySelector(".hero-copy");hc.insertBefore(topBox,hc.firstChild);
     let k=0;
-    WHY.forEach(([sel,title,text,roiLine])=>{
+    WHY.forEach(([sel,title,text,roiLine,pos])=>{
       const el=document.querySelector(sel);if(!el)return;const i=el.closest("dialog")?-1:k++;
       const n=document.createElement("div");n.className="why-note";n.setAttribute("role","note");
       n.innerHTML=`<span class="wn">${i<0?"+":i+1}</span><b>${esc(title)}</b><p>${esc(text)}</p><p class="roi">${esc(roiLine)}</p>`;
       el.setAttribute("data-why-on","");
-      if(sel==="#special"||sel===".top"){topBox.appendChild(n)}
-      else if(sel==="#obar"){document.querySelector("#how .wrap").appendChild(n)}
+      if(pos==="top"){topBox.appendChild(n)}
+      else if(pos==="how"){document.querySelector("#how .wrap").appendChild(n)}
+      else if(pos==="in"){el.prepend(n)}
       else if(sel==="#show"){el.prepend(n)}
-      else if(["SECTION","MAIN","BODY"].includes(el.parentNode.tagName)){const w=document.createElement("div");w.className="wrap why-wrap";w.appendChild(n);el.parentNode.insertBefore(w,el)}
+      else if(["SECTION","MAIN","BODY"].includes(el.parentNode.tagName)||!el.parentNode.closest(".wrap")){const w=document.createElement("div");w.className="wrap why-wrap";w.appendChild(n);el.parentNode.insertBefore(w,el)}
       else el.parentNode.insertBefore(n,el);
     });
-    document.querySelectorAll(".why-note").forEach(x=>{const p=x.closest(".io");if(p)p.classList.add("in")});
+    let q=0;document.querySelectorAll(".why-note").forEach(x=>{const p=x.closest(".io");if(p)p.classList.add("in");if(!x.closest("dialog"))x.querySelector(".wn").textContent=++q});
   }
   let notes=[],cur=0;
   function label(){if(!notes.length)return;const n=notes[cur],t=n.querySelector("b").textContent,c=$("whyCur");
