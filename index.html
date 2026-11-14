@@ -442,6 +442,34 @@ dialog[open]{animation:pop .3s var(--ease)}
 .sheet{padding:26px 22px 22px;display:grid;gap:14px;position:relative}
 .sheet h2{font-family:var(--f-display);font-weight:800;font-size:40px;line-height:1;margin:0}
 .x{position:absolute;top:14px;right:14px;border:0;background:var(--ice-2);width:40px;height:40px;border-radius:50%;font-size:22px;line-height:1}
+/* first-order offer */
+#offer{width:min(780px,100% - 24px);max-height:none;overflow:hidden;border-radius:10px}
+.off{display:grid;position:relative}
+.off-ph{margin:0;height:150px;overflow:hidden;background:var(--frost)}
+.off-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.off-in{padding:28px 26px 24px}
+.off .x{background:rgba(247,246,241,.92)}
+.off .x:focus:not(:focus-visible){outline:none}
+.off-k{margin:0 0 10px;font-size:14px;font-weight:600;color:var(--sign)}
+.off h2{font-family:var(--f-display);font-weight:800;font-size:clamp(44px,8vw,58px);line-height:.9;margin:0 0 14px;letter-spacing:.2px}
+.off h2 em{font-style:normal;display:inline-block;margin-bottom:14px;transform:skewX(-9deg);text-decoration:underline;text-decoration-color:var(--band);text-decoration-thickness:6px;text-underline-offset:6px}
+.off p{margin:0;color:var(--body);font-size:16.5px;line-height:1.5;max-width:36ch}
+.off form{display:grid;gap:10px;margin-top:20px}
+.off input{width:100%;font:inherit;font-size:17px;padding:14px 16px;border:1px solid #c6cfcd;border-radius:8px;background:#fff;color:var(--ink)}
+.off input:focus{outline:2px solid var(--sign);outline-offset:1px;border-color:var(--sign)}
+.off form .btn{width:100%;justify-content:center}
+.off small{display:block;margin-top:12px;font-size:13px;color:var(--muted)}
+.off-no{background:none;border:0;padding:0;margin-top:14px;font:inherit;font-size:14px;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.off-no:hover{color:var(--ink)}
+.off-code{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 6px;padding:12px 12px 12px 18px;border:1.5px dashed var(--ink);border-radius:8px;background:#fff}
+.off-code b{font-family:var(--f-mono);font-size:24px;letter-spacing:2px}
+.off-code button{background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 16px;font-weight:600;font-size:14px}
+.off .msg{font-size:14px;color:var(--shell-dk);margin:0;min-height:0}
+@media (min-width:700px){.off{grid-template-columns:1fr 1.15fr}.off-ph{height:auto;min-height:440px}.off-in{padding:44px 40px 34px;align-self:center}}
+@media (max-width:699px){#offer[open]{margin:auto 0 0;width:100%;max-width:100%;border-radius:14px 14px 0 0;animation:offUp .35s var(--ease)}}
+@keyframes offUp{from{transform:translateY(100%)}to{transform:none}}
+.code-line{margin:0;font-size:14.5px;background:#fff;border:1px dashed var(--sign);border-radius:8px;padding:10px 12px;color:var(--body)}
+.code-line b{font-family:var(--f-mono);color:var(--ink)}
 .olines{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .olines li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15.5px}
 .olines .m{font-family:var(--f-mono);font-size:14px}
@@ -890,6 +918,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
       </div>
       <label>ZIP code<input id="oZip" autocomplete="postal-code" inputmode="numeric"></label>
       <label>Notes<textarea id="oNotes" placeholder="Live or frozen, sizes, anything else"></textarea></label>
+      <p class="code-line" id="codeLine" hidden></p>
       <pre class="prev" id="prev"></pre>
       <div class="acts">
         <button class="btn btn-green" type="button" id="sendDirect" hidden>Send order</button>
@@ -910,6 +939,34 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
   </div>
 </dialog>
 
+<dialog id="offer" aria-labelledby="offT">
+  <div class="off">
+    <figure class="off-ph"><img src="img/crate.webp" alt="A crate of live lobsters from Overnight Tider" loading="lazy" width="1080" height="1080"></figure>
+    <div class="off-in">
+      <button class="x" type="button" data-close aria-label="Close">&times;</button>
+      <div id="offForm">
+        <p class="off-k">New to Overnight Tider?</p>
+        <h2 id="offT"><em id="offPct">10% off</em><br>your first order</h2>
+        <p>Leave your email and you get your code right away, plus this week&rsquo;s catch and specials before they sell out.</p>
+        <form id="offF" novalidate>
+          <label class="vh" for="offEmail">Email address</label>
+          <input id="offEmail" type="email" autocomplete="email" inputmode="email" placeholder="Your email address" required>
+          <button class="btn btn-green" type="submit" id="offBtn">Get my 10% off</button>
+          <p class="msg" id="offMsg" aria-live="polite"></p>
+        </form>
+        <small>One email a week at most. Unsubscribe anytime.</small>
+        <button class="off-no" type="button" data-close>No thanks</button>
+      </div>
+      <div id="offDone" hidden aria-live="polite">
+        <p class="off-k">You&rsquo;re on the list</p>
+        <h2>Here&rsquo;s your code</h2>
+        <div class="off-code"><b id="offCode">TIDE10</b><button type="button" id="offCopy">Copy</button></div>
+        <p>It&rsquo;s already saved to your order on this device. We take it off when we confirm your price.</p>
+        <a class="btn btn-green" href="#board" id="offGo" style="margin-top:20px">Start my order</a>
+      </div>
+    </div>
+  </div>
+</dialog>
 <dialog id="legal"><div class="legal" id="legalBody"></div></dialog>
 
 <script>
@@ -933,6 +990,7 @@ const SHOP={
   clients:[],          // Real client names, e.g. ["Harbor Grill","Sal\u2019s Catering"]. While empty, placeholders show in pitch mode only
   reviews:[],          // Real reviews only, e.g. {text:"...", name:"Maria T.", source:"Google review", stars:5}. Hidden while empty
   pitch:true,          // Shows the "Why we built it this way" toggle. Set to false before launch (or open the site with ?why to see it anyway)
+  welcome:{pct:10,code:"TIDE10"}, // First-order email offer. Owner must agree to honor it. Set to null to turn the popup off
   siteUrl:"https://overnight-tider.vercel.app",
   special:{on:true,text:"<b>Lobster special, Thu to Sun:</b> 1&frac12; lb lobsters at $7.99/lb.",item:"lobster",unit:"lobster (1½ lb)"}
 };
@@ -1038,6 +1096,7 @@ function message(){
   if(v("oWhen"))m+=` for ${new Date(v("oWhen")+"T12:00").toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"})}`;
   if(v("oZip"))m+=`\nZIP: ${v("oZip")}`;
   if(v("oNotes"))m+=`\nNotes: ${v("oNotes")}`;
+  const wc=welcomeCode();if(wc)m+=`\nFirst order code: ${wc} (${SHOP.welcome.pct}% off)`;
   if(v("oPhone"))m+=`\nPhone: ${v("oPhone")}`;
   if(v("oName"))m+=`\n\nThanks, ${v("oName")}`;
   return m;
@@ -1045,6 +1104,7 @@ function message(){
 function renderSheet(){
   $("olines").innerHTML=olines().map(l=>`<li><span>${l.name}</span><span><span class="m">${l.txt}</span><button class="rm" type="button" data-rm="${l.k}">remove</button></span></li>`).join("")||"<li>Nothing added yet.</li>";
   $("prev").textContent=message();
+  const wc=welcomeCode(),cl=$("codeLine");cl.hidden=!wc;if(wc)cl.innerHTML=`<b>${wc}</b> applied: ${SHOP.welcome.pct}% off your first order, taken off when we confirm your price.`;
   if(SHOP.phone)$("sendSMS").href="sms:"+SHOP.phone.replace(/[^\d+]/g,"")+"?&body="+encodeURIComponent(message());
 }
 async function copy(t,el,ok){try{await navigator.clipboard.writeText(t);el.textContent=ok}catch(e){el.textContent="Couldn't copy automatically. Select the text above and copy it."}}
@@ -1062,7 +1122,7 @@ $("sendDirect").onclick=async()=>{
   b.disabled=true;b.textContent="Sending...";
   const id="OT-"+Date.now().toString(36).slice(-5).toUpperCase();
   try{
-    await post("order",{id,name:v("oName"),phone:ph,how:v("oHow"),when:v("oWhen"),zip:v("oZip"),notes:v("oNotes"),items:olines().map(l=>`${l.name}: ${l.txt}`).join("; ")});
+    await post("order",{id,name:v("oName"),phone:ph,how:v("oHow"),when:v("oWhen"),zip:v("oZip"),notes:[v("oNotes"),welcomeCode()?"First order code "+welcomeCode():""].filter(Boolean).join(" | "),items:olines().map(l=>`${l.name}: ${l.txt}`).join("; ")});
     track("order_submitted",{order_id:id,lines:Object.keys(cart).length});rememberOrder();
     $("doneTxt").innerHTML=`Your order number is <span class="oid">${id}</span>. We'll reach you at ${esc(ph)} with this week's price.`;
     if(SHOP.depositLink){$("doneDeposit").href=SHOP.depositLink;$("doneDeposit").hidden=false}
@@ -1231,12 +1291,48 @@ const HERO_S=[["Live lobster", "lobster", "This week\u2019s crate"], ["Head-on s
   schedule();
 })();
 
+/* ---------- first-order email offer ---------- */
+function welcomeCode(){try{return SHOP.welcome&&localStorage.getItem("ot-code")||""}catch(e){return""}}
+(function offer(){
+  const W=SHOP.welcome,dlg=$("offer");if(!W||!dlg)return;
+  const pct=W.pct+"% off";$("offPct").textContent=pct;$("offBtn").textContent="Get my "+pct;$("offCode").textContent=W.code;
+  let st={};try{st=JSON.parse(localStorage.getItem("ot-offer")||"{}")}catch(e){}
+  const saveSt=()=>{try{localStorage.setItem("ot-offer",JSON.stringify(st))}catch(e){}};
+  const force=/[?&]offer\b/.test(location.search);
+  if(!force&&(st.done||(st.closed&&Date.now()-st.closed<14*864e5)||welcomeCode()))return;
+  let shown=false;const t0=Date.now();
+  function open(why){
+    if(shown)return;if(document.querySelector("dialog[open]")){setTimeout(()=>open(why),4000);return}
+    shown=true;dlg.showModal();if(matchMedia("(pointer:fine)").matches)$("offEmail").focus();track("offer_view",{trigger:why});cleanup();
+  }
+  const onScroll=()=>{const h=document.documentElement;if(Date.now()-t0>6000&&(scrollY+innerHeight)/h.scrollHeight>.45)open("scroll")};
+  const onOut=e=>{if(!e.relatedTarget&&e.clientY<8&&Date.now()-t0>5000)open("exit")};
+  const timer=setTimeout(()=>open("time"),force?600:28000);
+  function cleanup(){clearTimeout(timer);removeEventListener("scroll",onScroll);document.removeEventListener("mouseout",onOut)}
+  addEventListener("scroll",onScroll,{passive:true});
+  if(matchMedia("(pointer:fine)").matches)document.addEventListener("mouseout",onOut);
+  dlg.addEventListener("close",()=>{if(!st.done){st.closed=Date.now();saveSt();track("offer_close")}});
+  dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+  $("offF").addEventListener("submit",async e=>{
+    e.preventDefault();const em=$("offEmail").value.trim(),m=$("offMsg");
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){m.textContent="Please check your email address.";$("offEmail").focus();return}
+    m.textContent="";$("offBtn").disabled=true;
+    try{if(EP)await post("email",{email:em,code:W.code})}catch(err){}
+    try{localStorage.setItem("ot-code",W.code)}catch(err){}
+    st.done=Date.now();saveSt();track("sign_up",{method:"email_offer"});
+    $("offForm").hidden=true;$("offDone").hidden=false;
+  });
+  $("offCopy").onclick=()=>copy(W.code,$("offCopy"),"Copied");
+  $("offGo").onclick=e=>{e.preventDefault();dlg.close();const b=$("board");if(b)b.scrollIntoView({behavior:calm?"auto":"smooth"})};
+})();
+
 /* ---------- "why we built it this way" (pitch mode) ---------- */
 const WHY=[
  ["#special","Weekly special bar","Gives every visitor a reason to order this week instead of someday. You change the text from your Google Sheet in seconds.","Specials move stock you already bought before it loses value."],
  [".top","Order button that remembers the cart","The Order button is always on screen and changes to \"Review order (3)\" once something is added, so nobody loses an order halfway.","Fewer half-finished orders means more finished ones."],
  [".hero-copy h1","A headline that says what you sell","Live lobster, fresh seafood, delivered. A stranger understands what you do in about three seconds. Vague or clever headlines make people leave.","Every visitor who stays past the first screen is a possible order."],
  [".paths","Two doors: home and business","Home cooks go straight to this week's list. Restaurants and caterers go to the wholesale form, where the big repeat orders are.","Each buyer gets to the right place in one tap instead of guessing."],
+ ["#offer .off-in","First-order email offer","Shows once, only after someone scrolls halfway, stays 28 seconds, or moves to leave. Never on arrival, so it doesn't block the page or hurt search ranking.","Turns visitors who aren't ready to buy into an email list you own, and the code pulls them back for a first order."],
  ["#show","Your real crates, not stock photos","The slideshow shows what is actually in your crates and coolers this week. The biggest doubt about buying seafood online is \"is this real and is it fresh\".","Proof of real stock is what turns a curious visitor into a buyer."],
  ["#clients","Who already buys here","A row of real restaurants and caterers that buy from you, right under the first screen. Nothing makes a new buyer trust a supplier faster than seeing other kitchens they know already use it. Placeholders now, real names before launch.","Social proof from other businesses is what wins wholesale accounts."],
  ["#film","One species at a time, made to look premium","Right after the first screen, the catalog slides past one product at a time. Each gets the whole stage: its name, a clean shot, how it is sold, the price and an Add button. It feels like a real seafood brand, and the buyer only has one decision to make at a time.","Looking expensive lets you hold your prices. Showing one item at a time gets more of them added to orders."],

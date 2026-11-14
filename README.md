@@ -23,7 +23,8 @@ Website and ordering system for Overnight Tider (fresh and frozen seafood, retai
 5. **Deposits (optional).** Paste a Square payment link into `depositLink`.
 6. **Analytics.** Turn on Web Analytics in the Vercel project. Add a GA4 ID to `ga4` if wanted.
 7. **Domain.** When a custom domain is connected, replace `overnight-tider.vercel.app` in `index.html` (canonical and og tags), `sitemap.xml`, `robots.txt` and `SHOP.siteUrl`.
-8. **Google.** Create the Google Business Profile, link the site, and submit `sitemap.xml` in Search Console.
+8. **First-order offer.** `welcome` is set to 10% off with code `TIDE10`. Confirm the owner will honor it, change the percent or code if they want, or set it to `null` to turn the popup off. Signups land in the "Email list" tab. Open the site with `?offer` to see the popup right away.
+9. **Google.** Create the Google Business Profile, link the site, and submit `sitemap.xml` in Search Console.
 
 ## Files
 - `index.html`: the site

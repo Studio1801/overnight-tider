@@ -6,7 +6,7 @@
 // 3. Deploy > New deployment > Web app. Execute as: Me. Who has access: Anyone. Authorize.
 // 4. Copy the web app URL into SHOP.endpoint in index.html and push.
 //
-// Tabs "Orders", "Wholesale quotes" and "Text list" are created automatically on the first submission.
+// Tabs "Orders", "Wholesale quotes", "Text list" and "Email list" are created automatically on the first submission.
 // The owner works orders by changing the Status column (New, Priced, Confirmed, Done).
 
 const OWNER_EMAIL = "";
@@ -14,7 +14,8 @@ const OWNER_EMAIL = "";
 const TABS = {
   order: { name: "Orders", head: ["Received", "Order #", "Name", "Phone", "Items", "How", "Date needed", "ZIP", "Notes", "Status"] },
   quote: { name: "Wholesale quotes", head: ["Received", "Name", "Business", "Buying for", "Phone", "Need", "How often", "First delivery", "Status"] },
-  alert: { name: "Text list", head: ["Signed up", "Phone"] }
+  alert: { name: "Text list", head: ["Signed up", "Phone"] },
+  email: { name: "Email list", head: ["Signed up", "Email", "Code given"] }
 };
 
 function clean(v) {
@@ -49,12 +50,20 @@ function doPost(e) {
       if (have.indexOf(phone) > -1) return out("ok");
       row = [phone];
     }
+    if (d.type === "email") {
+      const email = String(d.email || "").trim().toLowerCase();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return out("bad email");
+      const n = sh.getLastRow() - 1;
+      const have = n > 0 ? sh.getRange(2, 2, n, 1).getValues().flat().map(x => String(x).toLowerCase()) : [];
+      if (have.indexOf(email) > -1) return out("ok");
+      row = [email, d.code];
+    }
     sh.appendRow([new Date()].concat(row.map(clean)));
   } finally {
     lock.releaseLock();
   }
 
-  if (OWNER_EMAIL && d.type !== "alert") {
+  if (OWNER_EMAIL && d.type !== "alert" && d.type !== "email") {
     const subject = d.type === "order"
       ? "New order " + d.id + " from " + (d.name || "a customer")
       : "Wholesale quote request from " + (d.biz || d.name);
