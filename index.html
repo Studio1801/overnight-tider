@@ -411,20 +411,31 @@ select.unit{padding:9px 10px;border:1px solid var(--line);border-radius:6px;back
 .seg button[aria-pressed="true"]{color:var(--ink)}
 .seg-ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);background:#fff;border-radius:999px;box-shadow:0 2px 8px rgba(19,32,46,.14);transition:transform .4s cubic-bezier(.3,1.4,.5,1)}
 .seg.r .seg-ind{transform:translateX(100%)}
-.pl-out{position:relative;background:var(--paper);border-radius:14px;padding:20px 20px 18px}
-.pl-out::before{content:"Your haul";display:block;font-family:var(--f-display);font-weight:800;font-size:22px;line-height:1;margin:0 0 6px;letter-spacing:.2px}
-.pl-list{list-style:none;margin:0 0 18px;padding:0}
-.pl-list li{display:grid;grid-template-columns:auto 1fr auto;gap:0 10px;align-items:baseline;padding:11px 0}
-.pl-list li::after{content:"";grid-column:2;grid-row:1;border-bottom:2px dotted #b9c2c0;transform:translateY(-5px)}
+.pl-out{position:relative;background:#fff;border-radius:16px;box-shadow:0 0 0 1px #e3e6e1,0 26px 44px -30px rgba(19,32,46,.45)}
+.po-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:20px 22px 4px}
+.po-head b{font-family:var(--f-display);font-weight:800;font-size:24px;line-height:1;letter-spacing:.2px}
+.po-head span{font-size:13px;color:var(--muted)}
+.pl-list{list-style:none;margin:0;padding:0 22px 8px}
+.pl-list li{display:grid;grid-template-columns:48px auto 1fr auto;gap:0 14px;align-items:center;padding:14px 0}
 .pl-list li+li{border-top:1px solid var(--line)}
-.pl-list li>span{font-size:16px;font-weight:600}
-.pl-list b{grid-column:3;font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;color:var(--ink);text-align:right}
-.pl-list small{grid-column:1/-1;font-size:13px;color:var(--muted);margin-top:2px}
+.pl-list li>img{width:48px;height:40px;object-fit:contain;filter:drop-shadow(0 4px 3px rgba(19,32,46,.22));transform:rotate(-8deg)}
+.pl-list .nm{display:grid;gap:2px;min-width:0}
+.pl-list .nm span{font-size:16px;font-weight:600;line-height:1.2}
+.pl-list .nm small{font-size:13px;color:var(--muted)}
+.pl-list .ldr{align-self:center;border-bottom:2px dotted #c4ccca;min-width:12px;margin-top:-14px}
+.pl-list b{display:grid;justify-items:end;text-align:right;font-family:var(--f-display);font-weight:800;line-height:.95;color:var(--ink)}
+.pl-list b>span{font-size:28px}
+.pl-list b>em{font-style:normal;font-size:17px;color:var(--muted);margin-top:3px}
+.po-tear{position:relative;padding:20px 22px 18px;border-top:2px dashed #dfe3df;background:var(--paper);border-radius:0 0 16px 16px}
+.po-tear::before,.po-tear::after{content:"";position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px #e3e6e1}
+.po-tear::before{left:-10px;clip-path:inset(0 0 0 50%)}
+.po-tear::after{right:-10px;clip-path:inset(0 50% 0 0)}
 .pl-out .btn{width:100%;justify-content:center;font-size:16.5px;padding-top:15px;padding-bottom:15px}
-.pl-safe{margin:10px 0 0;font-size:13px;color:var(--muted);text-align:center;line-height:1.9}
-.pl-safe a{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--band);text-decoration-thickness:2px;text-underline-offset:3px}
-.pl-how{margin:10px 0 0;font-size:13.5px;color:var(--body);line-height:1.55;background:var(--paper);border-radius:10px;padding:12px 14px}
-.roll{display:inline-block;animation:roll .35s var(--ease)}
+.pl-safe{margin:12px 0 0;font-size:13px;color:var(--muted);text-align:center;line-height:1.6}
+.pl-safe a{color:var(--ink);font-weight:600;white-space:nowrap;text-decoration:underline;text-decoration-color:var(--band);text-decoration-thickness:2px;text-underline-offset:3px}
+.pl-how{margin:12px 0 0;font-size:13.5px;color:var(--body);line-height:1.55;background:#fff;border-radius:10px;padding:12px 14px}
+@media (max-width:520px){.po-head{flex-direction:column;gap:4px;padding:18px 16px 2px}.pl-list{padding:0 16px 6px}.po-tear{padding:18px 16px 16px}.pl-list li{grid-template-columns:34px 1fr auto;gap:0 10px}.pl-list .ldr{display:none}.pl-list li>img{width:34px;height:30px}.pl-list .nm span{font-size:15px}.pl-list .nm small{font-size:12.5px}.pl-list b>span{font-size:22px}.pl-list b>em{font-size:15px}}
+.roll{animation:roll .35s var(--ease)}
 @keyframes roll{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.plate,.pc,.pl-head.pop b{animation:none}}
 
@@ -860,10 +871,13 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
           </div>
         </div>
         <div class="pl-out">
+          <div class="po-head"><b>Your haul</b><span id="poMeta">Crab boil, 10 guests</span></div>
           <ul class="pl-list" id="plList"></ul>
-          <button class="btn btn-green" type="button" id="plAdd">Add the whole haul</button>
-          <p class="pl-safe">Nothing is charged. We check amounts with you when we confirm.<br><a href="#" id="plHowT">How we size it</a></p>
+          <div class="po-tear">
+            <button class="btn btn-green" type="button" id="plAdd">Add the whole haul</button>
+            <p class="pl-safe">Nothing is charged. We check amounts with you when we confirm. <a href="#" id="plHowT">How we size it</a></p>
           <p class="pl-how" id="plHow" hidden>About 6 crabs a person with sides, 10 if crabs are the meal. One lobster each, or one and a half for big eaters. Half a pound of head-on shrimp a person with sides, a pound if it&rsquo;s the meal. A bushel is roughly 5 dozen crabs.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1285,9 +1299,10 @@ function pile(rows){
 function renderPlan(){
   const rows=OCC[occ].plan(people,$("pMain").checked);
   const grp=[];rows.forEach(r=>{const g=grp.find(x=>x[0]===r[0]);if(g)g[1].push(r);else grp.push([r[0],[r]])});
-  $("plList").innerHTML=grp.map(([id,rs])=>{const txt=rs.map(([,u,q])=>label(u,q).replace(" (1½ lb)","")).join(" + "),ch=lastRows[id]!==txt;lastRows[id]=txt;
+  $("plList").innerHTML=grp.map(([id,rs])=>{const parts=rs.map(([,u,q])=>label(u,q).replace(" (1½ lb)","")),txt=parts.join("+"),ch=lastRows[id]!==txt;lastRows[id]=txt;
     const h=hint(id,rs[0][1],rs[0][2],rows);
-    return `<li><span>${item(id).name}</span><b><span class="${ch?"roll":""}">${txt}</span></b>${h?`<small>${h}</small>`:""}</li>`}).join("");
+    return `<li><img src="${PILE[id][0]}" alt=""><div class="nm"><span>${item(id).name}</span>${h?`<small>${h}</small>`:""}</div><i class="ldr"></i><b class="${ch?"roll":""}"><span>${parts[0]}</span>${parts[1]?`<em>+ ${parts[1]}</em>`:""}</b></li>`}).join("");
+  $("poMeta").textContent=`${OCC[occ].name}, ${people} guests`;
   const o=$("pN");if(o.textContent!=String(people)){o.textContent=people;o.classList.remove("bump");void o.offsetWidth;o.classList.add("bump")}
   $("pRange").value=people;$("pRange").style.setProperty("--fill",((people-2)/58*100)+"%");
   const m=MOOD(people);$("plSub").textContent=`${OCC[occ].name} for ${people}`;
