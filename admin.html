@@ -387,7 +387,7 @@ button.row:hover{background:#fafaf7}
     <nav class="nav" id="nav" aria-label="Dashboard"></nav>
     <div class="side-foot">
       <div class="mode" id="modeBox"></div>
-      <a href="index.html" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 3h4v4M13 3 7 9M11 9v4H3V5h4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Open the website</a>
+      <a href="./" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 3h4v4M13 3 7 9M11 9v4H3V5h4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Open the website</a>
       <button type="button" id="lockBtn"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Lock</button>
     </div>
   </aside>
@@ -611,7 +611,7 @@ function pToday(){
   const hr=new Date().getHours(),hi=hr<12?"Good morning":hr<17?"Good afternoon":"Good evening";
   $("title").textContent=hi;
   $("page").innerHTML=`
-  ${DB.sample&&!LIVE?`<div class="note-bar"><b>Sample data.</b> These orders are made up so you can see how it works. Place an order on the <a class="lnk" href="index.html" target="_blank" rel="noopener">website</a> in this browser and it lands here.</div>`:""}
+  ${DB.sample&&!LIVE?`<div class="note-bar"><b>Sample data.</b> These orders are made up so you can see how it works. Place an order on the <a class="lnk" href="./" target="_blank" rel="noopener">website</a> in this browser and it lands here.</div>`:""}
   <section class="card" style="margin-bottom:18px"><div class="kpis">
     <div class="kpi ${nw.length?"hot":""}"><span>Waiting on your reply</span><b>${nw.length+qn.length}</b><small>${nw.length} order${nw.length===1?"":"s"}, ${qn.length} wholesale quote${qn.length===1?"":"s"}</small></div>
     <div class="kpi"><span>Sales this week</span><b>${fmt0(a.booked)}</b>${delta(a.booked,b.booked)||"<small>&nbsp;</small>"}</div>
@@ -838,7 +838,7 @@ function readDefaults(){const d=frameDoc();if(!d)return;const tmp=document.creat
   document.querySelectorAll("[data-imgk]").forEach(im=>{const k=im.dataset.imgk;if(!(cur().photos||{})[k]&&defImg[k])im.src=defImg[k]})}
 function pWebsite(){
   const S=cur(),C=S.content||{},P=S.photos||{},K=S.contact||{},O=S.offer||{on:true,pct:10,code:"TIDE10"};
-  $("topAct").innerHTML=`<button class="btn b-soft b-sm pv-open" type="button" id="pvOpen">Preview</button><a class="btn b-soft b-sm hide-m" href="index.html" target="_blank" rel="noopener">Open website</a>`;
+  $("topAct").innerHTML=`<button class="btn b-soft b-sm pv-open" type="button" id="pvOpen">Preview</button><a class="btn b-soft b-sm hide-m" href="./" target="_blank" rel="noopener">Open website</a>`;
   const fld=([k,l,t])=>{if(k==="@building")return photoSlot("building","Building photo",P.building||defImg.building||"img/building-wide.webp",!!P.building);
     const v=C[k]||"";return `<div class="field ${v?"chg":""}"><div class="fh"><label for="f-${k}">${l}</label>${v?`<button class="rs" type="button" data-reset="${k}">Use original</button>`:""}</div>${t==="area"?`<textarea id="f-${k}" data-ck="${k}" placeholder="${esc(defs[k]||"")}">${esc(v)}</textarea>`:`<input id="f-${k}" data-ck="${k}" value="${esc(v)}" placeholder="${esc(defs[k]||"")}">`}</div>`};
   const photoSlot=(k,l,src,chg)=>`<div class="ph"><div class="ph-img ${chg?"chg":""}"><img data-imgk="${k}" src="${esc(src)}" alt=""><button type="button" data-up="${k}">Replace</button></div><div class="grid" style="display:grid;gap:6px"><b style="font-size:14.5px">${l}</b><span class="muted" style="font-size:13px">A clear phone photo works. We resize it for you.</span>${chg?`<button class="rs lnk" style="justify-self:start;font-size:13px" type="button" data-imgreset="${k}">Use original</button>`:""}</div></div>`;
@@ -853,7 +853,7 @@ function pWebsite(){
     </div></details>`).join("")}
   </div>
   <div class="pv" id="pv"><div class="pv-bar"><b>Live preview</b><div class="seg" role="group" aria-label="Preview size"><button type="button" data-pvm="desktop" aria-pressed="${pvMode==="desktop"}">Computer</button><button type="button" data-pvm="phone" aria-pressed="${pvMode==="phone"}">Phone</button></div><button class="btn b-soft b-sm pv-open" type="button" id="pvClose">Close</button></div>
-    <div class="pv-frame" id="pvBox"><iframe id="pvF" title="Website preview" src="index.html?preview"></iframe></div></div></div>`;
+    <div class="pv-frame" id="pvBox"><iframe id="pvF" title="Website preview" src="./?preview"></iframe></div></div></div>`;
   const pg=$("page");
   const setC=(k,v)=>{const s=edit();s.content=s.content||{};if(v)s.content[k]=v;else delete s.content[k];changed()};
   pg.addEventListener("input",e=>{const t=e.target;
@@ -968,7 +968,7 @@ function pCustomers(){
 document.addEventListener("click",e=>{const c=e.target.closest("[data-cust]");if(!c)return;route="orders";location.hash="orders";drawNav();render({q:c.dataset.cust})});
 
 /* ===================== SETTINGS / MORE ===================== */
-function pMore(){$("page").innerHTML=`<div class="more-sheet">${[["customers","Customers"],["settings","Settings"]].map(([k,l])=>`<button type="button" data-go="${k}">${l}<span aria-hidden="true">›</span></button>`).join("")}<a class="btn b-soft" href="index.html" target="_blank" rel="noopener" style="justify-content:space-between;border-radius:14px;padding:16px 18px">Open the website<span aria-hidden="true">↗</span></a><button class="btn b-soft" type="button" id="lockM" style="justify-content:flex-start;border-radius:14px;padding:16px 18px">Lock the dashboard</button></div>`;$("lockM").onclick=lock}
+function pMore(){$("page").innerHTML=`<div class="more-sheet">${[["customers","Customers"],["settings","Settings"]].map(([k,l])=>`<button type="button" data-go="${k}">${l}<span aria-hidden="true">›</span></button>`).join("")}<a class="btn b-soft" href="./" target="_blank" rel="noopener" style="justify-content:space-between;border-radius:14px;padding:16px 18px">Open the website<span aria-hidden="true">↗</span></a><button class="btn b-soft" type="button" id="lockM" style="justify-content:flex-start;border-radius:14px;padding:16px 18px">Lock the dashboard</button></div>`;$("lockM").onclick=lock}
 function pSettings(){
   $("page").innerHTML=`<div class="grid2"><div class="stack">
    <section class="card"><div class="card-h"><h2>Connection</h2></div><div class="card-b" style="display:grid;gap:14px">
