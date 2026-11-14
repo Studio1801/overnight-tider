@@ -756,12 +756,12 @@ const ITEMS=[
    units:[{u:"lb",label:"By the lb"},{u:"sack",label:"Sack"}]},
   {id:"shrimp",name:"Head-on shrimp",img:"img/shrimp.webp",note:"Big, fresh, shell-on. Built for boils and the grill.",tag:"Fresh",
    units:[{u:"lb",label:"By the lb"},{u:"case",label:"Case"}]},
-  {id:"tails",name:"Red shrimp tails",img:"img/tails.webp",note:"Sweet tails, easy to peel.",tag:"Fresh or frozen",
+  {id:"tails",name:"Red shrimp",img:"img/p-redshrimp.webp",note:"Sweet red shrimp, whole or as tails. Fresh or frozen.",tag:"Fresh or frozen",
    units:[{u:"lb",label:"By the lb"},{u:"case",label:"Case"}]},
   {id:"oyster",name:"Oysters",img:"img/oysters.webp",note:"By the dozen or by the box.",tag:"Fresh",
    units:[{u:"dozen",label:"Dozen"},{u:"box",label:"Box"}]},
   {id:"squid",name:"Squid",img:"img/squid.webp",note:"Whole, fresh. Good for frying or the grill.",tag:"Fresh",units:[{u:"lb",label:"By the lb"}]},
-  {id:"octopus",name:"Octopus",img:"img/octopus.webp",note:"Whole, ready for the grill.",tag:"Fresh or frozen",units:[{u:"lb",label:"By the lb"}]},
+  {id:"octopus",name:"Octopus",img:"img/p-octopus.webp",note:"Whole, ready for the grill.",tag:"Fresh or frozen",units:[{u:"lb",label:"By the lb"}]},
   {id:"salmon",name:"Whole salmon",img:"img/p-salmon.webp",note:"Whole fish, cleaned or left as is. Ask about fillets.",tag:"Fresh",units:[{u:"lb",label:"By the lb"},{u:"each",label:"Whole fish"}]},
   {id:"snapper",name:"Red snapper",img:"img/p-snapper.webp",note:"Whole red snapper, great fried or on the grill.",tag:"Fresh",units:[{u:"lb",label:"By the lb"}]},
   {id:"porgy",name:"Red porgy",img:"img/p-porgy.webp",note:"Also called red sea bream. Sweet white meat, best whole.",tag:"Fresh",units:[{u:"lb",label:"By the lb"}]},
@@ -1084,7 +1084,7 @@ const WHY=[
 })();
 
 /* ---------- what we carry: horizontal film ---------- */
-const CARRY={lobster:{cut:"img/p-lobster.webp",word:"Lobster"},crab:{cut:"img/p-bluecrab.webp",word:"Blue crab"},dungeness:{cut:"img/p-dungeness.webp",word:"Dungeness"},crawfish:{cut:"img/p-crawfish.webp",word:"Crawfish"},shrimp:{cut:"img/p-shrimp.webp",word:"Shrimp"},tails:{photo:"img/tails.webp",word:"Red tails"},oyster:{cut:"img/p-oyster.webp",word:"Oysters"},salmon:{cut:"img/p-salmon.webp",word:"Salmon"},snapper:{cut:"img/p-snapper.webp",word:"Snapper"},porgy:{cut:"img/p-porgy.webp",word:"Porgy"},squid:{cut:"img/p-squid.webp",word:"Squid"},octopus:{cut:"img/cut-octopus.webp",word:"Octopus"}};
+const CARRY={lobster:{cut:"img/p-lobster.webp",word:"Lobster"},crab:{cut:"img/p-bluecrab.webp",word:"Blue crab"},dungeness:{cut:"img/p-dungeness.webp",word:"Dungeness crab"},crawfish:{cut:"img/p-crawfish.webp",word:"Crawfish"},shrimp:{cut:"img/p-shrimp.webp",word:"Head-on shrimp"},tails:{cut:"img/p-redshrimp.webp",word:"Red shrimp"},oyster:{cut:"img/p-oyster.webp",word:"Oysters"},salmon:{cut:"img/p-salmon.webp",word:"Salmon"},snapper:{cut:"img/p-snapper.webp",word:"Red snapper"},porgy:{cut:"img/p-porgy.webp",word:"Red porgy"},squid:{cut:"img/p-squid.webp",word:"Squid"},octopus:{cut:"img/p-octopus.webp",word:"Octopus"}};
 let carryIdx=0,ocList=[];
 function panelHTML(it,i,n){
   const c=CARRY[it.id];
