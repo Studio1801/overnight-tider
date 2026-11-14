@@ -252,18 +252,19 @@ button{cursor:pointer}
 .shop-tabs button:hover{color:var(--ink)}
 .shop-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:22px max(20px,calc((100vw - 1180px)/2)) 30px;scroll-padding-left:max(20px,calc((100vw - 1180px)/2))}
 .shop-track::-webkit-scrollbar{display:none}
-.pcard{flex:none;width:230px;scroll-snap-align:start;background:#fff;border-radius:14px;padding:18px 16px 18px;display:grid;grid-template-rows:auto auto 1fr auto;gap:4px;text-align:center;position:relative;transition:box-shadow .3s ease,transform .3s var(--ease)}
+.pcard{flex:none;width:250px;scroll-snap-align:start;background:#fff;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;text-align:left;position:relative;transition:box-shadow .3s ease,transform .3s var(--ease)}
 .pcard:hover{box-shadow:0 18px 40px rgba(19,32,46,.12);transform:translateY(-3px)}
-.pc-plate{height:160px;display:grid;place-items:center;margin-bottom:12px;position:relative}
-.pc-plate::before{content:"";position:absolute;width:150px;height:150px;border-radius:50%;background:var(--frost)}
-.pc-plate img{position:relative;max-width:100%;max-height:150px;object-fit:contain;filter:drop-shadow(0 12px 10px rgba(19,32,46,.18));transition:transform .45s var(--ease)}
-.pc-plate.photo img{width:150px;height:150px;border-radius:50%;object-fit:cover;filter:none}
-.pcard:hover .pc-plate img{transform:scale(1.06) rotate(-2deg)}
+.pc-photo{display:block;aspect-ratio:1/1;overflow:hidden;background:var(--frost);position:relative}
+.pc-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--ease)}
+.pcard:hover .pc-photo img{transform:scale(1.05)}
+.pc-body{flex:1;display:flex;flex-direction:column;gap:3px;padding:14px 16px 16px}
 .pcard h3{font-size:16.5px;font-weight:600;margin:0;line-height:1.25}
 .pc-unit{font-size:13px;color:var(--muted)}
-.pc-tag{position:absolute;top:12px;left:12px;font-size:11.5px;font-weight:600;background:var(--band);color:var(--ink);padding:3px 8px;border-radius:4px;z-index:1}
+.pc-src{font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px}
+.pc-src:hover{color:var(--sign);text-decoration:underline}
+.pc-tag{position:absolute;top:10px;left:10px;font-size:11.5px;font-weight:600;background:var(--band);color:var(--ink);padding:3px 8px;border-radius:4px;z-index:1}
 .pc-tag.out{background:var(--ice-2);color:var(--muted)}
-.pc-buy{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;text-align:left}
+.pc-buy{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:14px}
 .pc-price{font-family:var(--f-display);font-weight:800;font-size:22px;line-height:1}
 .pc-price.ask{font-family:var(--f-body);font-weight:500;font-size:13.5px;color:var(--muted);line-height:1.3;max-width:9ch}
 .pc-price.hot{color:var(--shell-dk)}
@@ -1391,17 +1392,17 @@ function carryNav(){}
 
 /* ---------- shop by type ---------- */
 const SHOP_TABS=[["shell","Crab & lobster",["lobster","spiny","crab","dungeness"]],["shrimp","Shrimp & crawfish",["shrimp","tails","crawfish"]],["fish","Whole fish",["salmon","snapper","porgy","fish"]],["more","Oysters, squid & octopus",["oyster","squid","octopus"]],["all","Everything",null]];
-const SHOP_IMG={lobster:"img/p-lobster.webp",crab:"img/p-bluecrab.webp",dungeness:"img/p-dungeness.webp",crawfish:"img/p-crawfish.webp",shrimp:"img/p-shrimp.webp",tails:"img/p-redshrimp.webp",oyster:"img/p-oyster.webp",salmon:"img/p-salmon.webp",snapper:"img/p-snapper.webp",porgy:"img/p-porgy.webp",squid:"img/p-squid.webp",octopus:"img/p-octopus.webp"};
 let shopTab="shell";
 function shopCard(it,i){
-  const cut=SHOP_IMG[it.id],src=cut||(REAL[it.id]&&REAL[it.id].src)||it.img,out=it.status==="out";
+  const R=REAL[it.id]||{src:it.img,post:""},out=it.status==="out";
   const u=unitSel[it.id]||it.units[0].u,un=it.units.find(x=>x.u===u)||it.units[0],hot=un.hot&&!out;
   const tag=out?'<span class="pc-tag out">Sold out</span>':hot?'<span class="pc-tag">Special</span>':it.status==="limited"?'<span class="pc-tag">Going fast</span>':"";
   const qty=it.units.reduce((n,x)=>n+(cart[it.id+"|"+x.u]||0),0);
   const price=out?'<span class="pc-price ask">Sold out this week</span>':un.price?`<span class="pc-price${hot?" hot":""}">${esc(un.price.split(",")[0].replace(/ special/i,""))}<small>${esc(un.label.toLowerCase())}</small></span>`:`<span class="pc-price ask">Price on request</span>`;
-  return `<article class="pcard" data-sid="${it.id}" style="--i:${i}">${tag}<div class="pc-plate${cut?"":" photo"}"><img src="${src}" alt="${esc(it.name)}" loading="lazy"></div>
-    <h3>${esc(it.name)}</h3><span class="pc-unit">${it.units.map(x=>x.label.toLowerCase()).join(" · ")}</span>
-    <div class="pc-buy">${price}<button class="pc-add${qty?" in":""}" type="button"${out?" disabled":""} aria-label="Add ${esc(it.name)} to order">${out?"Sold out":qty?`In order (${qty}) +`:"Add"}</button></div></article>`;
+  const img=`<img src="${R.src}" alt="${esc(it.name)}, photographed by Overnight Tider" width="250" height="250" loading="lazy">`;
+  return `<article class="pcard" data-sid="${it.id}" style="--i:${i}">${tag}${R.post?`<a class="pc-photo" href="https://www.instagram.com/p/${R.post}/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${img}</a>`:`<div class="pc-photo">${img}</div>`}
+    <div class="pc-body"><h3>${esc(it.name)}</h3><span class="pc-unit">${it.units.map(x=>x.label.toLowerCase()).join(" · ")}</span>${R.post?`<a class="pc-src" href="https://www.instagram.com/p/${R.post}/" target="_blank" rel="noopener">Our photo, see the post</a>`:`<span class="pc-src">Our photo</span>`}
+    <div class="pc-buy">${price}<button class="pc-add${qty?" in":""}" type="button"${out?" disabled":""} aria-label="Add ${esc(it.name)} to order">${out?"Sold out":qty?`In order (${qty}) +`:"Add"}</button></div></div></article>`;
 }
 function renderShop(anim){
   const t=$("shopTabs"),tr=$("shopTrack");if(!t)return;
