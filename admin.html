@@ -174,6 +174,7 @@ button.row:hover{background:#fafaf7}
 .tbl tr:last-child td{border-bottom:0}
 .tbl tbody tr{cursor:pointer;transition:background-color .12s}
 .tbl tbody tr:hover{background:#fafaf7}
+.tbl td.mono{white-space:nowrap}
 .tbl .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tbl .who b{display:block;font-weight:600}
 .tbl .who small{color:var(--muted);font-size:13px}
@@ -357,6 +358,102 @@ button.row:hover{background:#fafaf7}
 .toast b{color:var(--band)}
 .more-sheet{display:grid;gap:10px}
 .more-sheet button{display:flex;justify-content:space-between;align-items:center;background:#fff;border:0;border-radius:14px;box-shadow:0 0 0 1px var(--line);padding:16px 18px;font-size:16px;font-weight:600;text-align:left}
+
+/* ===== motion and simpler layout ===== */
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.enter>*{animation:rise .6s var(--ease) both;animation-delay:calc(var(--n,0)*70ms)}
+.app.in{animation:fadein .5s ease both}
+.lock{transition:opacity .5s ease,transform .6s var(--ease)}
+.lock.out{opacity:0;transform:scale(1.03)}
+.nav{position:relative}
+.nav-ind{position:absolute;left:0;right:0;top:0;height:42px;border-radius:10px;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);transition:transform .5s cubic-bezier(.3,1.3,.4,1),height .3s;pointer-events:none}
+.nav button{position:relative;z-index:1}
+.nav button[aria-current="true"]{background:none}
+.tab-ind{position:absolute;top:6px;left:0;border-radius:12px;background:rgba(255,255,255,.1);transition:transform .5s cubic-bezier(.3,1.3,.4,1),width .3s;pointer-events:none}
+.tabbar{grid-template-columns:repeat(5,1fr)}
+.tabbar button{z-index:1}
+.tabbar button[aria-current="true"]{background:none}
+.tabbar button svg{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.tabbar button[aria-current="true"] svg{transform:translateY(-2px) scale(1.08);color:var(--band)}
+.gear{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:0;background:var(--ice);color:var(--ink)}
+.gear svg{width:18px;height:18px}
+@media (min-width:980px){.gear{display:none}}
+.scrim{-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.drawer{transition:transform .55s cubic-bezier(.22,1,.36,1),visibility 0s .55s}
+.drawer.on .dr-b>*{animation:rise .55s var(--ease) both;animation-delay:calc(120ms + var(--n,0)*55ms)}
+.burst{position:absolute;left:50%;top:42%;z-index:5;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;background:var(--sign);display:grid;place-items:center;box-shadow:0 30px 60px -20px rgba(47,107,61,.6);animation:burst 1.15s var(--ease) forwards;pointer-events:none}
+.burst svg{width:58px;height:58px}
+.burst path{stroke-dasharray:60;stroke-dashoffset:60;animation:tick 0.45s .18s ease-out forwards}
+@keyframes burst{0%{transform:scale(.4);opacity:0}22%{transform:scale(1.06);opacity:1}34%{transform:scale(1)}78%{transform:scale(1);opacity:1}100%{transform:scale(.9);opacity:0}}
+@keyframes tick{to{stroke-dashoffset:0}}
+.chart .bar{transform-box:fill-box;transform-origin:50% 100%;animation:grow .9s cubic-bezier(.2,.9,.2,1) both;animation-delay:calc(var(--i,0)*40ms)}
+@keyframes grow{from{transform:scaleY(0)}}
+.btn{transition:background-color .15s,transform .15s cubic-bezier(.3,1.6,.5,1),box-shadow .2s}
+.btn:hover{transform:translateY(-1px)}
+.card{transition:box-shadow .3s}
+/* today */
+.hello{margin:0 0 24px}
+.hello p{margin:0;font-size:clamp(20px,2.4vw,26px);line-height:1.4;max-width:30ch;color:var(--body)}
+.hello b{color:var(--ink);font-weight:600}
+.hello .hl{background:linear-gradient(transparent 62%,rgba(242,194,48,.55) 62%);padding:0 2px}
+.sample{display:block;margin-top:14px;font-size:13.5px;color:var(--muted)}
+.sample i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--band);margin-right:8px;vertical-align:1px}
+.tasks{list-style:none;margin:0;padding:6px 8px 10px}
+.task{display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:2px 14px;align-items:center;width:100%;background:none;border:0;text-align:left;padding:14px 12px;border-radius:12px;transition:background-color .2s,transform .2s var(--ease)}
+.task:hover{background:var(--paper)}
+.task>i{grid-row:1/3;width:10px;height:10px;border-radius:50%;background:var(--band)}
+.task.k-confirmed>i{background:#5b85b3}.task.k-paid>i{background:var(--sign)}.task.k-quote>i{background:var(--ink)}
+.task b{font-size:16px;font-weight:600}
+.task .sub{grid-column:2;font-size:13.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.task .go{grid-row:1/3;grid-column:3;display:flex;align-items:center;gap:12px}
+.task .go span{font-weight:600;font-variant-numeric:tabular-nums}
+.task .go em{font-style:normal;font-size:13.5px;font-weight:600;background:var(--ink);color:#fff;border-radius:999px;padding:7px 13px;transition:background-color .2s}
+.task:hover .go em{background:var(--sign)}
+.wait{border-top:1px solid var(--line)}
+.wait summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:14px 20px;font-size:14.5px;color:var(--muted)}
+.wait summary::-webkit-details-marker{display:none}
+.wait summary b{color:var(--ink);font-weight:600}
+.wk{padding:18px 20px 0}
+.wk span{font-size:13.5px;color:var(--muted)}
+.wk b{display:block;font-family:var(--f-display);font-weight:800;font-size:52px;line-height:1;margin:6px 0 4px;letter-spacing:.3px}
+.wk small{font-size:13px}
+.wk small.up{color:var(--sign)}.wk small.dn{color:var(--shell)}
+@media (max-width:520px){.task .go span{display:none}.task{padding:13px 8px}}
+/* stock rows */
+.stk2{list-style:none;margin:0;padding:0}
+.stk2>li+li{border-top:1px solid var(--line)}
+.sr{display:grid;grid-template-columns:52px minmax(0,1fr) auto 36px;gap:14px;align-items:center;padding:14px 18px}
+.sr img{width:52px;height:52px;border-radius:12px;object-fit:cover;transition:filter .3s,opacity .3s}
+li.is-out .sr img{filter:grayscale(1);opacity:.55}
+.sr b{display:block;font-size:16px;font-weight:600}
+.sr small{display:block;font-size:13.5px;color:var(--muted);margin-top:1px}
+.sr small em{font-style:normal;color:var(--shell-dk,#8a3214);font-weight:600}
+.sx{width:36px;height:36px;border-radius:50%;border:0;background:var(--ice);display:grid;place-items:center;transition:transform .35s var(--ease),background-color .2s}
+.sx svg{width:14px;height:14px}
+li.open .sx{transform:rotate(180deg);background:var(--ink);color:#fff}
+.st3{position:relative;isolation:isolate}
+.st3 .th{position:absolute;z-index:-1;top:3px;bottom:3px;left:0;border-radius:999px;background:var(--sign);transition:transform .45s cubic-bezier(.3,1.3,.4,1),width .3s,background-color .3s}
+.st3[data-st="limited"] .th{background:var(--band)}.st3[data-st="out"] .th{background:var(--ink)}
+.st3 button[aria-pressed="true"][data-st]{background:none!important}
+.st3 button[aria-pressed="true"]{color:#fff!important}
+.st3[data-st="limited"] button[aria-pressed="true"]{color:var(--ink)!important}
+.sxp{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+li.open .sxp{grid-template-rows:1fr}
+.sxp>div{overflow:hidden}
+.sxi{padding:0 18px 18px 84px;display:grid;gap:14px;opacity:0;transform:translateY(-6px);transition:opacity .3s,transform .4s var(--ease)}
+li.open .sxi{opacity:1;transform:none;transition-delay:.08s}
+@media (max-width:640px){.sr{grid-template-columns:44px minmax(0,1fr) 36px;row-gap:10px;padding:14px}.sr img{width:44px;height:44px}.sr .st3{grid-column:1/-1;grid-row:2;width:100%}.sr .st3 button{flex:1}.sxi{padding:0 14px 16px}}
+.spc{display:flex;align-items:center;gap:16px;padding:16px 18px}
+.spc .sp-prev{flex:1;min-width:0}
+.spc-x{padding:0 18px 18px;display:grid;gap:12px}
+/* website hint */
+.pv-hint{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted)}
+.pv-hint i{width:8px;height:8px;border-radius:50%;background:var(--band);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.field.flash input,.field.flash textarea{animation:fflash 1.2s ease}
+@keyframes fflash{0%{box-shadow:0 0 0 4px var(--band)}100%{box-shadow:0 0 0 1px #d5dbd7}}
+@media (prefers-reduced-motion:reduce){.enter>*,.drawer.on .dr-b>*,.chart .bar{animation:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -387,12 +484,13 @@ button.row:hover{background:#fafaf7}
     <nav class="nav" id="nav" aria-label="Dashboard"></nav>
     <div class="side-foot">
       <div class="mode" id="modeBox"></div>
+      <button type="button" data-go="settings"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5v2.2M10 15.3v2.2M2.5 10h2.2M15.3 10h2.2M4.7 4.7l1.6 1.6M13.7 13.7l1.6 1.6M4.7 15.3l1.6-1.6M13.7 6.3l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Settings</button>
       <a href="./" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 3h4v4M13 3 7 9M11 9v4H3V5h4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Open the website</a>
       <button type="button" id="lockBtn"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Lock</button>
     </div>
   </aside>
   <main class="main">
-    <header class="top"><div class="top-in"><img class="top-mark" src="brand/mark.svg" alt=""><div><h1 id="title">Today</h1><span class="when" id="when"></span></div><div class="top-act" id="topAct"></div></div></header>
+    <header class="top"><div class="top-in"><img class="top-mark" src="brand/mark.svg" alt=""><div><h1 id="title">Today</h1><span class="when" id="when"></span></div><div class="top-act" id="topAct"></div><button class="gear" type="button" data-go="settings" aria-label="Settings"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5v2.2M10 15.3v2.2M2.5 10h2.2M15.3 10h2.2M4.7 4.7l1.6 1.6M13.7 13.7l1.6 1.6M4.7 15.3l1.6-1.6M13.7 6.3l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div></header>
     <div class="page" id="page"></div>
   </main>
   <nav class="tabbar" id="tabbar" aria-label="Dashboard"></nav>
@@ -571,31 +669,43 @@ const ICONS={
  customers:'<circle cx="8" cy="7" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 16c.8-3 3-4.5 5.5-4.5s4.7 1.5 5.5 4.5M13 4.2a3 3 0 0 1 0 5.6M15 11.8c1.3.6 2.1 2 2.5 4.2" fill="none" stroke="currentColor" stroke-width="1.6"/>',
  settings:'<circle cx="10" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5v2.2M10 15.3v2.2M2.5 10h2.2M15.3 10h2.2M4.7 4.7l1.6 1.6M13.7 13.7l1.6 1.6M4.7 15.3l1.6-1.6M13.7 6.3l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
  more:'<circle cx="5" cy="10" r="1.6" fill="currentColor"/><circle cx="10" cy="10" r="1.6" fill="currentColor"/><circle cx="15" cy="10" r="1.6" fill="currentColor"/>'};
-const PAGES=[["today","Today"],["orders","Orders"],["stock","Stock & prices"],["website","Website"],["money","Money"],["customers","Customers"],["settings","Settings"]];
-const SHORT={today:"Today",orders:"Orders",stock:"Stock",website:"Website",money:"Money",more:"More"};
+const PAGES=[["today","Today"],["orders","Orders"],["stock","Stock"],["website","Website"],["money","Money"]];
 let route="today";
 const ico=k=>`<svg viewBox="0 0 20 20" aria-hidden="true">${ICONS[k]}</svg>`;
+const needsYou=()=>DB.orders.filter(o=>["new","confirmed","paid"].includes(o.status)).length+DB.quotes.filter(q=>q.status==="new").length;
 function drawNav(){
-  const nNew=DB.orders.filter(o=>o.status==="new").length+DB.quotes.filter(q=>q.status==="new").length;
-  $("nav").innerHTML=PAGES.map(([k,l])=>`<button type="button" data-go="${k}" aria-current="${route===k}">${ico(k)}${l}${k==="orders"&&nNew?`<span class="ct">${nNew}</span>`:""}</button>`).join("");
-  const tabs=["today","orders","stock","website","money","more"];const inMore=["customers","settings"].includes(route);
-  $("tabbar").innerHTML=tabs.map(k=>`<button type="button" data-go="${k}" aria-current="${route===k||(k==="more"&&inMore)}">${ico(k)}${SHORT[k]}${k==="orders"&&nNew?`<span class="ct">${nNew}</span>`:""}</button>`).join("");
+  const n=needsYou();
+  $("nav").innerHTML=`<i class="nav-ind" id="navInd"></i>`+PAGES.map(([k,l])=>`<button type="button" data-go="${k}" aria-current="${route===k}">${ico(k)}${l}${k==="orders"&&n?`<span class="ct">${n}</span>`:""}</button>`).join("");
+  $("tabbar").innerHTML=`<i class="tab-ind" id="tabInd"></i>`+PAGES.map(([k,l])=>`<button type="button" data-go="${k}" aria-current="${route===k}">${ico(k)}${l}${k==="orders"&&n?`<span class="ct">${n}</span>`:""}</button>`).join("");
   $("modeBox").className="mode"+(LIVE?" live":"");
-  $("modeBox").innerHTML=LIVE?`<b><i></i>Connected</b>Orders and changes go to your Google Sheet and the live website.`:`<b><i></i>Sample data</b>Orders you place on the website in this browser show up here too.`;
+  $("modeBox").innerHTML=LIVE?`<b><i></i>Connected</b>Changes go to your Google Sheet and the live website.`:`<b><i></i>Sample data</b>Orders placed on the website in this browser show up here.`;
+  placeInd();
 }
+function placeInd(){
+  const a=$("nav").querySelector('[aria-current="true"]'),ni=$("navInd");
+  if(ni){if(a){ni.style.opacity=1;ni.style.height=a.offsetHeight+"px";ni.style.transform=`translateY(${a.offsetTop}px)`}else ni.style.opacity=0}
+  const t=$("tabbar").querySelector('[aria-current="true"]'),ti=$("tabInd");
+  if(ti){if(t){ti.style.opacity=1;ti.style.width=t.offsetWidth+"px";ti.style.height=t.offsetHeight+"px";ti.style.transform=`translateX(${t.offsetLeft}px)`}else ti.style.opacity=0}
+}
+let lastRoute=null;
+function setRoute(k){route=k;location.hash=k;
+  // move the existing indicator smoothly instead of redrawing it
+  document.querySelectorAll("#nav [data-go],#tabbar [data-go]").forEach(b=>b.setAttribute("aria-current",b.dataset.go===k));placeInd()}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(!b)return;e.preventDefault();go(b.dataset.go)});
-function go(k,opt){
-  if(DRAFT&&dirtyCount()&&!["stock","website"].includes(k)&&["stock","website"].includes(route)){/* keep the draft; the publish bar stays */}
-  route=k;location.hash=k;closeDrawer();drawNav();render(opt);scrollTo(0,0);
-}
-const T={today:"Today",orders:"Orders",stock:"Stock & prices",website:"Website",money:"Money",customers:"Customers",settings:"Settings",more:"More"};
+function go(k,opt){setRoute(k);closeDrawer();render(opt);scrollTo({top:0})}
+const T={today:"Today",orders:"Orders",stock:"Stock",website:"Website",money:"Money",settings:"Settings"};
 function render(opt){
-  $("title").textContent=innerWidth<520&&route==="stock"?"Stock":T[route];
+  $("title").textContent=T[route]||"Today";
   $("when").textContent=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
   $("topAct").innerHTML="";
-  ({today:pToday,orders:pOrders,stock:pStock,website:pWebsite,money:pMoney,customers:pCustomers,settings:pSettings,more:pMore}[route]||pToday)(opt);
-  pubBar();
+  ({today:pToday,orders:pOrders,stock:pStock,website:pWebsite,money:pMoney,settings:pSettings}[route]||pToday)(opt);
+  const pg=$("page");if(route!==lastRoute||(opt&&opt.anim)){pg.classList.remove("enter");[...pg.children].forEach((c,i)=>c.style.setProperty("--n",i));void pg.offsetWidth;pg.classList.add("enter")}
+  lastRoute=route;countUp();pubBar();
 }
+function countUp(){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  document.querySelectorAll("[data-count]").forEach(el=>{const to=+el.dataset.count,f=el.dataset.f==="$"?fmt0:(n=>Math.round(n).toLocaleString("en-US")),t0=performance.now(),d=900;
+    const step=t=>{const k=Math.min(1,(t-t0)/d),e=1-Math.pow(1-k,4);el.textContent=f(to*e);if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)})}
+addEventListener("resize",()=>placeInd());
 
 /* ---------- toast ---------- */
 let tT;function toast(h){const t=$("toast");t.innerHTML=h;t.classList.add("on");clearTimeout(tT);tT=setTimeout(()=>t.classList.remove("on"),3200)}
@@ -604,34 +714,28 @@ let tT;function toast(h){const t=$("toast");t.innerHTML=h;t.classList.add("on");
 function weekStats(off){const w0=+startOfWeek(new Date()),s=w0-off*7*DAY,e=s+(Date.now()-w0);const os=DB.orders.filter(o=>{const t=+new Date(o.at);return t>=s&&t<e&&o.status!=="cancelled"});
   return {n:os.length,sales:os.filter(isSale).reduce((t,o)=>t+orderTotal(o),0),booked:os.reduce((t,o)=>t+orderTotal(o),0),avg:os.length?os.reduce((t,o)=>t+orderTotal(o),0)/os.length:0}}
 const delta=(a,b)=>{if(!b)return"";const p=Math.round((a-b)/b*100);return `<small class="${p>=0?"up":"dn"}">${p>=0?"+":""}${p}% vs last week so far</small>`};
+const ACT={new:"Price it",confirmed:"Collect payment",paid:"Deliver"};
+function taskRow(o){const t=totals(o);return `<li><button class="task k-${o.status}" type="button" data-order="${esc(o.id)}"><i></i><b>${esc(o.biz||o.name||"No name")}${o.channel==="wholesale"?' <span class="tag ws">Wholesale</span>':""}</b><span class="sub">${esc(itemsText(o))} · ${o.status==="new"?ago(o.at):"needed "+esc(o.when||"soon")}</span><span class="go">${o.status==="new"?"":`<span>${fmt(t.tot)}</span>`}<em>${ACT[o.status]}</em></span></button></li>`}
+function quoteRow(q){return `<li><button class="task k-quote" type="button" data-quote="${esc(q.id)}"><i></i><b>${esc(q.biz||q.name)} <span class="tag ws">Wholesale request</span></b><span class="sub">${esc(q.need)} · ${ago(q.at)}</span><span class="go"><em>Reply</em></span></button></li>`}
 function pToday(){
-  const nw=DB.orders.filter(o=>o.status==="new"),sent=DB.orders.filter(o=>o.status==="sent"),conf=DB.orders.filter(o=>o.status==="confirmed"),qn=DB.quotes.filter(q=>q.status==="new");
+  const nw=DB.orders.filter(o=>o.status==="new"),conf=DB.orders.filter(o=>o.status==="confirmed"),paid=DB.orders.filter(o=>o.status==="paid"),sent=DB.orders.filter(o=>o.status==="sent"),qn=DB.quotes.filter(q=>q.status==="new");
   const a=weekStats(0),b=weekStats(1),st=cur().stock||{};
-  const watch=CAT.filter(c=>{const x=st[c.id]||{};return x.status==="out"||x.status==="limited"||(x.track&&x.onHand!=null&&x.onHand<=(x.low??0))});
-  const hr=new Date().getHours(),hi=hr<12?"Good morning":hr<17?"Good afternoon":"Good evening";
-  $("title").textContent=hi;
+  const watch=CAT.filter(c=>{const x=st[c.id]||{};return x.status==="out"||x.status==="limited"});
+  const hr=new Date().getHours();$("title").textContent=hr<12?"Good morning":hr<17?"Good afternoon":"Good evening";
+  const parts=[];if(nw.length)parts.push(`<b>${nw.length} order${nw.length>1?"s":""}</b> to price`);if(conf.length)parts.push(`<b>${conf.length}</b> to collect payment for`);if(paid.length)parts.push(`<b>${paid.length}</b> to deliver`);if(qn.length)parts.push(`<b>${qn.length} wholesale request${qn.length>1?"s":""}</b>`);
+  const list=parts.length>1?parts.slice(0,-1).join(", ")+" and "+parts.slice(-1):parts[0];
+  const p=b.booked?Math.round((a.booked-b.booked)/b.booked*100):0;
+  const todo=[...nw,...conf,...paid];
   $("page").innerHTML=`
-  ${DB.sample&&!LIVE?`<div class="note-bar"><b>Sample data.</b> These orders are made up so you can see how it works. Place an order on the <a class="lnk" href="./" target="_blank" rel="noopener">website</a> in this browser and it lands here.</div>`:""}
-  <section class="card" style="margin-bottom:18px"><div class="kpis">
-    <div class="kpi ${nw.length?"hot":""}"><span>Waiting on your reply</span><b>${nw.length+qn.length}</b><small>${nw.length} order${nw.length===1?"":"s"}, ${qn.length} wholesale quote${qn.length===1?"":"s"}</small></div>
-    <div class="kpi"><span>Sales this week</span><b>${fmt0(a.booked)}</b>${delta(a.booked,b.booked)||"<small>&nbsp;</small>"}</div>
-    <div class="kpi"><span>Orders this week</span><b>${a.n}</b>${delta(a.n,b.n)||"<small>&nbsp;</small>"}</div>
-    <div class="kpi"><span>Average order</span><b>${fmt0(a.avg)}</b>${delta(a.avg,b.avg)||"<small>&nbsp;</small>"}</div>
-  </div></section>
+  <section class="hello"><p>${todo.length+qn.length?`<b>${todo.length+qn.length} thing${todo.length+qn.length>1?"s":""}</b> need${todo.length+qn.length>1?"":"s"} you today.`:`You're all caught up.`} <span class="hl">${fmt0(a.booked)}</span> in orders this week${b.booked?`, ${p>=0?"up":"down"} ${Math.abs(p)}% on last week`:""}.</p>${DB.sample&&!LIVE?`<span class="sample"><i></i>Sample data. Orders you place on the <a class="lnk" href="./" target="_blank" rel="noopener">website</a> in this browser land here.</span>`:""}</section>
   <div class="grid2">
+    <section class="card"><div class="card-h"><h2>Needs you</h2>${todo.length+qn.length?`<span class="muted" style="font-size:13px">${todo.length+qn.length} to do</span>`:""}</div>
+      ${todo.length||qn.length?`<ul class="tasks">${nw.map(taskRow).join("")}${qn.map(quoteRow).join("")}${conf.map(taskRow).join("")}${paid.map(taskRow).join("")}</ul>`:`<p class="empty">Nothing to do right now. New orders show up here.</p>`}
+      ${sent.length?`<details class="wait"><summary><span>Waiting on <b>${sent.length} customer${sent.length>1?"s":""}</b> to say yes</span><span aria-hidden="true">›</span></summary><ul class="rows">${sent.map(o=>`<li>${orderRow(o)}</li>`).join("")}</ul></details>`:""}
+    </section>
     <div class="stack">
-      <section class="card"><div class="card-h"><h2>Needs your reply</h2><button class="lnk" data-go="orders">All orders</button></div>
-        ${nw.length||qn.length?`<ul class="rows">${nw.map(o=>`<li>${orderRow(o)}</li>`).join("")}${qn.map(q=>`<li><button class="row" type="button" data-quote="${esc(q.id)}"><b>${esc(q.biz||q.name)} <span class="tag ws">Wholesale quote</span></b><span class="sub">${esc(q.need)}</span><span class="rt"><span class="muted" style="font-size:13px">${ago(q.at)}</span></span></button></li>`).join("")}</ul>`:`<p class="empty">You're all caught up. New orders show up here.</p>`}
-      </section>
-      <section class="card"><div class="card-h"><h2>In progress</h2><span class="muted" style="font-size:13px">${sent.length} waiting for a yes, ${conf.length} to collect payment</span></div>
-        ${sent.length+conf.length?`<ul class="rows">${[...conf,...sent].map(o=>`<li>${orderRow(o)}</li>`).join("")}</ul>`:`<p class="empty">Nothing in progress.</p>`}
-      </section>
-    </div>
-    <div class="stack">
-      <section class="card"><div class="card-h"><h2>Sales, last 8 weeks</h2><button class="lnk" data-go="money">Money</button></div><div class="chart" id="miniChart"></div></section>
-      <section class="card"><div class="card-h"><h2>Stock to watch</h2><button class="lnk" data-go="stock">Stock</button></div>
-        ${watch.length?`<ul class="rows">${watch.map(c=>{const x=st[c.id]||{};return `<li><button class="row" type="button" data-go="stock"><b>${c.name}</b><span class="sub">${x.status==="out"?"Sold out on the website":x.status==="limited"?"Showing as going fast":""}${x.track&&x.onHand!=null?` · ${x.onHand} ${c.units[0][0]} on hand`:""}</span><span class="rt">${x.status==="out"?'<span class="chip s-done">Sold out</span>':'<span class="chip s-new">Low</span>'}</span></button></li>`}).join("")}</ul>`:`<p class="empty">Everything is showing as in stock.</p>`}
-      </section>
+      <section class="card"><div class="wk"><span>Orders this week</span><b data-count="${Math.round(a.booked)}" data-f="$">${fmt0(a.booked)}</b>${b.booked?`<small class="${p>=0?"up":"dn"}">${p>=0?"+":""}${p}% vs this time last week</small>`:""}</div><div class="chart" id="miniChart"></div></section>
+      ${watch.length?`<section class="card"><div class="card-h"><h2>Stock to watch</h2><button class="lnk" data-go="stock">Stock</button></div><ul class="rows">${watch.map(c=>{const x=st[c.id]||{};return `<li><button class="row" type="button" data-go="stock"><b>${c.name}</b><span class="sub">${x.status==="out"?"Sold out on the website":"Showing as going fast"}</span><span class="rt">${x.status==="out"?'<span class="chip s-done">Sold out</span>':'<span class="chip s-new">Low</span>'}</span></button></li>`}).join("")}</ul></section>`:""}
     </div>
   </div>`;
   weekChart($("miniChart"),8);
@@ -640,38 +744,35 @@ function orderRow(o){const t=totals(o);return `<button class="row" type="button"
 document.addEventListener("click",e=>{const b=e.target.closest("[data-order]");if(b)openOrder(b.dataset.order);const q=e.target.closest("[data-quote]");if(q)openQuote(q.dataset.quote)});
 
 /* ===================== ORDERS ===================== */
-let oFilter="open",oQuery="",oView="orders";
+let oFilter="needs",oQuery="";
+const OF={needs:["Needs you",o=>["new","confirmed","paid"].includes(o.status),q=>q.status==="new"],wait:["Waiting on customer",o=>o.status==="sent",q=>q.status==="sent"],done:["Finished",o=>o.status==="done"||o.status==="cancelled",q=>q.status==="done"||q.status==="lost"],all:["All",()=>true,()=>true]};
 function pOrders(opt){
-  if(opt&&opt.q!=null){oQuery=opt.q;oFilter="all";oView="orders"}
-  const counts={};DB.orders.forEach(o=>counts[o.status]=(counts[o.status]||0)+1);
-  const open=DB.orders.filter(o=>["new","sent","confirmed","paid"].includes(o.status)).length;
-  const F=[["open","Open",open],["new","New",counts.new||0],["sent","Price sent",counts.sent||0],["confirmed","Confirmed",counts.confirmed||0],["paid","Paid",counts.paid||0],["done","Delivered",counts.done||0],["cancelled","Cancelled",counts.cancelled||0],["all","All",DB.orders.length]];
-  $("topAct").innerHTML=`<div class="seg" role="group" aria-label="Show"><button type="button" data-ov="orders" aria-pressed="${oView==="orders"}">Orders</button><button type="button" data-ov="quotes" aria-pressed="${oView==="quotes"}">Wholesale quotes <span>${DB.quotes.filter(q=>q.status==="new").length||""}</span></button></div>`;
-  if(oView==="quotes")return pQuotes();
-  $("page").innerHTML=`<div class="toolbar"><div class="seg" role="group" aria-label="Filter">${F.map(([k,l,n])=>`<button type="button" data-of="${k}" aria-pressed="${oFilter===k}">${l} <span>${n}</span></button>`).join("")}</div>
-    <label class="search"><span class="vh">Search orders</span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.6"/></svg><input id="oq" type="search" placeholder="Name, phone, order # or item" value="${esc(oQuery)}"></label></div>
+  if(opt&&opt.q!=null){oQuery=opt.q;oFilter="all"}
+  $("page").innerHTML=`<div class="toolbar"><div class="seg" role="group" aria-label="Show">${Object.entries(OF).map(([k,[l,fo,fq]])=>`<button type="button" data-of="${k}" aria-pressed="${oFilter===k}">${l} <span>${DB.orders.filter(fo).length+DB.quotes.filter(fq).length}</span></button>`).join("")}</div>
+    <label class="search"><span class="vh">Search orders</span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.6"/></svg><input id="oq" type="search" placeholder="Search name, phone or item" value="${esc(oQuery)}"></label></div>
     <section class="card" id="olist"></section>`;
   $("oq").oninput=e=>{oQuery=e.target.value;drawOrders()};drawOrders();
 }
 function drawOrders(){
-  const q=oQuery.trim().toLowerCase(),qd=q.replace(/\D/g,"");
-  let os=DB.orders.filter(o=>oFilter==="all"||(oFilter==="open"?["new","sent","confirmed","paid"].includes(o.status):o.status===oFilter));
-  if(q)os=os.filter(o=>(o.name+" "+o.biz+" "+o.id+" "+itemsText(o)+" "+o.zip).toLowerCase().includes(q)||(qd.length>=3&&o.phone.replace(/\D/g,"").includes(qd)));
-  const order={new:0,sent:1,confirmed:2,paid:3,done:4,cancelled:5};
-  if(oFilter==="open")os.sort((a,b)=>order[a.status]-order[b.status]||new Date(b.at)-new Date(a.at));
+  const q=oQuery.trim().toLowerCase(),qd=q.replace(/\D/g,""),[,fo,fq]=OF[oFilter];
+  const match=t=>!q||t.toLowerCase().includes(q);
+  let os=DB.orders.filter(fo).filter(o=>match(o.name+" "+o.biz+" "+o.id+" "+itemsText(o)+" "+o.zip)||(qd.length>=3&&o.phone.replace(/\D/g,"").includes(qd)));
+  const qs=DB.quotes.filter(fq).filter(x=>match(x.name+" "+x.biz+" "+x.need));
+  const rank={new:0,confirmed:1,paid:2,sent:3,done:4,cancelled:5};
+  if(oFilter==="needs")os.sort((a,b)=>rank[a.status]-rank[b.status]||new Date(b.at)-new Date(a.at));
   const box=$("olist");if(!box)return;
-  if(!os.length){box.innerHTML=`<p class="empty">No orders match.</p>`;return}
-  box.innerHTML=`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Needed</th><th class="num">Total</th><th>Status</th><th>Received</th></tr></thead><tbody>${os.slice(0,200).map(o=>`<tr data-order="${esc(o.id)}" class="${o.status==="new"?"isnew":""}"><td class="mono">${esc(o.id)}</td><td class="who"><b>${esc(o.biz||o.name)}</b><small>${o.biz?esc(o.name)+" · ":""}${esc(o.phone)}</small></td><td class="its">${esc(itemsText(o))}</td><td>${esc(o.when||"Not set")}<br><small class="muted">${esc(o.how)}</small></td><td class="num">${o.status==="new"&&totals(o).missing?'<span class="muted">To price</span>':fmt(orderTotal(o))}</td><td>${chip(o.status)}</td><td class="muted">${ago(o.at)}</td></tr>`).join("")}</tbody></table></div>
-  <ul class="rows ocards">${os.slice(0,200).map(o=>`<li>${orderRow(o)}</li>`).join("")}</ul>`;
+  if(!os.length&&!qs.length){box.innerHTML=`<p class="empty">${oFilter==="needs"&&!q?"Nothing needs you right now.":"No orders match."}</p>`;return}
+  const qrow=x=>`<tr data-quote="${esc(x.id)}"><td><span class="tag ws">Quote</span></td><td class="who"><b>${esc(x.biz||x.name)}</b><small>${esc(x.phone||"")}</small></td><td class="its">${esc(x.need)}</td><td>${esc(x.when||"")}<br><small class="muted">${esc(x.freq||"")}</small></td><td class="num"><span class="muted">Wholesale</span></td><td>${chip(x.status==="sent"?"sent":x.status==="done"?"paid":x.status==="lost"?"cancelled":"new").replace("Price sent","Quote sent").replace(">Paid<",">Won<")}</td><td class="muted">${ago(x.at)}</td></tr>`;
+  box.innerHTML=`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Needed</th><th class="num">Total</th><th>Status</th><th>Received</th></tr></thead><tbody>${qs.map(qrow).join("")}${os.slice(0,200).map(o=>`<tr data-order="${esc(o.id)}" class="${o.status==="new"?"isnew":""}"><td class="mono">${esc(o.id)}</td><td class="who"><b>${esc(o.biz||o.name)}</b><small>${o.biz?esc(o.name)+" · ":""}${esc(o.phone)}</small></td><td class="its">${esc(itemsText(o))}</td><td>${esc(o.when||"Not set")}<br><small class="muted">${esc(o.how)}</small></td><td class="num">${o.status==="new"?'<span class="muted">To price</span>':fmt(orderTotal(o))}</td><td>${chip(o.status)}</td><td class="muted">${ago(o.at)}</td></tr>`).join("")}</tbody></table></div>
+  <ul class="tasks ocards">${qs.filter(x=>x.status==="new").map(quoteRow).join("")}${os.slice(0,200).map(o=>ACT[o.status]?taskRow(o):`<li>${orderRow(o)}</li>`).join("")}</ul>`;
 }
-document.addEventListener("click",e=>{const f=e.target.closest("[data-of]");if(f){oFilter=f.dataset.of;pOrders()}const v=e.target.closest("[data-ov]");if(v){oView=v.dataset.ov;pOrders()}});
-function pQuotes(){
-  $("page").innerHTML=`<section class="card">${DB.quotes.length?`<ul class="rows">${DB.quotes.map(q=>`<li><button class="row" type="button" data-quote="${esc(q.id)}"><b>${esc(q.biz||q.name)}${q.biz?` <span class="muted" style="font-weight:400">· ${esc(q.name)}</span>`:""}</b><span class="sub">${esc(q.need)} · ${esc(q.freq)}</span><span class="rt">${chip(q.status==="sent"?"sent":q.status==="done"?"done":"new").replace("Price sent","Quote sent").replace("Delivered","Won")}<span class="muted" style="font-size:13px">${ago(q.at)}</span></span></button></li>`).join("")}</ul>`:`<p class="empty">No wholesale requests yet.</p>`}</section>`;
-}
+document.addEventListener("click",e=>{const f=e.target.closest("[data-of]");if(f){oFilter=f.dataset.of;document.querySelectorAll("[data-of]").forEach(b=>b.setAttribute("aria-pressed",b===f));drawOrders()}});
 
 /* ---------- order drawer ---------- */
 let OPEN=null;
-function openDrawer(){$("scrim").classList.add("on");$("drawer").classList.add("on");document.body.style.overflow="hidden"}
+function openDrawer(){$("scrim").classList.add("on");$("drawer").classList.add("on");document.body.style.overflow="hidden";stagger()}
+function stagger(){[...$("drB").children].forEach((c,i)=>c.style.setProperty("--n",i));const d=$("drawer");if(d.classList.contains("on")){$("drB").style.display="none";void $("drB").offsetWidth;$("drB").style.display=""}}
+function celebrate(){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;const b=document.createElement("div");b.className="burst";b.innerHTML='<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 25l7 7 15-16" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';$("drawer").appendChild(b);setTimeout(()=>b.remove(),1200)}
 function closeDrawer(){$("scrim").classList.remove("on");$("drawer").classList.remove("on");document.body.style.overflow="";OPEN=null}
 $("drX").onclick=closeDrawer;$("scrim").onclick=closeDrawer;
 addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer()});
@@ -706,13 +807,13 @@ function drawOrder(){
        <div><span>${esc(o.how||"Delivery")} fee</span><span class="money-in"><input type="number" inputmode="decimal" step="0.01" min="0" id="oFee" value="${(+o.fee||0).toFixed(2)}" ${editable?"":"disabled"} aria-label="Delivery fee"></span></div>
        <div class="grand"><span>Total</span><b id="oTot">${fmt(t.tot)}</b></div>
      </div></section>
-   ${o.status==="new"||o.status==="sent"?`<div class="msg-box"><span class="lbl">${o.status==="new"?"Price message to send":"Message you sent"}</span><textarea id="oMsg">${esc(priceMsg(o))}</textarea></div>`:""}
+   ${o.status==="new"?`<details class="wait card" style="border:0"><summary><span>See the text we'll send</span><span aria-hidden="true">›</span></summary><div class="msg-box" style="padding:0 16px 16px"><textarea id="oMsg">${esc(priceMsg(o))}</textarea></div></details>`:""}
    ${o.status==="confirmed"?`<div class="msg-box"><span class="lbl">How did they pay?</span><div class="paidvia" id="pv">${PAYS.map(p=>`<button type="button" aria-pressed="${o.paid===p}">${p}</button>`).join("")}</div></div>`:""}
    ${o.paid&&isSale(o)?`<div class="memo" style="background:#e2efe5"><b>Paid</b> by ${esc(o.paid)}.</div>`:""}
-   <div><span class="lbl">History</span><ul class="log">${o.log.map(l=>`<li><b>${stName(l.s)}</b> · ${new Date(l.at).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}</li>`).join("")}</ul></div>`;
+   <details class="wait card" style="border:0"><summary><span>History</span><span aria-hidden="true">›</span></summary><ul class="log" style="padding:0 16px 16px">${o.log.map(l=>`<li><b>${stName(l.s)}</b> · ${new Date(l.at).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}</li>`).join("")}</ul></details>`;
   const F=$("drF");
-  const prim={new:["Text the price","sent"],sent:["They said yes","confirmed"],confirmed:["Got paid","paid"],paid:["Mark delivered","done"]}[o.status];
-  F.innerHTML=`${o.status==="new"?`<button class="btn b-soft" type="button" id="oCopy">Copy message</button>`:""}${prim?`<button class="btn b-green" type="button" id="oNext">${prim[0]}</button>`:""}${["new","sent","confirmed"].includes(o.status)?`<button class="btn b-ghost" type="button" id="oCancel">Cancel order</button>`:""}${o.status==="cancelled"?`<button class="btn b-soft" type="button" id="oReopen">Reopen order</button>`:""}`;
+  const prim={new:[`Text the price · ${fmt(t.tot)}`,"sent"],sent:["They said yes","confirmed"],confirmed:["Got paid","paid"],paid:["Mark delivered","done"]}[o.status];
+  F.innerHTML=`${prim?`<button class="btn b-green" type="button" id="oNext">${prim[0]}</button>`:""}${["new","sent","confirmed"].includes(o.status)?`<button class="btn b-ghost" type="button" id="oCancel">Cancel order</button>`:""}${o.status==="cancelled"?`<button class="btn b-soft" type="button" id="oReopen">Reopen order</button>`:""}`;
   // events
   $("drB").querySelectorAll("[data-lp]").forEach(inp=>inp.oninput=()=>{const l=OPEN.lines[+inp.dataset.lp];l.price=inp.value===""?null:+inp.value;refreshTotals()});
   if($("oFee"))$("oFee").oninput=e=>{OPEN.fee=+e.target.value||0;refreshTotals()};
@@ -721,14 +822,16 @@ function drawOrder(){
   if($("oNext"))$("oNext").onclick=()=>advance(prim[1]);
   if($("oCancel"))$("oCancel").onclick=()=>{if(confirm("Cancel this order? The customer is not told automatically."))advance("cancelled")};
   if($("oReopen"))$("oReopen").onclick=()=>advance("new");
-  const gc=$("drB").querySelector("[data-go-cust]");if(gc)gc.onclick=()=>{const p=gc.dataset.goCust;closeDrawer();route="orders";drawNav();render({q:p})};
+  const gc=$("drB").querySelector("[data-go-cust]");if(gc)gc.onclick=()=>go("orders",{q:gc.dataset.goCust,anim:1});
 }
 function refreshTotals(){const t=totals(OPEN);$("oTot").textContent=fmt(t.tot);
   $("drB").querySelectorAll(".lines li").forEach((li,i)=>{const l=OPEN.lines[i];if(!l)return;const p=linePrice(l);const lt=li.querySelector(".lt");if(lt)lt.textContent=p!=null?fmt(p*l.qty):"...";const mi=li.querySelector(".money-in");if(mi&&l.price!=null){mi.classList.remove("sug");const s=mi.querySelector("small");if(s)s.remove()}});
   const m=$("oMsg");if(m&&OPEN.status==="new")m.value=priceMsg(OPEN);
+  if(OPEN.status==="new"&&$("oNext"))$("oNext").textContent=`Text the price · ${fmt(t.tot)}`;
   const sub=$("drB").querySelector(".tot b");if(sub)sub.textContent=fmt(t.sub)}
+let busy=false;
 async function advance(to){
-  const o=OPEN;
+  if(busy)return;const o=OPEN;
   if(to==="sent"){const t=totals(o);if(t.missing){toast("Add a price for every item first.");return}
     o.lines.forEach(l=>{if(l.price==null)l.price=linePrice(l)});
     const phone=o.phone.replace(/[^\d+]/g,""),msg=$("oMsg")?$("oMsg").value:priceMsg(o);
@@ -737,11 +840,13 @@ async function advance(to){
   if(to==="paid"&&!o.paid){toast("Pick how they paid first.");return}
   if(to==="done")deduct(o);
   if(to==="new"){o.lines.forEach(l=>{})}
+  busy=true;$("drF").querySelectorAll("button").forEach(b=>b.disabled=true);setTimeout(()=>busy=false,700);
   o.status=to;o.log.push({s:to,at:new Date().toISOString()});
-  try{await saveOrder(o)}catch(e){return}
+  try{await saveOrder(o)}catch(e){busy=false;$("drF").querySelectorAll("button").forEach(b=>b.disabled=false);return}
+  if(to!=="cancelled"&&to!=="new")celebrate();
   const msgs={sent:"Price sent. Waiting for their yes.",confirmed:"Confirmed. Collect payment when you can.",paid:`Paid by ${esc(o.paid)}. Nice.`,done:"Delivered. Order closed.",cancelled:"Order cancelled.",new:"Order reopened."};
   toast(`<b>${esc(o.id)}</b> ${msgs[to]}`);
-  OPEN=JSON.parse(JSON.stringify(o));drawOrder();drawNav();if(route!=="orders")render();else drawOrders();
+  OPEN=JSON.parse(JSON.stringify(o));setTimeout(()=>{if(!OPEN)return;drawOrder();stagger()},to==="cancelled"||to==="new"?0:650);drawNav();if(route==="orders")drawOrders();else if(route==="today")render()
 }
 function deduct(o){ // take delivered amounts off the on-hand counts the owner tracks
   const had=!!DRAFT,S=draftOrSite();let ch=false;
@@ -776,46 +881,58 @@ $("pubGo").onclick=async()=>{const b=$("pubGo");b.disabled=true;b.textContent="P
   try{await publishSite(draftOrSite());DRAFT=null;toast(`<b>Published.</b> The website now shows your changes.`);render()}catch(e){toast("Couldn't publish. Check the connection and try again.")}
   b.disabled=false;b.textContent="Publish to website";pubBar()};
 function autoStatus(id,x){if(!x.track||x.onHand==null)return;const low=+(x.low??0);x.status=x.onHand<=0?"out":x.onHand<=low?"limited":"in"}
+const ST3=[["in","In stock"],["limited","Going fast"],["out","Sold out"]];
+const chev='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
+function stSummary(c,x){const u=c.units[0],p=x.prices&&x.prices[u[0]];const bits=[p!=null&&p!==""?`${fmt(p)} ${u[0]==="lb"?"a lb":u[0].startsWith("lobster")?"each":"a "+u[0]}`:"Market price"];
+  if(x.special)bits.push("<em>Special</em>");if(x.track&&x.onHand!=null)bits.push(`${x.onHand} ${u[0].startsWith("lobster")?"lobsters":u[0]} on hand`);if(x.note)bits.push(esc(x.note));return bits.join(" · ")}
+function placeThumb(g){const b=g.querySelector("[aria-pressed=true]"),t=g.querySelector(".th");if(!b||!t)return;g.dataset.st=b.dataset.st;t.style.width=b.offsetWidth+"px";t.style.transform=`translateX(${b.offsetLeft}px)`}
+let openStock=null;
 function pStock(){
   const S=cur(),st=S.stock||{},sp=S.special||{on:true,head:"Lobster special, Thu to Sun:",body:"1½ lb lobsters at $7.99/lb.",item:"lobster",unit:"lobster (1½ lb)"};
-  $("topAct").innerHTML=`<button class="btn b-soft b-sm" type="button" id="allIn">Mark everything in stock</button>`;
+  $("topAct").innerHTML=`<button class="btn b-soft b-sm" type="button" id="allIn">All in stock</button>`;
   $("page").innerHTML=`
-  <section class="card" style="margin-bottom:18px"><div class="sp">
-    <div class="sp-top"><div><b style="font-size:16.5px">Weekly special</b><div class="muted" style="font-size:13.5px">The bar across the top of the website.</div></div><button class="sw" type="button" role="switch" id="spOn" aria-checked="${!!sp.on}" aria-label="Show the special"></button></div>
-    <div class="f2"><div class="field"><label for="spHead">Bold part</label><input id="spHead" value="${esc(sp.head||"")}" placeholder="Lobster special, Thu to Sun:"></div><div class="field"><label for="spBody">The rest</label><input id="spBody" value="${esc(sp.body||"")}" placeholder="1½ lb lobsters at $7.99/lb."></div></div>
-    <div class="f2"><div class="field"><label for="spItem">"Add to my order" adds</label><select id="spItem">${CAT.map(c=>c.units.map(u=>`<option value="${c.id}|${esc(u[0])}" ${sp.item===c.id&&sp.unit===u[0]?"selected":""}>${c.name}, ${u[1].toLowerCase()}</option>`).join("")).join("")}</select></div>
-    <div class="field"><span class="lbl">Preview</span><div class="sp-prev" id="spPrev"></div></div></div>
-  </div></section>
-  <section class="card"><div class="card-h"><h2>What's on ice</h2><span class="muted" style="font-size:13px">Leave a price empty to show "Market price"</span></div>
-  <ul class="stk out-dim">${CAT.map(c=>{const x=st[c.id]||{},status=x.status||"in";return `<li data-sid="${c.id}" class="${status==="out"?"is-out":""}"><img src="${(S.photos||{})["item."+c.id]||c.img}" alt="">
-    <div><div class="stk-h"><b>${c.name}</b><div class="st3" role="group" aria-label="${c.name} stock">${[["in","In stock"],["limited","Going fast"],["out","Sold out"]].map(([k,l])=>`<button type="button" data-st="${k}" aria-pressed="${status===k}">${l}</button>`).join("")}</div></div>
-    <div class="stk-p">${c.units.map(([u,l])=>`<label class="pf"><span>${l}</span><span class="money-in"><input type="number" inputmode="decimal" step="0.01" min="0" data-pr="${esc(u)}" value="${x.prices&&x.prices[u]!=null&&x.prices[u]!==""?(+x.prices[u]).toFixed(2):""}" placeholder="Market"></span></label>`).join("")}</div>
-    <div class="stk-more"><label><input type="checkbox" data-hot ${x.special?"checked":""}> Show as this week's special</label>
-      <label><input type="checkbox" data-track ${x.track?"checked":""}> Count what's on hand</label>
-      ${x.track?`<span class="cnt">On hand <input type="number" inputmode="decimal" min="0" step="1" data-oh value="${x.onHand??""}" aria-label="On hand"> ${c.units[0][0]}</span><span class="cnt">Going fast at <input type="number" inputmode="decimal" min="0" step="1" data-low value="${x.low??""}" aria-label="Low stock alert"></span>${x.onHand!=null&&x.onHand<=(x.low??0)?`<span class="low">${x.onHand<=0?"Sold out":"Running low"}</span>`:""}`:""}
-    </div>
-    <div class="stk-note"><label class="vh" for="n-${c.id}">Note for ${c.name}</label><input id="n-${c.id}" data-note value="${esc(x.note||"")}" placeholder="Optional line under the name, e.g. Big ones this week"></div>
-    </div></li>`}).join("")}</ul></section>`;
-  const spSync=()=>{const s=edit();s.special={on:$("spOn").getAttribute("aria-checked")==="true",head:$("spHead").value,body:$("spBody").value,item:$("spItem").value.split("|")[0],unit:$("spItem").value.split("|")[1]};
-    $("spPrev").innerHTML=s.special.on?`<b>${esc(s.special.head)}</b> ${esc(s.special.body)}`:"<span style='opacity:.6'>Hidden on the website</span>";changed()};
-  $("spPrev").innerHTML=sp.on!==false?`<b>${esc(sp.head||"")}</b> ${esc(sp.body||"")}`:"<span style='opacity:.6'>Hidden on the website</span>";
+  <section class="card" style="margin-bottom:18px">
+    <div class="spc"><div class="sp-prev" id="spPrev"></div><button class="sw" type="button" role="switch" id="spOn" aria-checked="${sp.on!==false}" aria-label="Show the weekly special on the website"></button></div>
+    <details class="wait" id="spMore"><summary><span><b>Weekly special</b> · the bar across the top of the website</span><span aria-hidden="true">Edit</span></summary><div class="spc-x">
+      <div class="f2"><div class="field"><label for="spHead">Bold part</label><input id="spHead" value="${esc(sp.head||"")}" placeholder="Lobster special, Thu to Sun:"></div><div class="field"><label for="spBody">The rest</label><input id="spBody" value="${esc(sp.body||"")}" placeholder="1½ lb lobsters at $7.99/lb."></div></div>
+      <div class="field"><label for="spItem">The "Add to my order" button adds</label><select id="spItem">${CAT.map(c=>c.units.map(u=>`<option value="${c.id}|${esc(u[0])}" ${sp.item===c.id&&sp.unit===u[0]?"selected":""}>${c.name}, ${u[1].toLowerCase()}</option>`).join("")).join("")}</select></div>
+    </div></details>
+  </section>
+  <section class="card"><ul class="stk2">${CAT.map(c=>{const x=st[c.id]||{},status=x.status||"in";return `<li data-sid="${c.id}" class="${status==="out"?"is-out":""} ${openStock===c.id?"open":""}">
+    <div class="sr"><img src="${esc((S.photos||{})["item."+c.id]||c.img)}" alt=""><div><b>${c.name}</b><small data-sum>${stSummary(c,x)}</small></div>
+      <div class="st3" role="group" aria-label="${c.name} stock"><i class="th"></i>${ST3.map(([k,l])=>`<button type="button" data-st="${k}" aria-pressed="${status===k}">${l}</button>`).join("")}</div>
+      <button class="sx" type="button" data-x aria-expanded="${openStock===c.id}" aria-label="Prices and details for ${c.name}">${chev}</button></div>
+    <div class="sxp"><div><div class="sxi">
+      <div class="stk-p" style="margin:0">${c.units.map(([u,l])=>`<label class="pf"><span>${l}</span><span class="money-in"><input type="number" inputmode="decimal" step="0.01" min="0" data-pr="${esc(u)}" value="${x.prices&&x.prices[u]!=null&&x.prices[u]!==""?(+x.prices[u]).toFixed(2):""}" placeholder="Market"></span></label>`).join("")}</div>
+      <div class="stk-note" style="margin:0"><label class="vh" for="n-${c.id}">Note for ${c.name}</label><input id="n-${c.id}" data-note value="${esc(x.note||"")}" placeholder="A short note under the name, like: Big ones this week"></div>
+      <div class="stk-more" style="margin:0"><label><input type="checkbox" data-hot ${x.special?"checked":""}> This week's special</label><label><input type="checkbox" data-track ${x.track?"checked":""}> Count what's on hand</label>
+        ${x.track?`<span class="cnt">On hand <input type="number" inputmode="decimal" min="0" step="1" data-oh value="${x.onHand??""}" aria-label="On hand"> ${c.units[0][0].startsWith("lobster")?"lobsters":c.units[0][0]}</span><span class="cnt">Show "going fast" at <input type="number" inputmode="decimal" min="0" step="1" data-low value="${x.low??""}" aria-label="Going fast at"></span>`:""}</div>
+    </div></div></div></li>`}).join("")}</ul></section>
+  <p class="muted" style="font-size:13.5px;margin:14px 4px 0">Leave a price empty and the website shows "Market price". Nothing changes on the website until you press Publish.</p>`;
+  const pg=$("page");requestAnimationFrame(()=>pg.querySelectorAll(".st3").forEach(placeThumb));
+  const spPrev=()=>{const s=cur().special||sp;$("spPrev").innerHTML=s.on!==false?`<b>${esc(s.head||"")}</b> ${esc(s.body||"")}`:"<span style='opacity:.6'>Weekly special is hidden on the website</span>"};spPrev();
+  const spSync=()=>{const s=edit();s.special={on:$("spOn").getAttribute("aria-checked")==="true",head:$("spHead").value,body:$("spBody").value,item:$("spItem").value.split("|")[0],unit:$("spItem").value.split("|")[1]};spPrev();changed()};
   $("spOn").onclick=()=>{$("spOn").setAttribute("aria-checked",$("spOn").getAttribute("aria-checked")!=="true");spSync()};
   ["spHead","spBody","spItem"].forEach(id=>$(id).addEventListener("input",spSync));
-  $("allIn").onclick=()=>{const s=edit();s.stock=s.stock||{};CAT.forEach(c=>{const x=s.stock[c.id]=s.stock[c.id]||{};x.status="in";if(x.track&&x.onHand<=0)x.track=false});changed();pStock()};
-  const list=$("page").querySelector(".stk");
+  $("allIn").onclick=()=>{const s=edit();s.stock=s.stock||{};CAT.forEach(c=>{const x=s.stock[c.id]=s.stock[c.id]||{};x.status="in";if(x.track&&x.onHand<=0)x.track=false});changed();pStock();toast("Everything shows as in stock. Publish to put it live.")};
+  const list=pg.querySelector(".stk2");
   const X=id=>{const s=edit();s.stock=s.stock||{};return s.stock[id]=s.stock[id]||{}};
+  const sum=(li,id)=>{li.querySelector("[data-sum]").innerHTML=stSummary(cat(id),(cur().stock||{})[id]||{})};
+  const setSt=(li,v)=>{li.querySelectorAll("[data-st]").forEach(y=>y.setAttribute("aria-pressed",y.dataset.st===v));li.classList.toggle("is-out",v==="out");placeThumb(li.querySelector(".st3"))};
   list.addEventListener("click",e=>{const li=e.target.closest("[data-sid]");if(!li)return;const id=li.dataset.sid;
-    const b=e.target.closest("[data-st]");if(b){const x=X(id);x.status=b.dataset.st;if(x.track){x.track=false}li.querySelectorAll("[data-st]").forEach(y=>y.setAttribute("aria-pressed",y===b));li.classList.toggle("is-out",x.status==="out");changed();if(x.track===false&&li.querySelector("[data-oh]"))pStock()}});
+    const b=e.target.closest("[data-st]");if(b){const x=X(id);x.status=b.dataset.st;const wasTrack=x.track;x.track=false;setSt(li,x.status);sum(li,id);changed();if(wasTrack){openStock=id;pStock()}return}
+    if(e.target.closest("[data-x]")){const on=!li.classList.contains("open");list.querySelectorAll("li.open").forEach(o=>{o.classList.remove("open");o.querySelector("[data-x]").setAttribute("aria-expanded","false")});li.classList.toggle("open",on);li.querySelector("[data-x]").setAttribute("aria-expanded",on);openStock=on?id:null}});
   list.addEventListener("input",e=>{const li=e.target.closest("[data-sid]");if(!li)return;const id=li.dataset.sid,x=X(id),t=e.target;
     if(t.dataset.pr!=null){x.prices=x.prices||{};x.prices[t.dataset.pr]=t.value===""?null:+t.value}
     if(t.dataset.note!=null)x.note=t.value;
-    if(t.dataset.oh!=null){x.onHand=t.value===""?null:+t.value;autoStatus(id,x);li.querySelectorAll("[data-st]").forEach(y=>y.setAttribute("aria-pressed",y.dataset.st===(x.status||"in")))}
-    if(t.dataset.low!=null){x.low=t.value===""?null:+t.value;autoStatus(id,x);li.querySelectorAll("[data-st]").forEach(y=>y.setAttribute("aria-pressed",y.dataset.st===(x.status||"in")))}
-    changed()});
-  list.addEventListener("change",e=>{const li=e.target.closest("[data-sid]");if(!li)return;const x=X(li.dataset.sid),t=e.target;
-    if(t.dataset.hot!=null){x.special=t.checked;changed()}
-    if(t.dataset.track!=null){x.track=t.checked;if(t.checked&&x.onHand==null){x.onHand=0;x.low=x.low??5}autoStatus(li.dataset.sid,x);changed();pStock()}});
+    if(t.dataset.oh!=null){x.onHand=t.value===""?null:+t.value;autoStatus(id,x);setSt(li,x.status||"in")}
+    if(t.dataset.low!=null){x.low=t.value===""?null:+t.value;autoStatus(id,x);setSt(li,x.status||"in")}
+    sum(li,id);changed()});
+  list.addEventListener("change",e=>{const li=e.target.closest("[data-sid]");if(!li)return;const id=li.dataset.sid,x=X(id),t=e.target;
+    if(t.dataset.hot!=null){x.special=t.checked;sum(li,id);changed()}
+    if(t.dataset.track!=null){x.track=t.checked;if(t.checked&&x.onHand==null){x.onHand=0;x.low=x.low??5}autoStatus(id,x);changed();openStock=id;pStock()}});
 }
+addEventListener("resize",()=>document.querySelectorAll(".st3").forEach(placeThumb));
 
 /* ===================== WEBSITE ===================== */
 const GROUPS=[
@@ -852,7 +969,7 @@ function pWebsite(){
       ${g.offer?`<div class="sw-row"><button class="sw" type="button" role="switch" id="ofOn" aria-checked="${O.on!==false}" aria-label="Show the first-order offer"></button>Show the offer popup</div><div class="f2"><div class="field"><label for="ofPct">Percent off</label><input id="ofPct" type="number" min="1" max="50" value="${esc(O.pct??10)}"></div><div class="field"><label for="ofCode">Code</label><input id="ofCode" value="${esc(O.code||"TIDE10")}" style="text-transform:uppercase"></div></div><p class="muted" style="margin:0;font-size:13.5px">Orders that use the code show it, and the discount is already taken off when you price them.</p>`:""}
     </div></details>`).join("")}
   </div>
-  <div class="pv" id="pv"><div class="pv-bar"><b>Live preview</b><div class="seg" role="group" aria-label="Preview size"><button type="button" data-pvm="desktop" aria-pressed="${pvMode==="desktop"}">Computer</button><button type="button" data-pvm="phone" aria-pressed="${pvMode==="phone"}">Phone</button></div><button class="btn b-soft b-sm pv-open" type="button" id="pvClose">Close</button></div>
+  <div class="pv" id="pv"><div class="pv-bar"><span class="pv-hint"><i></i>Click any text or photo to change it</span><div class="seg" role="group" aria-label="Preview size"><button type="button" data-pvm="desktop" aria-pressed="${pvMode==="desktop"}">Computer</button><button type="button" data-pvm="phone" aria-pressed="${pvMode==="phone"}">Phone</button></div><button class="btn b-soft b-sm pv-open" type="button" id="pvClose">Close</button></div>
     <div class="pv-frame" id="pvBox"><iframe id="pvF" title="Website preview" src="./?preview"></iframe></div></div></div>`;
   const pg=$("page");
   const setC=(k,v)=>{const s=edit();s.content=s.content||{};if(v)s.content[k]=v;else delete s.content[k];changed()};
@@ -871,6 +988,14 @@ function pWebsite(){
   $("pvF").onload=()=>{readDefaults();preview();fitPv()};
   fitPv();
 }
+addEventListener("message",e=>{if(e.origin!==location.origin||!e.data||e.data.type!=="ot-pick")return;const k=e.data.k;
+  if(k==="special"){go("stock");setTimeout(()=>{const m=$("spMore");if(m){m.open=true;$("spHead").focus()}},350);return}
+  if(route!=="website")return;
+  const el=document.querySelector(`[data-ck="${k}"]`)||document.querySelector(`[data-imgk="${k}"]`);if(!el)return;
+  const g=el.closest("details");if(g&&!g.open){document.querySelectorAll(".grp[open]").forEach(x=>{if(x!==g)x.open=false});g.open=true}
+  setTimeout(()=>{el.scrollIntoView({behavior:"smooth",block:"center"});const f=el.closest(".field");
+    if(f){f.classList.remove("flash");void f.offsetWidth;f.classList.add("flash");el.focus({preventScroll:true})}
+    else{const b=el.closest(".ph-img");if(b){b.animate([{boxShadow:"0 0 0 4px #f2c230"},{boxShadow:"0 0 0 0 rgba(242,194,48,0)"}],{duration:1200})}}},60)});
 function fitPv(){const box=$("pvBox"),f=$("pvF");if(!box||!f)return;const W=box.clientWidth,H=box.clientHeight;
   box.classList.toggle("phone",pvMode==="phone");
   if(pvMode==="phone"){const s=Math.min(1,(H-40)/800);f.style.width="390px";f.style.height="800px";f.style.transform=`scale(${s})`;f.style.margin=`${-(800*(1-s))/2}px ${-(390*(1-s))/2}px`}
@@ -900,10 +1025,12 @@ function pMoney(){
   const top=Object.entries(items).sort((a,b)=>b[1]-a[1]).slice(0,7),mx=top.length?top[0][1]:1;
   const ws=sales.filter(o=>o.channel==="wholesale").reduce((t,o)=>t+orderTotal(o),0),rt=rev-ws;
   const pays={};sales.forEach(o=>{if(o.paid)pays[o.paid]=(pays[o.paid]||0)+orderTotal(o)});
+  const CM={};DB.orders.forEach(o=>{const k=o.phone.replace(/\D/g,"")||o.name;const c=CM[k]=CM[k]||{name:o.name,biz:o.biz,phone:o.phone,zip:o.zip,n:0,spent:0,last:o.at};c.n++;if(isSale(o))c.spent+=orderTotal(o);if(new Date(o.at)>new Date(c.last))c.last=o.at});
+  const allC=Object.values(CM).sort((a,b)=>b.spent-a.spent),best=allC.slice(0,6);
   const weeks=mRange==="all"?16:mRange==="year"?Math.min(52,Math.ceil((Date.now()-new Date(new Date().getFullYear(),0,1))/(7*DAY))):mRange;
   $("page").innerHTML=`<div class="toolbar"><div class="seg" role="group" aria-label="Time range">${R.map(([k,l])=>`<button type="button" data-mr="${k}" aria-pressed="${String(mRange)===String(k)}">${l}</button>`).join("")}</div></div>
   <section class="card" style="margin-bottom:18px"><div class="kpis k5">
-    <div class="kpi"><span>Paid sales</span><b>${fmt0(rev)}</b><small>${sales.length} orders</small></div>
+    <div class="kpi"><span>Paid sales</span><b data-count="${Math.round(rev)}" data-f="$">${fmt0(rev)}</b><small>${sales.length} orders</small></div>
     <div class="kpi"><span>Still to collect</span><b>${fmt0(owed)}</b><small>${os.filter(o=>o.status==="confirmed").length} confirmed, not paid</small></div>
     <div class="kpi"><span>Average order</span><b>${fmt0(sales.length?rev/sales.length:0)}</b><small>Paid orders only</small></div>
     <div class="kpi"><span>Customers</span><b>${cust}</b><small>${cust?Math.round(rep/cust*100):0}% ordered again</small></div>
@@ -917,11 +1044,15 @@ function pMoney(){
       <section class="card"><div class="card-h"><h2>Home vs wholesale</h2></div><div class="split">
         <div class="split-bar" role="img" aria-label="Home ${rev?Math.round(rt/rev*100):0} percent, wholesale ${rev?Math.round(ws/rev*100):0} percent">${rt?`<s style="flex:${rt};background:var(--sign)"></s>`:""}${ws?`<s style="flex:${ws};background:var(--ink)"></s>`:""}</div>
         <div class="split-l"><div><span><i style="background:var(--sign)"></i>Home cooks</span><b>${fmt0(rt)}</b><small>${rev?Math.round(rt/rev*100):0}% of sales</small></div><div><span><i style="background:var(--ink)"></i>Wholesale</span><b>${fmt0(ws)}</b><small>${rev?Math.round(ws/rev*100):0}% of sales</small></div></div></div></section>
+      <section class="card"><div class="card-h"><h2>Best customers</h2><button class="lnk" type="button" id="cCsv">Download all</button></div><ul class="pays">${best.map(c=>`<li><button class="lnk" style="text-decoration:none;font-weight:500" type="button" data-cust="${esc(c.phone)}">${esc(c.biz||c.name)}</button><b>${fmt0(c.spent)} <span class="muted" style="font-weight:400">· ${c.n} order${c.n>1?"s":""}</span></b></li>`).join("")}</ul><p class="muted" style="margin:0;padding:0 20px 18px;font-size:13.5px">${DB.emails.length} on the email list (<button class="lnk" type="button" id="eCsv">download</button>), ${DB.texts.length} on the text list (<button class="lnk" type="button" id="tCsv">download</button>).</p></section>
       <section class="card"><div class="card-h"><h2>How people pay</h2></div><ul class="pays">${Object.entries(pays).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<li><span>${esc(k)}</span><b>${fmt0(v)}</b></li>`).join("")||`<li><span class="muted">No payments yet</span></li>`}</ul></section>
     </div></div>`;
-  $("page").querySelectorAll("[data-mr]").forEach(b=>b.onclick=()=>{mRange=b.dataset.mr==="year"||b.dataset.mr==="all"?b.dataset.mr:+b.dataset.mr;pMoney()});
+  $("page").querySelectorAll("[data-mr]").forEach(b=>b.onclick=()=>{mRange=b.dataset.mr==="year"||b.dataset.mr==="all"?b.dataset.mr:+b.dataset.mr;pMoney();countUp()});
   $("csv").onclick=()=>downloadCSV("overnight-tider-orders.csv",[["Order","Received","Customer","Business","Phone","Items","Status","Paid by","Subtotal","Discount","Fee","Total"],...DB.orders.map(o=>{const t=totals(o);return[o.id,new Date(o.at).toLocaleString("en-US"),o.name,o.biz,o.phone,itemsText(o),stName(o.status),o.paid,t.sub.toFixed(2),t.disc.toFixed(2),(+o.fee||0).toFixed(2),t.tot.toFixed(2)]})]);
   weekChart($("bigChart"),Math.max(4,Math.min(weeks,26)));
+  $("cCsv").onclick=()=>downloadCSV("overnight-tider-customers.csv",[["Name","Business","Phone","ZIP","Orders","Spent","Last order"],...allC.map(c=>[c.name,c.biz,c.phone,c.zip,c.n,c.spent.toFixed(2),new Date(c.last).toLocaleDateString("en-US")])]);
+  $("eCsv").onclick=()=>downloadCSV("overnight-tider-email-list.csv",[["Signed up","Email","Code"],...DB.emails.map(e=>[new Date(e.at).toLocaleDateString("en-US"),e.email,e.code||""])]);
+  $("tCsv").onclick=()=>downloadCSV("overnight-tider-text-list.csv",[["Signed up","Phone"],...DB.texts.map(e=>[new Date(e.at).toLocaleDateString("en-US"),e.phone])]);
 }
 function weekChart(box,N){
   if(!box)return;const w0=+startOfWeek(new Date());
@@ -932,7 +1063,7 @@ function weekChart(box,N){
   let g="";for(let k=0;k<=TK;k++){const y=T+(VH-T-B)*(1-k/TK),v=step*k;g+=`<line class="gl" x1="${L}" x2="${VW}" y1="${y}" y2="${y}"/><text class="ax" x="${L-8}" y="${y+4}" text-anchor="end">${fk(v)}</text>`}
   const bars=W.map((x,i)=>{const h=(VH-T-B)*x.v/nice,cx=L+cw*i+cw/2,y=VH-B-h,r=Math.min(4,h/2);
     const every=Math.ceil(N/Math.max(2,Math.floor((VW-L)/56)));const lab=((N-1-i)%every===0)?`<text class="ax" x="${cx}" y="${VH-6}" text-anchor="middle">${dshort(x.s)}</text>`:"";
-    return `<g data-i="${i}">${h>0?`<path class="bar ${x.part?"part":""}" d="M${cx-bw/2},${VH-B}V${y+r}Q${cx-bw/2},${y} ${cx-bw/2+r},${y}H${cx+bw/2-r}Q${cx+bw/2},${y} ${cx+bw/2},${y+r}V${VH-B}Z"/>`:""}<rect class="hit" x="${L+cw*i}" y="${T}" width="${cw}" height="${VH-T-B}"/>${lab}</g>`}).join("");
+    return `<g data-i="${i}">${h>0?`<path class="bar ${x.part?"part":""}" style="--i:${i}" d="M${cx-bw/2},${VH-B}V${y+r}Q${cx-bw/2},${y} ${cx-bw/2+r},${y}H${cx+bw/2-r}Q${cx+bw/2},${y} ${cx+bw/2},${y+r}V${VH-B}Z"/>`:""}<rect class="hit" x="${L+cw*i}" y="${T}" width="${cw}" height="${VH-T-B}"/>${lab}</g>`}).join("");
   box.innerHTML=`<svg viewBox="0 0 ${VW} ${VH}" role="img" aria-label="Paid sales per week">${g}${bars}</svg><div class="tip"></div>`;
   const tip=box.querySelector(".tip"),svg=box.querySelector("svg");
   svg.addEventListener("pointermove",e=>{const gg=e.target.closest("g[data-i]");svg.querySelectorAll("g.on").forEach(x=>x.classList.remove("on"));if(!gg){tip.style.opacity=0;return}gg.classList.add("on");
@@ -965,7 +1096,7 @@ function pCustomers(){
   $("eCsv").onclick=()=>downloadCSV("overnight-tider-email-list.csv",[["Signed up","Email","Code"],...DB.emails.map(e=>[new Date(e.at).toLocaleDateString("en-US"),e.email,e.code||""])]);
   $("tCsv").onclick=()=>downloadCSV("overnight-tider-text-list.csv",[["Signed up","Phone"],...DB.texts.map(e=>[new Date(e.at).toLocaleDateString("en-US"),e.phone])]);
 }
-document.addEventListener("click",e=>{const c=e.target.closest("[data-cust]");if(!c)return;route="orders";location.hash="orders";drawNav();render({q:c.dataset.cust})});
+document.addEventListener("click",e=>{const c=e.target.closest("[data-cust]");if(!c)return;go("orders",{q:c.dataset.cust,anim:1})});
 
 /* ===================== SETTINGS / MORE ===================== */
 function pMore(){$("page").innerHTML=`<div class="more-sheet">${[["customers","Customers"],["settings","Settings"]].map(([k,l])=>`<button type="button" data-go="${k}">${l}<span aria-hidden="true">›</span></button>`).join("")}<a class="btn b-soft" href="./" target="_blank" rel="noopener" style="justify-content:space-between;border-radius:14px;padding:16px 18px">Open the website<span aria-hidden="true">↗</span></a><button class="btn b-soft" type="button" id="lockM" style="justify-content:flex-start;border-radius:14px;padding:16px 18px">Lock the dashboard</button></div>`;$("lockM").onclick=lock}
@@ -1005,11 +1136,11 @@ async function tryPin(p){
   try{
     if(LIVE){PIN=p;await loadAll()}
     else{const want=LS.get("ot-admin-pin",CFG.demoPin);if(p!==want)throw new Error("Wrong PIN");PIN=p;await loadAll()}
-    sessionStorage.setItem("ot-pin",p);enter();
+    sessionStorage.setItem("ot-pin",p);$("lock").classList.add("out");pinBoxes.forEach(b=>b.blur());setTimeout(()=>enter(true),450);
   }catch(e){PIN="";$("lockMsg").textContent=/locked/i.test(e.message)?"Too many tries. Wait 15 minutes and try again.":/Wrong|pin/i.test(e.message)?"That PIN isn't right. Try again.":"Couldn't reach your Google Sheet. Check your connection.";
     const g=$("pin");g.classList.remove("bad");void g.offsetWidth;g.classList.add("bad");pinBoxes.forEach(b=>b.value="");pinBoxes[0].focus()}
 }
-function enter(){$("lock").hidden=true;$("app").hidden=false;const h=location.hash.slice(1);route=PAGES.some(p=>p[0]===h)||h==="more"?h:"today";drawNav();render();
+function enter(anim){$("lock").hidden=true;$("app").hidden=false;if(anim)$("app").classList.add("in");const h=location.hash.slice(1);route=T[h]?h:"today";drawNav();render();requestAnimationFrame(placeInd);
   if(!LIVE)addEventListener("storage",e=>{if(e.key==="ot-inbox"&&e.newValue){const n=mergeInbox();if(n){DB.orders.sort((a,b)=>new Date(b.at)-new Date(a.at));const o=DB.orders[0];toast(`New order from <b>${esc(o.name||"a customer")}</b>`);drawNav();if(route==="today"||route==="orders")render()}}});
   if(LIVE)setInterval(async()=>{if(document.hidden||OPEN)return;try{const before=DB.orders.filter(o=>o.status==="new").length;await loadAll();const after=DB.orders.filter(o=>o.status==="new").length;if(after>before)toast(`<b>${after-before}</b> new order${after-before>1?"s":""}`);drawNav();if(["today","orders"].includes(route))render()}catch(e){}},60000);
 }
@@ -1022,7 +1153,7 @@ $("lockForm").onsubmit=e=>e.preventDefault();
   if(saved){try{PIN=saved;if(!LIVE&&saved!==LS.get("ot-admin-pin",CFG.demoPin))throw 0;await loadAll();enter();return}catch(e){PIN="";sessionStorage.removeItem("ot-pin")}}
   pinBoxes[0].focus();
 })();
-addEventListener("hashchange",()=>{const h=location.hash.slice(1);if(!$("app").hidden&&h&&h!==route&&(PAGES.some(p=>p[0]===h)||h==="more")){route=h;drawNav();render()}});
+addEventListener("hashchange",()=>{const h=location.hash.slice(1);if(!$("app").hidden&&h&&h!==route&&T[h]){setRoute(h);render()}});
 addEventListener("beforeunload",e=>{if(dirtyCount()){e.preventDefault();e.returnValue=""}});
 </script>
 </body>
