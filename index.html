@@ -341,59 +341,69 @@ select.unit{padding:9px 10px;border:1px solid var(--line);border-radius:6px;back
 
 /* party planner */
 #bundles{background:var(--ice)}
-.planner{display:grid;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 0 rgba(19,32,46,.04),0 30px 60px -36px rgba(19,32,46,.35)}
-.pl-photo{position:relative;aspect-ratio:4/3;background:var(--frost);overflow:hidden}
-.pl-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s var(--ease),transform 1.4s var(--ease)}
-.pl-photo img.out{opacity:0;transform:scale(1.05)}
-.pl-serves{position:absolute;left:16px;bottom:16px;display:flex;align-items:baseline;gap:10px;background:var(--ink);color:#fff;border-radius:10px;padding:10px 16px 12px}
-.pl-serves b{font-family:var(--f-display);font-weight:800;font-size:44px;line-height:.9;color:var(--band);font-variant-numeric:tabular-nums}
-.pl-serves span{font-size:14px;color:#c3cfd8}
-.pl-serves.bump b{animation:tick .3s var(--ease)}
-.pl-body{padding:24px 20px 26px;display:grid;gap:26px;align-content:start}
-.pl-q{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-weight:600;font-size:16px}
-.pl-q span{width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;font-size:12.5px;display:grid;place-items:center;flex:none}
+.planner{display:grid;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 1px 0 rgba(19,32,46,.04),0 40px 80px -40px rgba(19,32,46,.4)}
+.pl-table{position:relative;background:var(--ink);color:#fff;padding:26px 22px 22px;display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}
+.pl-head{display:grid;gap:4px;position:relative;z-index:2}
+.pl-head b{font-family:var(--f-display);font-weight:800;font-size:clamp(40px,5.4vw,64px);line-height:.9;color:var(--band);display:inline-block;transform:skewX(-8deg);transform-origin:left bottom;letter-spacing:.3px}
+.pl-head span{font-size:16px;color:#c3cfd8}
+.pl-head.pop b{animation:moodPop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes moodPop{0%{transform:skewX(-8deg) translateY(10px) scale(.96);opacity:0}100%{transform:skewX(-8deg);opacity:1}}
+.tbl{position:relative;width:100%;aspect-ratio:16/11;align-self:center;margin:8px 0 0}
+.tbl-top{position:absolute;left:14%;right:14%;top:17%;bottom:17%;border-radius:50%;background:#20364b;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 -10px 30px rgba(0,0,0,.25),0 24px 40px -18px rgba(0,0,0,.6)}
+.tbl-top::after{content:"";position:absolute;inset:9%;border-radius:50%;border:1px dashed rgba(255,255,255,.08)}
+.plates{position:absolute;inset:0}
+.plate{position:absolute;width:9.5%;aspect-ratio:1;margin:-4.75% 0 0 -4.75%;border-radius:50%;background:#f7f6f1;box-shadow:inset 0 0 0 4px #fff,inset 0 0 0 5px #e1e5e0,0 6px 10px -4px rgba(0,0,0,.5);transition:left .5s var(--ease),top .5s var(--ease);animation:platePop .45s cubic-bezier(.3,1.7,.5,1) both}
+.plate.bye{animation:plateOut .25s ease forwards}
+.plate img{position:absolute;left:50%;top:50%;width:62%;transform:translate(-50%,-50%) rotate(-20deg);filter:drop-shadow(0 2px 2px rgba(0,0,0,.3));animation:miniIn .4s .25s cubic-bezier(.3,1.7,.5,1) both}
+@keyframes miniIn{from{transform:translate(-50%,-50%) scale(0) rotate(-60deg)}to{transform:translate(-50%,-50%) rotate(-20deg)}}
+@keyframes platePop{from{transform:scale(0) rotate(-40deg)}to{transform:none}}
+@keyframes plateOut{to{transform:scale(0);opacity:0}}
+.pile{position:absolute;left:14%;right:14%;top:17%;bottom:17%}
+.pc{position:absolute;margin:0;transform:translate(-50%,-50%) rotate(var(--r));filter:drop-shadow(0 8px 6px rgba(0,0,0,.45));animation:drop .6s cubic-bezier(.3,1.5,.55,1) both;animation-delay:var(--dl,0s);pointer-events:none}
+.pc.bye{animation:pileOut .25s ease forwards}
+@keyframes drop{0%{transform:translate(-50%,-180%) rotate(calc(var(--r) - 40deg)) scale(.6);opacity:0}60%{opacity:1}100%{transform:translate(-50%,-50%) rotate(var(--r))}}
+@keyframes pileOut{to{transform:translate(-50%,-50%) rotate(var(--r)) scale(.2);opacity:0}}
+.pl-more{position:relative;z-index:2;justify-self:center;margin:6px 0 0;font-size:13.5px;color:#c3cfd8;background:rgba(255,255,255,.08);border-radius:999px;padding:6px 14px}
+.pl-body{padding:26px 22px 26px;display:grid;gap:26px;align-content:start}
+.pl-q{margin:0 0 12px;font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1;letter-spacing:.2px}
 .occ{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.occ button{display:grid;gap:8px;justify-items:start;text-align:left;background:#fff;border:0;border-radius:12px;padding:8px 8px 10px;box-shadow:0 0 0 1px var(--line);color:var(--ink);transition:box-shadow .2s,transform .2s var(--ease)}
-.occ button:hover{box-shadow:0 0 0 1px #bfc9c6,0 8px 18px -10px rgba(19,32,46,.3);transform:translateY(-2px)}
-.occ button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
-.occ img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;transition:filter .2s}
-.occ button[aria-pressed="false"] img{filter:saturate(.75)}
-.occ b{display:block;font-size:14.5px;font-weight:600;line-height:1.2}
-.occ small{display:block;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.3}
-.ppl{display:grid;grid-template-columns:44px auto 44px 1fr;align-items:center;gap:6px 10px}
-.pb{width:44px;height:44px;border-radius:50%;border:0;background:var(--ice);font-size:22px;line-height:1;color:var(--ink);transition:background-color .15s,transform .15s}
-.pb:hover{background:var(--ice-2)}.pb:active{transform:scale(.92)}
-.ppl output{font-family:var(--f-display);font-weight:800;font-size:56px;line-height:1;min-width:1.4em;text-align:center;font-variant-numeric:tabular-nums}
-.pr-wrap{grid-column:1/-1;padding-top:10px}
-.pr-marks{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px;padding:0 2px}
-#pRange{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:none;margin:0;--fill:14%}
-#pRange::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--sign) var(--fill),var(--ice-2) var(--fill))}
-#pRange::-moz-range-track{height:6px;border-radius:6px;background:var(--ice-2)}
-#pRange::-moz-range-progress{height:6px;border-radius:6px;background:var(--sign)}
-#pRange::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid var(--ink);margin-top:-9px;box-shadow:0 2px 6px rgba(19,32,46,.25);transition:transform .15s}
-#pRange::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
-#pRange:active::-webkit-slider-thumb{transform:scale(1.15)}
+.occ button{position:relative;display:grid;justify-items:center;gap:6px;background:var(--paper);border:0;border-radius:14px;padding:14px 8px 12px;color:var(--ink);box-shadow:inset 0 0 0 1px #e3e6e1;transition:box-shadow .2s,transform .25s cubic-bezier(.3,1.6,.5,1),background-color .2s}
+.occ button:hover{transform:translateY(-3px)}
+.occ button[aria-pressed="true"]{background:#fff;box-shadow:inset 0 0 0 2px var(--ink),0 10px 20px -12px rgba(19,32,46,.4)}
+.occ img{height:52px;width:auto;max-width:90%;object-fit:contain;filter:drop-shadow(0 6px 5px rgba(19,32,46,.25));transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.occ button:hover img,.occ button[aria-pressed="true"] img{transform:rotate(-8deg) scale(1.08)}
+.occ b{font-size:14px;font-weight:600}
+.ppl{display:flex;align-items:center;gap:10px}
+.pb{width:46px;height:46px;border-radius:50%;border:0;background:var(--ice);font-size:22px;line-height:1;color:var(--ink);transition:background-color .15s,transform .15s}
+.pb:hover{background:var(--ice-2)}.pb:active{transform:scale(.88)}
+.ppl output{font-family:var(--f-display);font-weight:800;font-size:60px;line-height:1;min-width:1.3em;text-align:center;font-variant-numeric:tabular-nums}
+.ppl output.bump{animation:tick .3s var(--ease)}
+.ppl-u{font-size:15px;color:var(--muted);margin-left:4px}
+#pRange{-webkit-appearance:none;appearance:none;width:100%;height:30px;background:none;margin:10px 0 0;--fill:14%}
+#pRange::-webkit-slider-runnable-track{height:8px;border-radius:8px;background:linear-gradient(to right,var(--sign) var(--fill),var(--ice-2) var(--fill))}
+#pRange::-moz-range-track{height:8px;border-radius:8px;background:var(--ice-2)}
+#pRange::-moz-range-progress{height:8px;border-radius:8px;background:var(--sign)}
+#pRange::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--band);border:3px solid #fff;margin-top:-10px;box-shadow:0 3px 10px rgba(19,32,46,.3);transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+#pRange::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--band);border:3px solid #fff}
+#pRange:active::-webkit-slider-thumb{transform:scale(1.2)}
 .seg{position:relative;display:grid;grid-template-columns:1fr 1fr;background:var(--ice);border-radius:999px;padding:4px}
-.seg button{position:relative;z-index:1;background:none;border:0;border-radius:999px;padding:10px 12px;font-size:14.5px;font-weight:600;color:var(--muted);transition:color .25s}
+.seg button{position:relative;z-index:1;background:none;border:0;border-radius:999px;padding:11px 10px;font-size:14.5px;font-weight:600;color:var(--muted);transition:color .25s}
 .seg button[aria-pressed="true"]{color:var(--ink)}
-.seg-ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);background:#fff;border-radius:999px;box-shadow:0 2px 8px rgba(19,32,46,.14);transition:transform .35s var(--ease)}
+.seg-ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);background:#fff;border-radius:999px;box-shadow:0 2px 8px rgba(19,32,46,.14);transition:transform .4s cubic-bezier(.3,1.4,.5,1)}
 .seg.r .seg-ind{transform:translateX(100%)}
-.pl-out{background:var(--paper);border-radius:12px;padding:18px 18px 16px}
-.pl-oh{margin:0 0 6px;font-size:14px;color:var(--muted)}
-.pl-oh b{color:var(--ink);font-weight:600}
-.pl-list{list-style:none;margin:0 0 16px;padding:0}
+.pl-out{border-top:2px solid var(--ink);padding-top:6px}
+.pl-list{list-style:none;margin:0 0 18px;padding:0}
 .pl-list li{display:grid;grid-template-columns:1fr auto;gap:0 12px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
-.pl-list li>span{font-size:16px;font-weight:500}
-.pl-list b{font-family:var(--f-display);font-weight:800;font-size:24px;line-height:1;color:var(--ink);text-align:right}
-.pl-list small{grid-column:1/-1;font-size:12.5px;color:var(--muted);margin-top:2px}
-.pl-out .btn{width:100%;justify-content:center}
-.pl-safe{margin:10px 0 0;font-size:13px;color:var(--muted);text-align:center}
+.pl-list li>span{font-size:16px;font-weight:600}
+.pl-list b{font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;color:var(--ink);text-align:right}
+.pl-list small{grid-column:1/-1;font-size:13px;color:var(--muted);margin-top:2px}
+.pl-out .btn{width:100%;justify-content:center;font-size:16.5px;padding-top:15px;padding-bottom:15px}
+.pl-safe{margin:10px 0 0;font-size:13px;color:var(--muted);text-align:center;line-height:1.9}
+.pl-safe a{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--band);text-decoration-thickness:2px;text-underline-offset:3px}
+.pl-how{margin:10px 0 0;font-size:13.5px;color:var(--body);line-height:1.55;background:var(--paper);border-radius:10px;padding:12px 14px}
 .roll{display:inline-block;animation:roll .35s var(--ease)}
 @keyframes roll{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
-.pl-how summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--ink);list-style:none;display:inline-flex;align-items:center;gap:8px;text-decoration:underline;text-decoration-color:var(--band);text-decoration-thickness:2px;text-underline-offset:4px}
-.pl-how summary::-webkit-details-marker{display:none}
-.pl-how p{margin:10px 0 0;font-size:14px;color:var(--body);line-height:1.55}
-@media (max-width:420px){.occ small{display:none}.pl-serves b{font-size:36px}}
+@media (prefers-reduced-motion:reduce){.plate,.pc,.pl-head.pop b{animation:none}}
 
 /* how it works */
 #how{background:var(--ice)}
@@ -528,7 +538,7 @@ dialog[open]{animation:pop .3s var(--ease)}
 .why-dock{position:fixed;left:50%;bottom:20px;z-index:45;transform:translateX(-50%);display:flex;align-items:stretch;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(8px) saturate(1.2);backdrop-filter:blur(8px) saturate(1.2);color:var(--ink);border-radius:999px;padding:4px;box-shadow:0 10px 30px -12px rgba(19,32,46,.35),0 0 0 1px rgba(19,32,46,.08);width:max-content;max-width:calc(100vw - 24px);user-select:none;-webkit-user-select:none;transition:bottom .3s var(--ease)}
 .why-dock button{-webkit-tap-highlight-color:transparent}
 .why-dock button:focus{outline:none}
-.why-dock button:focus-visible{outline:2px solid var(--sign);outline-offset:1px}
+.why-dock button:focus-visible{outline:none;background:rgba(19,32,46,.08)}
 .why-tog{display:flex;align-items:center;gap:10px;background:none;border:0;color:inherit;padding:6px 14px 6px 6px;border-radius:999px;text-align:left;transition:background-color .2s}
 .why-tog:hover{background:rgba(19,32,46,.05)}
 .why-tog .sw{flex:none;width:36px;height:22px;border-radius:999px;background:#c9d1d0;position:relative;transition:background-color .25s}
@@ -624,10 +634,9 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
   .paths{grid-template-columns:auto auto;justify-content:start}
     .treviews{grid-template-columns:repeat(3,1fr)}
   .tf-grid{grid-template-columns:repeat(5,1fr);gap:12px}
-        .planner{grid-template-columns:1fr 1fr;gap:0}
-  .pl-photo{aspect-ratio:auto;min-height:100%}
-  .pl-body{padding:34px 36px}
-  .pl-serves{left:24px;bottom:auto;top:24px}
+        .planner{grid-template-columns:1.1fr 1fr;gap:0}
+  .pl-table{padding:40px 36px 32px;min-height:100%}
+  .pl-body{padding:40px 40px}
   .steps{grid-template-columns:repeat(3,1fr);gap:40px}
   .bulk-g{grid-template-columns:1fr 1.1fr;align-items:start}
   .two{grid-template-columns:1fr 1fr}
@@ -791,48 +800,46 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
       <p>Pick the occasion and the headcount. We'll size it, you can still change anything before you send.</p>
     </div>
     <div class="planner io" style="--d:100ms">
-      <div class="pl-photo">
-        <img id="plA" src="img/crabs.webp" alt="Live blue crabs" loading="lazy"><img id="plB" class="out" alt="">
-        <div class="pl-serves" aria-hidden="true"><b id="plServes">10</b><span id="plServesT">people, crab boil</span></div>
+      <div class="pl-table" aria-hidden="true">
+        <div class="pl-head"><b id="plMood">Backyard boil</b><span id="plSub">Crab boil for 10</span></div>
+        <div class="tbl" id="plTbl"><div class="tbl-top"></div><div class="pile" id="plPile"></div><div class="plates" id="plPlates"></div></div>
+        <p class="pl-more" id="plMore" hidden></p>
       </div>
       <div class="pl-body">
         <div class="pl-step">
-          <p class="pl-q"><span>1</span>What&rsquo;s the occasion?</p>
+          <p class="pl-q">What are we having?</p>
           <div class="occ" role="group" aria-label="Occasion">
-            <button type="button" data-occ="boil" aria-pressed="true"><img src="img/crabs.webp" alt="" loading="lazy"><span><b>Crab boil</b><small>Blue crabs and shrimp</small></span></button>
-            <button type="button" data-occ="lobster" aria-pressed="false"><img src="img/lobster-hero.webp" alt="" loading="lazy"><span><b>Lobster night</b><small>Lobster and oysters</small></span></button>
-            <button type="button" data-occ="shrimp" aria-pressed="false"><img src="img/shrimp-tray.webp" alt="" loading="lazy"><span><b>Shrimp boil</b><small>Shrimp and crabs</small></span></button>
+            <button type="button" data-occ="boil" aria-pressed="true"><img src="img/pile-crab.webp" alt=""><b>Crab boil</b></button>
+            <button type="button" data-occ="lobster" aria-pressed="false"><img src="img/pile-lobster.webp" alt=""><b>Lobster night</b></button>
+            <button type="button" data-occ="shrimp" aria-pressed="false"><img src="img/pile-shrimp.webp" alt=""><b>Shrimp boil</b></button>
           </div>
         </div>
         <div class="pl-step">
-          <p class="pl-q" id="pplLab"><span>2</span>How many people?</p>
+          <p class="pl-q" id="pplLab">Who&rsquo;s coming?</p>
           <div class="ppl">
-            <button type="button" class="pb" id="pMinus" aria-label="Fewer people">&minus;</button>
+            <button type="button" class="pb" id="pMinus" aria-label="One less guest">&minus;</button>
             <output id="pN" aria-labelledby="pplLab">10</output>
-            <button type="button" class="pb" id="pPlus" aria-label="More people">+</button>
-            <div class="pr-wrap">
-              <label class="vh" for="pRange">Number of people</label>
-              <input type="range" id="pRange" min="2" max="60" value="10">
-              <div class="pr-marks" aria-hidden="true"><span>2</span><span>20</span><span>40</span><span>60</span></div>
-            </div>
+            <button type="button" class="pb" id="pPlus" aria-label="One more guest">+</button>
+            <span class="ppl-u">guests</span>
           </div>
+          <label class="vh" for="pRange">Number of guests</label>
+          <input type="range" id="pRange" min="2" max="60" value="10">
         </div>
         <div class="pl-step">
-          <p class="pl-q"><span>3</span>How hungry is the crowd?</p>
+          <p class="pl-q">How hungry?</p>
           <input type="checkbox" id="pMain" class="vh" tabindex="-1" aria-hidden="true">
           <div class="seg" role="group" aria-label="How hungry">
-            <button type="button" data-main="0" aria-pressed="true">With sides</button>
-            <button type="button" data-main="1" aria-pressed="false">Seafood only</button>
+            <button type="button" data-main="0" aria-pressed="true">There&rsquo;s sides</button>
+            <button type="button" data-main="1" aria-pressed="false">Seafood is the meal</button>
             <i class="seg-ind" aria-hidden="true"></i>
           </div>
         </div>
         <div class="pl-out">
-          <p class="pl-oh">Your list for <b id="plFor">10 people</b></p>
           <ul class="pl-list" id="plList"></ul>
-          <button class="btn btn-green" type="button" id="plAdd">Add this to my order</button>
-          <p class="pl-safe">Nothing is charged. We check the amounts with you when we confirm.</p>
+          <button class="btn btn-green" type="button" id="plAdd">Add the whole haul</button>
+          <p class="pl-safe">Nothing is charged. We check amounts with you when we confirm.<br><a href="#" id="plHowT">How we size it</a></p>
+          <p class="pl-how" id="plHow" hidden>About 6 crabs a person with sides, 10 if crabs are the meal. One lobster each, or one and a half for big eaters. Half a pound of head-on shrimp a person with sides, a pound if it&rsquo;s the meal. A bushel is roughly 5 dozen crabs.</p>
         </div>
-        <details class="pl-how"><summary>How we size it</summary><p>About 6 crabs a person with sides, 8 to 12 if crabs are the meal, one lobster each. A bushel is roughly 5 dozen depending on size. Half a pound of head-on shrimp a person with sides, a full pound if it&rsquo;s the meal.</p></details>
       </div>
     </div>
   </div>
@@ -1212,42 +1219,72 @@ $("copyOnly").onclick=()=>copy(message(),$("sheetMsg"),"Copied. Send it to @over
 
 /* ---------- party planner ---------- */
 const OCC={
-  boil:{img:"img/crabs.webp",alt:"Live blue crabs",name:"crab boil",def:10,plan:(g,m)=>{const out=[];const dz=Math.max(1,Math.ceil(g*(m?10:6)/12)),b=Math.floor(dz/5),r=dz%5;if(b)out.push(["crab","bushel",b]);if(r)out.push(["crab","dozen",r]);out.push(["shrimp","lb",Math.max(1,Math.ceil(g*(m?.75:.5)))]);return out}},
-  lobster:{img:"img/lobster-hero.webp",alt:"Live lobster on ice",name:"lobster night",def:4,plan:(g,m)=>[["lobster","lobster (1½ lb)",Math.max(1,Math.ceil(g*(m?1.5:1)))],["oyster","dozen",Math.max(1,Math.ceil(g/2))]]},
-  shrimp:{img:"img/shrimp-tray.webp",alt:"Head-on shrimp in a tray",name:"shrimp boil",def:8,plan:(g,m)=>[["shrimp","lb",Math.max(1,Math.ceil(g*(m?1:.66)))],["crab","dozen",Math.max(1,Math.ceil(g/6))]]}
+  boil:{name:"Crab boil",def:10,plan:(g,m)=>{const out=[];const dz=Math.max(1,Math.ceil(g*(m?10:6)/12)),b=Math.floor(dz/5),r=dz%5;if(b)out.push(["crab","bushel",b]);if(r)out.push(["crab","dozen",r]);out.push(["shrimp","lb",Math.max(1,Math.ceil(g*(m?.75:.5)))]);return out}},
+  lobster:{name:"Lobster night",def:4,plan:(g,m)=>[["lobster","lobster (1½ lb)",Math.max(1,Math.ceil(g*(m?1.5:1)))],["oyster","dozen",Math.max(1,Math.ceil(g/2))]]},
+  shrimp:{name:"Shrimp boil",def:8,plan:(g,m)=>[["shrimp","lb",Math.max(1,Math.ceil(g*(m?1:.66)))],["crab","dozen",Math.max(1,Math.ceil(g/6))]]}
 };
-let occ="boil",people=10,touched=false,plFront="plA",lastRows={};
+const PILE={crab:["img/pile-crab.webp",21],lobster:["img/pile-lobster.webp",30],shrimp:["img/pile-shrimp.webp",17],oyster:["img/pile-oyster.webp",15]};
+const MOOD=n=>n<=2?"Date night":n<=5?"Dinner at home":n<=11?"Backyard boil":n<=19?"Big family feast":n<=34?"Block party":"Feeding the whole crew";
+let occ="boil",people=10,touched=false,lastRows={},lastMood="",pileKey="",pileN=0;
 const each=(n)=>{const r=Math.round(n*2)/2;return (r%1?`${Math.floor(r)||""}½`:String(r))};
 function hint(id,u,q,rows){
-  if(id==="crab"){const all=rows.filter(r=>r[0]==="crab"),first=all[0]===rows.find(r=>r[0]==="crab"&&r[1]===u);if(rows.findIndex(r=>r[0]==="crab")!==rows.findIndex(r=>r[0]==="crab"&&r[1]===u))return"";
-    const n=all.reduce((t,[,uu,qq])=>t+qq*(uu==="bushel"?60:12),0);return `About ${n} crabs, ${Math.round(n/people)} a person`}
+  if(id==="crab"){if(rows.findIndex(r=>r[0]==="crab")!==rows.findIndex(r=>r[0]==="crab"&&r[1]===u))return"";
+    const n=rows.filter(r=>r[0]==="crab").reduce((t,[,uu,qq])=>t+qq*(uu==="bushel"?60:12),0);return `About ${n} crabs, ${Math.round(n/people)} a person`}
   if(id==="shrimp")return `About ${each(q/people)} lb a person`;
   if(id==="lobster")return `${each(q/people)} a person, about 1½ lb each`;
   if(id==="oyster")return `About ${Math.round(q*12/people)} a person`;
   return ""}
+function plates(){
+  const box=$("plPlates"),shown=Math.min(people,24),cur=[...box.children].filter(x=>!x.classList.contains("bye"));
+  const mini=PILE[OCC[occ].plan(2,false)[0][0]][0];
+  while(cur.length<shown){const d=document.createElement("i");d.className="plate";d.style.animationDelay=(cur.length%6)*30+"ms";d.innerHTML=`<img src="${mini}" alt="">`;box.appendChild(d);cur.push(d)}
+  cur.forEach(d=>{const im=d.querySelector("img");if(im&&!im.src.endsWith(mini.slice(4))){im.src=mini;im.style.animation="none";void im.offsetWidth;im.style.animation=""}});
+  while(cur.length>shown){const d=cur.pop();d.classList.add("bye");setTimeout(()=>d.remove(),260)}
+  cur.forEach((d,i)=>{const a=i/shown*Math.PI*2-Math.PI/2;d.style.left=(50+Math.cos(a)*42)+"%";d.style.top=(50+Math.sin(a)*41)+"%"});
+  const more=$("plMore");more.hidden=people<=24;if(people>24)more.textContent=`+${people-24} more around the table`;
+}
+function pile(rows){
+  const want=[];const tot={};rows.forEach(([id,u,q])=>{const n=id==="crab"?q*(u==="bushel"?5:1):id==="shrimp"?Math.ceil(q/2.5):id==="oyster"?q:q;tot[id]=(tot[id]||0)+n});
+  const cap={crab:9,lobster:8,shrimp:7,oyster:5};Object.keys(tot).forEach(id=>{for(let k=0;k<Math.min(cap[id]||6,Math.max(1,Math.round(tot[id])));k++)want.push(id)});
+  const order=[];const ids=Object.keys(tot);let mx=Math.max(...ids.map(id=>want.filter(w=>w===id).length));for(let k=0;k<mx;k++)ids.forEach(id=>{if(want.filter(w=>w===id).length>k)order.push(id)});
+  const box=$("plPile"),key=occ;
+  if(key!==pileKey){box.innerHTML="";pileKey=key}
+  const cur=[...box.children].filter(x=>!x.classList.contains("bye"));
+  order.forEach((id,i)=>{let el=cur[i];if(el&&el.dataset.id===id)return;if(el){el.remove();cur[i]=null}
+    const a=i*2.399,rr=Math.sqrt((i+.6)/order.length)*.82,P=PILE[id];
+    el=document.createElement("img");el.className="pc";el.src=P[0];el.alt="";el.dataset.id=id;
+    el.style.left=(50+Math.cos(a)*rr*44)+"%";el.style.top=(50+Math.sin(a)*rr*40)+"%";el.style.width=P[1]+"%";
+    el.style.setProperty("--r",((i*67)%80-40)+"deg");el.style.setProperty("--dl",(Math.max(0,i-pileN)*60)+"ms");
+    if(i<box.children.length)box.insertBefore(el,box.children[i]);else box.appendChild(el)});
+  [...box.children].filter(x=>!x.classList.contains("bye")).slice(order.length).forEach(d=>{d.classList.add("bye");setTimeout(()=>d.remove(),260)});
+  pileN=order.length;
+}
 function renderPlan(){
   const rows=OCC[occ].plan(people,$("pMain").checked);
-  $("plList").innerHTML=rows.map(([id,u,q])=>{const key=id+u,txt=label(u,q).replace(" (1½ lb)",""),ch=lastRows[key]!==txt;lastRows[key]=txt;
-    const h=hint(id,u,q,rows);
+  const grp=[];rows.forEach(r=>{const g=grp.find(x=>x[0]===r[0]);if(g)g[1].push(r);else grp.push([r[0],[r]])});
+  $("plList").innerHTML=grp.map(([id,rs])=>{const txt=rs.map(([,u,q])=>label(u,q).replace(" (1½ lb)","")).join(" + "),ch=lastRows[id]!==txt;lastRows[id]=txt;
+    const h=hint(id,rs[0][1],rs[0][2],rows);
     return `<li><span>${item(id).name}</span><b><span class="${ch?"roll":""}">${txt}</span></b>${h?`<small>${h}</small>`:""}</li>`}).join("");
-  $("pN").textContent=people;$("pRange").value=people;$("pRange").style.setProperty("--fill",((people-2)/58*100)+"%");
-  $("plFor").textContent=people+" people";$("plServes").textContent=people;$("plServesT").textContent="people, "+OCC[occ].name;
-  const sv=document.querySelector(".pl-serves");sv.classList.remove("bump");void sv.offsetWidth;sv.classList.add("bump");
+  const o=$("pN");if(o.textContent!=String(people)){o.textContent=people;o.classList.remove("bump");void o.offsetWidth;o.classList.add("bump")}
+  $("pRange").value=people;$("pRange").style.setProperty("--fill",((people-2)/58*100)+"%");
+  const m=MOOD(people);$("plSub").textContent=`${OCC[occ].name} for ${people}`;
+  if(m!==lastMood){$("plMood").textContent=m;lastMood=m;const h=document.querySelector(".pl-head");h.classList.remove("pop");void h.offsetWidth;h.classList.add("pop")}
+  plates();pile(rows);
 }
 function setPeople(n){people=Math.max(2,Math.min(60,n));touched=true;renderPlan()}
 document.querySelectorAll("[data-occ]").forEach(b=>b.onclick=()=>{
   if(b.dataset.occ===occ)return;occ=b.dataset.occ;
   document.querySelectorAll("[data-occ]").forEach(x=>x.setAttribute("aria-pressed",x===b));
-  if(!touched)people=OCC[occ].def;lastRows={};
-  plFront=swapImg("plA","plB",OCC[occ].img,OCC[occ].alt,plFront);renderPlan();track("planner_occasion",{occ});
+  if(!touched)people=OCC[occ].def;lastRows={};pileN=0;renderPlan();track("planner_occasion",{occ});
 });
 document.querySelectorAll("[data-main]").forEach(b=>b.onclick=()=>{const m=b.dataset.main==="1";$("pMain").checked=m;
   document.querySelectorAll("[data-main]").forEach(x=>x.setAttribute("aria-pressed",x===b));b.parentNode.classList.toggle("r",m);renderPlan()});
+$("plHowT").onclick=e=>{e.preventDefault();$("plHow").hidden=!$("plHow").hidden};
 $("pMinus").onclick=()=>setPeople(people-1);
 $("pPlus").onclick=()=>setPeople(people+1);
 $("pRange").oninput=e=>setPeople(+e.target.value);
 $("pMain").onchange=renderPlan;
-$("plAdd").onclick=()=>{track("add_to_cart",{bundle:occ,people});OCC[occ].plan(people,$("pMain").checked).forEach(([id,u,q])=>{cart[id+"|"+u]=(cart[id+"|"+u]||0)+q});save();bar(true);fly(OCC[occ].img,$("plAdd"));drawDetail();setTimeout(openSheet,calm?0:450)};
+$("plAdd").onclick=()=>{track("add_to_cart",{bundle:occ,people});OCC[occ].plan(people,$("pMain").checked).forEach(([id,u,q])=>{cart[id+"|"+u]=(cart[id+"|"+u]||0)+q});save();bar(true);fly(PILE[OCC[occ].plan(people,false)[0][0]][0],$("plAdd"));drawDetail();setTimeout(openSheet,calm?0:450)};
 
 /* ---------- other events ---------- */
 document.addEventListener("click",e=>{
@@ -1454,6 +1491,8 @@ const WHY=[
  ["#shopTrack","A real photo on every product","Every card shows your own Instagram photo and links to the post it came from.","Proof on every single product, not just the homepage."],
  [".board-foot","Not listed? Ask in the notes","A line at the end tells people to add anything else to their order notes.","Special requests become orders instead of lost messages."],
  [".planner","Party sizes","Turns \"how much do I need for 15 people?\" into a ready order. Party and event buyers order more per order than anyone else.","Bigger orders from the customers who spend the most."],
+ [".planner","The table fills up as you plan","Every guest adds a plate and the seafood piles up in the middle as the order grows. People play with it, and people who play order.","Time spent on the planner turns into bigger orders."],
+ [".planner","It names the party","Two guests is date night, twenty-five is a block party. A little humor makes a supplier feel like people, not a warehouse.","Friendly brands get remembered and recommended."],
  [".pl-body .occ","Pick by occasion, not by product","People think \"crab boil for 10\", not \"two bushels\". The planner speaks their language and does the math.","Hosts order the right amount instead of guessing low."],
  [".ppl","Headcount you can slide","Plus, minus or drag. The list updates instantly as the number changes.","Playing with the number keeps people on the page longer."],
  [".pl-out","Per-person amounts","Each line says what it means per guest, like \"6 crabs a person\", so the host trusts the amount.","Confidence to order the full amount."],
