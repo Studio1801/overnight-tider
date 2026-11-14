@@ -24,7 +24,7 @@
 {"@context":"https://schema.org","@type":"Store","name":"Overnight Tider","description":"Fresh and frozen seafood: lobsters, crabs, shrimp, oysters, fish and octopus. Retail and wholesale orders, delivery and shipping.","sameAs":["https://www.instagram.com/overnight_tider/"],"image":"img/building.webp","logo":"brand/mark.svg"}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I pay?","acceptedAnswer":{"@type":"Answer","text":"Nothing is charged on this site. Send your order, we confirm the items and the total with you, then tell you how to pay. You only pay once you have said yes."}},
 {"@type":"Question","name":"Do you deliver or ship?","acceptedAnswer":{"@type":"Answer","text":"Yes, both. Tell us your ZIP when you send your order and we'll confirm the options, cost and day."}},
 {"@type":"Question","name":"Can I buy a small amount, or is it wholesale only?","acceptedAnswer":{"@type":"Answer","text":"Both. Two lobsters for dinner is as welcome as a case of shrimp for a restaurant."}},
 {"@type":"Question","name":"Why don't you list every price?","acceptedAnswer":{"@type":"Answer","text":"Seafood prices move with the market and the season, so we confirm your price when you order. Specials are posted at the top of the page."}},
@@ -319,8 +319,8 @@ a.pc-src:hover{color:var(--sign);text-decoration:underline}
 /* section heads */
 .sec{padding:84px 0;position:relative}
 .head{display:grid;gap:12px;margin-bottom:36px;max-width:640px}
-.eyebrow{font-family:var(--f-mono);font-size:13px;color:var(--sign);margin:0}
-.head h2{font-family:var(--f-display);font-weight:800;font-size:clamp(42px,6.5vw,62px);line-height:.95;margin:0;letter-spacing:.2px}
+.eyebrow{font-size:14px;font-weight:600;color:var(--sign);margin:0}
+.head h2,.faq-side h2{font-family:var(--f-display);font-weight:800;font-size:clamp(42px,6.5vw,62px);line-height:.95;margin:0;letter-spacing:.2px}
 .head p{margin:0;color:var(--muted);font-size:18px}
 
 .ctl{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
@@ -477,34 +477,74 @@ form.f{display:grid;gap:14px;background:var(--ice);padding:24px;border-radius:8p
 .guide dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:15.5px}
 .guide dt{font-family:var(--f-mono);font-size:14px;color:var(--sign-dk)}
 .guide dd{margin:0;color:var(--body)}
-.faq{max-width:780px}
-.faq details{border-top:1px solid var(--line);padding:18px 0}
-.faq details:last-child{border-bottom:1px solid var(--line)}
-.faq summary{cursor:pointer;font-weight:600;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:20px}
+.faq-grid{display:grid;gap:36px}
+.faq-side h2{margin-top:8px!important}
+.faq-lede{margin:14px 0 0;color:var(--body);font-size:17px;max-width:32ch}
+.faq-ask{display:flex;align-items:center;gap:14px;margin-top:26px;padding:12px 16px 12px 12px;background:#fff;border-radius:14px;text-decoration:none;color:var(--ink);box-shadow:0 0 0 1px #e3e6e1;max-width:380px;transition:box-shadow .25s,transform .25s var(--ease)}
+.faq-ask:hover{transform:translateY(-2px);box-shadow:0 0 0 1px #d2d8d4,0 16px 30px -18px rgba(19,32,46,.4)}
+.faq-ask img{width:56px;height:56px;border-radius:10px;object-fit:cover;flex:none}
+.faq-ask span{display:grid;gap:2px;flex:1}
+.faq-ask b{font-size:16px;font-weight:600}
+.faq-ask small{font-size:13.5px;color:var(--muted)}
+.faq-ask svg{width:16px;height:16px;flex:none;color:var(--sign);transition:transform .25s var(--ease)}
+.faq-ask:hover svg{transform:translateX(3px)}
+.faq{background:#fff;border-radius:18px;padding:6px 26px;box-shadow:0 0 0 1px #e3e6e1,0 30px 60px -44px rgba(19,32,46,.4)}
+.faq details{border-top:1px solid var(--line)}
+.faq details:first-child{border-top:0}
+.faq summary{cursor:pointer;font-weight:600;font-size:18px;line-height:1.35;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;transition:color .2s}
+.faq summary:hover{color:var(--sign)}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-family:var(--f-mono);color:var(--sign);transition:transform .25s var(--ease)}
-.faq details[open] summary::after{transform:rotate(45deg)}
-.faq details p{margin:10px 0 0;color:var(--body)}
+.faq summary i{flex:none;position:relative;width:32px;height:32px;border-radius:50%;background:var(--ice);transition:background-color .25s,transform .35s var(--ease)}
+.faq summary i::before,.faq summary i::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:2px;margin:-1px 0 0 -6px;border-radius:2px;background:var(--ink);transition:transform .35s var(--ease),background-color .25s}
+.faq summary i::after{transform:rotate(90deg)}
+.faq details[open] summary i{background:var(--ink);transform:rotate(180deg)}
+.faq details[open] summary i::before,.faq details[open] summary i::after{background:#fff}
+.faq details[open] summary i::after{transform:rotate(0deg)}
+.faq details p{margin:0;padding:0 52px 24px 0;color:var(--body);font-size:16.5px;line-height:1.6;max-width:60ch}
+.faq details[open] p{animation:faqIn .35s var(--ease)}
+@keyframes faqIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (min-width:900px){.faq-grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:72px;align-items:start}.faq-side{position:sticky;top:110px}}
+@media (max-width:520px){.faq{padding:2px 18px}.faq summary{font-size:16.5px;padding:18px 0}.faq details p{padding-right:0;font-size:15.5px}}
 
 /* closer */
-.closer{background:var(--sign);color:#fff;padding:76px 0;position:relative}
-.closer .wrap{display:grid;gap:28px;align-items:center}
-.closer h2{font-family:var(--f-display);font-weight:800;font-size:clamp(42px,7vw,66px);line-height:.92;margin:0;max-width:13ch}
-.closer p{margin:14px 0 0;font-size:18px;max-width:40ch;color:#e3efe5}
-.alert-f{display:flex;flex-wrap:wrap;gap:10px}
-.alert-f input{flex:1 1 220px;padding:14px 16px;border-radius:8px;border:0;font-size:16px}
+.closer{background:var(--sign);color:#fff;padding:84px 0;position:relative;overflow:hidden}
+.closer .wrap{display:grid;gap:44px;align-items:center}
+.cl-eye{margin:0 0 14px;font-size:14px;font-weight:600;color:var(--band)}
+.closer h2{font-family:var(--f-display);font-weight:800;font-size:clamp(46px,7vw,84px);line-height:.9;margin:0;max-width:11ch}
+.cl-copy>p{margin:18px 0 28px;font-size:18px;line-height:1.55;max-width:40ch;color:#e3efe5}
+.alert-f{display:flex;flex-wrap:wrap;gap:10px;max-width:480px}
+.alert-f input{flex:1 1 220px;padding:14px 16px;border-radius:999px;border:0;font-size:16px}
 .closer small{display:block;margin-top:10px;opacity:.85;font-size:13px}
 .closer .msg{color:#fff;margin-top:8px}
+.cl-fan{position:relative;display:block;height:340px;max-width:460px;width:100%;justify-self:center;text-decoration:none}
+.pol{position:absolute;top:30px;width:200px;background:#fff;padding:9px 9px 34px;border-radius:4px;box-shadow:0 26px 40px -18px rgba(0,0,0,.55);transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.pol img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px}
+.p1{left:2%;transform:rotate(-9deg);z-index:1}
+.p2{left:calc(50% - 100px);top:6px;transform:rotate(2deg);z-index:3}
+.p3{right:2%;transform:rotate(10deg);z-index:2}
+.cl-fan:hover .p1{transform:rotate(-14deg) translate(-18px,6px)}
+.cl-fan:hover .p2{transform:rotate(0deg) translateY(-10px)}
+.cl-fan:hover .p3{transform:rotate(15deg) translate(18px,6px)}
+.cl-tag{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);white-space:nowrap;background:var(--ink);color:#fff;font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:999px;z-index:4}
+@media (min-width:900px){.closer .wrap{grid-template-columns:1fr 460px;gap:64px}}
+@media (max-width:520px){.cl-fan{height:240px;max-width:330px}.pol{width:128px;padding:6px 6px 22px;top:24px}.p2{left:calc(50% - 64px);top:4px}.p1{left:4%}.p3{right:4%}}
+@media (prefers-reduced-motion:reduce){.pol{transition:none}}
 
-footer{background:var(--ink);color:#b3c1cd;padding:52px 0 110px;font-size:14.5px}
-footer .wrap{display:grid;gap:28px}
-footer .mark span{color:var(--sign-lt)}
-.fcols{display:grid;gap:22px}
-.fcols div{display:grid;gap:5px;align-content:start}
-.fcols b{color:var(--ice);font-weight:600;margin-bottom:2px}
-.fcols a{text-decoration:none}.fcols a:hover{text-decoration:underline}
-.linkish{background:none;border:0;color:#b3c1cd;padding:0;font-size:14.5px;text-align:left}
-.linkish:hover{text-decoration:underline}
+footer{background:var(--ink);color:#b3c1cd;padding:64px 0 160px;font-size:15px}
+.ft-top{display:grid;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.1)}
+footer .mark span{color:#fff;font-size:30px}
+.ft-brand p{margin:16px 0 22px;max-width:36ch;line-height:1.55}
+.ft-cta{display:inline-flex}
+.fcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:28px}
+.fcols div{display:grid;gap:9px;align-content:start}
+.fcols div[hidden]{display:none}
+.fcols b{color:#fff;font-weight:600;margin-bottom:4px}
+.fcols a{color:#b3c1cd;text-decoration:none;transition:color .2s}.fcols a:hover{color:var(--band)}
+.ft-bot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-top:22px;font-size:13.5px;color:#8597a6}
+.ft-legal{display:flex;gap:20px}
+.linkish{background:none;border:0;color:#8597a6;padding:0;font-size:13.5px;text-align:left}
+.linkish:hover{color:#fff}
+@media (min-width:900px){.ft-top{grid-template-columns:1fr 1.2fr;gap:64px}}
 
 /* order bar + dialogs */
 .obar{position:fixed;left:12px;right:12px;bottom:12px;z-index:40;background:var(--ink);color:var(--paper);border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 8px 8px 20px;box-shadow:0 12px 30px rgba(19,32,46,.35);transform:translateY(150%);visibility:hidden;transition:transform .3s var(--ease),visibility 0s .3s}
@@ -676,9 +716,6 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
   .bulk-g{grid-template-columns:1fr 1.1fr;align-items:start}
   .two{grid-template-columns:1fr 1fr}
   .guides{grid-template-columns:1.2fr 1fr 1fr;gap:44px}
-  .closer .wrap{grid-template-columns:1fr 1fr}
-  footer .wrap{grid-template-columns:1.1fr 2fr}
-  .fcols{grid-template-columns:repeat(3,1fr)}
   .obar{left:auto;right:24px;bottom:24px;width:400px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -982,48 +1019,69 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
 </section>
 
 <section class="sec" id="faq">
-  <div class="wrap">
-    <div class="head io"><p class="eyebrow">Questions</p><h2>Before you order</h2></div>
-    <div class="faq io">
-      <details><summary>Do you deliver or ship?</summary><p>Yes, both. Tell us your ZIP when you send your order and we'll confirm the options, cost and day.</p></details>
-      <details><summary>Can I buy a small amount, or is it wholesale only?</summary><p>Both. Two lobsters for dinner is as welcome as a case of shrimp for a restaurant.</p></details>
-      <details><summary>Why don't you list every price?</summary><p>Seafood prices move with the market and the season. Rather than post a number that's wrong by Friday, we confirm your price when you order. Specials are posted at the top of this page.</p></details>
-      <details><summary>Fresh or frozen?</summary><p>We carry both. Lobsters and crabs come live, shrimp come fresh head-on or as tails, and frozen is there when you want to stock up. Say which you want in your order notes.</p></details>
-      <details><summary>How much should I order for a party?</summary><p>Use the <a class="tl" href="#bundles">party sizes</a> tool. If you're unsure, send what you have and we'll help you size it.</p></details>
+  <div class="wrap faq-grid">
+    <div class="faq-side io">
+      <p class="eyebrow">Questions</p><h2>Before you order</h2>
+      <p class="faq-lede">The things people ask us most. Anything else, just message us.</p>
+      <a class="faq-ask" href="https://ig.me/m/overnight_tider" target="_blank" rel="noopener">
+        <img src="img/building.webp" alt="" width="56" height="56" loading="lazy">
+        <span><b>Still wondering?</b><small>Ask us on Instagram. A real person answers.</small></span>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+      </a>
+    </div>
+    <div class="faq io" style="--d:80ms">
+      <details><summary>Do you deliver or ship?<i aria-hidden="true"></i></summary><p>Yes, both. Tell us your ZIP when you send your order and we'll confirm the options, cost and day.</p></details>
+      <details><summary>Can I buy a small amount, or is it wholesale only?<i aria-hidden="true"></i></summary><p>Both. Two lobsters for dinner is as welcome as a case of shrimp for a restaurant.</p></details>
+      <details><summary>Why don't you list every price?<i aria-hidden="true"></i></summary><p>Seafood prices move with the market and the season. Rather than post a number that's wrong by Friday, we confirm your price when you order. Specials are posted at the top of this page.</p></details>
+      <details><summary>How do I pay?<i aria-hidden="true"></i></summary><p>Nothing is charged on this site. Send your order, we confirm the items and the total with you, then tell you how to pay. You only pay once you've said yes.</p></details>
+      <details><summary>Fresh or frozen?<i aria-hidden="true"></i></summary><p>We carry both. Lobsters and crabs come live, shrimp come fresh head-on or as tails, and frozen is there when you want to stock up. Say which you want in your order notes.</p></details>
+      <details><summary>How much should I order for a party?<i aria-hidden="true"></i></summary><p>Use the <a class="tl" href="#bundles">party sizes</a> tool. If you're unsure, send what you have and we'll help you size it.</p></details>
     </div>
   </div>
 </section>
 
 <section class="closer">
   <div class="wrap">
-    <div class="io">
-      <h2>Get first pick every week</h2>
-      <p>The good stuff goes fast. Get the weekly list and specials before they hit Instagram.</p>
-    </div>
-    <div class="io" style="--d:100ms">
+    <div class="cl-copy io">
+      <p class="cl-eye">Every week</p>
+      <h2>Get first pick of the catch.</h2>
+      <p>The good stuff goes fast. Follow along and you see the new crates, the weekly list and the specials as soon as they land.</p>
       <form class="alert-f" id="alertForm" hidden>
         <label class="vh" for="alertPhone">Mobile number</label>
         <input id="alertPhone" type="tel" autocomplete="tel" placeholder="Your mobile number" required>
         <button class="btn btn-band" type="submit">Text me the list</button>
       </form>
       <small id="alertNote" hidden>One text a week, plus specials. Reply STOP anytime.</small>
-      <a class="btn btn-band" id="alertFallback" href="https://www.instagram.com/overnight_tider/" rel="noopener">Follow @overnight_tider</a>
+      <a class="btn btn-band" id="alertFallback" href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener">Follow @overnight_tider</a>
       <p class="msg" id="alertMsg"></p>
     </div>
+    <a class="cl-fan io" style="--d:120ms" href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener" aria-label="See our latest posts on Instagram">
+      <span class="pol p1"><img src="img/shrimp-tray.webp" alt="" loading="lazy"></span>
+      <span class="pol p2"><img src="img/crate.webp" alt="" loading="lazy"></span>
+      <span class="pol p3"><img src="img/snapper-box.webp" alt="" loading="lazy"></span>
+      <span class="cl-tag">Latest from @overnight_tider</span>
+    </a>
   </div>
 </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <div>
-      <a class="mark" href="#top"><img src="brand/mark.svg" alt="" width="32" height="32"><span>Overnight Tider</span></a>
-      <p style="margin:14px 0 0;max-width:38ch">Fresh &amp; frozen seafood, retail and wholesale. Every order is confirmed by a person before you pay.</p>
+    <div class="ft-top">
+      <div class="ft-brand">
+        <a class="mark" href="#top"><img src="brand/mark.svg" alt="" width="36" height="36"><span>Overnight Tider</span></a>
+        <p>Fresh and frozen seafood, retail and wholesale. Every order is confirmed by a person before you pay.</p>
+        <a class="btn btn-band ft-cta" href="#shop">Start an order</a>
+      </div>
+      <div class="fcols">
+        <div><b>Order</b><a href="#shop">This week</a><a href="#bundles">Party sizes</a><a href="#bulk">Wholesale quotes</a><a href="#faq">Questions</a></div>
+        <div><b>Talk to us</b><a href="https://ig.me/m/overnight_tider" target="_blank" rel="noopener">Message on Instagram</a><a href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener">@overnight_tider</a><a id="fCall" href="#" hidden></a></div>
+        <div id="fWhere" hidden><b>Find us</b><span id="fAddr"></span><span id="fHours"></span></div>
+      </div>
     </div>
-    <div class="fcols">
-      <div><b>Order</b><a href="#shop">This week</a><a href="#bundles">Party sizes</a><a href="#bulk">Wholesale quotes</a><a href="https://ig.me/m/overnight_tider" rel="noopener">Message us</a><a id="fCall" href="#" hidden></a></div>
-      <div id="fWhere" hidden><b>Find us</b><span id="fAddr"></span><span id="fHours"></span></div>
-      <div><b>More</b><a href="https://www.instagram.com/overnight_tider/" rel="noopener">Instagram</a><button class="linkish" type="button" data-legal="privacy">Privacy</button><button class="linkish" type="button" data-legal="terms">Terms</button><button class="linkish" type="button" data-legal="refunds" id="refundLink" hidden>Refunds</button><span>&copy; <span id="yr">2026</span> Overnight Tider</span></div>
+    <div class="ft-bot">
+      <span>&copy; <span id="yr">2026</span> Overnight Tider</span>
+      <span class="ft-legal"><button class="linkish" type="button" data-legal="privacy">Privacy</button><button class="linkish" type="button" data-legal="terms">Terms</button><button class="linkish" type="button" data-legal="refunds" id="refundLink" hidden>Refunds</button></span>
     </div>
   </div>
 </footer>
