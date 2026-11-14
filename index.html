@@ -92,25 +92,30 @@ button{cursor:pointer}
 .hero{position:relative;background:var(--paper);overflow:hidden}
 .hero .wrap{position:relative;z-index:2;display:grid;gap:40px;padding:40px 0 96px}
 .hero-fig{margin:0}
-.show .frame{position:relative;aspect-ratio:1/1;border-radius:4px;overflow:hidden;background:var(--frost);touch-action:pan-y}
+.show .frame{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--frost);touch-action:pan-y}
 .show .sl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity 1.1s ease,transform 7s linear}
 .show .sl.on{opacity:1;transform:scale(1)}
-.show .pp{position:absolute;right:12px;bottom:12px;width:36px;height:36px;border:0;border-radius:50%;background:rgba(19,32,46,.72);color:#fff;display:grid;place-items:center;padding:0}
-.show .pp svg{width:14px;height:14px}
-.shopbar{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 6px 6px;padding:12px 12px 12px 16px}
-.show .frame{border-radius:6px 6px 0 0}
-.sb-txt{display:grid;gap:2px;min-width:0}
-.sb-txt b{font-size:16px;font-weight:600}
-.sb-txt span{font-size:13.5px;color:var(--muted)}
-.sb-add{flex:none;background:var(--sign);color:#fff;border:0;border-radius:999px;padding:11px 18px;font-weight:600;font-size:15px;transition:background-color .15s}
-.sb-add:hover{background:var(--sign-dk)}
-.dots{display:flex;gap:8px;margin-top:12px}
-.dot{width:52px;height:52px;padding:0;border:0;border-radius:6px;overflow:hidden;background:none;opacity:.55;transition:opacity .2s,box-shadow .2s}
-.dot img{width:100%;height:100%;object-fit:cover;display:block}
-.dot:hover{opacity:.9}
-.dot.on{opacity:1;box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--ink)}
-@keyframes fill{from{width:0}to{width:100%}}
-@media (max-width:520px){.dot span{font-size:11.5px}}
+.show .frame{border-radius:6px}
+.tag{position:absolute;left:16px;bottom:16px;z-index:2;width:min(340px,calc(100% - 32px));background:var(--ink);color:#fff;border-radius:4px;padding:16px 16px 16px 20px;display:flex;align-items:flex-end;justify-content:space-between;gap:14px;box-shadow:0 18px 40px -18px rgba(19,32,46,.55)}
+.tag .tg-txt{display:grid;gap:4px;min-width:0;transition:opacity .22s ease,transform .22s ease}
+.tag.swap .tg-txt{opacity:0;transform:translateY(6px)}
+.tag small{font-family:var(--f-mono);font-size:12px;color:var(--band);letter-spacing:.2px}
+.tag b{font-family:var(--f-display);font-weight:800;font-size:34px;line-height:.95;display:inline-block;transform:skewX(-9deg);transform-origin:left bottom;letter-spacing:.3px}
+.tag span{font-size:13.5px;color:#b9c6d1}
+.sb-add{flex:none;background:var(--band);color:var(--ink);border:0;border-radius:999px;padding:10px 16px;font-weight:600;font-size:14.5px;display:inline-flex;align-items:center;gap:6px;transition:background-color .15s}
+.sb-add:hover{background:#ffd447}
+.sb-add i{font-style:normal;font-size:18px;line-height:1;margin-top:-2px}
+.idx{display:flex;align-items:center;gap:22px;margin-top:16px;padding:0 2px}
+.idx ol{display:flex;gap:20px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+.idx button{background:none;border:0;padding:4px 0;font-size:15px;color:var(--muted);position:relative;transition:color .2s}
+.idx button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--band);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.idx button:hover{color:var(--ink)}
+.idx button.on{color:var(--ink);font-weight:600}
+.idx button.on::after{transform:scaleX(1)}
+.show .pp{margin-left:auto;flex:none;width:32px;height:32px;border:1px solid var(--line);border-radius:50%;background:none;color:var(--ink);display:grid;place-items:center;padding:0;transition:border-color .2s}
+.show .pp:hover{border-color:var(--ink)}
+.show .pp svg{width:12px;height:12px}
+@media (max-width:520px){.tag{left:10px;bottom:10px;width:calc(100% - 20px);padding:11px 11px 11px 14px;gap:10px}.tag .tg-txt{gap:2px}.tag small{font-size:11px}.tag b{font-size:26px}.tag span{font-size:12.5px}.sb-add{padding:9px 14px;font-size:14px}.idx{gap:12px}.idx ol{gap:14px}.idx button{font-size:14px}}
 .kicker{font-family:var(--f-mono);font-size:13.5px;color:var(--sign);margin:0 0 14px}
 .hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(46px,10vw,78px);line-height:.92;margin:0 0 20px;letter-spacing:.2px;max-width:13ch}
 .hero-proof{display:flex;align-items:center;gap:12px;margin-top:26px;max-width:460px;text-decoration:none;color:var(--body);font-size:14.5px;line-height:1.4}
@@ -589,18 +594,14 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
       <img src="img/snapper-box.webp" alt="Whole red porgy packed in a cooler" width="1080" height="1080" loading="lazy" class="sl" data-i="2">
       <img src="img/squid.webp" alt="Whole fresh squid piled together" width="1080" height="1080" loading="lazy" class="sl" data-i="3">
       <img src="img/lobster-hero.webp" alt="A calico lobster with yellow claw bands on crushed ice" width="1080" height="1080" loading="lazy" class="sl" data-i="4">
+      <div class="tag" id="sbTag" aria-live="polite">
+        <div class="tg-txt"><small>Our photo, our stock</small><b id="sbName">Live lobster</b><span id="sbSub">This week’s crate</span></div>
+        <button type="button" class="sb-add" id="sbAdd"><i aria-hidden="true">+</i> Add</button>
+      </div>
+    </div>
+    <div class="idx">
+      <ol aria-label="Choose a photo"><li><button type="button" class="dot on" data-go="0" aria-label="Show live lobster" aria-current="true">Lobster</button></li><li><button type="button" class="dot" data-go="1" aria-label="Show head-on shrimp" aria-current="false">Shrimp</button></li><li><button type="button" class="dot" data-go="2" aria-label="Show red porgy" aria-current="false">Porgy</button></li><li><button type="button" class="dot" data-go="3" aria-label="Show squid" aria-current="false">Squid</button></li><li><button type="button" class="dot" data-go="4" aria-label="Show calico lobster" aria-current="false">Calico</button></li></ol>
       <button type="button" class="pp" id="showPP" aria-label="Pause slideshow"><svg viewBox="0 0 16 16" aria-hidden="true"><path id="ppIcon" d="M5 3h2v10H5zM9 3h2v10H9z" fill="currentColor"/></svg></button>
-    </div>
-    <div class="shopbar">
-      <div class="sb-txt"><b id="sbName">Live lobster</b><span id="sbSub">This week's crate</span></div>
-      <button type="button" class="sb-add" id="sbAdd">Add to order</button>
-    </div>
-    <div class="dots" role="group" aria-label="Choose a photo">
-      <button type="button" class="dot on" data-go="0" aria-label="Show live lobster" aria-current="true"><img src="img/crate.webp" alt="" width="56" height="56" loading="lazy"></button>
-      <button type="button" class="dot" data-go="1" aria-label="Show head-on shrimp" aria-current="false"><img src="img/shrimp-tray.webp" alt="" width="56" height="56" loading="lazy"></button>
-      <button type="button" class="dot" data-go="2" aria-label="Show red porgy" aria-current="false"><img src="img/snapper-box.webp" alt="" width="56" height="56" loading="lazy"></button>
-      <button type="button" class="dot" data-go="3" aria-label="Show squid" aria-current="false"><img src="img/squid.webp" alt="" width="56" height="56" loading="lazy"></button>
-      <button type="button" class="dot" data-go="4" aria-label="Show calico lobster" aria-current="false"><img src="img/lobster-hero.webp" alt="" width="56" height="56" loading="lazy"></button>
     </div>
   </figure>
   </div>
@@ -1208,7 +1209,8 @@ const HERO_S=[["Live lobster", "lobster", "This week\u2019s crate"], ["Head-on s
     slides.forEach((im,k)=>{if(k===i&&im.loading==="lazy")im.loading="eager";im.classList.toggle("on",k===i)});
     dots.forEach((d,k)=>{d.classList.toggle("on",k===i);d.classList.toggle("seen",k<i);d.setAttribute("aria-current",k===i?"true":"false");
 });
-    const S=HERO_S[i];$("sbName").textContent=S[0];$("sbSub").textContent=S[2];$("sbAdd").dataset.item=S[1];
+    const S=HERO_S[i],tag=$("sbTag");$("sbAdd").dataset.item=S[1];$("sbAdd").setAttribute("aria-label","Add "+S[0].toLowerCase()+" to order");
+    if($("sbName").textContent!==S[0]){tag.classList.add("swap");clearTimeout(tag._t);tag._t=setTimeout(()=>{$("sbName").textContent=S[0];$("sbSub").textContent=S[2];tag.classList.remove("swap")},calm?0:220)}
     const nx=slides[(i+1)%slides.length];if(nx.loading==="lazy")nx.loading="eager";
     if(user)track("hero_slide",{slide:i});
     schedule();
@@ -1219,7 +1221,7 @@ const HERO_S=[["Live lobster", "lobster", "This week\u2019s crate"], ["Head-on s
   dots.forEach(d=>d.addEventListener("click",()=>go(+d.dataset.go,true)));
   $("showPP").onclick=()=>setPaused(!paused);
   $("sbAdd").dataset.item=HERO_S[0][1];
-  $("sbAdd").onclick=()=>{const it=item($("sbAdd").dataset.item);if(!it||it.status==="out")return;add(it.id,unitSel[it.id]||it.units[0].u,1,slides[i]);drawDetail();track("hero_add",{item_id:it.id});const b=$("sbAdd");b.textContent="Added";setTimeout(()=>b.textContent="Add to order",1200)};
+  $("sbAdd").onclick=()=>{const it=item($("sbAdd").dataset.item);if(!it||it.status==="out")return;add(it.id,unitSel[it.id]||it.units[0].u,1,slides[i]);drawDetail();track("hero_add",{item_id:it.id});const b=$("sbAdd");b.innerHTML='<i aria-hidden="true">✓</i> Added';setTimeout(()=>b.innerHTML='<i aria-hidden="true">+</i> Add',1400)};
   const frame=root.querySelector(".frame");
   frame.addEventListener("mouseenter",()=>{hover=true;root.classList.add("paused");clearTimeout(timer)});
   frame.addEventListener("mouseleave",()=>{hover=false;if(!paused)root.classList.remove("paused");schedule()});
