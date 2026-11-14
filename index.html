@@ -130,72 +130,53 @@ button{cursor:pointer}
 .us figcaption{display:grid;gap:4px}
 .us #usAddr{color:var(--ink);font-family:var(--f-mono);font-size:13.5px}
 
-/* what we carry: one species at a time, on paper */
+/* what we carry: a horizontal film of the catalog, on paper */
 #carry{position:relative;background:#f4f2ec}
 #carry::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.42 0 0 0 0 0.36 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.oc-pin{position:relative;padding:44px 0 40px}
-.oc-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
-.oc-top h2{font-family:var(--f-mono);font-weight:400;font-size:13.5px;color:var(--sign);margin:0}
-.oc-count{font-family:var(--f-mono);font-size:13.5px;color:var(--muted)}
-.oc-count b{color:var(--ink);font-weight:500}
-.oc-main{display:grid;gap:10px}
-.oc-stage{position:relative;height:min(62vw,360px);display:grid;place-items:center;margin-top:8px;touch-action:pan-y;user-select:none}
-.oc-word{position:absolute;left:0;right:0;top:38%;transform:translateY(-58%);text-align:center;font-family:var(--f-display);font-weight:900;color:var(--ink);line-height:.8;letter-spacing:.5px;white-space:nowrap;margin:0;font-size:120px}
-.oc-img{position:absolute;left:0;right:0;bottom:2%;margin:0 auto;max-width:74%;max-height:70%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 28px 22px rgba(19,32,46,.28)) drop-shadow(0 6px 6px rgba(19,32,46,.16));will-change:transform,opacity;pointer-events:none}
-.oc-img.photo{width:min(62%,300px);aspect-ratio:1;border-radius:50%;object-fit:cover;filter:drop-shadow(0 22px 20px rgba(19,32,46,.25))}
-.oc-img[hidden]{display:block!important;opacity:0}
-.oc-seal{position:absolute;right:0;top:0;width:64px;height:64px;color:var(--sign);opacity:.9;transition:transform .9s var(--ease)}
-.oc-seal text{font-family:var(--f-mono);font-size:8.6px;letter-spacing:1.6px;fill:currentColor}
-.oc-info{display:grid;gap:16px;align-items:end}
-.oc-name{display:grid;gap:6px}
-.oc-tag{justify-self:start;font-family:var(--f-mono);font-size:12px;background:var(--band);color:var(--ink);padding:4px 9px;border-radius:4px}
-.oc-tag.out{background:var(--ice-2);color:var(--muted)}
-.oc-name h3{font-family:var(--f-display);font-weight:800;font-size:clamp(32px,4vw,44px);line-height:1;margin:0}
-.oc-name p{margin:0;color:var(--body);font-size:16.5px;max-width:42ch}
-.oc-buy{display:grid;gap:12px;justify-items:start}
-.oc-units{display:flex;flex-wrap:wrap;gap:8px}
-.oc-units button{border:1px solid #cfd6d3;background:#fff;border-radius:999px;padding:8px 15px;font-size:15px;color:var(--ink);transition:background-color .15s,color .15s,border-color .15s}
-.oc-units button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
-.oc-price{font-family:var(--f-mono);font-size:16px;color:var(--ink)}
-.oc-price.hot{color:var(--shell-dk)}
-.oc-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
-.oc-add{background:var(--sign);color:#fff;border:0;border-radius:8px;padding:15px 26px;font-weight:600;font-size:16.5px;transition:background-color .15s,transform .15s}
-.oc-add:hover{background:var(--sign-dk)}.oc-add:active{transform:translateY(1px)}
-.oc-add:disabled{background:var(--ice-2);color:var(--muted);cursor:not-allowed}
-.oc-have{font-size:14.5px;color:var(--sign-dk)}
-.oc-have:empty{display:none}
-.oc-assure{font-size:13.5px;color:var(--muted);margin:0}
-.oc-nav{display:flex;align-items:center;gap:10px}
-.oc-nav button{width:50px;height:50px;border-radius:50%;border:1px solid #cfd6d3;background:#fff;color:var(--ink);display:grid;place-items:center}
-.oc-nav button:disabled{opacity:.35}
-.oc-nav svg{width:20px;height:20px}
-.oc-index{display:none;list-style:none;margin:0;padding:0}
-.oc-index button{background:none;border:0;padding:5px 0;font-size:15px;color:var(--muted);text-align:left;display:flex;align-items:center;gap:10px;width:100%}
-.oc-index button::before{content:"";width:14px;height:2px;background:var(--line);transition:width .3s var(--ease),background-color .3s}
-.oc-index button[aria-current="true"]{color:var(--ink);font-weight:600}
-.oc-index button[aria-current="true"]::before{width:28px;background:var(--sign)}
-.oc-index button:hover{color:var(--ink)}
-.oc-bar{height:3px;background:#dcdfd9;border-radius:2px;overflow:hidden;margin-top:22px}
-.oc-bar i{display:block;height:100%;width:0;background:var(--sign);transition:width .4s var(--ease)}
-.oc-skip{font-size:13.5px;color:var(--muted)}
-@media (min-width:760px){
-  .oc-info{grid-template-columns:1fr auto;gap:30px}
-  .oc-buy{justify-items:end;text-align:right}
-  .oc-units{justify-content:flex-end}
-  .oc-stage{height:min(46vw,420px)}
-  .oc-seal{top:auto;bottom:2%;right:1%;width:92px;height:92px}
-}
-@media (min-width:1000px){
-  .oc-main{grid-template-columns:200px 1fr;gap:40px;align-items:center}
-  .oc-index{display:grid}
-}
-/* pinned: scrolling down walks through the catalog */
+.oc-pin{position:relative;padding:40px 0 34px;overflow:hidden}
+.oc-head{display:flex;justify-content:space-between;align-items:end;gap:16px}
+.oc-head h2{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,3.4vw,40px);line-height:1;margin:0;white-space:nowrap}
+.oc-nav{display:flex;align-items:center;gap:2px}
+.oc-count{font-size:15px;color:var(--muted);margin-right:8px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.oc-count b{color:var(--ink);font-weight:600}
+.oc-nav button{width:40px;height:40px;border-radius:50%;border:0;background:none;color:var(--ink);display:grid;place-items:center}
+.oc-nav button:hover{background:rgba(19,32,46,.06)}
+.oc-nav button:disabled{opacity:.25;cursor:default;background:none}
+.oc-nav svg{width:18px;height:18px}
+.film{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-top:8px}
+.film::-webkit-scrollbar{display:none}
+.panel{flex:none;width:100%;scroll-snap-align:center;display:grid;grid-template-rows:auto auto;justify-items:center;padding:0 20px}
+.p-stage{position:relative;width:100%;height:min(66vw,340px);overflow:visible}
+.p-word{position:absolute;left:-10%;right:-10%;top:40%;transform:translate3d(var(--px,0),-58%,0);text-align:center;font-family:var(--f-display);font-weight:900;color:var(--ink);line-height:.8;letter-spacing:.5px;white-space:nowrap;margin:0;font-size:120px;will-change:transform}
+.p-img{position:absolute;left:0;right:0;bottom:3%;margin:0 auto;max-width:74%;max-height:68%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 30px 24px rgba(19,32,46,.26)) drop-shadow(0 6px 6px rgba(19,32,46,.14));transform:translate3d(var(--ix,0),0,0) rotate(var(--ir,0deg));will-change:transform;user-select:none;-webkit-user-drag:none}
+.p-img.photo{width:min(56%,300px);aspect-ratio:1;border-radius:50%;object-fit:cover;filter:drop-shadow(0 22px 20px rgba(19,32,46,.22))}
+.p-info{display:grid;justify-items:center;text-align:center;gap:16px;margin-top:4px;max-width:640px}
+.p-note{margin:0;color:var(--body);font-size:17px;line-height:1.45}
+.p-note .t{display:inline-block;margin-right:8px;font-size:12.5px;background:var(--band);color:var(--ink);padding:2px 8px;border-radius:4px;vertical-align:2px;font-weight:600}
+.p-note .t.out{background:var(--ice-2);color:var(--muted)}
+.p-buy{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px 20px}
+.p-units{display:inline-flex;padding:3px;border:1px solid #d2d7d3;border-radius:999px;background:rgba(255,255,255,.6)}
+.p-units button{border:0;background:none;border-radius:999px;padding:8px 15px;font-size:14.5px;color:var(--muted)}
+.p-units button:hover{color:var(--ink)}
+.p-units button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.p-units span{padding:8px 14px;font-size:14.5px;color:var(--muted)}
+.p-price{font-size:15px;color:var(--ink);font-weight:500}
+.p-price.hot{color:var(--shell-dk)}
+.p-price.ask{color:var(--muted);font-weight:400}
+.p-add{background:var(--sign);color:#fff;border:0;border-radius:999px;padding:14px 28px;font-weight:600;font-size:16px;transition:background-color .15s,transform .15s}
+.p-add:hover{background:var(--sign-dk)}.p-add:active{transform:translateY(1px)}
+.p-add:disabled{background:var(--ice-2);color:var(--muted);cursor:not-allowed}
+.p-have{margin:0;font-size:14px;color:var(--sign-dk);font-weight:600;min-height:20px}
+.oc-foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;align-items:center;font-size:13.5px;color:var(--muted);margin-top:10px}
+@media (min-width:760px){.p-stage{height:min(42vw,430px)}}
 @media (min-width:1000px) and (min-height:640px) and (prefers-reduced-motion:no-preference){
   #carry.pinned{height:var(--oc-h,600vh)}
-  #carry.pinned .oc-pin{position:sticky;top:62px;height:calc(100vh - 62px);display:flex;flex-direction:column;justify-content:center;padding:22px 0 24px}
-  #carry.pinned .oc-stage{height:min(52vh,520px)}
-  #carry.pinned .oc-nav .oc-skipwrap{display:inline}
+  #carry.pinned .oc-pin{position:sticky;top:62px;height:calc(100vh - 62px);display:flex;flex-direction:column;justify-content:center;padding:22px 0 20px}
+  #carry.pinned .film{overflow:visible;scroll-snap-type:none}
+  #carry.pinned .film-in{display:flex;will-change:transform}
+  #carry.pinned .p-stage{height:min(52vh,520px)}
 }
+.film-in{display:flex;width:100%}
 /* section heads */
 .sec{padding:84px 0;position:relative}
 .head{display:grid;gap:12px;margin-bottom:36px;max-width:640px}
@@ -495,34 +476,12 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
 
 <section id="carry" aria-labelledby="carryT">
   <div class="oc-pin">
-    <div class="wrap">
-      <div class="oc-top"><h2 id="carryT">What we carry</h2><span class="oc-count" id="cCount" aria-live="polite"></span></div>
-      <div class="oc-main">
-        <ul class="oc-index" id="ocIndex" aria-label="Jump to a species"></ul>
-        <div>
-          <div class="oc-stage" id="ocStage">
-            <p class="oc-word" id="ocWord" aria-hidden="true"></p>
-            <img class="oc-img" id="ocA" alt="" draggable="false">
-            <img class="oc-img" id="ocB" alt="" draggable="false" hidden>
-            <svg class="oc-seal" id="ocSeal" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="ocCirc" d="M50 50m-38 0a38 38 0 1 1 76 0a38 38 0 1 1-76 0"/></defs><circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="50" cy="50" r="29" fill="none" stroke="currentColor" stroke-width=".8"/><text><textPath href="#ocCirc">OVERNIGHT TIDER &#183; FRESH &amp; FROZEN &#183; RETAIL &amp; WHOLESALE &#183;</textPath></text><circle cx="56" cy="42" r="7" fill="currentColor"/><circle cx="59.5" cy="39.5" r="6" fill="#f4f2ec"/><path d="M36 58c3.5-4 7-4 10.5 0s7 4 10.5 0 7-4 10.5 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-          </div>
-          <div class="oc-info">
-            <div class="oc-name"><span class="oc-tag" id="ocTag" hidden></span><h3 id="ocName"></h3><p id="ocNote"></p></div>
-            <div class="oc-buy">
-              <div class="oc-units" id="ocUnits" role="group" aria-label="Sold by"></div>
-              <span class="oc-price" id="ocPrice"></span>
-              <div class="oc-row"><span class="oc-have" id="ocHave"></span><button class="oc-add" type="button" id="ocAdd">Add to order</button></div>
-              <p class="oc-assure">Nothing is charged online. We confirm your price first.</p>
-            </div>
-          </div>
-          <div class="oc-bar"><i id="cBar"></i></div>
-          <div class="oc-top" style="margin-top:14px">
-            <div class="oc-nav"><button type="button" id="cPrev" aria-label="Previous species"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" id="cNext" aria-label="Next species"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7.5 4 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
-            <a class="oc-skip tl" href="#board">See the full price list</a>
-          </div>
-        </div>
-      </div>
+    <div class="wrap oc-head">
+      <h2 id="carryT">What we carry</h2>
+      <div class="oc-nav"><span class="oc-count" id="cCount" aria-live="polite"></span><button type="button" id="cPrev" aria-label="Previous"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" id="cNext" aria-label="Next"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7.5 4 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
     </div>
+    <div class="film" id="film" tabindex="0" aria-label="Seafood we carry"><div class="film-in" id="filmIn"></div></div>
+    <div class="wrap oc-foot"><span>Nothing is charged online. We confirm your price first.</span><a class="tl" href="#board">Full price list</a></div>
   </div>
 </section>
 
@@ -1075,7 +1034,7 @@ const WHY=[
  [".hero-copy h1","A headline that says what you sell","Live lobster, fresh seafood, delivered. A stranger understands what you do in about three seconds. Vague or clever headlines make people leave.","Every visitor who stays past the first screen is a possible order."],
  [".paths","Two doors: home and business","Home cooks go straight to this week's list. Restaurants and caterers go to the wholesale form, where the big repeat orders are.","Each buyer gets to the right place in one tap instead of guessing."],
  ["#show","Your real crates, not stock photos","The slideshow shows what is actually in your crates and coolers this week. The biggest doubt about buying seafood online is \"is this real and is it fresh\".","Proof of real stock is what turns a curious visitor into a buyer."],
- ["#ocStage","One species at a time, made to look premium","Right after the first screen, each product gets the whole stage: its name, a clean shot, how it is sold, the price and an Add button. It feels like a real seafood brand, and the buyer only has one decision to make at a time.","Looking expensive lets you hold your prices. Showing one item at a time gets more of them added to orders."],
+ ["#film","One species at a time, made to look premium","Right after the first screen, the catalog slides past one product at a time. Each gets the whole stage: its name, a clean shot, how it is sold, the price and an Add button. It feels like a real seafood brand, and the buyer only has one decision to make at a time.","Looking expensive lets you hold your prices. Showing one item at a time gets more of them added to orders."],
  [".promise","Answering the three doubts before they're asked","Are you a real business? Will I get charged online? Is there a person? Your building, \"nothing charged online\" and \"a person answers\" settle all three.","Trust is the cheapest way to raise how many visitors order."],
  ["#boardList","Every item, size and price in one list","Customers see everything in one scroll and add it without messaging you first. Prices come from your sheet, so \"Ask for price\" disappears once you fill them in.","Posted prices cut the back-and-forth DMs that make people give up."],
  [".planner","Party sizes","Turns \"how much do I need for 15 people?\" into a ready order. Party and event buyers order more per order than anyone else.","Bigger orders from the same number of customers."],
@@ -1124,99 +1083,80 @@ const WHY=[
   if(location.hash==="#why")set(true);
 })();
 
-/* ---------- what we carry: one at a time ---------- */
+/* ---------- what we carry: horizontal film ---------- */
 const CARRY={lobster:{cut:"img/p-lobster.webp",word:"Lobster"},crab:{cut:"img/p-bluecrab.webp",word:"Blue crab"},dungeness:{cut:"img/p-dungeness.webp",word:"Dungeness"},crawfish:{cut:"img/p-crawfish.webp",word:"Crawfish"},shrimp:{cut:"img/p-shrimp.webp",word:"Shrimp"},tails:{photo:"img/tails.webp",word:"Red tails"},oyster:{cut:"img/p-oyster.webp",word:"Oysters"},salmon:{cut:"img/p-salmon.webp",word:"Salmon"},snapper:{cut:"img/p-snapper.webp",word:"Snapper"},porgy:{cut:"img/p-porgy.webp",word:"Porgy"},squid:{cut:"img/p-squid.webp",word:"Squid"},octopus:{cut:"img/cut-octopus.webp",word:"Octopus"}};
-let carryIdx=0,ocFront="ocA",ocList=[];
-const pad2=n=>String(n).padStart(2,"0");
-function renderCarry(){
-  ocList=Object.keys(CARRY).map(item).filter(Boolean);
-  $("ocIndex").innerHTML=ocList.map((it,i)=>`<li><button type="button" data-oc="${i}" aria-current="${i===carryIdx}">${esc(it.name)}${it.status==="out"?" (sold out)":""}</button></li>`).join("");
-  ocList.forEach(it=>{const im=new Image();im.src=CARRY[it.id].cut||CARRY[it.id].photo});
-  ocShow(Math.min(carryIdx,ocList.length-1),0,true);
-  carryLayout();
+let carryIdx=0,ocList=[];
+function panelHTML(it,i,n){
+  const c=CARRY[it.id];
+  return `<article class="panel" data-pid="${it.id}" aria-roledescription="slide" aria-label="${esc(it.name)}, ${i+1} of ${n}">
+    <div class="p-stage"><p class="p-word" aria-hidden="true">${esc(c.word)}</p><img class="p-img${c.photo?" photo":""}" src="${c.cut||c.photo}" alt="${esc(it.name)}" loading="${i<2?"eager":"lazy"}" draggable="false"></div>
+    <div class="p-info"><h3 class="vh">${esc(it.name)}</h3><p class="p-note"></p><div class="p-buy"><div class="p-units" role="group" aria-label="Sold by"></div><span class="p-price"></span><button class="p-add" type="button">Add to order</button></div><p class="p-have" aria-live="polite"></p></div>
+  </article>`;
 }
-function fitWord(){
-  const w=$("ocWord"),st=$("ocStage");if(!w.textContent)return;
-  w.style.fontSize="200px";const ratio=(st.clientWidth*.96)/w.scrollWidth;
-  const maxH=st.clientHeight*.62;w.style.fontSize=Math.min(200*ratio,maxH/0.8)+"px";
-}
-function ocShow(i,dir,instant){
-  const it=ocList[i];if(!it)return;carryIdx=i;
-  const c=CARRY[it.id],src=c.cut||c.photo;
-  const back=ocFront==="ocA"?"ocB":"ocA",fi=$(ocFront),bi=$(back);
-  const word=$("ocWord");
-  if(instant||calm||!fi.src){
-    fi.src=src;fi.alt=it.name;fi.classList.toggle("photo",!!c.photo);word.textContent=c.word;fitWord();
-  }else{
-    bi.classList.toggle("photo",!!c.photo);bi.alt=it.name;bi.hidden=false;
-    const go=()=>{
-      bi.animate([{opacity:0,transform:`translateX(${dir*40}%) rotate(${dir*6}deg)`},{opacity:1,transform:"none"}],{duration:750,easing:"cubic-bezier(.2,.7,.15,1)",fill:"both"});
-      fi.animate([{opacity:1,transform:"none"},{opacity:0,transform:`translateX(${-dir*40}%) rotate(${-dir*6}deg)`}],{duration:550,easing:"cubic-bezier(.5,0,.75,0)",fill:"both"});
-      word.animate([{opacity:1,transform:"translateY(-58%)"},{opacity:0,transform:"translateY(-48%)"}],{duration:220,fill:"both"}).onfinish=()=>{
-        word.textContent=c.word;fitWord();
-        word.animate([{opacity:0,transform:"translateY(-68%)",letterSpacing:"8px"},{opacity:1,transform:"translateY(-58%)",letterSpacing:".5px"}],{duration:600,easing:"cubic-bezier(.2,.7,.15,1)",fill:"both"});
-      };
-      ocFront=back;
-    };
-    bi.src=src;if(bi.complete)go();else bi.onload=go;
-    const seal=$("ocSeal");seal.style.transform=`rotate(${i*30}deg)`;
-  }
-  $("ocName").textContent=it.name;$("ocNote").textContent=it.note;
-  const tag=$("ocTag"),u0=it.units[0];
-  if(it.status==="out"){tag.textContent="Sold out this week";tag.className="oc-tag out";tag.hidden=false}
-  else if(u0.hot){tag.textContent="This week’s special";tag.className="oc-tag";tag.hidden=false}
-  else if(it.status==="limited"){tag.textContent="Going fast";tag.className="oc-tag";tag.hidden=false}
-  else tag.hidden=true;
-  ocBuy();
-  document.querySelectorAll("[data-oc]").forEach(b=>b.setAttribute("aria-current",+b.dataset.oc===i));
-  const n=ocList.length;$("cCount").innerHTML=`<b>${pad2(i+1)}</b> / ${pad2(n)}`;$("cBar").style.width=((i+1)/n*100)+"%";
-  $("cPrev").disabled=i===0;$("cNext").disabled=i===n-1;
-  if(!instant)track("view_item",{item_id:it.id,from:"showcase"});
-}
-function ocBuy(){
-  const it=ocList[carryIdx];if(!it)return;unitSel[it.id]=unitSel[it.id]||it.units[0].u;
-  const u=unitSel[it.id],un=it.units.find(x=>x.u===u)||it.units[0],out=it.status==="out";
-  $("ocUnits").innerHTML=it.units.length>1?it.units.map(x=>`<button type="button" data-ocu="${x.u}" aria-pressed="${x.u===u}">${x.label}</button>`).join(""):`<span class="oc-price" style="color:var(--muted)">Sold ${it.units[0].label.toLowerCase()}</span>`;
-  $("ocPrice").textContent=out?"Sold out this week":(un.price||"Price on request, confirmed when you order");
-  $("ocPrice").className="oc-price"+(un.hot&&!out?" hot":"");
-  $("ocAdd").disabled=out;$("ocAdd").textContent=out?"Sold out this week":"Add to order";
+function ocFill(it){
+  const el=document.querySelector(`.panel[data-pid="${it.id}"]`);if(!el)return;
+  unitSel[it.id]=unitSel[it.id]||it.units[0].u;
+  const u=unitSel[it.id],un=it.units.find(x=>x.u===u)||it.units[0],out=it.status==="out",hot=it.units[0].hot&&!out;
+  const tag=out?'<span class="t out">Sold out this week</span>':hot?'<span class="t">This week’s special</span>':it.status==="limited"?'<span class="t">Going fast</span>':"";
+  el.querySelector(".p-note").innerHTML=tag+esc(it.note);
+  el.querySelector(".p-units").innerHTML=it.units.length>1?it.units.map(x=>`<button type="button" data-u="${x.u}" aria-pressed="${x.u===u}">${x.label}</button>`).join(""):`<span>Sold ${it.units[0].label.toLowerCase()}</span>`;
+  const pr=el.querySelector(".p-price");pr.textContent=out?"Sold out this week":(un.price||"Price confirmed when you order");pr.className="p-price"+(un.hot&&!out?" hot":"")+(!un.price||out?" ask":"");
+  const b=el.querySelector(".p-add");b.disabled=out;b.textContent=out?"Sold out":"Add to order";
   const have=it.units.filter(x=>cart[it.id+"|"+x.u]).map(x=>label(x.u,cart[it.id+"|"+x.u]));
-  $("ocHave").textContent=have.length?"In your order: "+have.join(", "):"";
+  el.querySelector(".p-have").textContent=have.length?"In your order: "+have.join(", "):"";
+}
+function ocBuy(){ocList.forEach(ocFill)}
+function renderCarry(){
+  ocList=Object.keys(CARRY).map(item).filter(Boolean);const n=ocList.length;
+  $("filmIn").innerHTML=ocList.map((it,i)=>panelHTML(it,i,n)).join("");
+  ocBuy();carryLayout();
+}
+function fitWords(){
+  document.querySelectorAll(".panel").forEach(p=>{const w=p.querySelector(".p-word"),st=p.querySelector(".p-stage");
+    w.style.fontSize="200px";const ratio=(st.clientWidth*.96)/w.scrollWidth;w.style.fontSize=Math.min(200*ratio,st.clientHeight*.62/0.8)+"px"});
 }
 const pinOK=()=>innerWidth>=1000&&innerHeight>=640&&!calm;
 function carryLayout(){
-  const sec=$("carry");if(!sec)return;
-  if(pinOK()){sec.classList.add("pinned");sec.style.setProperty("--oc-h",`calc(100vh + ${ocList.length*42}vh)`)}
-  else{sec.classList.remove("pinned");sec.style.removeProperty("--oc-h")}
-  fitWord();
+  const sec=$("carry");if(!sec)return;const n=ocList.length;
+  if(pinOK()){sec.classList.add("pinned");sec.style.setProperty("--oc-h",`calc(100vh + ${(n-1)*innerWidth*.75}px)`)}
+  else{sec.classList.remove("pinned");sec.style.removeProperty("--oc-h");$("filmIn").style.transform=""}
+  fitWords();carryTick();
+}
+function carryProgress(){
+  const sec=$("carry");
+  if(sec.classList.contains("pinned")){const r=sec.getBoundingClientRect(),run=sec.offsetHeight-innerHeight;return run>0?Math.min(1,Math.max(0,-r.top/run)):0}
+  const f=$("film"),max=f.scrollWidth-f.clientWidth;return max>0?f.scrollLeft/max:0;
 }
 function carryTick(){
-  const sec=$("carry");if(!sec||!sec.classList.contains("pinned"))return;
-  const r=sec.getBoundingClientRect(),run=sec.offsetHeight-innerHeight;if(run<=0)return;
-  const p=Math.min(.9999,Math.max(0,-r.top/run)),i=Math.floor(p*ocList.length);
-  if(i!==carryIdx)ocShow(i,i>carryIdx?1:-1);
+  const sec=$("carry");if(!sec||!ocList.length)return;
+  const n=ocList.length,p=carryProgress(),W=$("film").clientWidth;let pos=p*(n-1);
+  if(sec.classList.contains("pinned")){const k=Math.floor(pos),f=pos-k,t=Math.min(1,Math.max(0,(f-.3)/.7));pos=Math.min(n-1,k+t*t*(3-2*t))}
+  if(sec.classList.contains("pinned"))$("filmIn").style.transform=`translate3d(${-pos*W}px,0,0)`;
+  if(!calm)document.querySelectorAll(".panel").forEach((el,i)=>{const d=i-pos;if(Math.abs(d)>1.4)return;
+    el.style.setProperty("--px",(d*W*.35)+"px");el.style.setProperty("--ix",(d*W*-.08)+"px");el.style.setProperty("--ir",(d*-6)+"deg")});
+  const i=Math.round(pos);if(i!==carryIdx){carryIdx=i;track("view_item",{item_id:ocList[i].id,from:"showcase"})}
+  $("cCount").innerHTML=`<b>${i+1}</b> of ${n}`;$("cPrev").disabled=pos<.02;$("cNext").disabled=pos>n-1.02;
 }
 function carryGo(i){
-  const n=ocList.length;i=Math.max(0,Math.min(n-1,i));if(i===carryIdx)return;
-  const sec=$("carry");
-  if(sec.classList.contains("pinned")){const run=sec.offsetHeight-innerHeight,top=sec.getBoundingClientRect().top+scrollY;scrollTo({top:top+run*((i+.5)/n),behavior:"smooth"})}
-  else ocShow(i,i>carryIdx?1:-1);
+  const n=ocList.length;i=Math.max(0,Math.min(n-1,i));const sec=$("carry");
+  if(sec.classList.contains("pinned")){const run=sec.offsetHeight-innerHeight,top=sec.getBoundingClientRect().top+scrollY;scrollTo({top:top+run*(n>1?i/(n-1):0)+1,behavior:"smooth"})}
+  else{const f=$("film");f.scrollTo({left:i*f.clientWidth,behavior:calm?"auto":"smooth"})}
 }
 (function carryUI(){
-  if(!$("ocStage"))return;
+  if(!$("film"))return;
   $("cPrev").onclick=()=>carryGo(carryIdx-1);
   $("cNext").onclick=()=>carryGo(carryIdx+1);
-  $("ocIndex").addEventListener("click",e=>{const b=e.target.closest("[data-oc]");if(b)carryGo(+b.dataset.oc)});
-  $("ocUnits").addEventListener("click",e=>{const b=e.target.closest("[data-ocu]");if(!b)return;unitSel[ocList[carryIdx].id]=b.dataset.ocu;ocBuy();drawRow(ocList[carryIdx])});
-  $("ocAdd").onclick=()=>{const it=ocList[carryIdx];if(!it||it.status==="out")return;add(it.id,unitSel[it.id]||it.units[0].u,1,$(ocFront));drawRow(it);ocBuy();
-    const b=$("ocAdd");b.textContent="Added";setTimeout(()=>{if(ocList[carryIdx]===it)b.textContent="Add another"},900)};
   addEventListener("scroll",()=>{cancelAnimationFrame(window._ocr);window._ocr=requestAnimationFrame(carryTick)},{passive:true});
+  $("film").addEventListener("scroll",()=>{cancelAnimationFrame(window._ocf);window._ocf=requestAnimationFrame(carryTick)},{passive:true});
   addEventListener("resize",()=>{clearTimeout(window._ocz);window._ocz=setTimeout(carryLayout,120)});
-  if(document.fonts)document.fonts.ready.then(fitWord);
-  let x0=null;const st=$("ocStage");
-  st.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});
-  st.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)carryGo(carryIdx+(dx<0?1:-1));x0=null});
-  $("carry").addEventListener("keydown",e=>{if(e.target.closest("input,select,textarea"))return;if(e.key==="ArrowRight"){carryGo(carryIdx+1)}if(e.key==="ArrowLeft"){carryGo(carryIdx-1)}});
+  if(document.fonts)document.fonts.ready.then(fitWords);
+  $("film").addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();carryGo(carryIdx+1)}if(e.key==="ArrowLeft"){e.preventDefault();carryGo(carryIdx-1)}});
+  $("film").addEventListener("click",e=>{
+    const pnl=e.target.closest(".panel");if(!pnl)return;const it=item(pnl.dataset.pid);
+    const ub=e.target.closest("[data-u]");if(ub){unitSel[it.id]=ub.dataset.u;ocFill(it);drawRow(it);return}
+    const ab=e.target.closest(".p-add");if(ab&&it.status!=="out"){add(it.id,unitSel[it.id]||it.units[0].u,1,pnl.querySelector(".p-img"));drawRow(it);ocFill(it);
+      ab.textContent="Added";setTimeout(()=>ocFill(it),1100)}
+  });
 })();
 function carryNav(){}
 
