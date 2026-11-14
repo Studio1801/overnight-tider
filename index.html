@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Overnight Tider | Fresh &amp; Frozen Seafood, Delivered. Retail and Wholesale</title>
-<meta name="description" content="Live lobster, blue crabs, head-on shrimp, oysters, octopus and whole fish. Fresh and frozen seafood by the pound or by the case, with delivery and shipping. Build your order and send it in one tap.">
+<title>Fresh Seafood &amp; Live Lobster Delivery | Overnight Tider, Retail and Wholesale</title>
+<meta name="description" content="Order fresh seafood and live lobster from Overnight Tider: blue crab, shrimp, crawfish, oysters and whole fish, by the pound or by the case. Delivery and shipping for home cooks and restaurants. Price confirmed before you pay.">
 <meta property="og:title" content="Overnight Tider | Fresh &amp; Frozen Seafood, Delivered">
 <meta property="og:description" content="Lobster, crab, shrimp, oysters, fish and octopus. Retail and wholesale, delivery and shipping.">
 <meta property="og:image" content="https://overnight-tider.vercel.app/img/og.jpg">
@@ -109,11 +109,16 @@ button{cursor:pointer}
 @keyframes fill{from{width:0}to{width:100%}}
 @media (max-width:520px){.dot span{font-size:11.5px}}
 .kicker{font-family:var(--f-mono);font-size:13.5px;color:var(--sign);margin:0 0 14px}
-.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(48px,11vw,80px);line-height:.93;margin:0 0 20px;letter-spacing:.2px;max-width:11ch}
+.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(46px,10vw,78px);line-height:.92;margin:0 0 20px;letter-spacing:.2px;max-width:13ch}
+.hero-proof{display:flex;align-items:center;gap:12px;margin-top:26px;max-width:460px;text-decoration:none;color:var(--body);font-size:14.5px;line-height:1.4}
+.hero-proof img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 2px #fff,0 0 0 3px var(--line)}
+.hero-proof b{color:var(--ink);font-weight:600}
+.hero-proof u{text-decoration-color:var(--band);text-decoration-thickness:2px;text-underline-offset:3px;color:var(--ink);white-space:nowrap}
+.hero-proof:hover u{text-decoration-color:var(--sign)}
 .hero h1 .bl{color:var(--sign)}
 .band-u{position:relative;white-space:nowrap;isolation:isolate}
 .band-u::after{content:"";position:absolute;left:-2%;right:-2%;bottom:.05em;height:.11em;background:var(--band);z-index:-1;border-radius:2px}
-.lede{font-size:19px;max-width:38ch;margin:0 0 30px;color:var(--body);line-height:1.5}
+.lede{font-size:19px;max-width:40ch;margin:0 0 30px;color:var(--body);line-height:1.5}
 .paths{display:grid;gap:10px;max-width:440px}
 .paths .btn{padding:16px 24px;font-size:17px}
 .facts{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 22px;font-size:14.5px;color:var(--muted)}
@@ -272,6 +277,23 @@ button{cursor:pointer}
 .again span{color:var(--body)}
 .again-x{margin-left:auto;background:none;border:0;font-size:22px;color:var(--muted);width:34px;height:34px;border-radius:50%}
 .again-x:hover{background:var(--ice)}
+/* client strip */
+.clients{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.clients .wrap{padding:26px 0 28px}
+.cl-head{margin:0 0 18px;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.cl-ph{font-size:12px;background:var(--band);color:var(--ink);padding:2px 8px;border-radius:4px;font-weight:600}
+.cl-row{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 26px}
+.cl-row li{color:#6b7782;opacity:.85;transition:color .25s,opacity .25s;display:flex;align-items:center;gap:8px;line-height:1}
+.cl-row li:hover{color:var(--ink);opacity:1}
+.cl-row svg{width:26px;height:26px;flex:none}
+.lg-a{font-family:var(--f-display);font-weight:900;font-size:24px;letter-spacing:.5px}
+.lg-b{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:24px}
+.lg-c{font-family:var(--f-mono);font-size:17px;letter-spacing:2px;text-transform:uppercase}
+.lg-d{font-family:var(--f-body);font-weight:600;font-size:21px;letter-spacing:-.4px}
+.lg-e{font-family:var(--f-display);font-weight:700;font-size:23px;letter-spacing:3px;text-transform:uppercase}
+.lg-f{font-family:Georgia,serif;font-weight:700;font-size:22px}
+.lg-f small{display:block;font-family:var(--f-body);font-weight:500;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-top:3px}
+@media (max-width:759px){.cl-row{justify-content:flex-start;gap:18px 26px}.lg-a,.lg-b{font-size:22px}}
 /* section heads */
 .sec{padding:84px 0;position:relative}
 .head{display:grid;gap:12px;margin-bottom:36px;max-width:640px}
@@ -544,17 +566,18 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
 <section class="hero">
   <div class="wrap">
     <div class="hero-copy">
-    <p class="kicker rv" style="--d:0ms">For home cooks and restaurants</p>
-    <h1 class="h1-anim"><span class="ln"><span style="--d:80ms">Live lobster and</span></span> <span class="ln"><span style="--d:160ms">fresh seafood,</span></span> <span class="ln"><span style="--d:240ms"><span class="band-u">delivered.</span></span></span></h1>
-    <p class="lede rv" style="--d:380ms">Blue and Dungeness crab, crawfish, head-on shrimp, oysters, salmon, snapper, squid and octopus too. Order by the pound for dinner or by the case for your kitchen. We confirm the price before you pay.</p>
+    <p class="kicker rv" style="--d:0ms" id="heroKicker">Seafood supplier for home cooks and restaurants</p>
+    <h1 class="h1-anim"><span class="ln"><span style="--d:80ms">Fresh seafood and</span></span> <span class="ln"><span style="--d:170ms">live lobster, <span class="band-u" id="heroWhere">delivered.</span></span></span></h1>
+    <p class="lede rv" style="--d:380ms">Crab, shrimp, crawfish, oysters and whole fish, by the pound or by the case. Send us your list and we confirm the price before you pay.</p>
     <div class="paths rv" style="--d:480ms">
       <a class="btn btn-green" href="#board">Order for home</a>
       <a class="btn btn-ink" href="#bulk">Order for my business</a>
     </div>
-    <ul class="facts rv" id="facts" style="--d:580ms">
-      <li>Live, fresh &amp; frozen</li>
+    <a class="hero-proof rv" style="--d:580ms" href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener"><img src="img/building.webp" alt="" width="44" height="44"><span><b>A real business with real stock.</b> Our building, our trucks, our photos. <u>See @overnight_tider</u></span></a>
+    <ul class="facts rv" id="facts" style="--d:660ms">
+      <li>Nothing charged online</li>
+      <li>Retail &amp; wholesale</li>
       <li>Delivery &amp; shipping</li>
-      <li>A real person on every order</li>
     </ul>
     </div>
     <figure class="hero-fig show" id="show" aria-roledescription="carousel" aria-label="Photos of our stock">
@@ -576,6 +599,13 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
   </figure>
   </div>
   <svg class="edge" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20 C100 6 200 6 300 20 S500 34 600 20 800 6 900 20 1100 34 1200 20 V36 H0Z" fill="currentColor"/></svg>
+</section>
+
+<section class="clients" id="clients" aria-label="Kitchens that buy from us" hidden>
+  <div class="wrap">
+    <p class="cl-head">Restaurants and kitchens that buy from us <span class="cl-ph" id="clPh" hidden>Placeholder clients for the mockup</span></p>
+    <ul class="cl-row" id="clRow"></ul>
+  </div>
 </section>
 
 <section id="carry" aria-labelledby="carryT">
@@ -887,6 +917,7 @@ const SHOP={
   phone:"",            // e.g. "(555) 123-4567"  -> tap-to-call + "Text the order"
   address:"",          // e.g. "123 Dock St, Tampa, FL"
   hours:"",            // e.g. "Thu to Sun, 9 AM to 6 PM"
+  city:"",             // e.g. "Tampa". Puts the city in the hero ("delivered in Tampa"). Also add it to <title> and the meta description for search
   pickup:false,        // true once pickup is confirmed
   cutoff:null,         // e.g. {day:3,hour:17,label:"Wednesday 5 PM",fulfil:"Thursday"}  (day: 0=Sun ... 6=Sat)
   bulkTerms:"",        // e.g. "Restaurant delivery Tue and Fri. $150 minimum."
@@ -895,6 +926,7 @@ const SHOP={
   depositLink:"",      // Optional Square payment link, shown after an order is sent
   policy:"",           // Refund and live seafood policy in the owner's own words. Adds a Refunds link in the footer
   ga4:"",              // Optional Google Analytics 4 ID, e.g. "G-XXXXXXX"
+  clients:[],          // Real client names, e.g. ["Harbor Grill","Sal\u2019s Catering"]. While empty, placeholders show in pitch mode only
   reviews:[],          // Real reviews only, e.g. {text:"...", name:"Maria T.", source:"Google review", stars:5}. Hidden while empty
   pitch:true,          // Shows the "Why we built it this way" toggle. Set to false before launch (or open the site with ?why to see it anyway)
   siteUrl:"https://overnight-tider.vercel.app",
@@ -1097,6 +1129,7 @@ $("bulkForm").addEventListener("submit",async e=>{
   $("tcSpecies").textContent=ITEMS.filter(i=>i.id!=="fish"&&i.status!=="out").length;
   if(SHOP.phone){$("tcCall").href="tel:"+SHOP.phone.replace(/[^\d+]/g,"");$("tcCall").textContent="Call "+SHOP.phone;$("tcCall").hidden=false}
   if(SHOP.reviews&&SHOP.reviews.length){const t=$("tReviews");t.innerHTML=SHOP.reviews.slice(0,3).map(v=>`<figure class="rv-card io in"><span class="rv-stars" aria-label="${v.stars||5} out of 5 stars">${"\u2605".repeat(v.stars||5)}</span><p>${esc(v.text)}</p><figcaption><b>${esc(v.name)}</b> <span class="rv-src">${esc(v.source||"")}</span></figcaption></figure>`).join("");t.hidden=false}
+  if(SHOP.city){$("heroWhere").textContent="delivered in "+SHOP.city+".";$("heroKicker").textContent="Seafood supplier in "+SHOP.city+" for home cooks and restaurants"}
   if(SHOP.bulkTerms){$("bulkTerms").textContent=SHOP.bulkTerms;$("bulkTerms").hidden=false}
   if(SHOP.special&&SHOP.special.on){$("special").hidden=false;$("specialText").innerHTML=SHOP.special.text;
     $("specialAdd").onclick=()=>{unitSel[SHOP.special.item]=SHOP.special.unit;drawDetail();$("board").scrollIntoView({behavior:calm?"auto":"smooth"});setTimeout(()=>select(SHOP.special.item),calm?0:500)}}
@@ -1195,6 +1228,7 @@ const WHY=[
  [".hero-copy h1","A headline that says what you sell","Live lobster, fresh seafood, delivered. A stranger understands what you do in about three seconds. Vague or clever headlines make people leave.","Every visitor who stays past the first screen is a possible order."],
  [".paths","Two doors: home and business","Home cooks go straight to this week's list. Restaurants and caterers go to the wholesale form, where the big repeat orders are.","Each buyer gets to the right place in one tap instead of guessing."],
  ["#show","Your real crates, not stock photos","The slideshow shows what is actually in your crates and coolers this week. The biggest doubt about buying seafood online is \"is this real and is it fresh\".","Proof of real stock is what turns a curious visitor into a buyer."],
+ ["#clients","Who already buys here","A row of real restaurants and caterers that buy from you, right under the first screen. Nothing makes a new buyer trust a supplier faster than seeing other kitchens they know already use it. Placeholders now, real names before launch.","Social proof from other businesses is what wins wholesale accounts."],
  ["#film","One species at a time, made to look premium","Right after the first screen, the catalog slides past one product at a time. Each gets the whole stage: its name, a clean shot, how it is sold, the price and an Add button. It feels like a real seafood brand, and the buyer only has one decision to make at a time.","Looking expensive lets you hold your prices. Showing one item at a time gets more of them added to orders."],
  ["#again","Order again in one tap","Returning customers see their last order and can add it back with one button. Most seafood buyers order the same things every week.","Repeat orders with almost no effort from the customer, and none from you."],
  ["#shopTrack","Shop by type","Cards grouped the way buyers think: crab and lobster, shrimp, whole fish, the rest. Someone who came for one thing finds it in one tap, and sees what else sits next to it.","Easy browsing turns a one-item order into a two or three-item order."],
@@ -1395,6 +1429,20 @@ function rememberOrder(){try{if(Object.keys(cart).length)localStorage.setItem("o
   $("again").hidden=false;
   $("againBtn").onclick=()=>{Object.entries(last.cart).forEach(([k,q])=>{if(item(k.split("|")[0]))cart[k]=q});save();bar(true);drawDetail();$("again").hidden=true;track("order_again");openSheet()};
   $("againX").onclick=()=>{$("again").hidden=true;try{sessionStorage.setItem("ot-again-x","1")}catch(e){}};
+})();
+
+/* ---------- client strip ---------- */
+(function clients(){
+  const sec=$("clients");if(!sec)return;
+  const icons=['<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15c3-3 6-3 9 0s6 3 9 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 10c3-3 6-3 9 0s6 3 9 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>','<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 9l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="20" r="2" fill="currentColor"/></svg>','<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 13c2 2 6 2 8 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'];
+  const real=(SHOP.clients||[]).filter(Boolean);
+  let list;
+  if(real.length)list=real.map((n,i)=>`<span class="lg-${"adbfce"[i%6]}">${esc(n)}</span>`);
+  else if(SHOP.pitch||/[?&]why\b/.test(location.search)){
+    list=[`${icons[0]}<span class="lg-a">Low Tide Kitchen</span>`,`<span class="lg-b">Harbor &amp; Vine</span>`,`<span class="lg-c">The Saltbox</span>`,`${icons[1]}<span class="lg-e">Dockside</span>`,`<span class="lg-f">Marlow’s<small>Oyster bar</small></span>`,`${icons[2]}<span class="lg-d">Gulfside Catering</span>`];
+    $("clPh").hidden=false;
+  }else return;
+  $("clRow").innerHTML=list.map(x=>`<li>${x}</li>`).join("");sec.hidden=false;
 })();
 
 /* ---------- boot ---------- */
