@@ -487,11 +487,31 @@ dialog[open]{animation:pop .3s var(--ease)}
 .done .oid{font-family:var(--f-mono);background:var(--ice);padding:2px 8px;border-radius:4px;color:var(--ink)}
 .next{margin:0;padding-left:20px;color:var(--body);display:grid;gap:6px}
 /* why-we-built-it mode */
-.why-btn{position:fixed;left:16px;bottom:16px;z-index:45;display:flex;align-items:center;gap:10px;background:var(--band);color:var(--ink);border:0;border-radius:999px;padding:10px 16px 10px 12px;font-weight:600;font-size:14.5px;box-shadow:0 8px 22px rgba(19,32,46,.22)}
-.why-btn i{width:34px;height:20px;border-radius:999px;background:rgba(19,32,46,.25);position:relative;transition:background-color .2s}
-.why-btn i::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .2s var(--ease)}
-.why-btn[aria-pressed="true"] i{background:var(--ink)}
-.why-btn[aria-pressed="true"] i::after{transform:translateX(14px)}
+.why-dock{position:fixed;left:16px;bottom:16px;z-index:45;display:flex;align-items:center;background:var(--ink);color:#fff;border-radius:16px;padding:6px;box-shadow:0 14px 34px rgba(19,32,46,.32),0 0 0 1px rgba(255,255,255,.06) inset;max-width:calc(100vw - 32px);transition:padding .3s var(--ease)}
+.why-tog{display:flex;align-items:center;gap:12px;background:none;border:0;color:inherit;padding:8px 14px 8px 10px;border-radius:11px;text-align:left;min-width:0;transition:background-color .2s}
+.why-tog:hover{background:rgba(255,255,255,.07)}
+.why-tog .sw{flex:none;width:40px;height:24px;border-radius:999px;background:#3a4c5f;position:relative;transition:background-color .25s}
+.why-tog .sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .3s var(--ease);box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.why-tog[aria-pressed="true"] .sw{background:var(--band)}
+.why-tog[aria-pressed="true"] .sw::after{transform:translateX(16px);background:var(--ink)}
+.why-tog .wt{display:grid;gap:1px;min-width:0}
+.why-tog b{font-size:14.5px;font-weight:600;white-space:nowrap}
+.why-tog small{font-size:12.5px;color:#a9b8c5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px;transition:color .2s}
+.why-dock.on .why-tog small{color:var(--band)}
+.why-ping{position:absolute;top:-4px;right:-4px;width:14px;height:14px;border-radius:50%;background:var(--band);border:3px solid var(--paper)}
+.why-ping::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--band);animation:whyPing 1.8s ease-out infinite}
+@keyframes whyPing{from{transform:scale(1);opacity:.9}to{transform:scale(2.4);opacity:0}}
+.why-dock.on .why-ping,.why-dock.seen .why-ping{display:none}
+.why-nav{display:none;align-items:center;gap:2px;padding-left:6px;margin-left:2px;border-left:1px solid rgba(255,255,255,.12)}
+.why-dock.on .why-nav{display:flex}
+.why-nav button{width:36px;height:36px;border:0;border-radius:50%;background:none;color:#fff;display:grid;place-items:center;padding:0;transition:background-color .2s}
+.why-nav button:hover{background:rgba(255,255,255,.1)}
+.why-nav svg{width:15px;height:15px}
+.why-nav span{font-family:var(--f-mono);font-size:12.5px;color:#a9b8c5;min-width:44px;text-align:center}
+.why-note.flash{animation:whyFlash 1.2s ease}
+@keyframes whyFlash{0%{box-shadow:0 0 0 0 rgba(242,194,48,.9)}100%{box-shadow:0 0 0 14px rgba(242,194,48,0)}}
+@media (prefers-reduced-motion:reduce){.why-ping::after{animation:none}}
+@media (max-width:520px){.why-tog{padding:6px 10px 6px 8px;gap:10px}.why-tog b{font-size:13.5px}.why-tog small{max-width:150px;font-size:12px}.why-nav button{width:32px;height:32px}.why-nav span{min-width:38px}}
 .why-note,.why-roi{display:none}
 body.why .why-note{display:grid}
 body.why .why-roi{display:block}
@@ -503,7 +523,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
 .why-note .roi{color:var(--sign-dk);font-weight:600}
 #bulk .why-note,#how .why-note{background:#fff8dc}
 .why-wrap{padding-top:22px}
-@media (max-width:759px){.why-btn{bottom:84px}}
+@media (max-width:759px){.why-dock{bottom:84px}}
 .why-roi{background:var(--ink);color:var(--ice);padding:28px 0}
 .why-roi h2{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,5vw,48px);line-height:1;margin:0 0 8px;color:#fff}
 .why-roi .sub{margin:0 0 20px;color:#b3c1cd;max-width:70ch}
@@ -515,7 +535,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
 .roi-out span{color:#b3c1cd;font-size:14px}
 .roi-small{margin:14px 0 0;font-size:13px;color:#8fa1b1}
 @media (min-width:760px){.roi-g{grid-template-columns:repeat(3,1fr) 1.3fr;align-items:end}}
-@media print{.why-btn{display:none}}
+@media print{.why-dock{display:none}}
 /* entrance + reveals */
 .js .rv{opacity:0;transform:translateY(14px)}
 .js.ready .rv{opacity:1;transform:none;transition:opacity .7s var(--ease) var(--d,0ms),transform .7s var(--ease) var(--d,0ms)}
@@ -551,7 +571,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
   footer .wrap{grid-template-columns:1.1fr 2fr}
   .fcols{grid-template-columns:repeat(3,1fr)}
   .obar{left:auto;right:24px;bottom:24px;width:400px}
-  .why-btn{left:24px;bottom:24px}
+  .why-dock{left:24px;bottom:24px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
@@ -1323,8 +1343,11 @@ const WHY=[
 ];
 (function whyMode(){
   if(!(SHOP.pitch||/[?&]why\b/.test(location.search)||location.hash==="#why"))return;
-  const btn=document.createElement("button");btn.type="button";btn.className="why-btn";btn.setAttribute("aria-pressed","false");btn.innerHTML="<i></i>Why we built it this way";
-  document.body.appendChild(btn);
+  const NW=WHY.filter(w=>{const e=document.querySelector(w[0]);return e&&!e.closest("dialog")}).length;
+  const dock=document.createElement("div");dock.className="why-dock";
+  dock.innerHTML=`<button type="button" class="why-tog" aria-pressed="false"><span class="sw" aria-hidden="true"></span><span class="wt"><b>Why we built it this way</b><small id="whySub">${NW} notes on what each part earns</small></span></button><div class="why-nav"><button type="button" id="whyPrev" aria-label="Previous note"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button><span id="whyPos" aria-live="polite">1 / ${NW}</span><button type="button" id="whyNext" aria-label="Next note"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button></div><span class="why-ping" aria-hidden="true"></span>`;
+  document.body.appendChild(dock);const btn=dock.querySelector(".why-tog");
+  try{if(localStorage.getItem("ot-why-seen"))dock.classList.add("seen")}catch(e){}
   const roi=document.createElement("section");roi.className="why-roi";roi.setAttribute("aria-label","Return on investment");
   roi.innerHTML=`<div class="wrap"><h2>How this site pays for itself</h2><p class="sub">Every part of this page has one job: get more people from \"looking\" to \"ordered\", and bring them back. Put in your own numbers.</p>
   <div class="roi-g"><label>Average order ($)<input type="number" id="roiAvg" value="120" min="0" inputmode="decimal"></label>
@@ -1340,10 +1363,11 @@ const WHY=[
   function build(){
     if(built)return;built=true;
     const topBox=document.createElement("div");const hc=document.querySelector(".hero-copy");hc.insertBefore(topBox,hc.firstChild);
-    WHY.forEach(([sel,title,text,roiLine],i)=>{
-      const el=document.querySelector(sel);if(!el)return;
+    let k=0;
+    WHY.forEach(([sel,title,text,roiLine])=>{
+      const el=document.querySelector(sel);if(!el)return;const i=el.closest("dialog")?-1:k++;
       const n=document.createElement("div");n.className="why-note";n.setAttribute("role","note");
-      n.innerHTML=`<span class="wn">${i+1}</span><b>${esc(title)}</b><p>${esc(text)}</p><p class="roi">${esc(roiLine)}</p>`;
+      n.innerHTML=`<span class="wn">${i<0?"+":i+1}</span><b>${esc(title)}</b><p>${esc(text)}</p><p class="roi">${esc(roiLine)}</p>`;
       el.setAttribute("data-why-on","");
       if(sel==="#special"||sel===".top"){topBox.appendChild(n)}
       else if(sel==="#obar"){document.querySelector("#how .wrap").appendChild(n)}
@@ -1353,8 +1377,20 @@ const WHY=[
     });
     document.querySelectorAll(".why-note").forEach(x=>{const p=x.closest(".io");if(p)p.classList.add("in")});
   }
-  function set(on){if(on)build();document.body.classList.toggle("why",on);btn.setAttribute("aria-pressed",on);track("why_mode",{on})}
-  btn.onclick=()=>{const on=btn.getAttribute("aria-pressed")!=="true";set(on);if(on)scrollTo({top:0,behavior:calm?"auto":"smooth"})};
+  let notes=[],cur=0;
+  const sub=()=>$("whySub");
+  function label(){if(!notes.length)return;const n=notes[cur];$("whyPos").textContent=`${cur+1} / ${notes.length}`;sub().textContent=n.querySelector("b").textContent}
+  function nearest(){const mid=innerHeight*.45;let best=0,bd=1e9;notes.forEach((n,k)=>{const r=n.getBoundingClientRect();if(!r.height)return;const d=Math.abs(r.top-mid);if(d<bd){bd=d;best=k}});return best}
+  let lockT=0;const onScroll=()=>{if(Date.now()<lockT)return;cancelAnimationFrame(onScroll.r);onScroll.r=requestAnimationFrame(()=>{const k=nearest();if(k!==cur){cur=k;label()}})};
+  function jump(k){if(!notes.length)return;cur=(k+notes.length)%notes.length;lockT=Date.now()+1100;const n=notes[cur];n.scrollIntoView({behavior:calm?"auto":"smooth",block:"center"});n.classList.remove("flash");void n.offsetWidth;n.classList.add("flash");setTimeout(()=>n.classList.remove("flash"),1300);label();track("why_jump",{note:cur+1})}
+  function set(on){if(on){build();notes=[...document.querySelectorAll(".why-note")].filter(n=>!n.closest("dialog")).sort((a,b)=>+a.querySelector(".wn").textContent-+b.querySelector(".wn").textContent)}
+    document.body.classList.toggle("why",on);btn.setAttribute("aria-pressed",on);dock.classList.toggle("on",on);
+    if(on){addEventListener("scroll",onScroll,{passive:true});cur=0;label()}else{removeEventListener("scroll",onScroll);sub().textContent=`${NW} notes on what each part earns`}
+    dock.classList.add("seen");try{localStorage.setItem("ot-why-seen","1")}catch(e){}
+    track("why_mode",{on})}
+  btn.onclick=()=>{const on=btn.getAttribute("aria-pressed")!=="true";set(on);if(on)setTimeout(()=>jump(0),60)};
+  $("whyPrev").onclick=()=>jump(cur-1);$("whyNext").onclick=()=>jump(cur+1);
+  document.addEventListener("keydown",e=>{if(!dock.classList.contains("on")||e.target.closest("input,textarea,select")||document.querySelector("dialog[open]"))return;if(e.key==="]"){jump(cur+1)}if(e.key==="["){jump(cur-1)}});
   if(location.hash==="#why")set(true);
 })();
 
