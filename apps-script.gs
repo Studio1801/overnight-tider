@@ -1,46 +1,92 @@
-// Overnight Tider: orders, wholesale quotes and text-list signups, all into one Google Sheet.
+// Overnight Tider backend: one Google Sheet runs the website and the owner dashboard.
 //
-// Setup (about 5 minutes):
+// What it does
+// - Website orders, wholesale quotes, text-list and email-list signups land in tabs of this Sheet.
+// - The owner dashboard (/admin) reads orders, prices them, moves them along, and publishes
+//   stock, prices, the special, text and photos to the website. Everything is PIN protected.
+//
+// Setup (about 5 minutes)
 // 1. Create a Google Sheet. Extensions > Apps Script. Paste this whole file in.
-// 2. Put the owner's email in OWNER_EMAIL below (new orders and quotes get emailed there).
-// 3. Deploy > New deployment > Web app. Execute as: Me. Who has access: Anyone. Authorize.
-// 4. Copy the web app URL into SHOP.endpoint in index.html and push.
+// 2. Put the owner's email in OWNER_EMAIL and a 4-digit PIN in FIRST_PIN below.
+// 3. Run the function "setup" once (Run button at the top) and allow the permissions.
+// 4. Deploy > New deployment > Web app. Execute as: Me. Who has access: Anyone. Deploy.
+// 5. Copy the web app URL into SHOP.endpoint in index.html and push.
+//    In the dashboard: Settings > Connection, paste the same URL.
 //
-// Tabs "Orders", "Wholesale quotes", "Text list" and "Email list" are created automatically on the first submission.
-// The owner works orders by changing the Status column (New, Priced, Confirmed, Done).
+// The owner can also work straight in the Sheet. Status values: New, Price sent, Confirmed, Paid, Delivered, Cancelled.
 
 const OWNER_EMAIL = "";
+const FIRST_PIN = "";        // e.g. "4821". Used once by setup(). Change it later from the dashboard
+const PHOTO_FOLDER = "Overnight Tider website photos";
 
 const TABS = {
-  order: { name: "Orders", head: ["Received", "Order #", "Name", "Phone", "Items", "How", "Date needed", "ZIP", "Notes", "Status"] },
+  order: { name: "Orders", head: ["Received", "Order #", "Name", "Phone", "Items", "How", "Date needed", "ZIP", "Notes", "Status", "Code", "Lines", "Fee", "Discount %", "Total", "Paid by", "History", "Business", "Channel"] },
   quote: { name: "Wholesale quotes", head: ["Received", "Name", "Business", "Buying for", "Phone", "Need", "How often", "First delivery", "Status"] },
   alert: { name: "Text list", head: ["Signed up", "Phone"] },
   email: { name: "Email list", head: ["Signed up", "Email", "Code given"] }
 };
+const STATUS = { new: "New", sent: "Price sent", confirmed: "Confirmed", paid: "Paid", done: "Delivered", cancelled: "Cancelled" };
+const STATUS_BACK = Object.keys(STATUS).reduce((m, k) => (m[STATUS[k].toLowerCase()] = k, m), { priced: "sent", done: "done" });
+
+function setup() {
+  if (FIRST_PIN && /^\d{4}$/.test(FIRST_PIN)) PropertiesService.getScriptProperties().setProperty("ADMIN_PIN", FIRST_PIN);
+  Object.keys(TABS).forEach(k => tab(k));
+  site_();
+}
 
 function clean(v) {
-  v = String(v == null ? "" : v).slice(0, 2000);
+  v = String(v == null ? "" : v).slice(0, 5000);
   return /^[=+\-@]/.test(v) ? "'" + v : v; // stop spreadsheet formula injection
+}
+function json(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
+function out(t) { return ContentService.createTextOutput(t); }
+function tab(type) {
+  const t = TABS[type], ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sh = ss.getSheetByName(t.name) || ss.insertSheet(t.name);
+  if (sh.getLastRow() === 0) {
+    sh.appendRow(t.head); sh.setFrozenRows(1); sh.getRange(1, 1, 1, t.head.length).setFontWeight("bold");
+  } else if (sh.getLastColumn() < t.head.length) {
+    sh.getRange(1, 1, 1, t.head.length).setValues([t.head]).setFontWeight("bold"); // older sheet, add new columns
+  }
+  return sh;
+}
+function site_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sh = ss.getSheetByName("Site") || ss.insertSheet("Site");
+  if (!sh.getRange("A1").getValue()) sh.getRange("A1").setValue(JSON.stringify({ v: 1 }));
+  sh.getRange("B1").setValue("Website settings written by the dashboard. Don't edit by hand.");
+  return sh;
+}
+
+/* ---------- public: the website reads its published settings ---------- */
+function doGet(e) {
+  const action = (e && e.parameter && e.parameter.action) || "";
+  if (action === "site") {
+    const cache = CacheService.getScriptCache(), hit = cache.get("site");
+    if (hit) return ContentService.createTextOutput(hit).setMimeType(ContentService.MimeType.JSON);
+    const txt = String(site_().getRange("A1").getValue() || "{}");
+    try { cache.put("site", txt, 60); } catch (err) {}
+    return ContentService.createTextOutput(txt).setMimeType(ContentService.MimeType.JSON);
+  }
+  return out("ok");
 }
 
 function doPost(e) {
   let d = {};
   try { d = JSON.parse(e.postData.contents); } catch (err) { return out("bad request"); }
+  if (d.type === "admin") return admin(d);
   const t = TABS[d.type];
   if (!t) return out("unknown type");
 
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
   try {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const sh = ss.getSheetByName(t.name) || ss.insertSheet(t.name);
-    if (sh.getLastRow() === 0) {
-      sh.appendRow(t.head);
-      sh.setFrozenRows(1);
-      sh.getRange(1, 1, 1, t.head.length).setFontWeight("bold");
-    }
+    const sh = tab(d.type);
     let row;
-    if (d.type === "order") row = [d.id, d.name, d.phone, d.items, d.how, d.when, d.zip, d.notes, "New"];
+    if (d.type === "order") {
+      const lines = Array.isArray(d.lines) ? d.lines.slice(0, 40).map(l => ({ id: String(l.id).slice(0, 20), unit: String(l.unit).slice(0, 30), qty: +l.qty || 1 })) : [];
+      row = [d.id, d.name, d.phone, d.items, d.how, d.when, d.zip, d.notes, "New", d.code || "", JSON.stringify(lines), 0, d.code ? 10 : 0, "", "", JSON.stringify([{ s: "new", at: new Date().toISOString() }]), "", "retail"];
+    }
     if (d.type === "quote") row = [d.name, d.biz, d.who, d.phone, d.need, d.freq, d.when, "New"];
     if (d.type === "alert") {
       const phone = String(d.phone || "").replace(/[^\d+]/g, "");
@@ -63,15 +109,85 @@ function doPost(e) {
     lock.releaseLock();
   }
 
-  if (OWNER_EMAIL && d.type !== "alert" && d.type !== "email") {
-    const subject = d.type === "order"
-      ? "New order " + d.id + " from " + (d.name || "a customer")
-      : "Wholesale quote request from " + (d.biz || d.name);
-    const skip = ["type", "page"];
+  if (OWNER_EMAIL && (d.type === "order" || d.type === "quote")) {
+    const subject = d.type === "order" ? "New order " + d.id + " from " + (d.name || "a customer") : "Wholesale quote request from " + (d.biz || d.name);
+    const skip = ["type", "page", "lines"];
     const body = Object.keys(d).filter(k => skip.indexOf(k) === -1).map(k => k + ": " + d[k]).join("\n");
-    MailApp.sendEmail(OWNER_EMAIL, subject, body + "\n\nEverything is also in the Google Sheet.");
+    MailApp.sendEmail(OWNER_EMAIL, subject, body + "\n\nOpen the dashboard to price it, or see the Google Sheet.");
   }
   return out("ok");
 }
 
-function out(t) { return ContentService.createTextOutput(t); }
+/* ---------- owner dashboard API (PIN protected) ---------- */
+function admin(d) {
+  const props = PropertiesService.getScriptProperties(), cache = CacheService.getScriptCache();
+  const fails = +(cache.get("fails") || 0);
+  if (fails >= 10) return json({ error: "Locked. Too many wrong PINs, try again in 15 minutes." });
+  const pin = props.getProperty("ADMIN_PIN");
+  if (!pin) return json({ error: "No PIN set yet. Put one in FIRST_PIN and run setup." });
+  if (String(d.pin) !== pin) { cache.put("fails", String(fails + 1), 900); Utilities.sleep(600); return json({ error: "Wrong PIN" }); }
+  cache.remove("fails");
+
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    if (d.op === "load") return json({ orders: readOrders(), quotes: readQuotes(), emails: readList("email"), texts: readList("alert"), site: JSON.parse(String(site_().getRange("A1").getValue() || "{}")) });
+    if (d.op === "saveOrder") { writeOrder(d.order); return json({ ok: true }); }
+    if (d.op === "saveQuote") {
+      const sh = tab("quote"), r = +String(d.quote.id).replace(/\D/g, "");
+      if (r > 1 && r <= sh.getLastRow()) sh.getRange(r, 9).setValue({ new: "New", sent: "Quote sent", done: "Won", lost: "Didn't work out" }[d.quote.status] || "New");
+      return json({ ok: true });
+    }
+    if (d.op === "saveSite") {
+      const txt = JSON.stringify(d.site || { v: 1 });
+      if (txt.length > 48000) return json({ error: "Too much in one save. Use uploaded photos, not pasted ones." });
+      site_().getRange("A1").setValue(txt); cache.remove("site");
+      return json({ ok: true });
+    }
+    if (d.op === "upload") {
+      const mime = /^image\/(webp|jpeg|png)$/.test(d.mime) ? d.mime : "image/jpeg";
+      const bytes = Utilities.base64Decode(String(d.data || ""));
+      if (bytes.length > 4 * 1024 * 1024) return json({ error: "Photo too large" });
+      const it = DriveApp.getFoldersByName(PHOTO_FOLDER), folder = it.hasNext() ? it.next() : DriveApp.createFolder(PHOTO_FOLDER);
+      const f = folder.createFile(Utilities.newBlob(bytes, mime, String(d.name || "photo").replace(/[^\w.-]/g, "-")));
+      f.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      return json({ url: "https://lh3.googleusercontent.com/d/" + f.getId() });
+    }
+    if (d.op === "setPin") {
+      if (!/^\d{4}$/.test(String(d.newPin))) return json({ error: "Use 4 numbers" });
+      props.setProperty("ADMIN_PIN", String(d.newPin)); return json({ ok: true });
+    }
+    return json({ error: "Unknown request" });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function rows(type) { const sh = tab(type), n = sh.getLastRow() - 1; return n > 0 ? sh.getRange(2, 1, n, TABS[type].head.length).getValues() : []; }
+function iso(v) { return v instanceof Date ? v.toISOString() : (v ? new Date(v).toISOString() : new Date().toISOString()); }
+function parse(v, d) { try { return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+function readOrders() {
+  return rows("order").map(r => ({
+    at: iso(r[0]), id: String(r[1]).replace(/^'/, ""), name: String(r[2]), phone: String(r[3]).replace(/^'/, ""), items: String(r[4]), how: String(r[5]), when: String(r[6]), zip: String(r[7]), notes: String(r[8]),
+    status: STATUS_BACK[String(r[9]).toLowerCase()] || "new", code: String(r[10] || ""), lines: parse(r[11], []), fee: +r[12] || 0, disc: +r[13] || 0,
+    paid: String(r[15] || ""), log: parse(r[16], null) || [{ s: "new", at: iso(r[0]) }], biz: String(r[17] || ""), channel: String(r[18] || "retail")
+  })).filter(o => o.id);
+}
+function readQuotes() {
+  return rows("quote").map((r, i) => ({ id: "Q" + (i + 2), at: iso(r[0]), name: String(r[1]), biz: String(r[2]), who: String(r[3]), phone: String(r[4]).replace(/^'/, ""), need: String(r[5]), freq: String(r[6]), when: String(r[7]),
+    status: ({ "quote sent": "sent", won: "done", "didn't work out": "lost" })[String(r[8]).toLowerCase()] || "new" }));
+}
+function readList(type) { return rows(type).map(r => type === "email" ? { at: iso(r[0]), email: String(r[1]), code: String(r[2] || "") } : { at: iso(r[0]), phone: String(r[1]).replace(/^'/, "") }); }
+function writeOrder(o) {
+  const sh = tab("order"), n = sh.getLastRow() - 1;
+  const ids = n > 0 ? sh.getRange(2, 2, n, 1).getValues().flat().map(x => String(x).replace(/^'/, "")) : [];
+  let r = ids.indexOf(String(o.id));
+  const lines = (o.lines || []).map(l => ({ id: l.id, unit: l.unit, qty: +l.qty || 1, price: l.price == null ? null : +l.price }));
+  const sub = lines.reduce((t, l) => t + (l.price || 0) * l.qty, 0), total = Math.max(0, sub - sub * (+o.disc || 0) / 100 + (+o.fee || 0));
+  const vals = [STATUS[o.status] || "New", o.code || "", JSON.stringify(lines), +o.fee || 0, +o.disc || 0, Math.round(total * 100) / 100, o.paid || "", JSON.stringify(o.log || []), o.biz || "", o.channel || "retail"].map(clean);
+  if (r === -1) {
+    sh.appendRow([new Date(o.at || Date.now()), o.id, o.name, o.phone, o.items || "", o.how, o.when, o.zip, o.notes].map((v, i) => i ? clean(v) : v).concat(vals));
+  } else {
+    sh.getRange(r + 2, 10, 1, vals.length).setValues([vals]);
+  }
+}

@@ -34,3 +34,13 @@ Website and ordering system for Overnight Tider (fresh and frozen seafood, retai
 - `brand/`: logo files. `mark.svg` (icon and favicon), `logo.svg` (light backgrounds), `logo-reverse.svg` (dark backgrounds), `logo-sign.svg` (caps lockup matching the painted building sign). Green #2f6b3d, navy #13202e, band yellow #f2c230
 - `img/`: product photos (WebP) and `og.jpg` share image
 - `vercel.json`: caching and security headers
+
+
+## Owner dashboard (/admin)
+
+`admin.html` is the owner's back office: orders inbox with pricing and "text the price", order status from New to Delivered, wholesale quotes, stock and prices (with optional on-hand counts that go down when orders are delivered), the weekly special, a website editor with live preview and photo upload, money charts with CSV export, customers, email and text lists.
+
+- **Pitch mode (no endpoint):** runs on sample orders in the browser. PIN `1801`. Orders placed on the website in the same browser land in the dashboard, and anything published shows on the site in that browser.
+- **Live:** set up `apps-script.gs` (FIRST_PIN, run `setup`, deploy). Put the web app URL in `SHOP.endpoint` in index.html and in the dashboard under Settings > Connection. The website then reads stock, prices, text and photos from the Sheet's "Site" tab, and photos upload to the owner's Google Drive.
+- The dashboard is `noindex` and disallowed in robots.txt. The PIN locks for 15 minutes after 10 wrong tries.
+- The item list lives in both `index.html` (ITEMS) and `admin.html` (CAT). Add a new product in both.
