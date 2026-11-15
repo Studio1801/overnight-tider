@@ -711,6 +711,9 @@ input,select,textarea{transition:box-shadow .2s,background-color .2s,border-colo
 @media (max-width:640px){.dp-pop{width:calc(100vw - 32px);max-width:380px}.dp-btn{padding:9px 14px;font-size:14px}.dpick.on .dp-btn{padding-right:38px}}
 
 
+.tv-empty{margin:auto;display:grid;justify-items:center;gap:10px;color:var(--muted);font-size:15px;text-align:center;padding:30px}
+.tv-empty svg{width:44px;height:44px;color:var(--ice-2)}
+.tv-empty p{margin:0}
 /* messages */
 .task.k-chat>i{background:var(--band)}
 .tag.chat{background:var(--band);color:var(--ink)}
@@ -1184,14 +1187,13 @@ const unreadThreads=()=>threads().filter(t=>t.unread);
 function chatTask(t){return `<li><button class="task k-chat" type="button" data-chat="${esc(t.id)}"><i></i><b>${esc(t.name)} <span class="tag chat">Website chat</span></b><span class="sub">${esc(t.last.text)} · ${ago(t.last.at)}</span><span class="go"><em>Reply</em></span></button></li>`}
 let OPENCHAT=null;
 function pMessages(opt){if(opt&&opt.chat)OPENCHAT=opt.chat;const ts=threads();if(OPENCHAT&&!ts.find(t=>t.id===OPENCHAT))OPENCHAT=null;
-  if(!OPENCHAT&&ts.length&&innerWidth>860)OPENCHAT=ts[0].id;
   $("page").innerHTML=`<div class="msgs${OPENCHAT?" has-open":""}" id="msgs"><section class="card th-list" id="thList"><div class="card-h"><h2>Conversations</h2>${unreadThreads().length?`<span class="muted" style="font-size:13px">${unreadThreads().length} unread</span>`:""}</div><ul id="thUl"></ul></section><section class="card th-view" id="thView"></section></div>`;
   drawThreads();drawThread(false)}
 function drawThreads(){const ul=$("thUl");if(!ul)return;const ts=threads();
   ul.innerHTML=ts.length?ts.map(t=>`<li><button type="button" class="th${t.id===OPENCHAT?" on":""}${t.unread?" un":""}" data-th="${esc(t.id)}"><span class="av">${esc((t.name.match(/\b\w/g)||["?"]).slice(0,2).join("").toUpperCase())}</span><span class="tx"><b>${esc(t.name)}</b><span>${t.last.from==="o"?"You: ":""}${esc(t.last.text)}</span></span><span class="tm">${ago(t.last.at).replace(" ago","")}${t.unread?`<i>${t.unread}</i>`:""}</span></button></li>`).join(""):`<li class="empty">No messages yet. When someone uses the chat on the website, it shows up here.</li>`}
 const QUICK=["Yes, we have it this week.","What's your ZIP code?","I'll text you the total shortly.","Want me to put the order in for you?"];
 function drawThread(anim=true){const v=$("thView");if(!v)return;const t=threads().find(x=>x.id===OPENCHAT);$("msgs").classList.toggle("has-open",!!t);
-  if(!t){v.innerHTML=`<p class="empty" style="margin:auto">Pick a conversation.</p>`;return}
+  if(!t){v.innerHTML=`<div class="tv-empty"><svg viewBox="0 0 20 20" aria-hidden="true">${ICONS.messages}</svg><p>${threads().length?"Pick a conversation to read and reply.":"No messages yet."}</p></div>`;return}
   const tel=t.phone.replace(/[^\d+]/g,"");
   v.innerHTML=`<header class="tv-h"><button type="button" class="tv-back" id="tvBack" aria-label="All conversations"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="tv-who"><b>${esc(t.name)}</b><span>${t.phone?esc(t.phone):"No number yet"}<i class="lg-l"> · Website chat</i></span></div><div class="tv-act">${tel?`<a class="btn b-soft b-sm" href="tel:${esc(tel)}">Call</a><a class="btn b-soft b-sm hide-m" href="sms:${esc(tel)}">Text</a>`:""}<button class="btn b-ink b-sm" type="button" id="tvOrder">New order</button></div></header>
     <div class="tv-log" id="tvLog">${t.msgs.map((m,i)=>{const nx=t.msgs[i+1];return `<div class="bub ${m.from}${m.pending?" pending":""}" data-k="${esc(m.id)}">${esc(m.text)}</div>${!nx||nx.from!==m.from||new Date(nx.at)-new Date(m.at)>6e5?`<span class="bub-t ${m.from}">${m.pending?"Sending":new Date(m.at).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}</span>`:""}`}).join("")}</div>
