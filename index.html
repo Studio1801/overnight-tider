@@ -659,6 +659,12 @@ dialog[open]{animation:pop .3s var(--ease)}
 .why-dock button:focus-visible{outline:none;background:rgba(19,32,46,.08)}
 .why-tog{display:flex;align-items:center;gap:10px;background:none;border:0;color:inherit;padding:6px 14px 6px 6px;border-radius:999px;text-align:left;transition:background-color .2s}
 .why-tog:hover{background:rgba(19,32,46,.05)}
+.why-pop{position:relative;display:flex;align-items:center;gap:7px;border:0;background:none;color:inherit;padding:6px 14px 6px 15px;border-radius:999px;font-size:14px;font-weight:600;white-space:nowrap;transition:background-color .2s}
+.why-pop::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:1px;background:rgba(19,32,46,.14)}
+.why-pop svg{width:16px;height:16px;color:var(--sign);flex:none}
+.why-pop:hover{background:rgba(19,32,46,.05)}
+.why-dock.on .why-pop span{display:none}.why-dock.on .why-pop{padding:6px 10px 6px 11px}
+@media (max-width:520px){.why-pop span{display:none}.why-pop{padding:6px 11px 6px 12px}}
 .why-tog .sw{flex:none;width:36px;height:22px;border-radius:999px;background:#c9d1d0;position:relative;transition:background-color .25s}
 .why-tog .sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .35s cubic-bezier(.3,1.5,.5,1);box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .why-tog[aria-pressed="true"] .sw{background:var(--sign)}
@@ -1849,7 +1855,7 @@ window.OTpop=(function(){
   fill(D);arm();
   if(PREVIEW)addEventListener("message",e=>{if(e.origin!==location.origin||!e.data||e.data.type!=="ot-popup")return;
     if(e.data.show){if(!dlg.open){dlg.showModal();dlg.querySelector(".off-in").scrollTop=0}}else if(dlg.open)dlg.close()});
-  return{sync(S){PH=(S&&S.photos)||{};fill(popData(S));if(!PREVIEW)arm()}};
+  return{sync(S){PH=(S&&S.photos)||{};fill(popData(S));if(!PREVIEW)arm()},show(){fill(D);document.querySelectorAll("dialog[open]").forEach(x=>{if(x!==dlg)x.close()});if(!dlg.open){dlg.showModal();track("popup_demo")}}};
 })();
 
 /* ---------- first-order email offer ---------- */
@@ -1973,8 +1979,9 @@ const WHY=[
   if(!(SHOP.pitch||/[?&]why\b/.test(location.search)||location.hash==="#why"))return;
   const NW=WHY.filter(w=>{const e=document.querySelector(w[0]);return e&&!e.closest("dialog")}).length;
   const dock=document.createElement("div");dock.className="why-dock";
-  dock.innerHTML=`<div class="why-list" id="whyList" role="menu" aria-label="All notes"></div><button type="button" class="why-tog" aria-pressed="false" aria-label="Why we built it this way"><span class="sw" aria-hidden="true"></span><span class="wt"><b>Why we built it this way</b><small id="whySub">${NW} notes</small></span></button><button type="button" class="why-cur" id="whyCur" aria-haspopup="menu" aria-expanded="false"><span class="num" id="whyNum">1</span><span class="ct"><small id="whyPos">Note 1 of ${NW}</small><b id="whyT"></b></span><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 10 4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button><div class="why-nav"><button type="button" id="whyPrev" aria-label="Previous note"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><button type="button" id="whyNext" aria-label="Next note"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button></div><span class="why-bar" aria-hidden="true"><i id="whyBar"></i></span><span class="why-ping" aria-hidden="true"></span>`;
+  dock.innerHTML=`<div class="why-list" id="whyList" role="menu" aria-label="All notes"></div><button type="button" class="why-tog" aria-pressed="false" aria-label="Why we built it this way"><span class="sw" aria-hidden="true"></span><span class="wt"><b>Why we built it this way</b><small id="whySub">${NW} notes</small></span></button><button type="button" class="why-pop" id="whyPop" aria-label="Show the pop-up"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5 7h6M5 10h3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Show pop-up</span></button><button type="button" class="why-cur" id="whyCur" aria-haspopup="menu" aria-expanded="false"><span class="num" id="whyNum">1</span><span class="ct"><small id="whyPos">Note 1 of ${NW}</small><b id="whyT"></b></span><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 10 4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button><div class="why-nav"><button type="button" id="whyPrev" aria-label="Previous note"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><button type="button" id="whyNext" aria-label="Next note"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button></div><span class="why-bar" aria-hidden="true"><i id="whyBar"></i></span><span class="why-ping" aria-hidden="true"></span>`;
   document.body.appendChild(dock);const btn=dock.querySelector(".why-tog");
+  dock.querySelector("#whyPop").addEventListener("click",()=>{if(window.OTpop&&OTpop.show)OTpop.show()});
   try{if(localStorage.getItem("ot-why-seen"))dock.classList.add("seen")}catch(e){}
   const roi=document.createElement("section");roi.className="why-roi";roi.setAttribute("aria-label","Return on investment");
   roi.innerHTML=`<div class="wrap"><h2>How this site pays for itself</h2><p class="sub">Every part of this page has one job: get more people from \"looking\" to \"ordered\", and bring them back. Put in your own numbers.</p>
