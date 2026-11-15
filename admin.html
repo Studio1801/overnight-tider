@@ -692,8 +692,8 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:4px}
      text and photos publish straight to the live website.
    ===================================================================== */
 const TOUCH=matchMedia("(hover:none)").matches;
-const CFG={endpoint:"",demoPin:"1801"};
-const EP=(()=>{try{return localStorage.getItem("ot-admin-ep")||CFG.endpoint}catch(e){return CFG.endpoint}})();
+const CFG={endpoint:"https://script.google.com/macros/s/AKfycbwZXnZto5F-p33Nv60MJ0N600yRuAaWijUn0SBdGDaFQEKYcYgFV3hKYumJpwsQ5aw/exec",demoPin:"1801",pitch:true}; // pitch: show the "Why we built it this way" notes. Set false at handover
+const EP=/[?&]sample\b/.test(location.search)?"":(()=>{try{return localStorage.getItem("ot-admin-ep")||CFG.endpoint}catch(e){return CFG.endpoint}})();
 const LIVE=!!EP;
 const $=id=>document.getElementById(id);
 const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -1305,6 +1305,7 @@ function pSettings(){
      <div><button class="btn b-ink b-sm" type="button" id="pinSave">Change PIN</button></div>
      <p class="muted" style="margin:0;font-size:13.5px">After 10 wrong tries the dashboard locks for 15 minutes.</p></div></section>
   </div><div class="stack">
+   ${LIVE?`<section class="card"><div class="card-h"><h2>Orders in the Sheet</h2></div><div class="card-b" style="display:grid;gap:12px"><p style="margin:0">For a demo, fill the Sheet with sample orders. Clear it before real customers start ordering.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn b-soft b-sm" type="button" id="lSeed">Load sample orders</button><button class="btn b-ghost b-sm" type="button" id="lClear">Clear all orders</button></div></div></section>`:""}
    ${LIVE?"":`<section class="card"><div class="card-h"><h2>Sample data</h2></div><div class="card-b" style="display:grid;gap:12px"><p style="margin:0">Start over with fresh sample orders, or clear everything to see the dashboard empty.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn b-soft b-sm" type="button" id="sReset">Fresh sample data</button><button class="btn b-ghost b-sm" type="button" id="sClear">Start empty</button><button class="btn b-ghost b-sm" type="button" id="sSite">Undo all website edits</button></div></div></section>`}
    <section class="card"><div class="card-h"><h2>Good to know</h2></div><ul class="pays" style="padding-top:6px"><li><span>Prices you set</span><b>Fill in new orders for you</b></li><li><span>Counting stock</span><b>Goes down when you mark delivered</b></li><li><span>Customer data</span><b>Stays in your own Google Sheet</b></li><li><span>Payments</span><b>Never taken online</b></li></ul></section>
   </div></div>`;
@@ -1312,6 +1313,9 @@ function pSettings(){
   if($("epOff"))$("epOff").onclick=()=>{localStorage.removeItem("ot-admin-ep");sessionStorage.removeItem("ot-pin");location.reload()};
   $("pinSave").onclick=async()=>{const a=$("pin1").value,b=$("pin2").value;if(!/^\d{4}$/.test(a)){toast("Use 4 numbers.");return}if(a!==b){toast("The two PINs don't match.");return}
     try{if(LIVE)await api("setPin",{newPin:a});else LS.set("ot-admin-pin",a);PIN=a;sessionStorage.setItem("ot-pin",a);toast("PIN changed");$("pin1").value=$("pin2").value=""}catch(e){toast("Couldn't change the PIN.")}};
+  const repl=async(data,msg)=>{try{toast("Working on it");await api("replaceAll",{data});await loadAll();toast(msg);go("today")}catch(e){toast("Couldn't update the Sheet. "+e.message)}};
+  if($("lSeed"))$("lSeed").onclick=()=>{if(!confirm("Replace every order, quote and signup in the Google Sheet with sample data?"))return;repl(seedDB(),"Sample orders loaded into the Sheet")};
+  if($("lClear"))$("lClear").onclick=()=>{if(!confirm("Delete every order, quote and signup from the Google Sheet? This can't be undone."))return;repl({},"The Sheet is empty")};
   if($("sReset"))$("sReset").onclick=()=>{if(!confirm("Replace everything with fresh sample orders?"))return;DB=seedDB();saveDB();toast("Fresh sample data loaded");go("today")};
   if($("sClear"))$("sClear").onclick=()=>{if(!confirm("Clear all orders, quotes and signups in this browser?"))return;DB={orders:[],quotes:[],emails:[],texts:[]};saveDB();toast("Cleared");go("today")};
   if($("sSite"))$("sSite").onclick=()=>{if(!confirm("Put the website back to how it was built?"))return;SITE={v:1};DRAFT=null;localStorage.removeItem("ot-site");localStorage.removeItem("ot-site-draft");toast("Website back to the original");pubBar()};
@@ -1447,7 +1451,7 @@ const WHY_D=[
  ["money",".grid2","The customer list is yours","Best customers, plus the full customer, email and text lists, download any time.","No platform owns the relationships. Ready for promotions."],
  ["settings",".grid2","Runs on the owner's Google Sheet","Orders, stock and website text live in a Sheet the owner owns. No monthly software and no cut of each order.","Lower running costs than any ordering platform."],
  ["settings",".grid2","A PIN with a lockout","Four digits for the owner. Ten wrong tries locks it for 15 minutes.","Simple for the owner, closed to guessers."]];
-const WHYSHOW=!LIVE||/[?&#]why\b/.test(location.search+location.hash);
+const WHYSHOW=CFG.pitch||!LIVE||/[?&#]why\b/.test(location.search+location.hash);
 let WHYON=false,wCur=0;
 function whyClear(){document.querySelectorAll(".why-stack").forEach(n=>n.remove());document.querySelectorAll("[data-why-on]").forEach(n=>n.removeAttribute("data-why-on"))}
 function whyPaint(){whyClear();const by=new Map();

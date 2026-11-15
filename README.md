@@ -42,5 +42,9 @@ Website and ordering system for Overnight Tider (fresh and frozen seafood, retai
 
 - **Pitch mode (no endpoint):** runs on sample orders in the browser. PIN `1801`. Orders placed on the website in the same browser land in the dashboard, and anything published shows on the site in that browser.
 - **Live:** set up `apps-script.gs` (FIRST_PIN, run `setup`, deploy). Put the web app URL in `SHOP.endpoint` in index.html and in the dashboard under Settings > Connection. The website then reads stock, prices, text and photos from the Sheet's "Site" tab, and photos upload to the owner's Google Drive.
+- **Connected now:** the Sheet "Overnight Tider orders" and its Apps Script ("Overnight Tider backend") live in Kevin's Google Drive. The endpoint is set in both `SHOP.endpoint` and `CFG.endpoint`. PIN starts as `1801`; change it in Settings. New orders email kevinasuteja@gmail.com (OWNER_EMAIL in the deployed script only, not in this repo).
+- **Handover:** in the dashboard Settings, "Clear all orders" empties the Sheet. Transfer the Sheet to the owner (the script moves with it, then redeploy from their account and update both endpoints). Set `SHOP.pitch` and `CFG.pitch` to false. Change OWNER_EMAIL.
+- `admin.html?sample` always opens the browser-only sample mode (used by the tests).
+- After editing `apps-script.gs`, paste it into the script editor and use Deploy > Manage deployments > Edit > New version, so the URL stays the same.
 - The dashboard is `noindex` and disallowed in robots.txt. The PIN locks for 15 minutes after 10 wrong tries.
 - The item list lives in both `index.html` (ITEMS) and `admin.html` (CAT). Add a new product in both.

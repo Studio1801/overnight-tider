@@ -20,19 +20,21 @@ const FIRST_PIN = "";        // e.g. "4821". Used once by setup(). Change it lat
 const PHOTO_FOLDER = "Overnight Tider website photos";
 
 const TABS = {
-  order: { name: "Orders", head: ["Received", "Order #", "Name", "Phone", "Items", "How", "Date needed", "ZIP", "Notes", "Status", "Code", "Lines", "Fee", "Discount %", "Total", "Paid by", "History", "Business", "Channel"] },
-  quote: { name: "Wholesale quotes", head: ["Received", "Name", "Business", "Buying for", "Phone", "Need", "How often", "First delivery", "Status"] },
-  alert: { name: "Text list", head: ["Signed up", "Phone"] },
-  email: { name: "Email list", head: ["Signed up", "Email", "Code given"] }
+  order: { name: "Orders", text: "B:L", text2: "P:S", head: ["Received", "Order #", "Name", "Phone", "Items", "How", "Date needed", "ZIP", "Notes", "Status", "Code", "Lines", "Fee", "Discount %", "Total", "Paid by", "History", "Business", "Channel"] },
+  quote: { name: "Wholesale quotes", text: "B:I", head: ["Received", "Name", "Business", "Buying for", "Phone", "Need", "How often", "First delivery", "Status"] },
+  alert: { name: "Text list", text: "B:B", head: ["Signed up", "Phone"] },
+  email: { name: "Email list", text: "B:C", head: ["Signed up", "Email", "Code given"] }
 };
 const STATUS = { new: "New", sent: "Price sent", confirmed: "Confirmed", paid: "Paid", done: "Delivered", cancelled: "Cancelled" };
 const STATUS_BACK = Object.keys(STATUS).reduce((m, k) => (m[STATUS[k].toLowerCase()] = k, m), { priced: "sent", done: "done" });
 
 function setup() {
   if (FIRST_PIN && /^\d{4}$/.test(FIRST_PIN)) PropertiesService.getScriptProperties().setProperty("ADMIN_PIN", FIRST_PIN);
-  Object.keys(TABS).forEach(k => tab(k));
+  Object.keys(TABS).forEach(k => textCols_(tab(k), TABS[k]));
   site_();
 }
+// Keep ZIPs, phones and dates exactly as typed (no 08104 -> 8104, no "Nov 20" -> a date)
+function textCols_(sh, t) { [t.text, t.text2].forEach(a => a && sh.getRange(a).setNumberFormat("@")); }
 
 function clean(v) {
   v = String(v == null ? "" : v).slice(0, 5000);
@@ -44,6 +46,7 @@ function tab(type) {
   const t = TABS[type], ss = SpreadsheetApp.getActiveSpreadsheet();
   const sh = ss.getSheetByName(t.name) || ss.insertSheet(t.name);
   if (sh.getLastRow() === 0) {
+    textCols_(sh, t);
     sh.appendRow(t.head); sh.setFrozenRows(1); sh.getRange(1, 1, 1, t.head.length).setFontWeight("bold");
   } else if (sh.getLastColumn() < t.head.length) {
     sh.getRange(1, 1, 1, t.head.length).setValues([t.head]).setFontWeight("bold"); // older sheet, add new columns
@@ -135,7 +138,7 @@ function admin(d) {
     if (d.op === "saveOrder") { writeOrder(d.order); return json({ ok: true }); }
     if (d.op === "saveQuote") {
       const sh = tab("quote"), r = +String(d.quote.id).replace(/\D/g, "");
-      if (r > 1 && r <= sh.getLastRow()) sh.getRange(r, 9).setValue({ new: "New", sent: "Quote sent", done: "Won", lost: "Didn't work out" }[d.quote.status] || "New");
+      if (r > 1 && r <= sh.getLastRow()) sh.getRange(r, 9).setValue(QSTATUS[d.quote.status] || "New");
       return json({ ok: true });
     }
     if (d.op === "saveSite") {
@@ -152,6 +155,19 @@ function admin(d) {
       const f = folder.createFile(Utilities.newBlob(bytes, mime, String(d.name || "photo").replace(/[^\w.-]/g, "-")));
       f.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
       return json({ url: "https://lh3.googleusercontent.com/d/" + f.getId() });
+    }
+    if (d.op === "replaceAll") { // Settings: clear the Sheet, or load sample orders for a demo
+      const D = d.data || {};
+      const put = (k, list) => {
+        const sh = tab(k), n = sh.getLastRow() - 1;
+        if (n > 0) sh.getRange(2, 1, n, TABS[k].head.length).clearContent();
+        if (list.length) sh.getRange(2, 1, list.length, list[0].length).setValues(list);
+      };
+      put("order", (D.orders || []).slice(0, 3000).map(orderRow_));
+      put("quote", (D.quotes || []).slice(0, 500).map(q => [new Date(q.at)].concat([q.name, q.biz, q.who, q.phone, q.need, q.freq, q.when, QSTATUS[q.status] || "New"].map(clean))));
+      put("email", (D.emails || []).slice(0, 5000).map(x => [new Date(x.at), clean(x.email), clean(x.code)]));
+      put("alert", (D.texts || []).slice(0, 5000).map(x => [new Date(x.at), clean(x.phone)]));
+      return json({ ok: true });
     }
     if (d.op === "setPin") {
       if (!/^\d{4}$/.test(String(d.newPin))) return json({ error: "Use 4 numbers" });
@@ -178,16 +194,17 @@ function readQuotes() {
     status: ({ "quote sent": "sent", won: "done", "didn't work out": "lost" })[String(r[8]).toLowerCase()] || "new" }));
 }
 function readList(type) { return rows(type).map(r => type === "email" ? { at: iso(r[0]), email: String(r[1]), code: String(r[2] || "") } : { at: iso(r[0]), phone: String(r[1]).replace(/^'/, "") }); }
+const QSTATUS = { new: "New", sent: "Quote sent", done: "Won", lost: "Didn't work out" };
+function orderVals_(o) {
+  const lines = (o.lines || []).map(l => ({ id: l.id, unit: l.unit, qty: +l.qty || 1, price: l.price == null ? null : +l.price }));
+  const sub = lines.reduce((t, l) => t + (l.price || 0) * l.qty, 0), total = Math.max(0, sub - sub * (+o.disc || 0) / 100 + (+o.fee || 0));
+  return [STATUS[o.status] || "New", o.code || "", JSON.stringify(lines), +o.fee || 0, +o.disc || 0, Math.round(total * 100) / 100, o.paid || "", JSON.stringify(o.log || []), o.biz || "", o.channel || "retail"].map(v => typeof v === "number" ? v : clean(v));
+}
+function orderRow_(o) { return [new Date(o.at || Date.now())].concat([o.id, o.name, o.phone, o.items || "", o.how, o.when, o.zip, o.notes].map(clean), orderVals_(o)); }
 function writeOrder(o) {
   const sh = tab("order"), n = sh.getLastRow() - 1;
   const ids = n > 0 ? sh.getRange(2, 2, n, 1).getValues().flat().map(x => String(x).replace(/^'/, "")) : [];
-  let r = ids.indexOf(String(o.id));
-  const lines = (o.lines || []).map(l => ({ id: l.id, unit: l.unit, qty: +l.qty || 1, price: l.price == null ? null : +l.price }));
-  const sub = lines.reduce((t, l) => t + (l.price || 0) * l.qty, 0), total = Math.max(0, sub - sub * (+o.disc || 0) / 100 + (+o.fee || 0));
-  const vals = [STATUS[o.status] || "New", o.code || "", JSON.stringify(lines), +o.fee || 0, +o.disc || 0, Math.round(total * 100) / 100, o.paid || "", JSON.stringify(o.log || []), o.biz || "", o.channel || "retail"].map(clean);
-  if (r === -1) {
-    sh.appendRow([new Date(o.at || Date.now()), o.id, o.name, o.phone, o.items || "", o.how, o.when, o.zip, o.notes].map((v, i) => i ? clean(v) : v).concat(vals));
-  } else {
-    sh.getRange(r + 2, 10, 1, vals.length).setValues([vals]);
-  }
+  const r = ids.indexOf(String(o.id));
+  if (r === -1) sh.appendRow(orderRow_(o));
+  else sh.getRange(r + 2, 10, 1, 10).setValues([orderVals_(o)]);
 }
