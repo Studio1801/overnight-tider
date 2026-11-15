@@ -135,13 +135,20 @@ button{cursor:pointer}
 .tc-eye{margin:0 0 18px;font-size:14px;font-weight:600;color:var(--band)}
 .tc-copy h2{font-family:var(--f-display);font-weight:800;font-size:clamp(52px,8.4vw,104px);line-height:.88;margin:0 0 24px;letter-spacing:.2px}
 .tc-lede{margin:0;color:#d3dde5;font-size:18px;line-height:1.55;max-width:44ch}
+.tc-story{margin:14px 0 0;color:#aebccb;font-size:16.5px;line-height:1.6;max-width:46ch}
+.tc-ph-note{margin:16px 0 0;font-size:13.5px;color:#aebccb;max-width:46ch;line-height:1.5}
+.tc-ph-note .cl-ph{margin-right:6px}
 .tc-where{margin:14px 0 0;color:#fff;font-weight:600}
 .tc-acts{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:32px}
 .tc-call{background:rgba(255,255,255,.1);color:#fff}
 .tc-call:hover{background:rgba(255,255,255,.18)}
 .tc-link{color:#fff;font-weight:600;font-size:15.5px;text-decoration:underline;text-decoration-color:var(--band);text-decoration-thickness:2px;text-underline-offset:6px}
 .tc-link:hover{color:var(--band)}
-.tc-proof{display:block;position:relative;justify-self:start;width:min(380px,100%);background:#fff;padding:10px 10px 0;border-radius:6px;color:var(--ink);text-decoration:none;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);transform:rotate(-2deg);transition:transform .5s var(--ease)}
+.tc-ph{position:relative;justify-self:start;width:min(380px,calc(100% - 18px));margin:26px 0 0 18px}
+.tp-back{position:absolute;top:-24px;left:-16px;width:56%;background:#fff;padding:8px 8px 24px;border-radius:6px;box-shadow:0 24px 50px -20px rgba(0,0,0,.6);transform:rotate(-8deg);transition:transform .6s var(--ease)}
+.tp-back img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:3px}
+.tc-ph:hover .tp-back{transform:rotate(-11deg) translate(-8px,-6px)}
+.tc-proof{display:block;position:relative;justify-self:start;width:100%;background:#fff;padding:10px 10px 0;border-radius:6px;color:var(--ink);text-decoration:none;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);transform:rotate(-2deg);transition:transform .5s var(--ease)}
 .tc-proof:hover{transform:rotate(0deg) translateY(-4px)}
 .tc-proof img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;border-radius:3px}
 .tp-cap{display:flex;justify-content:space-between;align-items:baseline;padding:12px 4px 14px;font-size:14px}
@@ -154,12 +161,12 @@ button{cursor:pointer}
 .tc-pledge span{font-size:15px;color:#b3c1cd;line-height:1.5;max-width:36ch}
 @media (min-width:900px){
   .tcard{grid-template-columns:minmax(0,1fr) 400px;column-gap:64px;align-items:end;padding-top:112px}
-  .tc-proof{justify-self:end;margin-bottom:6px}
+  .tc-ph{justify-self:end;margin:0 0 6px}
   .tc-pledge{grid-column:1/-1;grid-template-columns:repeat(3,1fr);margin-top:36px}
   .tc-pledge li{border-bottom:0;padding:28px 32px 40px 0}
   .tc-pledge li+li{padding-left:32px;border-left:1px solid rgba(255,255,255,.1)}
 }
-@media (prefers-reduced-motion:reduce){.tc-proof{transform:none}}
+@media (prefers-reduced-motion:reduce){.tc-proof,.tp-back,.tc-ph:hover .tp-back{transform:none}}
 .treviews{display:grid;gap:16px;margin-top:56px}
 .rv-card{background:#fff;border-radius:14px;padding:22px;display:grid;gap:10px}
 .rv-stars{color:var(--band);letter-spacing:2px;font-size:16px}
@@ -959,7 +966,9 @@ body:has(.obar.show) .chat-peek{bottom:164px}
       <div class="tc-copy io">
         <p class="tc-eye">Who you're buying from</p>
         <h2 data-k="trust.h">Our name is<br>on the building.</h2>
-        <p class="tc-lede" data-k="trust.lede">Overnight Tider buys, packs and delivers its own seafood. Your order goes straight to us, not to a reseller or a call center.</p>
+        <p class="tc-lede" data-k="trust.lede">Overnight Tider is a small seafood shop with its name painted across the front and a white pickup parked outside. We buy fresh, raw seafood straight from the ocean, pack it ourselves and bring it to your door.</p>
+        <p class="tc-story" data-k="trust.story">Message us and you're talking to the people who pick out your crabs, not a reseller or a call center. So you hear what came in this week straight from us, by the pound for dinner or by the case for your kitchen.</p>
+        <p class="tc-ph-note" id="storyPh" hidden><span class="cl-ph">For the mockup</span> The owner's own story goes here at launch: how it started and who's behind the counter.</p>
         <p class="tc-where" id="tsWhere" hidden><span id="usAddr"></span></p>
         <div class="tc-acts">
           <a class="btn btn-band" href="https://www.instagram.com/overnight_tider/" data-dm target="_blank" rel="noopener">Message us directly</a>
@@ -967,10 +976,13 @@ body:has(.obar.show) .chat-peek{bottom:164px}
           <a class="tc-link" href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener">See all our posts</a>
         </div>
       </div>
-      <a class="tc-proof io" style="--d:120ms" href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener" aria-label="Our building, on Instagram">
+      <div class="tc-ph io" style="--d:120ms">
+      <span class="tp-back" aria-hidden="true"><img src="img/crabs.webp" alt="" width="655" height="655" loading="lazy"></span>
+      <a class="tc-proof" href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener" aria-label="Our building, on Instagram">
         <img data-kimg="building" src="img/building-wide.webp" alt="The Overnight Tider building with the name painted on the front and a white work truck outside" width="900" height="600" loading="lazy">
         <span class="tp-cap"><b>Our building</b><span>@overnight_tider</span></span>
       </a>
+      </div>
       <ul class="tc-pledge">
         <li class="io"><b>Straight from us</b><span>The people who answer your message buy, pack and deliver your order.</span></li>
         <li class="io" style="--d:90ms"><b>Price before you pay</b><span>We text your total. Nothing is charged until you say yes.</span></li>
@@ -1346,7 +1358,7 @@ body:has(.obar.show) .chat-peek{bottom:164px}
       <button class="x" type="button" data-close aria-label="Close">&times;</button>
       <p class="off-k" id="proTag" data-pk="tag">This weekend</p>
       <h2 id="proT" data-pk="head" tabindex="-1" autofocus>Live crawfish are in</h2>
-      <p id="proBody" data-pk="body">Louisiana crawfish by the pound or by the sack. Order by Thursday for Saturday delivery.</p>
+      <p id="proBody" data-pk="body">Live crawfish by the pound or by the sack, while this week&rsquo;s batch lasts.</p>
       <a class="btn btn-green" id="proBtn" data-pk="btn" href="#shop">Show me the crawfish</a>
       <button class="off-no" type="button" data-close>Not now</button>
     </div>
@@ -1782,7 +1794,7 @@ function liveApply(S){
 })();
 
 /* ---------- owner pop-up announcement ---------- */
-const POP0={on:false,tag:"This weekend",head:"Live crawfish are in",body:"Louisiana crawfish by the pound or by the sack. Order by Thursday for Saturday delivery.",act:"item",item:"crawfish",btn:"Show me the crawfish",when:"5"};
+const POP0={on:!!SHOP.pitch,tag:"This weekend",head:"Live crawfish are in",body:"Live crawfish by the pound or by the sack, while this week's batch lasts.",act:"item",item:"crawfish",btn:"Show me the crawfish",when:"5"};
 const popData=S=>{const p=(S&&S.popup)||{},d={...POP0};Object.keys(p).forEach(k=>{if(p[k]!==""&&p[k]!=null)d[k]=p[k]});return d};
 window.OTpop=(function(){
   const dlg=$("promo");if(!dlg)return{sync(){}};
@@ -1890,6 +1902,7 @@ const WHY=[
  [".oc-foot","The same promise at every buy point","\"Nothing is charged online. We confirm your price first\" repeats wherever people add things.","Reassurance at the exact moment people decide."],
  [".tcard","Answering the three doubts before they're asked","Are you a real business? Will I get charged online? Is there a person? Your real building, direct contact, nothing charged online, and real Instagram posts as proof settle all three.","Trust is the cheapest way to raise how many visitors order."],
  [".tc-copy h2","A claim anyone can check","\"Our name is on the building\" can be verified by driving past. Checkable beats impressive.","Trust you don't have to argue for."],
+ [".tc-copy .tc-story","A story, not a slogan","The painted sign, the white pickup, the people who pick out the crabs. Small, specific details a visitor can picture, and check on Instagram, read as true in a way slogans never do.","People buy from a small business they can picture."],
  [".tc-copy .tc-acts","Message us, not a contact form","The button opens your Instagram messages, where you already answer customers. No new inbox to watch.","Leads land where you already work."],
  [".tc-copy .tc-acts","Three promises you can keep","Straight from us, price before you pay, 1 lb or a whole case. All three are true today, so none of them can backfire.","Promises that hold build repeat customers."],
  [".tfeed","Instagram as live proof","Five recent posts, each opening the real post. People can check dates, likes and comments themselves.","Social proof you never have to fake."],
@@ -2149,6 +2162,7 @@ function rememberOrder(){try{if(Object.keys(cart).length)localStorage.setItem("o
   $("againX").onclick=()=>{$("again").hidden=true;try{sessionStorage.setItem("ot-again-x","1")}catch(e){}};
 })();
 
+if((SHOP.pitch||/[?&]why\b/.test(location.search))&&$("storyPh"))$("storyPh").hidden=false;
 /* ---------- client strip ---------- */
 (function clients(){
   const sec=$("clients");if(!sec)return;

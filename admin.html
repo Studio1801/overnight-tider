@@ -1531,7 +1531,7 @@ const GROUPS=[
  {t:"Pop-up",s:"An announcement you can switch on and off",popup:true},
  {t:"Slideshow",s:"The five photos at the top",slides:true},
  {t:"Product photos",s:"The photo on each item in the store",items:true},
- {t:"Who you're buying from",s:"The dark trust section",f:[["trust.h","Headline","area"],["trust.lede","Text","area"],["@building","Building photo"]]},
+ {t:"Who you're buying from",s:"The dark trust section",f:[["trust.h","Headline","area"],["trust.lede","Your story","area"],["trust.story","Why buy from you","area"],["@building","Building photo"]]},
  {t:"Section headings",s:"Titles down the page",f:[["carry.h","Product showcase"],["shop.h","Store"],["shop.sub","Under the store title","area"],["party.h","Party planner"],["party.sub","Under the party title","area"],["how.h","How ordering works"],["photos.h","Photo strip"],["bulk.h","Wholesale"],["guides.h","Guides"]]},
  {t:"Questions",s:"Answers that stop people from hesitating",f:[["faq.h","Title"],["faq.lede","Under the title","area"],...[0,1,2,3,4,5].flatMap(i=>[[`faq${i}.q`,`Question ${i+1}`],[`faq${i}.a`,`Answer ${i+1}`,"area"]])]},
  {t:"Bottom of the page",s:"Follow section and footer",f:[["closer.h","Follow headline"],["closer.p","Follow text","area"],["footer.about","Footer line","area"]]},
@@ -1539,7 +1539,7 @@ const GROUPS=[
  {t:"First-order offer",s:"The email popup",offer:true}];
 const SLIDE0=[["Live lobster","This week\u2019s crate"],["Head-on shrimp","Fresh, shell-on"],["Red porgy","Whole, on ice"],["Squid","Whole, fresh"],["Calico lobster","Ask for the odd colored ones"]];
 let pvMode="desktop",defs={},defImg={};
-const POP0={tag:"This weekend",head:"Live crawfish are in",body:"Louisiana crawfish by the pound or by the sack. Order by Thursday for Saturday delivery.",act:"item",item:"crawfish",btn:"Show me the crawfish",when:"5"};
+const POP0={tag:"This weekend",head:"Live crawfish are in",body:"Live crawfish by the pound or by the sack, while this week's batch lasts.",act:"item",item:"crawfish",btn:"Show me the crawfish",when:"5"};
 const POPACT=[["item","Show one item"],["shop","Open the store"],["bulk","Wholesale form"],["dm","Instagram messages"]];
 const POPWHEN=[["3","After 3 seconds"],["5","After 5 seconds"],["15","After 15 seconds"],["scroll","Once they start scrolling"]];
 function popPost(show){const f=$("pvF");if(f&&f.contentWindow)f.contentWindow.postMessage({type:"ot-popup",show},location.origin)}
@@ -1550,7 +1550,7 @@ function readDefaults(){const d=frameDoc();if(!d)return;const tmp=document.creat
   document.querySelectorAll("[data-ck]").forEach(i=>{if(!i.value)i.placeholder=defs[i.dataset.ck]||""});
   document.querySelectorAll("[data-imgk]").forEach(im=>{const k=im.dataset.imgk;if(!(cur().photos||{})[k]&&defImg[k])im.src=defImg[k]})}
 function pWebsite(){
-  const S=cur(),C=S.content||{},P=S.photos||{},K=S.contact||{},O=S.offer||{on:true,pct:10,code:"TIDE10"},PP=S.popup||{};
+  const S=cur(),C=S.content||{},P=S.photos||{},K=S.contact||{},O=S.offer||{on:true,pct:10,code:"TIDE10"},PP={on:!!CFG.pitch,...(S.popup||{})};
   $("topAct").innerHTML=`<button class="btn b-soft b-sm pv-open" type="button" id="pvOpen">Preview</button><a class="btn b-soft b-sm hide-m" href="./" target="_blank" rel="noopener">Open website</a>`;
   const fld=([k,l,t])=>{if(k==="@building")return photoSlot("building","Building photo",P.building||defImg.building||"img/building-wide.webp",!!P.building);
     const v=C[k]||"";return `<div class="field ${v?"chg":""}"><div class="fh"><label for="f-${k}">${l}</label>${v?`<button class="rs" type="button" data-reset="${k}">Use original</button>`:""}</div>${t==="area"?`<textarea id="f-${k}" data-ck="${k}" placeholder="${esc(defs[k]||"")}">${esc(v)}</textarea>`:`<input id="f-${k}" data-ck="${k}" value="${esc(v)}" placeholder="${esc(defs[k]||"")}">`}</div>`};
@@ -1611,8 +1611,8 @@ addEventListener("message",e=>{if(e.origin!==location.origin||!e.data||e.data.ty
     else{const b=el.closest(".ph-img");if(b){b.animate([{boxShadow:"0 0 0 4px #f2c230"},{boxShadow:"0 0 0 0 rgba(242,194,48,0)"}],{duration:1200})}}},60)});
 function fitPv(){const box=$("pvBox"),f=$("pvF");if(!box||!f)return;const W=box.clientWidth,H=box.clientHeight;
   box.classList.toggle("phone",pvMode==="phone");
-  if(pvMode==="phone"){const s=Math.min(1,(H-40)/800);f.style.width="390px";f.style.height="800px";f.style.transform=`scale(${s})`;f.style.margin=`${-(800*(1-s))/2}px ${-(390*(1-s))/2}px`}
-  else{const w=1280,s=W/w;f.style.width=w+"px";f.style.height=(H/s)+"px";f.style.transform=`scale(${s})`;f.style.margin="0"}}
+  if(pvMode==="phone"){const s=Math.min(1,(H-40)/800);f.style.transformOrigin="50% 50%";f.style.width="390px";f.style.height="800px";f.style.transform=`scale(${s})`;f.style.margin=`${-(800*(1-s))/2}px ${-(390*(1-s))/2}px`}
+  else{const w=1280,s=W/w;f.style.transformOrigin="0 0";f.style.width=w+"px";f.style.height=(H/s)+"px";f.style.transform=`scale(${s})`;f.style.margin="0"}}
 let rzT;addEventListener("resize",()=>{if(route==="website")fitPv();clearTimeout(rzT);rzT=setTimeout(()=>{if(route==="money")pMoney();if(route==="today")weekChart($("miniChart"),8)},200)});
 let pvT;function preview(){clearTimeout(pvT);pvT=setTimeout(()=>{const s=cur();LS.set("ot-site-draft",s);const f=$("pvF");if(f&&f.contentWindow)f.contentWindow.postMessage({type:"ot-preview",site:JSON.parse(JSON.stringify(s))},location.origin)},120)}
 function scrollPv(k){const f=$("pvF");if(f&&f.contentWindow)f.contentWindow.postMessage({type:"ot-scroll",k},location.origin)}
