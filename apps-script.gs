@@ -21,8 +21,8 @@ const FIRST_PIN = "";        // e.g. "4821". Used once by setup(). Change it lat
 const PHOTO_FOLDER = "Overnight Tider website photos";
 
 const TABS = {
-  order: { name: "Orders", text: "B:L", text2: "P:S", head: ["Received", "Order #", "Name", "Phone", "Items", "How", "Date needed", "ZIP", "Notes", "Status", "Code", "Lines", "Fee", "Discount %", "Total", "Paid by", "History", "Business", "Channel"] },
-  quote: { name: "Wholesale quotes", text: "B:I", head: ["Received", "Name", "Business", "Buying for", "Phone", "Need", "How often", "First delivery", "Status"] },
+  order: { name: "Orders", text: "B:L", text2: "P:S", head: ["Received", "Order #", "Name", "Phone", "Items", "How", "Date needed", "ZIP", "Notes", "Status", "Code", "Lines", "Fee", "Discount %", "Total", "Paid by", "History", "Business", "Channel", "Email"] },
+  quote: { name: "Wholesale quotes", text: "B:I", head: ["Received", "Name", "Business", "Buying for", "Phone", "Need", "How often", "First delivery", "Status", "Email"] },
   alert: { name: "Text list", text: "B:B", head: ["Signed up", "Phone"] },
   email: { name: "Email list", text: "B:C", head: ["Signed up", "Email", "Code given"] },
   chat: { name: "Chats", text: "B:H", head: ["Time", "Chat", "From", "Name", "Phone", "Message", "Read", "Msg id"] }
@@ -96,9 +96,9 @@ function doPost(e) {
     let row;
     if (d.type === "order") {
       const lines = Array.isArray(d.lines) ? d.lines.slice(0, 40).map(l => ({ id: String(l.id).slice(0, 20), unit: String(l.unit).slice(0, 30), qty: +l.qty || 1 })) : [];
-      row = [d.id, d.name, d.phone, d.items, d.how, d.when, d.zip, d.notes, "New", d.code || "", JSON.stringify(lines), 0, d.code ? 10 : 0, "", "", JSON.stringify([{ s: "new", at: new Date().toISOString() }]), "", "retail"];
+      row = [d.id, d.name, d.phone, d.items, d.how, d.when, d.zip, d.notes, "New", d.code || "", JSON.stringify(lines), 0, d.code ? 10 : 0, "", "", JSON.stringify([{ s: "new", at: new Date().toISOString() }]), "", "retail", String(d.email || "").trim().slice(0, 120)];
     }
-    if (d.type === "quote") row = [d.name, d.biz, d.who, d.phone, d.need, d.freq, d.when, "New"];
+    if (d.type === "quote") row = [d.name, d.biz, d.who, d.phone, d.need, d.freq, d.when, "New", String(d.email || "").trim().slice(0, 120)];
     if (d.type === "alert") {
       const phone = String(d.phone || "").replace(/[^\d+]/g, "");
       if (phone.replace(/\D/g, "").length < 10) return out("bad phone");
@@ -185,7 +185,7 @@ function admin(d) {
         if (list.length) sh.getRange(2, 1, list.length, list[0].length).setValues(list);
       };
       put("order", (D.orders || []).slice(0, 3000).map(orderRow_));
-      put("quote", (D.quotes || []).slice(0, 500).map(q => [new Date(q.at)].concat([q.name, q.biz, q.who, q.phone, q.need, q.freq, q.when, QSTATUS[q.status] || "New"].map(clean))));
+      put("quote", (D.quotes || []).slice(0, 500).map(q => [new Date(q.at)].concat([q.name, q.biz, q.who, q.phone, q.need, q.freq, q.when, QSTATUS[q.status] || "New", q.email || ""].map(clean))));
       put("email", (D.emails || []).slice(0, 5000).map(x => [new Date(x.at), clean(x.email), clean(x.code)]));
       put("alert", (D.texts || []).slice(0, 5000).map(x => [new Date(x.at), clean(x.phone)]));
       const oldChat = rows("chat").map(r => "chat:" + String(r[1]).replace(/^'/, ""));
@@ -210,11 +210,11 @@ function readOrders() {
   return rows("order").map(r => ({
     at: iso(r[0]), id: String(r[1]).replace(/^'/, ""), name: String(r[2]), phone: String(r[3]).replace(/^'/, ""), items: String(r[4]), how: String(r[5]), when: String(r[6]), zip: String(r[7]), notes: String(r[8]),
     status: STATUS_BACK[String(r[9]).toLowerCase()] || "new", code: String(r[10] || ""), lines: parse(r[11], []), fee: +r[12] || 0, disc: +r[13] || 0,
-    paid: String(r[15] || ""), log: parse(r[16], null) || [{ s: "new", at: iso(r[0]) }], biz: String(r[17] || ""), channel: String(r[18] || "retail")
+    paid: String(r[15] || ""), log: parse(r[16], null) || [{ s: "new", at: iso(r[0]) }], biz: String(r[17] || ""), channel: String(r[18] || "retail"), email: String(r[19] || "")
   })).filter(o => o.id);
 }
 function readQuotes() {
-  return rows("quote").map((r, i) => ({ id: "Q" + (i + 2), at: iso(r[0]), name: String(r[1]), biz: String(r[2]), who: String(r[3]), phone: String(r[4]).replace(/^'/, ""), need: String(r[5]), freq: String(r[6]), when: String(r[7]),
+  return rows("quote").map((r, i) => ({ id: "Q" + (i + 2), at: iso(r[0]), name: String(r[1]), biz: String(r[2]), who: String(r[3]), phone: String(r[4]).replace(/^'/, ""), need: String(r[5]), freq: String(r[6]), when: String(r[7]), email: String(r[9] || ""),
     status: ({ "quote sent": "sent", won: "done", "didn't work out": "lost" })[String(r[8]).toLowerCase()] || "new" }));
 }
 function readList(type) { return rows(type).map(r => type === "email" ? { at: iso(r[0]), email: String(r[1]), code: String(r[2] || "") } : { at: iso(r[0]), phone: String(r[1]).replace(/^'/, "") }); }
@@ -224,7 +224,7 @@ function orderVals_(o) {
   const sub = lines.reduce((t, l) => t + (l.price || 0) * l.qty, 0), total = Math.max(0, sub - sub * (+o.disc || 0) / 100 + (+o.fee || 0));
   return [STATUS[o.status] || "New", o.code || "", JSON.stringify(lines), +o.fee || 0, +o.disc || 0, Math.round(total * 100) / 100, o.paid || "", JSON.stringify(o.log || []), o.biz || "", o.channel || "retail"].map(v => typeof v === "number" ? v : clean(v));
 }
-function orderRow_(o) { return [new Date(o.at || Date.now())].concat([o.id, o.name, o.phone, o.items || "", o.how, o.when, o.zip, o.notes].map(clean), orderVals_(o)); }
+function orderRow_(o) { return [new Date(o.at || Date.now())].concat([o.id, o.name, o.phone, o.items || "", o.how, o.when, o.zip, o.notes].map(clean), orderVals_(o), [clean(o.email || "")]); }
 function writeOrder(o) {
   const sh = tab("order"), n = sh.getLastRow() - 1;
   const ids = n > 0 ? sh.getRange(2, 2, n, 1).getValues().flat().map(x => String(x).replace(/^'/, "")) : [];

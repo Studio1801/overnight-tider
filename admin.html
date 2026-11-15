@@ -986,7 +986,7 @@ function seedDB(){
   const pick=a=>a[Math.floor(r()*a.length)];
   const first=["Maria","Darnell","Tasha","Luis","Kim","Andre","Jessica","Tony","Keisha","Mike","Priya","Carlos","Denise","James","Latoya","Brian","Rosa","Kevin","Shonda","Marcus","Anh","Gloria","Terrence","Nicole","Victor","Angela","Hector","Brenda","Jamal","Lisa","Omar","Tiffany","Ray","Monique","Danny","Yolanda","Chris","Erica","Paul","Sandra"];
   const last=["T.","W.","R.","M.","B.","J.","L.","P.","K.","D.","S.","H.","C.","F.","G."];
-  const people=first.slice(0,18).map((f,i)=>({name:f+" "+last[i%last.length],phone:"(215) 555-01"+String(10+i).padStart(2,"0"),zip:pick(["19104","19143","19139","19131","19146","08104","19019"]),w:1+Math.floor(r()*4)}));
+  const people=first.slice(0,18).map((f,i)=>({name:f+" "+last[i%last.length],email:i%3===1?"":(f+"."+last[i%last.length][0]).toLowerCase()+(i%2?"@yahoo.com":"@gmail.com"),phone:"(215) 555-01"+String(10+i).padStart(2,"0"),zip:pick(["19104","19143","19139","19131","19146","08104","19019"]),w:1+Math.floor(r()*4)}));
   const biz=[["Low Tide Kitchen","Sam R."],["Harbor & Vine","Elena P."],["The Saltbox","Marcus D."],["Dockside","Jo B."],["Marlow's Oyster Bar","Will M."],["Gulfside Catering","Renee A."]].slice(2,5).map((b,i)=>({name:b[1],biz:b[0],phone:"(267) 555-02"+String(20+i),zip:"19107"}));
   const retailMix=[["lobster","lobster (1½ lb)",[2,6]],["crab","dozen",[1,4]],["crab","bushel",[1,1]],["shrimp","lb",[2,8]],["oyster","dozen",[1,4]],["crawfish","lb",[5,15]],["snapper","lb",[2,5]],["porgy","lb",[2,6]],["squid","lb",[1,4]],["tails","lb",[1,4]],["dungeness","each",[1,4]],["salmon","lb",[3,8]],["octopus","lb",[1,3]],["spiny","each",[1,3]]];
   const wt=[9,8,3,9,5,3,3,3,2,2,2,2,1,1];const wsum=wt.reduce((a,b)=>a+b,0);
@@ -998,7 +998,7 @@ function seedDB(){
     const code=!ws&&firstTime&&r()<.22?"TIDE10":"";
     const how=ws?"Delivery":pick(["Delivery","Delivery","Delivery","Shipping"]);
     const ls=lines.map(([id,u,q])=>({id,unit:u,qty:q,price:+(GUIDE[id][u]*(.96+r()*.08)).toFixed(2)}));
-    return {id,at:at.toISOString(),name:c.name,biz:c.biz||"",phone:c.phone,how,when:dshort(new Date(+at+DAY*(1+Math.floor(r()*3)))),zip:c.zip,notes:ws?pick(["Back door, before 10 AM","Invoice to the restaurant","Same as last week","Call when outside"]):pick(["","","","For a birthday boil","Leave on the porch","Big ones please","Text when close"]),
+    return {id,at:at.toISOString(),name:c.name,biz:c.biz||"",phone:c.phone,email:c.email||"",how,when:dshort(new Date(+at+DAY*(1+Math.floor(r()*3)))),zip:c.zip,notes:ws?pick(["Back door, before 10 AM","Invoice to the restaurant","Same as last week","Call when outside"]):pick(["","","","For a birthday boil","Leave on the porch","Big ones please","Text when close"]),
       code,disc:code?10:0,fee:how==="Shipping"?24:ws?0:pick([0,10,10,15]),channel:ws?"wholesale":"retail",lines:ls,status:"done",paid:pick(["Cash","Zelle","Zelle","Card","Square link","Cash App"]),log:[]}};
   for(let w=15;w>=0;w--){
     const base=2+(15-w)*.12,cnt=Math.round(base+r()*2),wsc=r()<.45?1:0;
@@ -1039,14 +1039,14 @@ async function api(op,data={}){
 function normOrder(o){
   const lines=Array.isArray(o.lines)?o.lines.map(l=>({id:l.id,unit:l.unit,qty:+l.qty||1,price:l.price==null||l.price===""?null:+l.price})):[];
   const code=o.code||((o.notes||"").match(/First order code (\w+)/)||[])[1]||"";
-  return {id:o.id||"OT-"+Math.random().toString(36).slice(-5).toUpperCase(),at:o.at||o.ts||new Date().toISOString(),name:o.name||"",biz:o.biz||"",phone:o.phone||"",how:o.how||"",when:o.when||"",zip:o.zip||"",
+  return {id:o.id||"OT-"+Math.random().toString(36).slice(-5).toUpperCase(),at:o.at||o.ts||new Date().toISOString(),name:o.name||"",biz:o.biz||"",phone:o.phone||"",email:o.email||"",how:o.how||"",when:o.when||"",zip:o.zip||"",
     notes:(o.notes||"").replace(/\s*\|?\s*First order code \w+/,""),items:o.items||"",code,disc:o.disc!=null?+o.disc:(code?10:0),fee:+o.fee||0,channel:o.channel||"retail",lines,status:o.status||"new",paid:o.paid||"",log:o.log||[{s:"new",at:o.at||o.ts||new Date().toISOString()}]}
 }
 function mergeInbox(){
   if(LIVE)return 0;const box=LS.get("ot-inbox",[]);if(!box.length)return 0;let n=0;
   box.forEach(x=>{
     if(x.type==="order"&&!DB.orders.find(o=>o.id===x.id)){DB.orders.push(normOrder({...x,at:x.ts}));n++}
-    if(x.type==="quote")DB.quotes.unshift({id:"Q"+Date.now()+Math.random(),at:x.ts,name:x.name,biz:x.biz,who:x.who,phone:x.phone,need:x.need,freq:x.freq,when:x.when,status:"new"});
+    if(x.type==="quote")DB.quotes.unshift({id:"Q"+Date.now()+Math.random(),at:x.ts,name:x.name,biz:x.biz,who:x.who,phone:x.phone,email:x.email||"",need:x.need,freq:x.freq,when:x.when,status:"new"});
     if(x.type==="email")DB.emails.push({at:x.ts,email:x.email,code:x.code});
     if(x.type==="alert")DB.texts.push({at:x.ts,phone:x.phone});
   });
@@ -1214,7 +1214,7 @@ function drawOrders(){
   const q=oQuery.trim().toLowerCase(),qd=q.replace(/\D/g,""),[,fo,fq]=OF[oFilter];
   const match=t=>!q||t.toLowerCase().includes(q);
   dpCounts();
-  let os=DB.orders.filter(fo).filter(o=>inDates(o.at)).filter(o=>match(o.name+" "+o.biz+" "+o.id+" "+itemsText(o)+" "+o.zip)||(qd.length>=3&&o.phone.replace(/\D/g,"").includes(qd)));
+  let os=DB.orders.filter(fo).filter(o=>inDates(o.at)).filter(o=>match(o.name+" "+o.biz+" "+o.id+" "+itemsText(o)+" "+o.zip+" "+(o.email||""))||(qd.length>=3&&o.phone.replace(/\D/g,"").includes(qd)));
   const qs=DB.quotes.filter(fq).filter(x=>inDates(x.at)).filter(x=>match(x.name+" "+x.biz+" "+x.need));
   const rank={new:0,confirmed:1,paid:2,sent:3,done:4,cancelled:5};
   if(oFilter==="needs")os.sort((a,b)=>rank[a.status]-rank[b.status]||new Date(b.at)-new Date(a.at));
@@ -1359,10 +1359,12 @@ function closeDrawer(){$("scrim").classList.remove("on");$("drawer").classList.r
 $("drX").onclick=closeDrawer;$("scrim").onclick=closeDrawer;
 addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer()});
 const FLOW=["new","sent","confirmed","paid","done"];
+const mailHref=(to,subj,body)=>`mailto:${encodeURIComponent(to).replace(/%40/g,"@")}?subject=${encodeURIComponent(subj||"")}${body?`&body=${encodeURIComponent(body)}`:""}`;
+function openLink(href){const a=document.createElement("a");a.href=href;a.rel="noopener";document.body.appendChild(a);a.click();a.remove()}
 function priceMsg(o){
   const t=totals(o),first=(o.name||"").split(" ")[0];
   const L=o.lines.map(l=>`- ${lineText(l)}: ${fmt((linePrice(l)||0)*l.qty)}`).join("\n");
-  return `Hi${first?" "+first:""}, it's Overnight Tider. Here's your order ${o.id}:\n${L}${t.disc?`\n- ${o.code||"First order"} ${o.disc}% off: -${fmt(t.disc)}`:""}${o.fee?`\n- ${o.how||"Delivery"}: ${fmt(o.fee)}`:""}\nTotal: ${fmt(t.tot)}${o.when?`\nFor ${o.when}.`:""}\n\nReply YES and we'll get it ready.`;
+  return `Hi${first?" "+first:""}, it's Overnight Tider. Here's your order ${o.id}:\n${L}${t.disc?`\n- ${o.code||"First order"} ${o.disc}% off: -${fmt(t.disc)}`:""}${o.fee?`\n- ${o.how||"Delivery"}: ${fmt(o.fee)}`:""}\nTotal: ${fmt(t.tot)}${o.when?`\nFor ${whenTxt(o)}.`:""}\n\nReply YES and we'll get it ready.`;
 }
 function openOrder(id){
   const o=DB.orders.find(x=>x.id===id);if(!o)return;OPEN=JSON.parse(JSON.stringify(o));
@@ -1375,8 +1377,8 @@ function drawOrder(){
   const editable=["new","sent"].includes(o.status);
   $("drB").innerHTML=`
    <div class="who-card"><h3>${esc(o.biz||o.name||"No name")}${o.channel==="wholesale"?' <span class="tag ws">Wholesale</span>':""}</h3>
-     <div class="who-meta">${o.biz?`<span>${esc(o.name)}</span>`:""}<span><b>${esc(o.phone||"No phone")}</b></span><span>${esc(o.how||"")}${o.zip?" to "+esc(o.zip):""}</span><span>Needed: <b>${esc(o.when||"not set")}</b></span><span>Received ${ago(o.at)}</span></div>
-     ${phone?`<div class="who-acts"><a class="btn b-soft b-sm" href="tel:${phone}">Call</a><a class="btn b-soft b-sm" href="sms:${phone}">Text</a><button class="btn b-soft b-sm" type="button" data-go-cust="${esc(o.phone)}">Their orders</button></div>`:""}
+     <div class="who-meta">${o.biz?`<span>${esc(o.name)}</span>`:""}<span><b>${esc(o.phone||"No phone")}</b></span>${o.email?`<span>${esc(o.email)}</span>`:""}<span>${esc(o.how||"")}${o.zip?" to "+esc(o.zip):""}</span><span>Needed: <b>${esc(o.when?whenTxt(o):"not set")}</b></span><span>Received ${ago(o.at)}</span></div>
+     ${phone||o.email?`<div class="who-acts">${phone?`<a class="btn b-soft b-sm" href="tel:${phone}">Call</a><a class="btn b-soft b-sm" href="sms:${phone}">Text</a>`:""}${o.email?`<a class="btn b-soft b-sm" href="${esc(mailHref(o.email,"Your Overnight Tider order "+o.id,`Hi${o.name?" "+o.name.split(" ")[0]:""},\n\n`))}">Email</a>`:""}<button class="btn b-soft b-sm" type="button" data-go-cust="${esc(o.phone||o.email)}">Their orders</button></div>`:""}
      ${o.notes?`<div class="memo"><b>Note:</b> ${esc(o.notes)}</div>`:""}
    </div>
    ${o.status!=="cancelled"?`<div class="steps">${FLOW.map((s,i)=>`<div class="${i<=si?"on":""}${s===JUST?" just":""}"><i></i>${stName(s)}<small>${i<=si?stepAt(s):""}</small></div>`).join("")}</div>`:""}
@@ -1389,19 +1391,21 @@ function drawOrder(){
        <div><span>${esc(o.how||"Delivery")} fee</span><span class="money-in"><input type="number" inputmode="decimal" step="0.01" min="0" id="oFee" value="${(+o.fee||0).toFixed(2)}" ${editable?"":"disabled"} aria-label="Delivery fee"></span></div>
        <div class="grand"><span>Total</span><b id="oTot">${fmt(t.tot)}</b></div>
      </div></section>
-   ${o.status==="new"?`<details class="wait card" style="border:0"><summary><span>See the text we'll send</span><span aria-hidden="true">›</span></summary><div class="msg-box" style="padding:0 16px 16px"><textarea id="oMsg">${esc(priceMsg(o))}</textarea></div></details>`:""}
+   ${o.status==="new"?`<details class="wait card" style="border:0"><summary><span>See the message we'll send</span><span aria-hidden="true">›</span></summary><div class="msg-box" style="padding:0 16px 16px"><textarea id="oMsg">${esc(priceMsg(o))}</textarea></div></details>`:""}
    ${o.status==="confirmed"?`<div class="msg-box"><span class="lbl">How did they pay?</span><div class="paidvia" id="pv">${PAYS.map(p=>`<button type="button" aria-pressed="${o.paid===p}">${p}</button>`).join("")}</div></div>`:""}
    ${o.paid&&isSale(o)?`<div class="memo" style="background:#e2efe5"><b>Paid</b> by ${esc(o.paid)}.</div>`:""}
-   <details class="wait card" style="border:0"><summary><span>History</span><span aria-hidden="true">›</span></summary><ul class="log" style="padding:0 16px 16px">${o.log.map(l=>`<li><b>${stName(l.s)}</b> · ${new Date(l.at).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}</li>`).join("")}</ul></details>`;
+   <details class="wait card" style="border:0"><summary><span>History</span><span aria-hidden="true">›</span></summary><ul class="log" style="padding:0 16px 16px">${o.log.map(l=>`<li><b>${stName(l.s)}</b>${l.v?` by ${l.v==="copied"?"copied message":l.v}`:""} · ${new Date(l.at).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}</li>`).join("")}</ul></details>`;
   const F=$("drF");
-  const prim={new:[`Text the price · ${fmt(t.tot)}`,"sent"],sent:["They said yes","confirmed"],confirmed:["Got paid","paid"],paid:["Mark delivered","done"]}[o.status];
-  F.innerHTML=`${prim?`<button class="btn b-green" type="button" id="oNext">${prim[0]}</button>`:""}${["new","sent","confirmed"].includes(o.status)?`<button class="btn b-ghost" type="button" id="oCancel">Cancel order</button>`:""}${o.status==="cancelled"?`<button class="btn b-soft" type="button" id="oReopen">Reopen order</button>`:""}${["confirmed","paid","done"].includes(o.status)?`<button class="btn b-ghost" type="button" id="oPrint">Print slip</button>`:""}`;
+  const viaMail=o.status==="new"&&!phone&&o.email;
+  const prim={new:[`${viaMail?"Email":"Text"} the price · ${fmt(t.tot)}`,"sent"],sent:["They said yes","confirmed"],confirmed:["Got paid","paid"],paid:["Mark delivered","done"]}[o.status];
+  F.innerHTML=`${prim?`<button class="btn b-green" type="button" id="oNext">${prim[0]}</button>`:""}${o.status==="new"&&phone&&o.email?`<button class="btn b-soft" type="button" id="oMail">Email it instead</button>`:""}${["new","sent","confirmed"].includes(o.status)?`<button class="btn b-ghost" type="button" id="oCancel">Cancel order</button>`:""}${o.status==="cancelled"?`<button class="btn b-soft" type="button" id="oReopen">Reopen order</button>`:""}${["confirmed","paid","done"].includes(o.status)?`<button class="btn b-ghost" type="button" id="oPrint">Print slip</button>`:""}`;
   // events
   $("drB").querySelectorAll("[data-lp]").forEach(inp=>inp.oninput=()=>{const l=OPEN.lines[+inp.dataset.lp];l.price=inp.value===""?null:+inp.value;refreshTotals()});
   if($("oFee"))$("oFee").oninput=e=>{OPEN.fee=+e.target.value||0;refreshTotals()};
   const pv=$("pv");if(pv)pv.onclick=e=>{const b=e.target.closest("button");if(!b)return;OPEN.paid=b.textContent;pv.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b))};
   if($("oCopy"))$("oCopy").onclick=async()=>{try{await navigator.clipboard.writeText($("oMsg").value);toast("Message copied")}catch(e){$("oMsg").select()}};
-  if($("oNext"))$("oNext").onclick=()=>advance(prim[1]);
+  if($("oNext"))$("oNext").onclick=()=>advance(prim[1],viaMail?"email":"text");
+  if($("oMail"))$("oMail").onclick=()=>advance("sent","email");
   if($("oCancel"))$("oCancel").onclick=()=>{if(confirm("Cancel this order? The customer is not told automatically."))advance("cancelled")};
   if($("oReopen"))$("oReopen").onclick=()=>advance("new");
   if($("oPrint"))$("oPrint").onclick=()=>printSlip(o);
@@ -1410,23 +1414,25 @@ function drawOrder(){
 function refreshTotals(){const t=totals(OPEN);$("oTot").textContent=fmt(t.tot);
   $("drB").querySelectorAll(".lines li").forEach((li,i)=>{const l=OPEN.lines[i];if(!l)return;const p=linePrice(l);const lt=li.querySelector(".lt");if(lt)lt.textContent=p!=null?fmt(p*l.qty):"...";const mi=li.querySelector(".money-in");if(mi&&l.price!=null){mi.classList.remove("sug");const s=mi.querySelector("small");if(s)s.remove()}});
   const m=$("oMsg");if(m&&OPEN.status==="new")m.value=priceMsg(OPEN);
-  if(OPEN.status==="new"&&$("oNext"))$("oNext").textContent=`Text the price · ${fmt(t.tot)}`;
+  if(OPEN.status==="new"&&$("oNext"))$("oNext").textContent=`${!OPEN.phone.replace(/[^\d+]/g,"")&&OPEN.email?"Email":"Text"} the price · ${fmt(t.tot)}`;
   const sub=$("drB").querySelector(".tot b");if(sub)sub.textContent=fmt(t.sub)}
 let busy=false;
 let JUST=null;
-async function advance(to){
+async function advance(to,via){
   if(busy)return;const o=OPEN;
   if(to==="sent"){const t=totals(o);if(t.missing){toast("Add a price for every item first.");return}
     o.lines.forEach(l=>{if(l.price==null)l.price=linePrice(l)});
     const phone=o.phone.replace(/[^\d+]/g,""),msg=$("oMsg")?$("oMsg").value:priceMsg(o);
-    if(phone){const a=document.createElement("a");a.href=`sms:${phone}${/iPhone|iPad|Mac/.test(navigator.userAgent)?"&":"?"}body=${encodeURIComponent(msg)}`;a.rel="noopener";document.body.appendChild(a);a.click();a.remove()}
-    else{try{await navigator.clipboard.writeText(msg)}catch(e){}}}
+    if(via==="email"&&o.email)openLink(mailHref(o.email,`Your Overnight Tider order ${o.id}: ${fmt(t.tot)}`,msg));
+    else if(phone)openLink(`sms:${phone}${/iPhone|iPad|Mac/.test(navigator.userAgent)?"&":"?"}body=${encodeURIComponent(msg)}`);
+    else{try{await navigator.clipboard.writeText(msg)}catch(e){}}
+    via=via==="email"&&o.email?"email":phone?"text":"copied"}
   if(to==="paid"&&!o.paid){toast("Pick how they paid first.");return}
   if(to==="done")deduct(o);
   if(to==="new"){o.lines.forEach(l=>{})}
   const pressed=lastBtn&&$("drF").contains(lastBtn)?lastBtn:null,bb=busyBtn(pressed);
   busy=true;$("drF").querySelectorAll("button").forEach(b=>{if(b!==pressed)b.disabled=true});setTimeout(()=>busy=false,700);
-  o.status=to;o.log.push({s:to,at:new Date().toISOString()});
+  o.status=to;o.log.push(to==="sent"&&via?{s:to,at:new Date().toISOString(),v:via}:{s:to,at:new Date().toISOString()});
   try{await saveOrder(o)}catch(e){bb.fail();busy=false;$("drF").querySelectorAll("button").forEach(b=>b.disabled=false);return}
   await bb.ok(480);JUST=to;setTimeout(()=>JUST=null,1500);
   const msgs={sent:"Price sent. Waiting for their yes.",confirmed:"Confirmed. Collect payment when you can.",paid:`Paid by ${esc(o.paid)}. Nice.`,done:"Delivered. Order closed.",cancelled:"Order cancelled.",new:"Order reopened."};
@@ -1442,8 +1448,8 @@ function deduct(o){ // take delivered amounts off the on-hand counts the owner t
 function openQuote(id){
   const q=DB.quotes.find(x=>x.id===id);if(!q)return;OPEN=null;const phone=(q.phone||"").replace(/[^\d+]/g,"");
   $("drT").textContent="Wholesale quote";$("drChip").innerHTML="";
-  $("drB").innerHTML=`<div class="who-card"><h3>${esc(q.biz||q.name)}</h3><div class="who-meta">${q.biz?`<span>${esc(q.name)}</span>`:""}<span><b>${esc(q.phone)}</b></span><span>${esc(q.who||"")}</span><span>Received ${ago(q.at)}</span></div>
-    ${phone?`<div class="who-acts"><a class="btn b-soft b-sm" href="tel:${phone}">Call</a><a class="btn b-soft b-sm" href="sms:${phone}">Text</a></div>`:""}</div>
+  $("drB").innerHTML=`<div class="who-card"><h3>${esc(q.biz||q.name)}</h3><div class="who-meta">${q.biz?`<span>${esc(q.name)}</span>`:""}<span><b>${esc(q.phone)}</b></span>${q.email?`<span>${esc(q.email)}</span>`:""}<span>${esc(q.who||"")}</span><span>Received ${ago(q.at)}</span></div>
+    ${phone||q.email?`<div class="who-acts">${phone?`<a class="btn b-soft b-sm" href="tel:${phone}">Call</a><a class="btn b-soft b-sm" href="sms:${phone}">Text</a>`:""}${q.email?`<a class="btn b-soft b-sm" href="${esc(mailHref(q.email,"Your wholesale quote from Overnight Tider",`Hi${q.name?" "+q.name.split(" ")[0]:""},\n\nThanks for reaching out about ${q.need}.\n\n`))}">Email</a>`:""}</div>`:""}</div>
     <section class="card"><ul class="pays" style="padding-top:8px"><li><span>They need</span><b style="text-align:right;max-width:60%">${esc(q.need)}</b></li><li><span>How often</span><b>${esc(q.freq)}</b></li><li><span>First delivery</span><b>${esc(q.when)}</b></li></ul></section>
     <p class="muted" style="margin:0;font-size:14px">A steady weekly account is worth more than dozens of one-time orders. Reply the same day if you can.</p>`;
   $("drF").innerHTML=`<button class="btn b-soft" type="button" data-qs="sent">Mark quote sent</button><button class="btn b-green" type="button" data-qs="done">Won the account</button><button class="btn b-ghost" type="button" data-qs="lost">Didn't work out</button>`;
@@ -1655,7 +1661,7 @@ function pMoney(){
       <section class="card"><div class="card-h"><h2>How people pay</h2></div><ul class="pays">${Object.entries(pays).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<li><span>${esc(k)}</span><b>${fmt0(v)}</b></li>`).join("")||`<li><span class="muted">No payments yet</span></li>`}</ul></section>
     </div></div>`;
   $("page").querySelectorAll("[data-mr]").forEach(b=>b.onclick=()=>{mRange=b.dataset.mr==="year"||b.dataset.mr==="all"?b.dataset.mr:+b.dataset.mr;pMoney();countUp()});
-  $("csv").onclick=()=>downloadCSV("overnight-tider-orders.csv",[["Order","Received","Customer","Business","Phone","Items","Status","Paid by","Subtotal","Discount","Fee","Total"],...DB.orders.map(o=>{const t=totals(o);return[o.id,new Date(o.at).toLocaleString("en-US"),o.name,o.biz,o.phone,itemsText(o),stName(o.status),o.paid,t.sub.toFixed(2),t.disc.toFixed(2),(+o.fee||0).toFixed(2),t.tot.toFixed(2)]})]);
+  $("csv").onclick=()=>downloadCSV("overnight-tider-orders.csv",[["Order","Received","Customer","Business","Phone","Email","Items","Status","Paid by","Subtotal","Discount","Fee","Total"],...DB.orders.map(o=>{const t=totals(o);return[o.id,new Date(o.at).toLocaleString("en-US"),o.name,o.biz,o.phone,o.email||"",itemsText(o),stName(o.status),o.paid,t.sub.toFixed(2),t.disc.toFixed(2),(+o.fee||0).toFixed(2),t.tot.toFixed(2)]})]);
   weekChart($("bigChart"),Math.max(4,Math.min(weeks,26)));
   $("cCsv").onclick=()=>downloadCSV("overnight-tider-customers.csv",[["Name","Business","Phone","ZIP","Orders","Spent","Last order"],...allC.map(c=>[c.name,c.biz,c.phone,c.zip,c.n,c.spent.toFixed(2),new Date(c.last).toLocaleDateString("en-US")])]);
   $("eCsv").onclick=()=>downloadCSV("overnight-tider-email-list.csv",[["Signed up","Email","Code"],...DB.emails.map(e=>[new Date(e.at).toLocaleDateString("en-US"),e.email,e.code||""])]);
@@ -1780,6 +1786,7 @@ function newOrder(pre){OPEN=null;let lines=[{id:"crab",unit:"dozen",qty:1}],how=
     $("nl").querySelectorAll("[data-ni]").forEach(s=>s.value=lines[+s.dataset.ni].id+"|"+lines[+s.dataset.ni].unit)};
   $("drB").innerHTML=`<p class="muted" style="margin:0">For orders that come in by phone, text or Instagram. They get the same pricing, texts and records as website orders.</p>
     <div class="f2"><div class="field"><label for="nN">Name</label><input id="nN" autocomplete="off"></div><div class="field"><label for="nP">Phone</label><input id="nP" inputmode="tel" autocomplete="off"></div></div>
+    <div class="field"><label for="nE">Email <span class="muted" style="font-weight:400">(optional)</span></label><input id="nE" type="email" inputmode="email" autocomplete="off"></div>
     <div class="field"><label for="nB">Business (wholesale only)</label><input id="nB" autocomplete="off" placeholder="Leave empty for home customers"></div>
     <div class="field"><span class="lbl">What they want</span><div class="nl" id="nl"></div><button class="lnk" type="button" id="nAdd" style="justify-self:start;margin-top:4px">+ Add another item</button></div>
     <div class="f2"><div class="field"><span class="lbl">How</span><div class="segm" id="nH">${["Delivery","Pickup","Shipping"].map(h=>`<button type="button" aria-pressed="${h===how}">${h}</button>`).join("")}</div></div><div class="field"><label for="nW">Needed</label><input id="nW" type="date"></div></div>
@@ -1795,7 +1802,7 @@ function newOrder(pre){OPEN=null;let lines=[{id:"crab",unit:"dozen",qty:1}],how=
   $("drF").onclick=null;$("nCancel").onclick=closeDrawer;
   $("nSave").onclick=async()=>{const name=$("nN").value.trim();if(!name){toast("Add their name.");$("nN").focus();return}
     const when=$("nW").value?dshort($("nW").value+"T12:00"):"",biz=$("nB").value.trim(),yes=$("nYes").checked;
-    const o=normOrder({id:"OT-"+(Date.now().toString(36).slice(-5)).toUpperCase(),at:new Date().toISOString(),name,phone:$("nP").value.trim(),biz,how,when,notes:$("nNote").value.trim(),channel:biz?"wholesale":"retail",lines:lines.map(l=>({...l,price:null})),status:"new"});
+    const o=normOrder({id:"OT-"+(Date.now().toString(36).slice(-5)).toUpperCase(),at:new Date().toISOString(),name,phone:$("nP").value.trim(),email:$("nE").value.trim(),biz,how,when,notes:$("nNote").value.trim(),channel:biz?"wholesale":"retail",lines:lines.map(l=>({...l,price:null})),status:"new"});
     if(yes){o.lines.forEach(l=>l.price=linePrice(l));o.log.push({s:"sent",at:o.at},{s:"confirmed",at:o.at});o.status="confirmed"}
     const bb=busyBtn($("nSave"));DB.orders.unshift(o);try{await saveOrder(o)}catch(e){bb.fail();DB.orders.shift();return}if(!LIVE)saveDB();await bb.ok(500);
     toast(`Order added for <b>${esc(name)}</b>`);drawNav();flip(()=>{if(route==="orders")oMode==="board"?drawBoard():drawOrders();else if(route==="today")render()});openOrder(o.id)};

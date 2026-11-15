@@ -467,6 +467,7 @@ form.f{display:grid;gap:14px;background:var(--ice);padding:24px;border-radius:8p
 .f textarea{min-height:92px;resize:vertical}
 :focus-visible{outline:2px solid var(--sign);outline-offset:2px}
 .two{display:grid;gap:14px}
+.opt{font-weight:400;color:var(--muted)}
 .msg{margin:0;min-height:22px;font-size:14.5px}
 
 /* guides + faq */
@@ -611,6 +612,8 @@ dialog[open]{animation:pop .3s var(--ease)}
 .olines .m{font-family:var(--f-mono);font-size:14px}
 .olines .rm{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:13.5px;padding:0;margin-left:10px}
 .sheet label{display:grid;gap:5px;font-size:14.5px;font-weight:500}
+.sheet-in,.sheet label,.f label{min-width:0}.sheet input,.sheet select,.sheet textarea{min-width:0;max-width:100%}
+@media (min-width:760px){.sheet .two,.f .two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 .sheet input,.sheet select,.sheet textarea{padding:11px 13px;border-radius:6px;border:1px solid var(--line);background:#fff;font-size:16px}
 .sheet textarea{min-height:70px}
 .prev{font-family:var(--f-mono);font-size:12.5px;background:var(--ice);border-radius:8px;padding:12px;white-space:pre-wrap;margin:0;max-height:150px;overflow:auto}
@@ -1148,6 +1151,7 @@ body:has(.obar.show) .chat-peek{bottom:164px}
         <label>You're buying for<select name="who"><option>A restaurant</option><option>Catering or events</option><option>A store or market</option><option>A big family cookout</option><option>Something else</option></select></label>
         <label>Phone<input name="phone" type="tel" autocomplete="tel" placeholder="So we can reach you fast"></label>
       </div>
+      <label><span>Email <span class="opt">(optional)</span></span><input name="email" type="email" autocomplete="email" inputmode="email" placeholder="For quotes and invoices"></label>
       <label>What do you need?<textarea name="need" required placeholder="e.g. 40 lb head-on shrimp, 2 bushels blue crab, 100 oysters"></textarea></label>
       <div class="two">
         <label>How often<select name="freq"><option>One time</option><option>Every week</option><option>A few times a week</option><option>Not sure yet</option></select></label>
@@ -1281,7 +1285,10 @@ body:has(.obar.show) .chat-peek{bottom:164px}
         <label>How do you want it?<select id="oHow"></select></label>
         <label>Date you need it<input id="oWhen" type="date"></label>
       </div>
-      <label>ZIP code<input id="oZip" autocomplete="postal-code" inputmode="numeric"></label>
+      <div class="two">
+        <label>ZIP code<input id="oZip" autocomplete="postal-code" inputmode="numeric"></label>
+        <label><span>Email <span class="opt">(optional)</span></span><input id="oEmail" type="email" autocomplete="email" inputmode="email" placeholder="If you'd rather get it by email"></label>
+      </div>
       <label>Notes<textarea id="oNotes" placeholder="Live or frozen, sizes, anything else"></textarea></label>
       <p class="code-line" id="codeLine" hidden></p>
       <pre class="prev" id="prev"></pre>
@@ -1506,6 +1513,7 @@ function message(){
   let m=`Hi Overnight Tider! I'd like to order:\n${olines().map(l=>`- ${l.name}: ${l.txt}`).join("\n")}\n\n${v("oHow")}`;
   if(v("oWhen"))m+=` for ${new Date(v("oWhen")+"T12:00").toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"})}`;
   if(v("oZip"))m+=`\nZIP: ${v("oZip")}`;
+  if(v("oEmail"))m+=`\nEmail: ${v("oEmail")}`;
   if(v("oNotes"))m+=`\nNotes: ${v("oNotes")}`;
   const wc=welcomeCode();if(wc)m+=`\nFirst order code: ${wc} (${SHOP.welcome.pct}% off)`;
   if(v("oPhone"))m+=`\nPhone: ${v("oPhone")}`;
@@ -1523,19 +1531,21 @@ const sheet=$("sheet");
 const openSheet=()=>{$("sheetForm").hidden=false;$("done").hidden=true;$("sheetMsg").textContent="";renderSheet();sheet.showModal();track("begin_checkout",{lines:Object.keys(cart).length})};
 $("openSheet").onclick=openSheet;
 $("topOrder").addEventListener("click",e=>{if(Object.keys(cart).length){e.preventDefault();openSheet()}});
-["oName","oPhone","oHow","oWhen","oZip","oNotes"].forEach(id=>$(id).addEventListener("input",renderSheet));
+["oName","oPhone","oEmail","oHow","oWhen","oZip","oNotes"].forEach(id=>$(id).addEventListener("input",renderSheet));
 $("sendIG").addEventListener("click",()=>{track("order_instagram",{lines:Object.keys(cart).length});rememberOrder()});
 $("sendIG").addEventListener("click",()=>copy(message(),$("sheetMsg"),"Order copied. Paste it in the chat and hit send."));
 $("sendDirect").onclick=async()=>{
   const m=$("sheetMsg"),b=$("sendDirect"),v=k=>$(k).value.trim(),ph=v("oPhone");
   if(!Object.keys(cart).length){m.textContent="Add something to your order first.";return}
-  if(ph.replace(/\D/g,"").length<10){m.textContent="Add a mobile number so we can send you the price.";$("oPhone").focus();return}
+  const em=v("oEmail"),okEm=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em);
+  if(em&&!okEm){m.textContent="Please check your email address.";$("oEmail").focus();return}
+  if(ph.replace(/\D/g,"").length<10&&!okEm){m.textContent="Add a mobile number or email so we can send you the price.";$("oPhone").focus();return}
   b.disabled=true;b.textContent="Sending...";
   const id="OT-"+Date.now().toString(36).slice(-5).toUpperCase();
   try{
-    await post("order",{id,name:v("oName"),phone:ph,how:v("oHow"),when:v("oWhen"),zip:v("oZip"),notes:[v("oNotes"),welcomeCode()?"First order code "+welcomeCode():""].filter(Boolean).join(" | "),items:olines().map(l=>`${l.name}: ${l.txt}`).join("; "),code:welcomeCode(),lines:Object.entries(cart).map(([k,q])=>{const[i,u]=k.split("|");return{id:i,unit:u,qty:q}})});
+    await post("order",{id,name:v("oName"),phone:ph,email:em,how:v("oHow"),when:v("oWhen"),zip:v("oZip"),notes:[v("oNotes"),welcomeCode()?"First order code "+welcomeCode():""].filter(Boolean).join(" | "),items:olines().map(l=>`${l.name}: ${l.txt}`).join("; "),code:welcomeCode(),lines:Object.entries(cart).map(([k,q])=>{const[i,u]=k.split("|");return{id:i,unit:u,qty:q}})});
     track("order_submitted",{order_id:id,lines:Object.keys(cart).length});rememberOrder();
-    $("doneTxt").innerHTML=`Your order number is <span class="oid">${id}</span>. We'll reach you at ${esc(ph)} with this week's price.`;
+    $("doneTxt").innerHTML=`Your order number is <span class="oid">${id}</span>. We'll reach you at ${esc(ph.replace(/\D/g,"").length>=10?ph:em)} with this week's price.`;
     if(SHOP.depositLink){$("doneDeposit").href=SHOP.depositLink;$("doneDeposit").hidden=false}
     cart={};save();bar();drawDetail();
     $("sheetForm").hidden=true;$("done").hidden=false;
@@ -1636,11 +1646,13 @@ $("bulkForm").addEventListener("submit",async e=>{
   const when=g("when")?new Date(g("when")+"T12:00").toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"}):"flexible";
   track("wholesale_quote",{who:g("who"),freq:g("freq")});
   if(EP||DEMO){
-    if(g("phone").replace(/\D/g,"").length<10){m.textContent="Add a phone number so we can send your quote.";return}
-    try{await post("quote",{name:g("name"),biz:g("biz"),who:g("who"),phone:g("phone"),need:g("need"),freq:g("freq"),when});
+    const okEm=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(g("email"));
+    if(g("email")&&!okEm){m.textContent="Please check the email address.";return}
+    if(g("phone").replace(/\D/g,"").length<10&&!okEm){m.textContent="Add a phone number or email so we can send your quote.";return}
+    try{await post("quote",{name:g("name"),biz:g("biz"),who:g("who"),phone:g("phone"),email:g("email"),need:g("need"),freq:g("freq"),when});
       m.textContent="Got it. We'll get back to you with a quote.";e.target.reset();return}catch(err){}
   }
-  const txt=`Hi Overnight Tider! Wholesale quote request.\nName: ${g("name")}${g("biz")?" ("+g("biz")+")":""}\nBuying for: ${g("who")}\nNeed: ${g("need")}\nHow often: ${g("freq")}\nFirst delivery: ${when}${g("phone")?"\nPhone: "+g("phone"):""}`;
+  const txt=`Hi Overnight Tider! Wholesale quote request.\nName: ${g("name")}${g("biz")?" ("+g("biz")+")":""}\nBuying for: ${g("who")}\nNeed: ${g("need")}\nHow often: ${g("freq")}\nFirst delivery: ${when}${g("phone")?"\nPhone: "+g("phone"):""}${g("email")?"\nEmail: "+g("email"):""}`;
   const done=copy(txt,m,"Request copied. Opening our messages, paste it in and send.");
   const w=window.open(IGDM,"_blank");if(w)w.opener=null;else location.href=IGDM;
   await done;
