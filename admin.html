@@ -400,6 +400,22 @@ button.row:hover{background:#fafaf7}
 .sample{display:block;margin-top:14px;font-size:13.5px;color:var(--muted)}
 .sample i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--band);margin-right:8px;vertical-align:1px}
 .tasks{list-style:none;margin:0;padding:6px 8px 10px}
+.tgs{padding:2px 0 6px}
+.tg+.tg{border-top:1px solid var(--line);margin-top:4px}
+.tg .tasks{padding:0 8px 8px}
+.tg-h{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin:0;padding:16px 20px 6px;font-size:15px;font-weight:600;color:var(--ink)}
+.tg-h>i{align-self:center;width:10px;height:10px;border-radius:50%;background:var(--tg)}
+.tg-n{font-size:12.5px;font-weight:700;color:var(--ink);background:var(--paper);border-radius:999px;padding:1px 8px;font-variant-numeric:tabular-nums}
+.tg-hint{font-size:13.5px;font-weight:400;color:var(--muted)}
+.tg-reply{--tg:var(--ink);--tg-b:var(--ink);--tg-t:#fff}
+.tg-price{--tg:var(--band);--tg-b:var(--band);--tg-t:var(--ink)}
+.tg-pay{--tg:#5b85b3;--tg-b:#3f6a98;--tg-t:#fff}
+.tg-deliver{--tg:var(--sign);--tg-b:var(--sign);--tg-t:#fff}
+.tg .task>i{visibility:hidden}
+.tg-h{padding-left:22px}
+.tg .task .go em{background:var(--tg-b);color:var(--tg-t)}
+.tg .task:hover .go em{background:var(--tg-b);filter:brightness(.92)}
+@media (max-width:520px){.tg-hint{flex-basis:100%;padding-left:20px}.tg-h{padding:14px 14px 4px}}
 .task{display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:2px 14px;align-items:center;width:100%;background:none;border:0;text-align:left;padding:14px 12px;border-radius:12px;transition:background-color .2s,transform .2s var(--ease)}
 .task:hover{background:var(--paper)}
 .task>i{grid-row:1/3;width:10px;height:10px;border-radius:50%;background:var(--band)}
@@ -1079,6 +1095,9 @@ const delta=(a,b)=>{if(!b)return"";const p=Math.round((a-b)/b*100);return `<smal
 const ACT={new:"Price it",confirmed:"Collect payment",paid:"Deliver"};
 function taskRow(o){const t=totals(o);return `<li><button class="task k-${o.status}" type="button" data-order="${esc(o.id)}"><i></i><b>${esc(o.biz||o.name||"No name")}${o.channel==="wholesale"?' <span class="tag ws">Wholesale</span>':""}</b><span class="sub">${esc(itemsText(o))} · ${o.status==="new"?ago(o.at):"needed "+esc(o.when||"soon")}</span><span class="go">${o.status==="new"?"":`<span>${fmt(t.tot)}</span>`}<em>${ACT[o.status]}</em></span></button></li>`}
 function quoteRow(q){return `<li><button class="task k-quote" type="button" data-quote="${esc(q.id)}"><i></i><b>${esc(q.biz||q.name)} <span class="tag ws">Wholesale request</span></b><span class="sub">${esc(q.need)} · ${ago(q.at)}</span><span class="go"><em>Reply</em></span></button></li>`}
+const TG=[["reply","Reply","They're waiting on an answer"],["price","Send a price","Weigh it up and text them a total"],["pay","Get paid","They said yes. Send the payment link"],["deliver","Deliver","Paid for. Pack it and get it to them"]];
+function tGroups(uc,qn,nw,conf,paid){const rows={reply:uc.map(chatTask).join("")+qn.map(quoteRow).join(""),price:nw.map(taskRow).join(""),pay:conf.map(taskRow).join(""),deliver:paid.map(taskRow).join("")},n={reply:uc.length+qn.length,price:nw.length,pay:conf.length,deliver:paid.length};
+  return `<div class="tgs">${TG.filter(g=>n[g[0]]).map(([k,t,h])=>`<section class="tg tg-${k}"><h3 class="tg-h"><i></i><b>${t}</b><span class="tg-n">${n[k]}</span><span class="tg-hint">${h}</span></h3><ul class="tasks">${rows[k]}</ul></section>`).join("")}</div>`}
 function pToday(){
   const nw=DB.orders.filter(o=>o.status==="new"),conf=DB.orders.filter(o=>o.status==="confirmed"),paid=DB.orders.filter(o=>o.status==="paid"),sent=DB.orders.filter(o=>o.status==="sent"),qn=DB.quotes.filter(q=>q.status==="new");
   const a=weekStats(0),b=weekStats(1),st=cur().stock||{};
@@ -1092,7 +1111,7 @@ function pToday(){
   <section class="hello" id="cHello"><p>${todo.length+qn.length+uc.length?`<b>${todo.length+qn.length+uc.length} thing${todo.length+qn.length+uc.length>1?"s":""}</b> need${todo.length+qn.length+uc.length>1?"":"s"} you today.`:`You're all caught up.`} <span class="hl">${fmt0(a.booked)}</span> in orders this week${b.booked?`, ${p>=0?"up":"down"} ${Math.abs(p)}% on last week`:""}.</p>${DB.sample&&!LIVE?`<span class="sample"><i></i>Sample data. Orders you place on the <a class="lnk" href="./" target="_blank" rel="noopener">website</a> in this browser land here.</span>`:""}</section>
   <div class="grid2">
     <section class="card" id="cNeeds"><div class="card-h"><h2>Needs you</h2>${todo.length+qn.length+uc.length?`<span class="muted" style="font-size:13px">${todo.length+qn.length+uc.length} to do</span>`:""}</div>
-      ${todo.length||qn.length||uc.length?`<ul class="tasks">${uc.map(chatTask).join("")}${nw.map(taskRow).join("")}${qn.map(quoteRow).join("")}${conf.map(taskRow).join("")}${paid.map(taskRow).join("")}</ul>`:`<p class="empty">Nothing to do right now. New orders show up here.</p>`}
+      ${todo.length||qn.length||uc.length?tGroups(uc,qn,nw,conf,paid):`<p class="empty">Nothing to do right now. New orders show up here.</p>`}
       ${sent.length?`<details class="wait"><summary><span>Waiting on <b>${sent.length} customer${sent.length>1?"s":""}</b> to say yes</span><span aria-hidden="true">›</span></summary><ul class="rows">${sent.map(o=>`<li>${orderRow(o)}</li>`).join("")}</ul></details>`:""}
     </section>
     <div class="stack">
@@ -1767,7 +1786,7 @@ function chime(){try{const A=new (window.AudioContext||window.webkitAudioContext
 /* ===================== WHY WE BUILT IT THIS WAY ===================== */
 const WHY_D=[
  ["today","#cHello","One sentence, not a spreadsheet","The owner opens the app and knows in two seconds how many things need doing and how the week is going.","Less time in the app, more time selling seafood."],
- ["today","#cNeeds","Every row says the next step","Price it, Collect payment, Deliver, Reply. No status codes to interpret. The list empties as the work gets done.","Orders don't sit unanswered, and the fastest reply usually wins the sale."],
+ ["today","#cNeeds","Sorted by what to do next","Reply, Send a price, Get paid, Deliver. Each group has its own color and one line saying what to do, so the owner never has to work out which job a row is. The list empties as the work gets done.","Orders don't sit unanswered, and the fastest reply usually wins the sale."],
  ["today","#cPrep","A shopping list from real orders","Adds up every open order by item and size, so the morning buy at the market matches what's already sold. One tap prints it.","Less waste, and no promising orders you can't fill."],
  ["today","#cBack","Regulars worth a text","Customers who ordered at least twice but went quiet for three weeks, each with a ready-to-send text about their favorite item.","Repeat orders from people who already trust you, at zero ad cost."],
  ["today","#cWeek","This week against last week","Compared at the same point in the week, so Tuesday isn't measured against a full week.","Spot a slow week early enough to run a special."],
