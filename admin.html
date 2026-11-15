@@ -454,6 +454,137 @@ li.open .sxi{opacity:1;transform:none;transition-delay:.08s}
 .field.flash input,.field.flash textarea{animation:fflash 1.2s ease}
 @keyframes fflash{0%{box-shadow:0 0 0 4px var(--band)}100%{box-shadow:0 0 0 1px #d5dbd7}}
 @media (prefers-reduced-motion:reduce){.enter>*,.drawer.on .dr-b>*,.chart .bar{animation:none}}
+
+/* ===== advanced: search, board, prep, phone orders, why mode ===== */
+.ck-open{display:flex;align-items:center;gap:10px;margin:0 0 14px;padding:10px 12px;border-radius:10px;border:0;background:rgba(255,255,255,.06);color:#9fb0bd;font-size:14px;text-align:left;width:100%;transition:background-color .2s,color .2s}
+.ck-open:hover{background:rgba(255,255,255,.1);color:#fff}
+.ck-open svg{width:16px;height:16px}
+.ck-open kbd{margin-left:auto;font-family:var(--f-mono);font-size:11.5px;background:rgba(255,255,255,.08);border-radius:5px;padding:2px 6px}
+.cmdk{position:fixed;inset:0;z-index:90;background:rgba(19,32,46,.35);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:grid;justify-items:center;align-items:start;padding:12vh 14px 14px;animation:fadein .2s ease}
+.ck-box{width:min(640px,100%);background:#fff;border-radius:18px;box-shadow:0 40px 80px -30px rgba(19,32,46,.6),0 0 0 1px rgba(19,32,46,.06);overflow:hidden;animation:ckIn .35s cubic-bezier(.2,1.2,.3,1) both}
+@keyframes ckIn{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:none}}
+.ck-in{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.ck-in svg{width:18px;height:18px;color:var(--muted);flex:none}
+.ck-in input{flex:1;border:0;font-size:17px;outline:none;background:none}
+.ck-list{list-style:none;margin:0;padding:8px;max-height:min(56vh,460px);overflow:auto}
+.ck-list li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:2px 12px;align-items:center;padding:9px 10px;border-radius:12px;cursor:pointer}
+.ck-list li[aria-selected="true"]{background:var(--paper)}
+.ck-list .ci{grid-row:1/3;width:34px;height:34px;border-radius:9px;background:var(--ice);display:grid;place-items:center;overflow:hidden;color:var(--ink)}
+.ck-list .ci img{width:100%;height:100%;object-fit:cover}
+.ck-list .ci svg{width:17px;height:17px}
+.ck-list b{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ck-list small{grid-column:2;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ck-list .k{grid-row:1/3;grid-column:3;font-size:12px;color:var(--muted)}
+.ck-list li.ckg{display:block;padding:10px 10px 4px;font-size:12px;font-weight:600;color:var(--muted);cursor:default;background:none}
+.ck-foot{display:flex;gap:16px;padding:10px 18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.ck-foot kbd{font-family:var(--f-mono);background:var(--ice);border-radius:5px;padding:1px 6px;margin-right:4px}
+.tb-ic{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:0;background:var(--ice);color:var(--ink)}
+.tb-ic svg{width:17px;height:17px}
+@media (min-width:980px){.tb-ic{display:none}}
+/* board */
+.board{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);gap:14px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}
+.col{background:#eceee9;border-radius:16px;padding:10px;min-height:320px;scroll-snap-align:start;transition:background-color .2s,box-shadow .2s}
+.col.over{background:#e3ebe4;box-shadow:inset 0 0 0 2px var(--sign)}
+.col-h{display:flex;align-items:center;justify-content:space-between;padding:4px 6px 10px;font-weight:600;font-size:14.5px}
+.col-h span{font-weight:500;font-size:12.5px;color:var(--muted);background:#fff;border-radius:999px;padding:2px 9px}
+.col-h b{font-weight:600}
+.col-h small{display:block;font-weight:400;font-size:12.5px;color:var(--muted)}
+.bc{display:grid;gap:6px;background:#fff;border-radius:12px;padding:12px 13px;margin-bottom:8px;box-shadow:0 1px 2px rgba(19,32,46,.06),0 0 0 1px rgba(19,32,46,.04);cursor:grab;transition:transform .2s var(--ease),box-shadow .2s}
+.bc:hover{transform:translateY(-2px);box-shadow:0 10px 20px -12px rgba(19,32,46,.35),0 0 0 1px rgba(19,32,46,.05)}
+.bc.drag{opacity:.4}
+.bc.land{animation:land .5s cubic-bezier(.3,1.5,.5,1)}
+@keyframes land{0%{transform:scale(.92);box-shadow:0 0 0 3px var(--band)}100%{transform:none}}
+.bc-t{display:flex;justify-content:space-between;gap:10px;font-weight:600;font-size:14.5px}
+.bc-t span{font-variant-numeric:tabular-nums}
+.bc small{font-size:13px;color:var(--muted);line-height:1.35}
+.bc .bc-f{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted)}
+.col-empty{font-size:13px;color:var(--muted);text-align:center;padding:24px 8px;border:1.5px dashed #cfd6d3;border-radius:12px}
+/* prep + winback */
+.prep{list-style:none;margin:0;padding:4px 20px 8px}
+.prep li{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:0 12px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.prep li:first-child{border-top:0}
+.prep img{width:40px;height:40px;border-radius:9px;object-fit:cover}
+.prep b{font-weight:600;font-size:15px}
+.prep small{display:block;font-size:12.5px;color:var(--muted)}
+.prep .q{font-family:var(--f-display);font-weight:800;font-size:22px;white-space:nowrap}
+.card-f{display:flex;gap:10px;padding:4px 20px 18px}
+.back{list-style:none;margin:0;padding:4px 20px 14px}
+.back li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.back li:first-child{border-top:0}
+.back b{font-weight:600}
+.back small{display:block;font-size:12.5px;color:var(--muted)}
+/* new order form */
+.nl{display:grid;gap:8px}
+.nl-row{display:grid;grid-template-columns:minmax(0,1fr) 84px 36px;gap:8px;align-items:center}
+.nl-row select,.nl-row input{width:100%;border:0;border-radius:10px;background:#fff;box-shadow:0 0 0 1px #d5dbd7;padding:10px 12px;font-size:15px}
+.nl-row button{width:36px;height:36px;border-radius:50%;border:0;background:var(--ice);font-size:18px;line-height:1}
+.segm{display:flex;gap:4px;background:#fff;border-radius:999px;padding:4px;box-shadow:0 0 0 1px var(--line);width:max-content}
+.segm button{border:0;background:none;border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;color:var(--muted)}
+.segm button[aria-pressed="true"]{background:var(--ink);color:#fff}
+/* why mode (same look as the website) */
+.why-dock{position:fixed;left:50%;bottom:86px;z-index:46;transform:translateX(-50%);display:flex;align-items:stretch;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(8px) saturate(1.2);backdrop-filter:blur(8px) saturate(1.2);color:var(--ink);border-radius:999px;padding:4px;box-shadow:0 10px 30px -12px rgba(19,32,46,.35),0 0 0 1px rgba(19,32,46,.08);width:max-content;max-width:calc(100vw - 24px);user-select:none;-webkit-user-select:none;transition:bottom .35s var(--ease)}
+@media (min-width:980px){.why-dock{bottom:22px;left:calc(50% + 124px)}}
+body:has(.publish.on) .why-dock{bottom:150px}
+@media (min-width:980px){body:has(.publish.on) .why-dock{bottom:90px}}
+.why-dock button{-webkit-tap-highlight-color:transparent}
+.why-dock button:focus{outline:none}
+.why-dock button:focus-visible{background:rgba(19,32,46,.08)}
+.why-tog{display:flex;align-items:center;gap:10px;background:none;border:0;color:inherit;padding:6px 14px 6px 6px;border-radius:999px;text-align:left}
+.why-tog:hover{background:rgba(19,32,46,.05)}
+.why-tog .sw2{flex:none;width:36px;height:22px;border-radius:999px;background:#c9d1d0;position:relative;transition:background-color .25s}
+.why-tog .sw2::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .35s cubic-bezier(.3,1.5,.5,1);box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.why-tog[aria-pressed="true"] .sw2{background:var(--sign)}
+.why-tog[aria-pressed="true"] .sw2::after{transform:translateX(14px)}
+.why-tog .wt{display:flex;align-items:baseline;gap:8px}
+.why-tog b{font-size:14px;font-weight:600;white-space:nowrap}
+.why-tog small{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.why-dock.on .why-tog .wt{display:none}
+.why-dock.on .why-tog{padding:6px}
+.why-ping{position:absolute;top:-2px;right:-2px;width:12px;height:12px;border-radius:50%;background:var(--band);border:2px solid #fff}
+.why-ping::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--band);animation:whyPing 1.8s ease-out infinite}
+@keyframes whyPing{from{transform:scale(1);opacity:.9}to{transform:scale(2.4);opacity:0}}
+.why-dock.on .why-ping,.why-dock.seen .why-ping{display:none}
+.why-cur{display:none;align-items:center;gap:10px;background:none;border:0;color:var(--ink);text-align:left;padding:4px 12px 4px 8px;border-radius:999px;min-width:0}
+.why-cur:hover{background:rgba(19,32,46,.05)}
+.why-dock.on .why-cur{display:flex}
+.why-cur .num{font-family:var(--f-display);font-weight:800;font-size:24px;line-height:1;color:var(--sign);min-width:1.4em;text-align:right;font-variant-numeric:tabular-nums;transition:opacity .18s,transform .18s}
+.why-cur .ct{display:grid;min-width:0;width:min(280px,46vw)}
+.why-cur small{font-size:11.5px;color:var(--muted)}
+.why-cur b{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .18s,transform .18s}
+.why-cur.swap b,.why-cur.swap .num{opacity:0;transform:translateY(4px)}
+.why-nav{display:none;align-items:center;gap:4px;padding-left:4px}
+.why-dock.on .why-nav{display:flex}
+.why-nav button{width:36px;height:36px;border:0;border-radius:50%;background:rgba(19,32,46,.06);color:var(--ink);display:grid;place-items:center;padding:0;transition:background-color .2s,transform .15s}
+.why-nav button:active{transform:scale(.92)}
+.why-nav #wNext{background:var(--ink);color:#fff}
+.why-nav svg{width:16px;height:16px}
+.why-bar{position:absolute;left:22px;right:22px;bottom:0;height:2px;border-radius:2px;background:rgba(19,32,46,.07);overflow:hidden;display:none}
+.why-dock.on .why-bar{display:block}
+.why-bar i{display:block;height:100%;width:0;background:var(--sign);border-radius:3px;transition:width .45s var(--ease)}
+.why-list{position:absolute;left:0;right:0;bottom:calc(100% + 10px);background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:16px;padding:8px;border:1px solid rgba(19,32,46,.08);max-height:min(60vh,520px);overflow:auto;box-shadow:0 24px 50px -16px rgba(19,32,46,.35);opacity:0;transform:translateY(8px);visibility:hidden;transition:opacity .2s,transform .25s var(--ease),visibility 0s .25s}
+.why-dock.open .why-list{opacity:1;transform:none;visibility:visible;transition:opacity .2s,transform .25s var(--ease),visibility 0s}
+.why-list p{margin:6px 10px 8px;font-size:12px;color:var(--muted)}
+.why-list .wg{display:block;padding:10px 10px 4px;font-size:12px;font-weight:600;color:var(--muted)}
+.why-list button{display:flex;align-items:baseline;gap:12px;width:100%;background:none;border:0;color:var(--body);text-align:left;padding:8px 10px;border-radius:10px;font-size:14.5px;line-height:1.3}
+.why-list button span{font-family:var(--f-mono);font-size:12px;color:#97a3ab;min-width:20px;text-align:right}
+.why-list button:hover{background:rgba(19,32,46,.05);color:var(--ink)}
+.why-list button[aria-current="true"]{background:rgba(47,107,61,.1);color:var(--ink);font-weight:600}
+.why-note{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;background:#fff8dc;border:1px solid #ecd27a;border-radius:12px;padding:14px 16px;margin:0 0 14px;color:var(--ink);font-size:14.5px;line-height:1.5;text-align:left;animation:rise .45s var(--ease) both}
+.why-note .wn{grid-row:span 3;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--band);font-family:var(--f-mono);font-size:13px;display:grid;place-items:center}
+.why-note b{font-size:15px}
+.why-note p{margin:0;color:var(--body)}
+.why-note .roi{color:var(--sign-dk);font-weight:600}
+.why-stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px;margin:0 0 14px}
+.why-stack .why-note{margin:0}
+.card>.why-stack,.grp>.why-stack{margin:14px 14px 4px}
+.wk>.why-stack,.hello>.why-stack{margin:0 0 14px}
+.hello .why-note p{font-size:14.5px;max-width:none;line-height:1.5}
+@media (max-width:640px){.top-act .segm{display:none}#newO{padding:8px 12px}}
+.why-note.flash{animation:whyFlash 1.2s ease}
+@keyframes whyFlash{0%{box-shadow:0 0 0 0 rgba(242,194,48,.9)}100%{box-shadow:0 0 0 14px rgba(242,194,48,0)}}
+body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:4px}
+@media (max-width:520px){.why-tog small{display:none}.why-cur .ct{max-width:40vw}}
+@media print{.why-dock,.side,.tabbar,.top,.publish{display:none!important}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -481,6 +612,7 @@ li.open .sxi{opacity:1;transform:none;transition-delay:.08s}
 <div class="app" id="app" hidden>
   <aside class="side">
     <a class="brand" href="#today"><img src="brand/mark.svg" alt=""><span><b>Overnight Tider</b><small>Owner dashboard</small></span></a>
+    <button class="ck-open" type="button" id="ckBtn"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.6"/></svg>Search<kbd id="ckKey">Ctrl K</kbd></button>
     <nav class="nav" id="nav" aria-label="Dashboard"></nav>
     <div class="side-foot">
       <div class="mode" id="modeBox"></div>
@@ -490,7 +622,7 @@ li.open .sxi{opacity:1;transform:none;transition-delay:.08s}
     </div>
   </aside>
   <main class="main">
-    <header class="top"><div class="top-in"><img class="top-mark" src="brand/mark.svg" alt=""><div><h1 id="title">Today</h1><span class="when" id="when"></span></div><div class="top-act" id="topAct"></div><button class="gear" type="button" data-go="settings" aria-label="Settings"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5v2.2M10 15.3v2.2M2.5 10h2.2M15.3 10h2.2M4.7 4.7l1.6 1.6M13.7 13.7l1.6 1.6M4.7 15.3l1.6-1.6M13.7 6.3l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div></header>
+    <header class="top"><div class="top-in"><img class="top-mark" src="brand/mark.svg" alt=""><div><h1 id="title">Today</h1><span class="when" id="when"></span></div><div class="top-act" id="topAct"></div><button class="tb-ic" type="button" id="ckBtnM" aria-label="Search"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.6"/></svg></button><button class="gear" type="button" data-go="settings" aria-label="Settings"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5v2.2M10 15.3v2.2M2.5 10h2.2M15.3 10h2.2M4.7 4.7l1.6 1.6M13.7 13.7l1.6 1.6M4.7 15.3l1.6-1.6M13.7 6.3l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div></header>
     <div class="page" id="page"></div>
   </main>
   <nav class="tabbar" id="tabbar" aria-label="Dashboard"></nav>
@@ -500,6 +632,7 @@ li.open .sxi{opacity:1;transform:none;transition-delay:.08s}
 <aside class="drawer" id="drawer" aria-modal="true" role="dialog" aria-labelledby="drT"><div class="dr-h"><span class="mono" id="drT"></span><span id="drChip"></span><button class="dr-x" type="button" id="drX" aria-label="Close">&times;</button></div><div class="dr-b" id="drB"></div><div class="dr-f" id="drF"></div></aside>
 <div class="publish" id="publish" role="status"><span id="pubTxt"></span><button class="btn b-ghost b-sm" type="button" id="pubUndo" style="color:#b9c6d1">Discard</button><button class="btn b-band b-sm" type="button" id="pubGo">Publish to website</button></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="cmdk" id="cmdk" hidden role="dialog" aria-modal="true" aria-label="Search"><div class="ck-box"><label class="ck-in"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.6"/></svg><span class="vh">Search</span><input id="ckIn" autocomplete="off" placeholder="Search orders, customers, items, or type what you want to do"></label><ul class="ck-list" id="ckList" role="listbox"></ul><div class="ck-foot"><span><kbd>↑↓</kbd>move</span><span><kbd>Enter</kbd>open</span><span><kbd>Esc</kbd>close</span></div></div></div>
 <input type="file" id="fileIn" accept="image/*" hidden>
 
 <script>
@@ -674,7 +807,7 @@ let route="today";
 const ico=k=>`<svg viewBox="0 0 20 20" aria-hidden="true">${ICONS[k]}</svg>`;
 const needsYou=()=>DB.orders.filter(o=>["new","confirmed","paid"].includes(o.status)).length+DB.quotes.filter(q=>q.status==="new").length;
 function drawNav(){
-  const n=needsYou();
+  const n=needsYou();document.title=(n?`(${n}) `:"")+"Owner dashboard | Overnight Tider";
   $("nav").innerHTML=`<i class="nav-ind" id="navInd"></i>`+PAGES.map(([k,l])=>`<button type="button" data-go="${k}" aria-current="${route===k}">${ico(k)}${l}${k==="orders"&&n?`<span class="ct">${n}</span>`:""}</button>`).join("");
   $("tabbar").innerHTML=`<i class="tab-ind" id="tabInd"></i>`+PAGES.map(([k,l])=>`<button type="button" data-go="${k}" aria-current="${route===k}">${ico(k)}${l}${k==="orders"&&n?`<span class="ct">${n}</span>`:""}</button>`).join("");
   $("modeBox").className="mode"+(LIVE?" live":"");
@@ -700,7 +833,7 @@ function render(opt){
   $("topAct").innerHTML="";
   ({today:pToday,orders:pOrders,stock:pStock,website:pWebsite,money:pMoney,settings:pSettings}[route]||pToday)(opt);
   const pg=$("page");if(route!==lastRoute||(opt&&opt.anim)){pg.classList.remove("enter");[...pg.children].forEach((c,i)=>c.style.setProperty("--n",i));void pg.offsetWidth;pg.classList.add("enter")}
-  lastRoute=route;countUp();pubBar();
+  lastRoute=route;countUp();pubBar();if(WHYON)whyPaint();
 }
 function countUp(){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
   document.querySelectorAll("[data-count]").forEach(el=>{const to=+el.dataset.count,f=el.dataset.f==="$"?fmt0:(n=>Math.round(n).toLocaleString("en-US")),t0=performance.now(),d=900;
@@ -727,14 +860,15 @@ function pToday(){
   const p=b.booked?Math.round((a.booked-b.booked)/b.booked*100):0;
   const todo=[...nw,...conf,...paid];
   $("page").innerHTML=`
-  <section class="hello"><p>${todo.length+qn.length?`<b>${todo.length+qn.length} thing${todo.length+qn.length>1?"s":""}</b> need${todo.length+qn.length>1?"":"s"} you today.`:`You're all caught up.`} <span class="hl">${fmt0(a.booked)}</span> in orders this week${b.booked?`, ${p>=0?"up":"down"} ${Math.abs(p)}% on last week`:""}.</p>${DB.sample&&!LIVE?`<span class="sample"><i></i>Sample data. Orders you place on the <a class="lnk" href="./" target="_blank" rel="noopener">website</a> in this browser land here.</span>`:""}</section>
+  <section class="hello" id="cHello"><p>${todo.length+qn.length?`<b>${todo.length+qn.length} thing${todo.length+qn.length>1?"s":""}</b> need${todo.length+qn.length>1?"":"s"} you today.`:`You're all caught up.`} <span class="hl">${fmt0(a.booked)}</span> in orders this week${b.booked?`, ${p>=0?"up":"down"} ${Math.abs(p)}% on last week`:""}.</p>${DB.sample&&!LIVE?`<span class="sample"><i></i>Sample data. Orders you place on the <a class="lnk" href="./" target="_blank" rel="noopener">website</a> in this browser land here.</span>`:""}</section>
   <div class="grid2">
-    <section class="card"><div class="card-h"><h2>Needs you</h2>${todo.length+qn.length?`<span class="muted" style="font-size:13px">${todo.length+qn.length} to do</span>`:""}</div>
+    <section class="card" id="cNeeds"><div class="card-h"><h2>Needs you</h2>${todo.length+qn.length?`<span class="muted" style="font-size:13px">${todo.length+qn.length} to do</span>`:""}</div>
       ${todo.length||qn.length?`<ul class="tasks">${nw.map(taskRow).join("")}${qn.map(quoteRow).join("")}${conf.map(taskRow).join("")}${paid.map(taskRow).join("")}</ul>`:`<p class="empty">Nothing to do right now. New orders show up here.</p>`}
       ${sent.length?`<details class="wait"><summary><span>Waiting on <b>${sent.length} customer${sent.length>1?"s":""}</b> to say yes</span><span aria-hidden="true">›</span></summary><ul class="rows">${sent.map(o=>`<li>${orderRow(o)}</li>`).join("")}</ul></details>`:""}
     </section>
     <div class="stack">
-      <section class="card"><div class="wk"><span>Orders this week</span><b data-count="${Math.round(a.booked)}" data-f="$">${fmt0(a.booked)}</b>${b.booked?`<small class="${p>=0?"up":"dn"}">${p>=0?"+":""}${p}% vs this time last week</small>`:""}</div><div class="chart" id="miniChart"></div></section>
+      ${prepCard()}${backCard()}
+      <section class="card" id="cWeek"><div class="wk"><span>Orders this week</span><b data-count="${Math.round(a.booked)}" data-f="$">${fmt0(a.booked)}</b>${b.booked?`<small class="${p>=0?"up":"dn"}">${p>=0?"+":""}${p}% vs this time last week</small>`:""}</div><div class="chart" id="miniChart"></div></section>
       ${watch.length?`<section class="card"><div class="card-h"><h2>Stock to watch</h2><button class="lnk" data-go="stock">Stock</button></div><ul class="rows">${watch.map(c=>{const x=st[c.id]||{};return `<li><button class="row" type="button" data-go="stock"><b>${c.name}</b><span class="sub">${x.status==="out"?"Sold out on the website":"Showing as going fast"}</span><span class="rt">${x.status==="out"?'<span class="chip s-done">Sold out</span>':'<span class="chip s-new">Low</span>'}</span></button></li>`}).join("")}</ul></section>`:""}
     </div>
   </div>`;
@@ -744,16 +878,21 @@ function orderRow(o){const t=totals(o);return `<button class="row" type="button"
 document.addEventListener("click",e=>{const b=e.target.closest("[data-order]");if(b)openOrder(b.dataset.order);const q=e.target.closest("[data-quote]");if(q)openQuote(q.dataset.quote)});
 
 /* ===================== ORDERS ===================== */
-let oFilter="needs",oQuery="";
+let oFilter="needs",oQuery="",oMode="list";
 const OF={needs:["Needs you",o=>["new","confirmed","paid"].includes(o.status),q=>q.status==="new"],wait:["Waiting on customer",o=>o.status==="sent",q=>q.status==="sent"],done:["Finished",o=>o.status==="done"||o.status==="cancelled",q=>q.status==="done"||q.status==="lost"],all:["All",()=>true,()=>true]};
 function pOrders(opt){
-  if(opt&&opt.q!=null){oQuery=opt.q;oFilter="all"}
-  $("page").innerHTML=`<div class="toolbar"><div class="seg" role="group" aria-label="Show">${Object.entries(OF).map(([k,[l,fo,fq]])=>`<button type="button" data-of="${k}" aria-pressed="${oFilter===k}">${l} <span>${DB.orders.filter(fo).length+DB.quotes.filter(fq).length}</span></button>`).join("")}</div>
+  if(opt&&opt.q!=null){oQuery=opt.q;oFilter="all";oMode="list"}
+  $("topAct").innerHTML=`<div class="segm" role="group" aria-label="View"><button type="button" data-om="list" aria-pressed="${oMode==="list"}">List</button><button type="button" data-om="board" aria-pressed="${oMode==="board"}">Board</button></div><button class="btn b-green b-sm" type="button" id="newO">+ New<span class="hide-m"> order</span></button>`;
+  $("newO").onclick=newOrder;$("topAct").querySelectorAll("[data-om]").forEach(b=>b.onclick=()=>{oMode=b.dataset.om;pOrders({anim:1})});
+  if(oMode==="board"&&innerWidth<640)oMode="list";
+  if(oMode==="board"){$("page").innerHTML=`<div class="toolbar" id="oTools"><p class="muted" style="margin:0;font-size:14px">Drag an order to move it along. Tap it to open.</p></div><div class="board" id="olist"></div>`;drawBoard();return}
+  $("page").innerHTML=`<div class="toolbar" id="oTools"><div class="seg" role="group" aria-label="Show">${Object.entries(OF).map(([k,[l,fo,fq]])=>`<button type="button" data-of="${k}" aria-pressed="${oFilter===k}">${l} <span>${DB.orders.filter(fo).length+DB.quotes.filter(fq).length}</span></button>`).join("")}</div>
     <label class="search"><span class="vh">Search orders</span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.6"/></svg><input id="oq" type="search" placeholder="Search name, phone or item" value="${esc(oQuery)}"></label></div>
     <section class="card" id="olist"></section>`;
   $("oq").oninput=e=>{oQuery=e.target.value;drawOrders()};drawOrders();
 }
 function drawOrders(){
+  if(oMode==="board"){drawBoard();return}
   const q=oQuery.trim().toLowerCase(),qd=q.replace(/\D/g,""),[,fo,fq]=OF[oFilter];
   const match=t=>!q||t.toLowerCase().includes(q);
   let os=DB.orders.filter(fo).filter(o=>match(o.name+" "+o.biz+" "+o.id+" "+itemsText(o)+" "+o.zip)||(qd.length>=3&&o.phone.replace(/\D/g,"").includes(qd)));
@@ -765,6 +904,7 @@ function drawOrders(){
   const qrow=x=>`<tr data-quote="${esc(x.id)}"><td><span class="tag ws">Quote</span></td><td class="who"><b>${esc(x.biz||x.name)}</b><small>${esc(x.phone||"")}</small></td><td class="its">${esc(x.need)}</td><td>${esc(x.when||"")}<br><small class="muted">${esc(x.freq||"")}</small></td><td class="num"><span class="muted">Wholesale</span></td><td>${chip(x.status==="sent"?"sent":x.status==="done"?"paid":x.status==="lost"?"cancelled":"new").replace("Price sent","Quote sent").replace(">Paid<",">Won<")}</td><td class="muted">${ago(x.at)}</td></tr>`;
   box.innerHTML=`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Needed</th><th class="num">Total</th><th>Status</th><th>Received</th></tr></thead><tbody>${qs.map(qrow).join("")}${os.slice(0,200).map(o=>`<tr data-order="${esc(o.id)}" class="${o.status==="new"?"isnew":""}"><td class="mono">${esc(o.id)}</td><td class="who"><b>${esc(o.biz||o.name)}</b><small>${o.biz?esc(o.name)+" · ":""}${esc(o.phone)}</small></td><td class="its">${esc(itemsText(o))}</td><td>${esc(o.when||"Not set")}<br><small class="muted">${esc(o.how)}</small></td><td class="num">${o.status==="new"?'<span class="muted">To price</span>':fmt(orderTotal(o))}</td><td>${chip(o.status)}</td><td class="muted">${ago(o.at)}</td></tr>`).join("")}</tbody></table></div>
   <ul class="tasks ocards">${qs.filter(x=>x.status==="new").map(quoteRow).join("")}${os.slice(0,200).map(o=>ACT[o.status]?taskRow(o):`<li>${orderRow(o)}</li>`).join("")}</ul>`;
+  if(WHYON)whyPaint();
 }
 document.addEventListener("click",e=>{const f=e.target.closest("[data-of]");if(f){oFilter=f.dataset.of;document.querySelectorAll("[data-of]").forEach(b=>b.setAttribute("aria-pressed",b===f));drawOrders()}});
 
@@ -813,7 +953,7 @@ function drawOrder(){
    <details class="wait card" style="border:0"><summary><span>History</span><span aria-hidden="true">›</span></summary><ul class="log" style="padding:0 16px 16px">${o.log.map(l=>`<li><b>${stName(l.s)}</b> · ${new Date(l.at).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}</li>`).join("")}</ul></details>`;
   const F=$("drF");
   const prim={new:[`Text the price · ${fmt(t.tot)}`,"sent"],sent:["They said yes","confirmed"],confirmed:["Got paid","paid"],paid:["Mark delivered","done"]}[o.status];
-  F.innerHTML=`${prim?`<button class="btn b-green" type="button" id="oNext">${prim[0]}</button>`:""}${["new","sent","confirmed"].includes(o.status)?`<button class="btn b-ghost" type="button" id="oCancel">Cancel order</button>`:""}${o.status==="cancelled"?`<button class="btn b-soft" type="button" id="oReopen">Reopen order</button>`:""}`;
+  F.innerHTML=`${prim?`<button class="btn b-green" type="button" id="oNext">${prim[0]}</button>`:""}${["new","sent","confirmed"].includes(o.status)?`<button class="btn b-ghost" type="button" id="oCancel">Cancel order</button>`:""}${o.status==="cancelled"?`<button class="btn b-soft" type="button" id="oReopen">Reopen order</button>`:""}${["confirmed","paid","done"].includes(o.status)?`<button class="btn b-ghost" type="button" id="oPrint">Print slip</button>`:""}`;
   // events
   $("drB").querySelectorAll("[data-lp]").forEach(inp=>inp.oninput=()=>{const l=OPEN.lines[+inp.dataset.lp];l.price=inp.value===""?null:+inp.value;refreshTotals()});
   if($("oFee"))$("oFee").oninput=e=>{OPEN.fee=+e.target.value||0;refreshTotals()};
@@ -822,6 +962,7 @@ function drawOrder(){
   if($("oNext"))$("oNext").onclick=()=>advance(prim[1]);
   if($("oCancel"))$("oCancel").onclick=()=>{if(confirm("Cancel this order? The customer is not told automatically."))advance("cancelled")};
   if($("oReopen"))$("oReopen").onclick=()=>advance("new");
+  if($("oPrint"))$("oPrint").onclick=()=>printSlip(o);
   const gc=$("drB").querySelector("[data-go-cust]");if(gc)gc.onclick=()=>go("orders",{q:gc.dataset.goCust,anim:1});
 }
 function refreshTotals(){const t=totals(OPEN);$("oTot").textContent=fmt(t.tot);
@@ -898,7 +1039,7 @@ function pStock(){
       <div class="field"><label for="spItem">The "Add to my order" button adds</label><select id="spItem">${CAT.map(c=>c.units.map(u=>`<option value="${c.id}|${esc(u[0])}" ${sp.item===c.id&&sp.unit===u[0]?"selected":""}>${c.name}, ${u[1].toLowerCase()}</option>`).join("")).join("")}</select></div>
     </div></details>
   </section>
-  <section class="card"><ul class="stk2">${CAT.map(c=>{const x=st[c.id]||{},status=x.status||"in";return `<li data-sid="${c.id}" class="${status==="out"?"is-out":""} ${openStock===c.id?"open":""}">
+  <section class="card" id="cStock"><ul class="stk2">${CAT.map(c=>{const x=st[c.id]||{},status=x.status||"in";return `<li data-sid="${c.id}" class="${status==="out"?"is-out":""} ${openStock===c.id?"open":""}">
     <div class="sr"><img src="${esc((S.photos||{})["item."+c.id]||c.img)}" alt=""><div><b>${c.name}</b><small data-sum>${stSummary(c,x)}</small></div>
       <div class="st3" role="group" aria-label="${c.name} stock"><i class="th"></i>${ST3.map(([k,l])=>`<button type="button" data-st="${k}" aria-pressed="${status===k}">${l}</button>`).join("")}</div>
       <button class="sx" type="button" data-x aria-expanded="${openStock===c.id}" aria-label="Prices and details for ${c.name}">${chev}</button></div>
@@ -1036,7 +1177,7 @@ function pMoney(){
     <div class="kpi"><span>Customers</span><b>${cust}</b><small>${cust?Math.round(rep/cust*100):0}% ordered again</small></div>
     <div class="kpi"><span>Cancelled</span><b>${os.filter(o=>o.status==="cancelled").length}</b><small>of ${os.length} orders</small></div>
   </div></section>
-  <section class="card" style="margin-bottom:18px"><div class="card-h"><h2>Paid sales by week</h2><span class="muted" style="font-size:13px">Hover a week for the details</span></div><div class="chart" id="bigChart"></div></section>
+  <section class="card" id="cChart" style="margin-bottom:18px"><div class="card-h"><h2>Paid sales by week</h2><span class="muted" style="font-size:13px">Hover a week for the details</span></div><div class="chart" id="bigChart"></div></section>
   <div class="grid2">
     <section class="card"><div class="card-h"><h2>What sells</h2><span class="muted" style="font-size:13px">Paid sales by item</span></div>
       ${top.length?`<ul class="hbars">${top.map(([id,v])=>`<li><span>${cat(id).name}</span><b>${fmt0(v)}</b><i><s style="width:${Math.max(2,v/mx*100)}%"></s></i></li>`).join("")}</ul>`:`<p class="empty">No paid orders in this range.</p>`}</section>
@@ -1124,6 +1265,166 @@ function pSettings(){
   if($("sSite"))$("sSite").onclick=()=>{if(!confirm("Put the website back to how it was built?"))return;SITE={v:1};DRAFT=null;localStorage.removeItem("ot-site");localStorage.removeItem("ot-site-draft");toast("Website back to the original");pubBar()};
 }
 
+
+/* ===================== TODAY EXTRAS ===================== */
+function openOrders(){return DB.orders.filter(o=>["new","sent","confirmed","paid"].includes(o.status))}
+function prepTotals(){const T={};openOrders().forEach(o=>o.lines.forEach(l=>{const k=l.id+"|"+l.unit,t=T[k]=T[k]||{id:l.id,unit:l.unit,qty:0,n:0};t.qty+=l.qty;t.n++}));return Object.values(T).sort((a,b)=>b.n-a.n||b.qty-a.qty)}
+function prepCard(){const P=prepTotals(),n=openOrders().length;if(!P.length)return"";
+  return `<section class="card" id="cPrep"><div class="card-h"><h2>To get ready</h2><span class="muted" style="font-size:13px">For ${n} open order${n>1?"s":""}</span></div><ul class="prep">${P.slice(0,6).map(t=>`<li><img src="${cat(t.id).img}" alt=""><span><b>${cat(t.id).name}</b><small>${t.n} order${t.n>1?"s":""}</small></span><span class="q">${qtyLabel(t.unit,t.qty).replace(" (1½ lb)","")}</span></li>`).join("")}</ul>${P.length>6?`<p class="muted" style="margin:0;padding:0 20px 10px;font-size:13px">+${P.length-6} more on the printed list</p>`:""}<div class="card-f"><button class="btn b-soft b-sm" type="button" onclick="printPrep()">Print the list</button></div></section>`}
+function lapsed(){const M={};DB.orders.forEach(o=>{if(o.status==="cancelled"||!o.phone)return;const k=o.phone.replace(/\D/g,"");const c=M[k]=M[k]||{name:o.name,biz:o.biz,phone:o.phone,n:0,spent:0,last:0,items:{}};c.n++;if(isSale(o))c.spent+=orderTotal(o);c.last=Math.max(c.last,+new Date(o.at));o.lines.forEach(l=>c.items[l.id]=(c.items[l.id]||0)+1)});
+  return Object.values(M).filter(c=>c.n>=2&&Date.now()-c.last>21*DAY&&Date.now()-c.last<150*DAY).sort((a,b)=>b.spent-a.spent).slice(0,4)}
+function backMsg(c){const fav=Object.entries(c.items).sort((a,b)=>b[1]-a[1])[0],it=fav?cat(fav[0]).name.toLowerCase():"seafood";return `Hi ${(c.name||"").split(" ")[0]}, it's Overnight Tider. Fresh ${it} just came in this week. Want me to set some aside for you?`}
+function backCard(){const L=lapsed();if(!L.length)return"";
+  return `<section class="card" id="cBack"><div class="card-h"><h2>Worth a text</h2><span class="muted" style="font-size:13px">Regulars you haven't heard from</span></div><ul class="back">${L.map(c=>{const ph=c.phone.replace(/[^\d+]/g,"");return `<li><span><b>${esc(c.biz||c.name)}</b><small>${c.n} orders, ${fmt0(c.spent)} · last ${Math.round((Date.now()-c.last)/DAY)} days ago</small></span><a class="btn b-soft b-sm" href="sms:${ph}${/iPhone|iPad|Mac/.test(navigator.userAgent)?"&":"?"}body=${encodeURIComponent(backMsg(c))}">Text</a></li>`}).join("")}</ul></section>`}
+function printWin(title,body){const w=open("","_blank","width=720,height=900");if(!w){toast("Allow pop-ups to print.");return}
+  w.document.write(`<!DOCTYPE html><html><head><title>${esc(title)}</title><style>body{font:15px/1.5 system-ui,sans-serif;color:#13202e;margin:32px}h1{font-size:26px;margin:0 0 4px}p{margin:0 0 14px;color:#5d6b75}table{width:100%;border-collapse:collapse;margin-top:12px}td,th{text-align:left;padding:9px 6px;border-bottom:1px solid #ddd}th{font-size:12px;color:#5d6b75}.r{text-align:right}.big{font-size:22px;font-weight:700}.box{border:1.5px solid #13202e;border-radius:8px;padding:12px 14px;margin-top:16px}</style></head><body>${body}<script>onload=()=>{print()}<\/script></body></html>`);w.document.close()}
+function printPrep(){const P=prepTotals();printWin("Prep list",`<h1>Overnight Tider · prep list</h1><p>${new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})} · ${openOrders().length} open orders</p><table><tr><th>Item</th><th>Size</th><th class="r">Total</th><th class="r">Orders</th></tr>${P.map(t=>`<tr><td>${cat(t.id).name}</td><td>${t.unit}</td><td class="r big">${t.qty}</td><td class="r">${t.n}</td></tr>`).join("")}</table>`)}
+function printSlip(o){const t=totals(o);printWin("Order "+o.id,`<h1>Order ${esc(o.id)}</h1><p>Overnight Tider · ${new Date(o.at).toLocaleDateString("en-US",{month:"long",day:"numeric"})}</p><div class="box"><b>${esc(o.biz||o.name)}</b>${o.biz?" · "+esc(o.name):""}<br>${esc(o.phone)}<br>${esc(o.how||"")}${o.zip?" to "+esc(o.zip):""} · needed ${esc(o.when||"")}${o.notes?"<br><i>"+esc(o.notes)+"</i>":""}</div><table><tr><th>Item</th><th class="r">Amount</th><th class="r">Price</th></tr>${o.lines.map(l=>`<tr><td>${cat(l.id).name}</td><td class="r">${lineText(l).replace(/ [a-z].*$/i,m=>m)}</td><td class="r">${fmt((linePrice(l)||0)*l.qty)}</td></tr>`).join("")}${t.disc?`<tr><td>${esc(o.code)} ${o.disc}% off</td><td></td><td class="r">-${fmt(t.disc)}</td></tr>`:""}${o.fee?`<tr><td>${esc(o.how||"Delivery")}</td><td></td><td class="r">${fmt(o.fee)}</td></tr>`:""}<tr><td class="big">Total</td><td></td><td class="r big">${fmt(t.tot)}</td></tr></table><p style="margin-top:16px">${o.paid?"Paid by "+esc(o.paid):"Not paid yet"}</p>`)}
+
+/* ===================== BOARD ===================== */
+const COLS=[["new","New","Needs a price"],["sent","Price sent","Waiting on a yes"],["confirmed","Confirmed","Collect payment"],["paid","Paid","Get it delivered"],["done","Delivered","Last 7 days"]];
+let landed=null;
+function drawBoard(){const box=$("olist");if(!box)return;
+  box.innerHTML=COLS.map(([k,l,sub])=>{const os=DB.orders.filter(o=>o.status===k&&(k!=="done"||Date.now()-new Date(o.at)<8*DAY));
+    return `<div class="col" data-col="${k}"><div class="col-h"><span style="background:none;padding:0;font-size:inherit;color:inherit"><b>${l}</b><small>${sub}</small></span><span>${os.length}</span></div>${os.length?os.map(o=>`<div class="bc ${landed===o.id?"land":""}" draggable="true" data-bc="${esc(o.id)}" tabindex="0"><div class="bc-t"><b>${esc(o.biz||o.name)}</b><span>${o.status==="new"?"":fmt0(orderTotal(o))}</span></div><small>${esc(itemsText(o))}</small><div class="bc-f"><span>${esc(o.when?"Needed "+o.when:"")}</span><span>${ago(o.at)}</span></div></div>`).join(""):`<div class="col-empty">Drop an order here</div>`}</div>`}).join("");
+  landed=null;if(WHYON)whyPaint();
+  box.querySelectorAll(".bc").forEach(c=>{c.ondragstart=e=>{e.dataTransfer.setData("text/plain",c.dataset.bc);e.dataTransfer.effectAllowed="move";requestAnimationFrame(()=>c.classList.add("drag"))};c.ondragend=()=>c.classList.remove("drag");
+    c.onclick=()=>openOrder(c.dataset.bc);c.onkeydown=e=>{if(e.key==="Enter")openOrder(c.dataset.bc)}});
+  box.querySelectorAll(".col").forEach(col=>{col.ondragover=e=>{e.preventDefault();col.classList.add("over")};col.ondragleave=e=>{if(!col.contains(e.relatedTarget))col.classList.remove("over")};
+    col.ondrop=e=>{e.preventDefault();col.classList.remove("over");moveTo(e.dataTransfer.getData("text/plain"),col.dataset.col)}});
+}
+async function moveTo(id,to){const o=DB.orders.find(x=>x.id===id);if(!o||o.status===to)return;
+  if(to==="sent"&&totals(o).missing){openOrder(id);toast("Add the prices first, then text them.");return}
+  if(to==="paid"&&!o.paid){openOrder(id);OPEN.status="confirmed";drawOrder();toast("Pick how they paid.");return}
+  if(o.status==="new"&&to!=="cancelled")o.lines.forEach(l=>{if(l.price==null)l.price=linePrice(l)});
+  if(to==="done")deduct(o);
+  o.status=to;o.log.push({s:to,at:new Date().toISOString()});
+  try{await saveOrder(o)}catch(e){return}
+  landed=id;drawBoard();drawNav();toast(`<b>${esc(o.biz||o.name)}</b> moved to ${stName(to)}`)}
+
+/* ===================== PHONE / DM ORDER ===================== */
+function newOrder(){OPEN=null;let lines=[{id:"crab",unit:"dozen",qty:1}],how="Delivery";
+  $("drT").textContent="New order";$("drChip").innerHTML="";
+  const opts=()=>CAT.map(c=>c.units.map(u=>`<option value="${c.id}|${esc(u[0])}">${c.name}, ${u[1].toLowerCase()}</option>`).join("")).join("");
+  const draw=()=>{$("nl").innerHTML=lines.map((l,i)=>`<div class="nl-row"><select data-ni="${i}" aria-label="Item">${opts()}</select><input type="number" min="0.5" step="0.5" inputmode="decimal" data-nq="${i}" value="${l.qty}" aria-label="Amount"><button type="button" data-nx="${i}" aria-label="Remove">&times;</button></div>`).join("");
+    $("nl").querySelectorAll("[data-ni]").forEach(s=>s.value=lines[+s.dataset.ni].id+"|"+lines[+s.dataset.ni].unit)};
+  $("drB").innerHTML=`<p class="muted" style="margin:0">For orders that come in by phone, text or Instagram. They get the same pricing, texts and records as website orders.</p>
+    <div class="f2"><div class="field"><label for="nN">Name</label><input id="nN" autocomplete="off"></div><div class="field"><label for="nP">Phone</label><input id="nP" inputmode="tel" autocomplete="off"></div></div>
+    <div class="field"><label for="nB">Business (wholesale only)</label><input id="nB" autocomplete="off" placeholder="Leave empty for home customers"></div>
+    <div class="field"><span class="lbl">What they want</span><div class="nl" id="nl"></div><button class="lnk" type="button" id="nAdd" style="justify-self:start;margin-top:4px">+ Add another item</button></div>
+    <div class="f2"><div class="field"><span class="lbl">How</span><div class="segm" id="nH">${["Delivery","Pickup","Shipping"].map(h=>`<button type="button" aria-pressed="${h===how}">${h}</button>`).join("")}</div></div><div class="field"><label for="nW">Needed</label><input id="nW" type="date"></div></div>
+    <div class="field"><label for="nNote">Note</label><input id="nNote" autocomplete="off" placeholder="Optional"></div>
+    <label class="sw-row" style="font-weight:500"><input type="checkbox" id="nYes" style="width:18px;height:18px;accent-color:var(--sign)"> They already agreed on the price</label>`;
+  draw();
+  $("nl").addEventListener("change",e=>{const i=e.target.dataset.ni;if(i!=null){const[a,b]=e.target.value.split("|");lines[+i].id=a;lines[+i].unit=b}});
+  $("nl").addEventListener("input",e=>{const i=e.target.dataset.nq;if(i!=null)lines[+i].qty=+e.target.value||1});
+  $("nl").addEventListener("click",e=>{const i=e.target.dataset.nx;if(i!=null&&lines.length>1){lines.splice(+i,1);draw()}});
+  $("nAdd").onclick=()=>{lines.push({id:"shrimp",unit:"lb",qty:1});draw();$("nl").lastElementChild.querySelector("select").focus()};
+  $("nH").onclick=e=>{const b=e.target.closest("button");if(!b)return;how=b.textContent;$("nH").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b))};
+  $("drF").innerHTML=`<button class="btn b-green" type="button" id="nSave">Add order</button><button class="btn b-ghost" type="button" id="nCancel">Cancel</button>`;
+  $("drF").onclick=null;$("nCancel").onclick=closeDrawer;
+  $("nSave").onclick=async()=>{const name=$("nN").value.trim();if(!name){toast("Add their name.");$("nN").focus();return}
+    const when=$("nW").value?dshort($("nW").value+"T12:00"):"",biz=$("nB").value.trim(),yes=$("nYes").checked;
+    const o=normOrder({id:"OT-"+(Date.now().toString(36).slice(-5)).toUpperCase(),at:new Date().toISOString(),name,phone:$("nP").value.trim(),biz,how,when,notes:$("nNote").value.trim(),channel:biz?"wholesale":"retail",lines:lines.map(l=>({...l,price:null})),status:"new"});
+    if(yes){o.lines.forEach(l=>l.price=linePrice(l));o.log.push({s:"sent",at:o.at},{s:"confirmed",at:o.at});o.status="confirmed"}
+    DB.orders.unshift(o);try{await saveOrder(o)}catch(e){DB.orders.shift();return}if(!LIVE)saveDB();
+    toast(`Order added for <b>${esc(name)}</b>`);drawNav();if(route==="orders")oMode==="board"?drawBoard():drawOrders();else if(route==="today")render();openOrder(o.id)};
+  openDrawer();setTimeout(()=>$("nN").focus(),350)}
+
+/* ===================== SEARCH (Ctrl K) ===================== */
+const IC={page:ICONS.today,act:'<path d="M10 3v14M3 10h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'};
+let ckItems=[],ckSel=0;
+function ckBuild(q){q=q.trim().toLowerCase();const qd=q.replace(/\D/g,""),toks=q.split(/\s+/).filter(Boolean),hit=t=>toks.every(k=>t.toLowerCase().includes(k));
+  const out=[];const add=(grp,it)=>out.push({grp,...it});
+  const sp=(cur().special||{}).on!==false;
+  const acts=[["Add a phone or DM order","Orders",()=>{go("orders");newOrder()}],["See the board","Orders",()=>{oMode="board";go("orders")}],[sp?"Hide the weekly special":"Show the weekly special","Stock",()=>{const s=edit();s.special={...(s.special||{head:"Lobster special, Thu to Sun:",body:"1½ lb lobsters at $7.99/lb.",item:"lobster",unit:"lobster (1½ lb)"}),on:!sp};changed();go("stock");toast("Press Publish to put it live.")}],["Mark everything in stock","Stock",()=>{go("stock");setTimeout(()=>$("allIn")&&$("allIn").click(),60)}],["Print the prep list","Today",printPrep],["Download orders","Money",()=>{go("money");setTimeout(()=>$("csv").click(),60)}],["Edit the website","Website",()=>go("website")],["Lock the dashboard","",lock]];
+  acts.forEach(([l,s,f])=>{if(!q||hit(l+" "+s))add("Do",{t:l,s,ic:IC.act,run:f})});
+  PAGES.forEach(([k,l])=>{if(q&&hit("go "+l))add("Go to",{t:l,s:"Page",ic:ICONS[k],run:()=>go(k)})});
+  if(q){
+    DB.orders.filter(o=>hit(o.name+" "+o.biz+" "+o.id+" "+itemsText(o))||(qd.length>=3&&o.phone.replace(/\D/g,"").includes(qd))).slice(0,6).forEach(o=>add("Orders",{t:`${o.biz||o.name} · ${o.id}`,s:`${stName(o.status)} · ${itemsText(o)}`,img:cat((o.lines[0]||{}).id).img,k:o.status==="new"?"":fmt0(orderTotal(o)),run:()=>{go("orders");openOrder(o.id)}}));
+    DB.quotes.filter(x=>hit(x.name+" "+x.biz+" "+x.need)).slice(0,3).forEach(x=>add("Orders",{t:`${x.biz||x.name} · wholesale request`,s:x.need,ic:IC.act,run:()=>openQuote(x.id)}));
+    CAT.filter(c=>hit(c.name)).slice(0,4).forEach(c=>{const x=(cur().stock||{})[c.id]||{};add("Stock",{t:c.name,s:`${(ST3.find(z=>z[0]===(x.status||"in"))||[])[1]} · ${stSummary(c,x).replace(/<[^>]+>/g,"")}`,img:c.img,run:()=>{openStock=c.id;go("stock");setTimeout(()=>{const li=document.querySelector(`[data-sid="${c.id}"]`);if(li)li.scrollIntoView({behavior:"smooth",block:"center"})},120)}})});
+    const seen=new Set();DB.orders.filter(o=>hit(o.name+" "+o.biz)||(qd.length>=3&&o.phone.replace(/\D/g,"").includes(qd))).forEach(o=>{const k=o.phone;if(seen.has(k)||seen.size>=3)return;seen.add(k);const n=DB.orders.filter(x=>x.phone===k).length;add("Customers",{t:o.biz||o.name,s:`${o.phone} · ${n} order${n>1?"s":""}`,ic:ICONS.customers,run:()=>go("orders",{q:o.phone,anim:1})})});
+  }else DB.orders.filter(o=>o.status==="new").slice(0,4).forEach(o=>add("Needs a price",{t:`${o.name} · ${o.id}`,s:itemsText(o),img:cat((o.lines[0]||{}).id).img,run:()=>{go("orders");openOrder(o.id)}}));
+  return out}
+function ckDraw(){const L=$("ckList");let g="";ckItems=ckBuild($("ckIn").value);ckSel=Math.min(ckSel,Math.max(0,ckItems.length-1));
+  L.innerHTML=ckItems.length?ckItems.map((it,i)=>{const head=it.grp!==g?`<li class="ckg" role="presentation">${it.grp}</li>`:"";g=it.grp;return head+`<li role="option" data-ck="${i}" aria-selected="${i===ckSel}"><span class="ci">${it.img?`<img src="${it.img}" alt="">`:`<svg viewBox="0 0 20 20" aria-hidden="true">${it.ic}</svg>`}</span><b>${esc(it.t)}</b><small>${esc(it.s||"")}</small>${it.k?`<span class="k">${it.k}</span>`:""}</li>`}).join(""):`<li class="ckg" role="presentation">Nothing found. Try a name, phone number or item.</li>`}
+function ckOpen(){$("cmdk").hidden=false;$("ckIn").value="";ckSel=0;ckDraw();setTimeout(()=>$("ckIn").focus(),20)}
+function ckClose(){$("cmdk").hidden=true}
+function ckRun(i){const it=ckItems[i];if(!it)return;ckClose();it.run()}
+$("ckKey").textContent=/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent)?"⌘ K":"Ctrl K";
+$("ckBtn").onclick=ckOpen;$("ckBtnM").onclick=ckOpen;
+$("ckIn").oninput=()=>{ckSel=0;ckDraw()};
+$("ckIn").onkeydown=e=>{if(e.key==="ArrowDown"){e.preventDefault();ckSel=Math.min(ckItems.length-1,ckSel+1);ckDraw();$("ckList").querySelector('[aria-selected="true"]')?.scrollIntoView({block:"nearest"})}
+  if(e.key==="ArrowUp"){e.preventDefault();ckSel=Math.max(0,ckSel-1);ckDraw();$("ckList").querySelector('[aria-selected="true"]')?.scrollIntoView({block:"nearest"})}
+  if(e.key==="Enter"){e.preventDefault();ckRun(ckSel)}};
+$("ckList").onclick=e=>{const li=e.target.closest("[data-ck]");if(li)ckRun(+li.dataset.ck)};
+$("ckList").onmousemove=e=>{const li=e.target.closest("[data-ck]");if(li&&+li.dataset.ck!==ckSel){ckSel=+li.dataset.ck;$("ckList").querySelectorAll("[data-ck]").forEach(x=>x.setAttribute("aria-selected",+x.dataset.ck===ckSel))}};
+$("cmdk").onclick=e=>{if(e.target===$("cmdk"))ckClose()};
+addEventListener("keydown",e=>{if($("app").hidden)return;
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();$("cmdk").hidden?ckOpen():ckClose()}
+  else if(e.key==="Escape"&&!$("cmdk").hidden)ckClose()
+  else if(e.key==="/"&&!e.target.closest("input,textarea,select")&&$("cmdk").hidden){e.preventDefault();ckOpen()}});
+
+/* ===================== NEW ORDER SOUND ===================== */
+function chime(){try{const A=new (window.AudioContext||window.webkitAudioContext)(),t=A.currentTime;[[880,0],[1318.5,.14]].forEach(([f,d])=>{const o=A.createOscillator(),g=A.createGain();o.type="sine";o.frequency.value=f;g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(.14,t+d+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d+.6);o.connect(g).connect(A.destination);o.start(t+d);o.stop(t+d+.65)})}catch(e){}}
+
+/* ===================== WHY WE BUILT IT THIS WAY ===================== */
+const WHY_D=[
+ ["today","#cHello","One sentence, not a spreadsheet","The owner opens the app and knows in two seconds how many things need doing and how the week is going.","Less time in the app, more time selling seafood."],
+ ["today","#cNeeds","Every row says the next step","Price it, Collect payment, Deliver, Reply. No status codes to interpret. The list empties as the work gets done.","Orders don't sit unanswered, and the fastest reply usually wins the sale."],
+ ["today","#cPrep","A shopping list from real orders","Adds up every open order by item and size, so the morning buy at the market matches what's already sold. One tap prints it.","Less waste, and no promising orders you can't fill."],
+ ["today","#cBack","Regulars worth a text","Customers who ordered at least twice but went quiet for three weeks, each with a ready-to-send text about their favorite item.","Repeat orders from people who already trust you, at zero ad cost."],
+ ["today","#cWeek","This week against last week","Compared at the same point in the week, so Tuesday isn't measured against a full week.","Spot a slow week early enough to run a special."],
+ ["orders","#oTools","Three tabs, not eight","Needs you, Waiting on customer, Finished. That's how an owner thinks about the day. A search box finds any order by name, phone or item.","Nothing slips through the cracks."],
+ ["orders","#olist","Price once, text in one tap","Open an order and prices fill in from the price list. One button opens Messages with every item and the total written out.","Replies in under a minute instead of typing each order by hand."],
+ ["orders","#olist","Nothing is charged until they say yes","The same promise the website makes. Orders move from price sent to confirmed to paid, and the payment method is recorded.","No chargebacks or refund fights over market-price seafood."],
+ ["orders","#olist","A board for busy days","Switch to Board and drag orders from New to Delivered. Marking delivered takes the amounts off the stock counts.","The whole day's pipeline at a glance on a Friday rush."],
+ ["orders","#olist","Phone and Instagram orders go in too","+ New order records orders taken outside the website, with the same pricing, texts and history.","Every sale counted in one place, so the money numbers are real."],
+ ["orders","#oTools","Find anything with one box","Press Ctrl K (or the search button) and type a name, phone number, item or what you want to do.","Answer a customer on the phone in seconds."],
+ ["stock",".spc","The weekly special is a switch","Turn the special bar on the website on or off, and choose what its Add button puts in the cart.","Moves extra stock before it loses value."],
+ ["stock","#cStock","Three words, one tap","In stock, Going fast or Sold out, straight onto the website. Sold out items stay visible so customers know you carry them.","No more \"do you have crabs?\" messages, and no selling what's gone."],
+ ["stock","#cStock","Counts that go down by themselves","Optional on-hand counts. Delivered orders subtract automatically and the item flips to Going fast, then Sold out.","The website never sells what's not in the cooler."],
+ ["stock","#cStock","Nothing changes until you publish","Every edit waits as a draft with a count of changes, then goes live in one press. Discard puts it all back.","Edit calmly without breaking the live site."],
+ ["website","#pv","Click the website to edit it","The real website sits next to the fields. Click any headline or photo in it and the matching field opens.","Updates without calling a developer."],
+ ["website",".ed>div:first-child","Plain-language fields","Every field is named for what it changes on the page, with the original text shown faintly so nothing gets lost.","Changes take minutes, not support tickets."],
+ ["website",".ed>div:first-child","Phone photos, resized for you","Upload straight from the phone. Photos are shrunk for speed and stored in the owner's own Google Drive.","Fresh photos every week keep the site believable and fast."],
+ ["money",".kpis","Paid money, not guesses","Sales only count once an order is paid. Money still to collect is shown on its own.","Know the cash in hand and what's owed."],
+ ["money","#cChart","Week by week","Hover any week for the total and the number of paid orders.","See the seasons and buy ahead for holidays and crab season."],
+ ["money",".grid2","What actually earns","Sales by item, home cooks against wholesale, and how people pay.","Put specials and photos behind the items that make the money."],
+ ["money",".grid2","The customer list is yours","Best customers, plus the full customer, email and text lists, download any time.","No platform owns the relationships. Ready for promotions."],
+ ["settings",".grid2","Runs on the owner's Google Sheet","Orders, stock and website text live in a Sheet the owner owns. No monthly software and no cut of each order.","Lower running costs than any ordering platform."],
+ ["settings",".grid2","A PIN with a lockout","Four digits for the owner. Ten wrong tries locks it for 15 minutes.","Simple for the owner, closed to guessers."]];
+const WHYSHOW=!LIVE||/[?&#]why\b/.test(location.search+location.hash);
+let WHYON=false,wCur=0;
+function whyClear(){document.querySelectorAll(".why-stack").forEach(n=>n.remove());document.querySelectorAll("[data-why-on]").forEach(n=>n.removeAttribute("data-why-on"))}
+function whyPaint(){whyClear();const by=new Map();
+  WHY_D.forEach((w,k)=>{if(w[0]!==route)return;const el=document.querySelector(w[1]);if(!el)return;if(!by.has(el))by.set(el,[]);by.get(el).push(k)});
+  by.forEach((ks,el)=>{const st=document.createElement("div");st.className="why-stack";
+    st.innerHTML=ks.map(k=>{const[,,t,txt,roi]=WHY_D[k];return `<div class="why-note" data-k="${k}"><span class="wn">${k+1}</span><b>${esc(t)}</b><p>${esc(txt)}</p><p class="roi">${esc(roi)}</p></div>`}).join("");
+    const pd=getComputedStyle(el).display;if(/grid|flex/.test(pd)&&!el.classList.contains("card"))el.parentNode.insertBefore(st,el);else el.prepend(st);el.setAttribute("data-why-on","")})}
+function whyLabel(){const w=WHY_D[wCur],c=$("wCur");const put=()=>{$("wNum").textContent=wCur+1;$("wT").textContent=w[2];$("wPos").textContent=`${T[w[0]]} · note ${wCur+1} of ${WHY_D.length}`;c.classList.remove("swap")};
+  if($("wT").textContent&&$("wT").textContent!==w[2]){c.classList.add("swap");setTimeout(put,170)}else put();
+  $("wBar").style.width=((wCur+1)/WHY_D.length*100)+"%";$("wList").querySelectorAll("[data-wk]").forEach(b=>b.setAttribute("aria-current",+b.dataset.wk===wCur))}
+function whyJump(k){wCur=(k+WHY_D.length)%WHY_D.length;const w=WHY_D[wCur];
+  const show=()=>{const n=document.querySelector(`.why-note[data-k="${wCur}"]`);if(n){n.scrollIntoView({behavior:"smooth",block:"center"});n.classList.remove("flash");void n.offsetWidth;n.classList.add("flash")}};
+  if(w[0]!==route){go(w[0]);setTimeout(show,250)}else{whyPaint();show()}whyLabel()}
+function whyDock(){if(!WHYSHOW)return;const d=document.createElement("div");d.className="why-dock";d.id="wDock";
+  let g="";d.innerHTML=`<div class="why-list" id="wList"><p>Jump to a note</p>${WHY_D.map((w,k)=>{const h=w[0]!==g?`<span class="wg">${T[w[0]]}</span>`:"";g=w[0];return h+`<button type="button" data-wk="${k}"><span>${k+1}</span>${esc(w[2])}</button>`}).join("")}</div>
+  <button type="button" class="why-tog" id="wTog" aria-pressed="false"><span class="sw2" aria-hidden="true"></span><span class="wt"><b>Why we built it this way</b><small>${WHY_D.length} notes</small></span></button>
+  <button type="button" class="why-cur" id="wCur" aria-expanded="false"><span class="num" id="wNum">1</span><span class="ct"><small id="wPos"></small><b id="wT"></b></span></button>
+  <div class="why-nav"><button type="button" id="wPrev" aria-label="Previous note"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><button type="button" id="wNext" aria-label="Next note"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
+  <span class="why-bar" aria-hidden="true"><i id="wBar"></i></span><span class="why-ping" aria-hidden="true"></span>`;
+  document.body.appendChild(d);try{if(localStorage.getItem("ot-why-dash"))d.classList.add("seen")}catch(e){}
+  $("wTog").onclick=()=>{WHYON=!WHYON;$("wTog").setAttribute("aria-pressed",WHYON);d.classList.toggle("on",WHYON);document.body.classList.toggle("why",WHYON);d.classList.add("seen");try{localStorage.setItem("ot-why-dash","1")}catch(e){}
+    if(WHYON){const first=WHY_D.findIndex(w=>w[0]===route);whyJump(first<0?0:first)}else{d.classList.remove("open");whyClear()}};
+  $("wPrev").onclick=()=>whyJump(wCur-1);$("wNext").onclick=()=>whyJump(wCur+1);
+  $("wCur").onclick=()=>{const o=!d.classList.contains("open");d.classList.toggle("open",o);$("wCur").setAttribute("aria-expanded",o);if(o)$("wList").querySelector('[aria-current="true"]')?.scrollIntoView({block:"nearest"})};
+  $("wList").onclick=e=>{const b=e.target.closest("[data-wk]");if(!b)return;d.classList.remove("open");whyJump(+b.dataset.wk)};
+  document.addEventListener("click",e=>{if(d.classList.contains("open")&&!d.contains(e.target))d.classList.remove("open")});
+  addEventListener("keydown",e=>{if(!WHYON||e.target.closest("input,textarea,select"))return;if(e.key==="]")whyJump(wCur+1);if(e.key==="[")whyJump(wCur-1)});
+}
+
 /* ===================== LOCK / BOOT ===================== */
 const pinBoxes=[...document.querySelectorAll("#pin input")];
 pinBoxes.forEach((inp,i)=>{
@@ -1140,9 +1441,9 @@ async function tryPin(p){
   }catch(e){PIN="";$("lockMsg").textContent=/locked/i.test(e.message)?"Too many tries. Wait 15 minutes and try again.":/Wrong|pin/i.test(e.message)?"That PIN isn't right. Try again.":"Couldn't reach your Google Sheet. Check your connection.";
     const g=$("pin");g.classList.remove("bad");void g.offsetWidth;g.classList.add("bad");pinBoxes.forEach(b=>b.value="");pinBoxes[0].focus()}
 }
-function enter(anim){$("lock").hidden=true;$("app").hidden=false;if(anim)$("app").classList.add("in");const h=location.hash.slice(1);route=T[h]?h:"today";drawNav();render();requestAnimationFrame(placeInd);
-  if(!LIVE)addEventListener("storage",e=>{if(e.key==="ot-inbox"&&e.newValue){const n=mergeInbox();if(n){DB.orders.sort((a,b)=>new Date(b.at)-new Date(a.at));const o=DB.orders[0];toast(`New order from <b>${esc(o.name||"a customer")}</b>`);drawNav();if(route==="today"||route==="orders")render()}}});
-  if(LIVE)setInterval(async()=>{if(document.hidden||OPEN)return;try{const before=DB.orders.filter(o=>o.status==="new").length;await loadAll();const after=DB.orders.filter(o=>o.status==="new").length;if(after>before)toast(`<b>${after-before}</b> new order${after-before>1?"s":""}`);drawNav();if(["today","orders"].includes(route))render()}catch(e){}},60000);
+function enter(anim){$("lock").hidden=true;$("app").hidden=false;if(!$("wDock"))whyDock();if(anim)$("app").classList.add("in");const h=location.hash.slice(1);route=T[h]?h:"today";drawNav();render();requestAnimationFrame(placeInd);
+  if(!LIVE)addEventListener("storage",e=>{if(e.key==="ot-inbox"&&e.newValue){const n=mergeInbox();if(n){DB.orders.sort((a,b)=>new Date(b.at)-new Date(a.at));const o=DB.orders[0];toast(`New order from <b>${esc(o.name||"a customer")}</b>`);chime();drawNav();if(route==="today"||route==="orders")render()}}});
+  if(LIVE)setInterval(async()=>{if(document.hidden||OPEN)return;try{const before=DB.orders.filter(o=>o.status==="new").length;await loadAll();const after=DB.orders.filter(o=>o.status==="new").length;if(after>before){toast(`<b>${after-before}</b> new order${after-before>1?"s":""}`);chime()}drawNav();if(["today","orders"].includes(route))render()}catch(e){}},60000);
 }
 function lock(){sessionStorage.removeItem("ot-pin");PIN="";location.hash="";location.reload()}
 $("lockBtn").onclick=lock;
