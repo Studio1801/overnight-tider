@@ -144,10 +144,7 @@ button{cursor:pointer}
 .tc-call:hover{background:rgba(255,255,255,.18)}
 .tc-link{color:#fff;font-weight:600;font-size:15.5px;text-decoration:underline;text-decoration-color:var(--band);text-decoration-thickness:2px;text-underline-offset:6px}
 .tc-link:hover{color:var(--band)}
-.tc-ph{position:relative;justify-self:start;width:min(380px,calc(100% - 18px));margin:26px 0 0 18px}
-.tp-back{position:absolute;top:-24px;left:-16px;width:56%;background:#fff;padding:8px 8px 24px;border-radius:6px;box-shadow:0 24px 50px -20px rgba(0,0,0,.6);transform:rotate(-8deg);transition:transform .6s var(--ease)}
-.tp-back img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:3px}
-.tc-ph:hover .tp-back{transform:rotate(-11deg) translate(-8px,-6px)}
+.tc-ph{position:relative;justify-self:start;width:min(380px,100%)}
 .tc-proof{display:block;position:relative;justify-self:start;width:100%;background:#fff;padding:10px 10px 0;border-radius:6px;color:var(--ink);text-decoration:none;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);transform:rotate(-2deg);transition:transform .5s var(--ease)}
 .tc-proof:hover{transform:rotate(0deg) translateY(-4px)}
 .tc-proof img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;border-radius:3px}
@@ -166,7 +163,7 @@ button{cursor:pointer}
   .tc-pledge li{border-bottom:0;padding:28px 32px 40px 0}
   .tc-pledge li+li{padding-left:32px;border-left:1px solid rgba(255,255,255,.1)}
 }
-@media (prefers-reduced-motion:reduce){.tc-proof,.tp-back,.tc-ph:hover .tp-back{transform:none}}
+@media (prefers-reduced-motion:reduce){.tc-proof{transform:none}}
 .treviews{display:grid;gap:16px;margin-top:56px}
 .rv-card{background:#fff;border-radius:14px;padding:22px;display:grid;gap:10px}
 .rv-stars{color:var(--band);letter-spacing:2px;font-size:16px}
@@ -587,7 +584,8 @@ dialog[open]{animation:pop .3s var(--ease)}
 .pro h2:focus{outline:none}
 .pro .btn{width:100%;justify-content:center;margin-top:24px}
 .pro .off-no{display:block;margin:14px auto 0}
-.pro .off-ph img{object-position:center}
+.pro .off-ph img{object-position:50% 40%}
+@media (max-width:699px){.pro .off-ph{height:230px}}
 .off{display:grid;position:relative}
 .off-ph{margin:0;height:150px;overflow:hidden;background:var(--frost)}
 .off-ph img{width:100%;height:100%;object-fit:cover;display:block}
@@ -977,7 +975,6 @@ body:has(.obar.show) .chat-peek{bottom:164px}
         </div>
       </div>
       <div class="tc-ph io" style="--d:120ms">
-      <span class="tp-back" aria-hidden="true"><img src="img/crabs.webp" alt="" width="655" height="655" loading="lazy"></span>
       <a class="tc-proof" href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener" aria-label="Our building, on Instagram">
         <img data-kimg="building" src="img/building-wide.webp" alt="The Overnight Tider building with the name painted on the front and a white work truck outside" width="900" height="600" loading="lazy">
         <span class="tp-cap"><b>Our building</b><span>@overnight_tider</span></span>
@@ -1353,13 +1350,13 @@ body:has(.obar.show) .chat-peek{bottom:164px}
 </dialog>
 <dialog id="promo" aria-labelledby="proT">
   <div class="off pro">
-    <figure class="off-ph"><img data-kimg="popup" src="img/ig-crawfish.webp" alt="" width="720" height="720"></figure>
+    <figure class="off-ph"><img data-kimg="popup" src="img/crate.webp" alt="Live lobsters in a crate, one of them a bright orange calico" width="1080" height="1080"></figure>
     <div class="off-in">
       <button class="x" type="button" data-close aria-label="Close">&times;</button>
       <p class="off-k" id="proTag" data-pk="tag">This weekend</p>
-      <h2 id="proT" data-pk="head" tabindex="-1" autofocus>Live crawfish are in</h2>
-      <p id="proBody" data-pk="body">Live crawfish by the pound or by the sack, while this week&rsquo;s batch lasts.</p>
-      <a class="btn btn-green" id="proBtn" data-pk="btn" href="#shop">Show me the crawfish</a>
+      <h2 id="proT" data-pk="head" tabindex="-1" autofocus>Live lobsters are in</h2>
+      <p id="proBody" data-pk="body">Hard-shell, banded and lively. Two for dinner or a case for your kitchen, while this week&rsquo;s crate lasts.</p>
+      <a class="btn btn-green" id="proBtn" data-pk="btn" href="#shop">Show me the lobsters</a>
       <button class="off-no" type="button" data-close>Not now</button>
     </div>
   </div>
@@ -1794,7 +1791,7 @@ function liveApply(S){
 })();
 
 /* ---------- owner pop-up announcement ---------- */
-const POP0={on:!!SHOP.pitch,tag:"This weekend",head:"Live crawfish are in",body:"Live crawfish by the pound or by the sack, while this week's batch lasts.",act:"item",item:"crawfish",btn:"Show me the crawfish",when:"5"};
+const POP0={on:!!SHOP.pitch,tag:"This weekend",head:"Live lobsters are in",body:"Hard-shell, banded and lively. Two for dinner or a case for your kitchen, while this week's crate lasts.",act:"item",item:"lobster",btn:"Show me the lobsters",when:"5"};
 const popData=S=>{const p=(S&&S.popup)||{},d={...POP0};Object.keys(p).forEach(k=>{if(p[k]!==""&&p[k]!=null)d[k]=p[k]});return d};
 window.OTpop=(function(){
   const dlg=$("promo");if(!dlg)return{sync(){}};

@@ -1539,7 +1539,7 @@ const GROUPS=[
  {t:"First-order offer",s:"The email popup",offer:true}];
 const SLIDE0=[["Live lobster","This week\u2019s crate"],["Head-on shrimp","Fresh, shell-on"],["Red porgy","Whole, on ice"],["Squid","Whole, fresh"],["Calico lobster","Ask for the odd colored ones"]];
 let pvMode="desktop",defs={},defImg={};
-const POP0={tag:"This weekend",head:"Live crawfish are in",body:"Live crawfish by the pound or by the sack, while this week's batch lasts.",act:"item",item:"crawfish",btn:"Show me the crawfish",when:"5"};
+const POP0={tag:"This weekend",head:"Live lobsters are in",body:"Hard-shell, banded and lively. Two for dinner or a case for your kitchen, while this week's crate lasts.",act:"item",item:"lobster",btn:"Show me the lobsters",when:"5"};
 const POPACT=[["item","Show one item"],["shop","Open the store"],["bulk","Wholesale form"],["dm","Instagram messages"]];
 const POPWHEN=[["3","After 3 seconds"],["5","After 5 seconds"],["15","After 15 seconds"],["scroll","Once they start scrolling"]];
 function popPost(show){const f=$("pvF");if(f&&f.contentWindow)f.contentWindow.postMessage({type:"ot-popup",show},location.origin)}
@@ -1563,7 +1563,7 @@ function pWebsite(){
       ${g.contact?`<div class="f2">${[["phone","Phone","(555) 123-4567"],["city","City","Philadelphia"]].map(([k,l,ph])=>`<div class="field"><label for="c-${k}">${l}</label><input id="c-${k}" data-cc="${k}" value="${esc(K[k]||"")}" placeholder="${ph}"></div>`).join("")}</div>
         ${[["address","Address","123 Dock St, Philadelphia, PA"],["hours","Hours","Thu to Sun, 9 AM to 6 PM"],["bulkTerms","Wholesale terms","Restaurant delivery Tue and Fri. $150 minimum."]].map(([k,l,ph])=>`<div class="field"><label for="c-${k}">${l}</label><input id="c-${k}" data-cc="${k}" value="${esc(K[k]||"")}" placeholder="${ph}"></div>`).join("")}`:""}
       ${g.popup?`<div class="sw-row"><button class="sw" type="button" role="switch" id="ppOn" aria-checked="${!!PP.on}" aria-label="Show the pop-up on the website"></button><span id="ppState">${PP.on?"On. Visitors see it once":"Off. Only you can see it here"}</span></div>
-        ${photoSlot("popup","Pop-up photo",P.popup||defImg.popup||"img/ig-crawfish.webp",!!P.popup)}
+        ${photoSlot("popup","Pop-up photo",P.popup||defImg.popup||"img/crate.webp",!!P.popup)}
         ${[["tag","Small line on top"],["head","Headline"],["body","Text","area"]].map(([k,l,t])=>`<div class="field"><label for="pp-${k}">${l}</label>${t?`<textarea id="pp-${k}" data-pp="${k}" placeholder="${esc(POP0[k])}">${esc(PP[k]||"")}</textarea>`:`<input id="pp-${k}" data-pp="${k}" value="${esc(PP[k]||"")}" placeholder="${esc(POP0[k])}">`}</div>`).join("")}
         <div class="f2"><div class="field"><label for="pp-act">The button</label><select id="pp-act" data-pp="act">${POPACT.map(([v,l])=>`<option value="${v}" ${(PP.act||POP0.act)===v?"selected":""}>${l}</option>`).join("")}</select></div>
           <div class="field" id="ppItemF" ${(PP.act||POP0.act)==="item"?"":"hidden"}><label for="pp-item">Which item</label><select id="pp-item" data-pp="item">${CAT.map(c=>`<option value="${c.id}" ${(PP.item||POP0.item)===c.id?"selected":""}>${c.name}</option>`).join("")}</select></div></div>
