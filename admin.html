@@ -68,7 +68,7 @@ img{display:block;max-width:100%}
 .top-in{display:flex;align-items:center;gap:14px;padding:14px 18px;max-width:1240px;margin:0 auto}
 .top-mark{width:32px;height:32px}
 .top h1{font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;margin:0;letter-spacing:.2px;white-space:nowrap}
-@media (max-width:520px){.top-act .btn{padding:8px 12px;font-size:13px}.top-act .hide-m{display:none}}
+@media (max-width:520px){.top h1{white-space:normal;text-wrap:balance;font-size:27px;min-width:0}.top-act .btn{padding:8px 12px;font-size:13px}.top-act .hide-m{display:none}}
 .top .when{font-size:13px;color:var(--muted);display:none}
 .top-act{margin-left:auto;display:flex;gap:8px;align-items:center}
 .page{max-width:1240px;margin:0 auto;padding:20px 18px}
@@ -1156,11 +1156,22 @@ function quoteRow(q){return `<li><button class="task k-quote" type="button" data
 const TG=[["reply","Reply","They're waiting on an answer"],["price","Send a price","Weigh it up and text them a total"],["pay","Get paid","They said yes. Send the payment link"],["deliver","Deliver","Paid for. Pack it and get it to them"]];
 function tGroups(uc,qn,nw,conf,paid){const rows={reply:uc.map(chatTask).join("")+qn.map(quoteRow).join(""),price:nw.map(taskRow).join(""),pay:conf.map(taskRow).join(""),deliver:paid.map(taskRow).join("")},n={reply:uc.length+qn.length,price:nw.length,pay:conf.length,deliver:paid.length};
   return `<div class="tgs">${TG.filter(g=>n[g[0]]).map(([k,t,h])=>`<section class="tg tg-${k}"><h3 class="tg-h"><i></i><b>${t}</b><span class="tg-n">${n[k]}</span><span class="tg-hint">${h}</span></h3><ul class="tasks">${rows[k]}</ul></section>`).join("")}</div>`}
+/* a different short hello every time the owner opens the dashboard */
+const HI={any:["Ahoy, boss.","Let's get crackin'.","Shell yeah, you're back.","Holy mackerel, hi.","Long time, no sea.","Clawsome to see you.","Water you waiting for?","What's the catch?","Oh hey, captain.","Dock's open.","Feeling crabby? Same.","Fresh off the boat.","Seas the day.","Oh, it's you. Nice.","Let's make waves."],
+  morning:["Rise and brine.","Morning, captain.","Up before the gulls.","Coffee, then crabs."],
+  afternoon:["Afternoon, captain.","Halfway to close.","Lunch was shrimp, right?"],
+  evening:["Evening, captain.","Ice it and call it.","Last call for crabs."],
+  day:[["Sunday shuck day."],["Monday. Shell it."],["Taco Tuesday? Shrimp."],["Hump day, shrimp day."],["Almost boil day."],["Fry-day, boss."],["Boil day."]]};
+let HI_NOW=null;function greet(){const d=new Date(),h=d.getHours(),part=h<12?"morning":h<17?"afternoon":"evening",key=d.toDateString()+part;
+  if(HI_NOW&&HI_NOW.k===key)return HI_NOW.t;
+  const pool=[...HI.any,...HI[part],...HI[part],...HI.day[d.getDay()],...HI.day[d.getDay()]];let last="";try{last=localStorage.getItem("ot-hi-last")||""}catch(e){}
+  let t=pool[Math.floor(Math.random()*pool.length)];if(t===last)t=pool[(pool.indexOf(t)+1)%pool.length];
+  HI_NOW={k:key,t};try{localStorage.setItem("ot-hi-last",t)}catch(e){}return t}
 function pToday(){
   const nw=DB.orders.filter(o=>o.status==="new"),conf=DB.orders.filter(o=>o.status==="confirmed"),paid=DB.orders.filter(o=>o.status==="paid"),sent=DB.orders.filter(o=>o.status==="sent"),qn=DB.quotes.filter(q=>q.status==="new");
   const a=weekStats(0),b=weekStats(1),st=cur().stock||{};
   const watch=CAT.filter(c=>{const x=st[c.id]||{};return x.status==="out"||x.status==="limited"});
-  const hr=new Date().getHours();$("title").textContent=hr<12?"Good morning":hr<17?"Good afternoon":"Good evening";
+  $("title").textContent=greet();
   const parts=[];if(nw.length)parts.push(`<b>${nw.length} order${nw.length>1?"s":""}</b> to price`);if(conf.length)parts.push(`<b>${conf.length}</b> to collect payment for`);if(paid.length)parts.push(`<b>${paid.length}</b> to deliver`);if(qn.length)parts.push(`<b>${qn.length} wholesale request${qn.length>1?"s":""}</b>`);
   const list=parts.length>1?parts.slice(0,-1).join(", ")+" and "+parts.slice(-1):parts[0];
   const p=b.booked?Math.round((a.booked-b.booked)/b.booked*100):0;
