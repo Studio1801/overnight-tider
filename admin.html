@@ -632,6 +632,57 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:4px}
 @media (max-width:400px){.seg button{padding:8px 11px;font-size:13.5px}.kpi b{font-size:34px}}
 @keyframes ckUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @media print{.why-dock,.side,.tabbar,.top,.publish{display:none!important}}
+
+/* ===== premium motion: press physics, sheen, busy and done states, sliding thumbs ===== */
+:root{--spring:cubic-bezier(.34,1.56,.64,1);--out:cubic-bezier(.16,1,.3,1)}
+.btn{position:relative;overflow:hidden;isolation:isolate;transition:background-color .25s,color .25s,box-shadow .25s,transform .55s var(--spring)}
+.btn:hover{transform:none}
+.btn:active:not(:disabled){transform:scale(.96);transition-duration:.25s,.25s,.25s,.09s;transition-timing-function:ease,ease,ease,ease-out}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.2),transparent 65%);opacity:0;transition:opacity .35s}
+.btn.b-band::before{background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.45),transparent 65%)}
+.btn.b-soft::before,.btn.b-ghost::before{background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(19,32,46,.06),transparent 65%)}
+@media (hover:hover){.btn:hover::before{opacity:1}}
+.btn:focus-visible{outline:none;box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--sign)}
+.btn .bl{display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .45s var(--out),opacity .25s}
+.btn .bx{position:absolute;inset:0;display:grid;place-items:center;transform:translateY(110%);opacity:0;transition:transform .45s var(--out),opacity .25s}
+.btn.busy,.btn.ok{pointer-events:none}
+.btn.busy .bl,.btn.ok .bl{transform:translateY(-110%);opacity:0}
+.btn.busy .bx,.btn.ok .bx{transform:none;opacity:1}
+.bx .spin{width:18px;height:18px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;opacity:.85;animation:spin .7s linear infinite}
+.bx svg{display:none;width:20px;height:20px}
+.btn.ok{background:var(--sign)!important;color:#fff!important}
+.btn.ok .spin{display:none}.btn.ok .bx svg{display:block}
+.btn.ok .bx path{stroke-dasharray:24;stroke-dashoffset:24;animation:tick .45s var(--out) .05s forwards}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* rows, chips and controls press in, spring back */
+.task,.seg button,.segm button,.st3 button,.nav button,.ck-open,.why-tog,.dr-x,.tabbar button{transition-property:background-color,color,box-shadow,transform;transition-duration:.25s,.25s,.25s,.5s;transition-timing-function:ease,ease,ease,var(--spring)}
+.task:active{transform:scale(.985);transition-duration:.25s,.25s,.25s,.09s}
+.seg button:active,.segm button:active,.st3 button:active,.ck-open:active,.dr-x:active{transform:scale(.94);transition-duration:.25s,.25s,.25s,.09s}
+.nav button:active{transform:scale(.97);transition-duration:.25s,.25s,.25s,.09s}
+button.row:active,.tbl tbody tr:active{background:var(--ice)}
+.task .go em{transition:background-color .25s,transform .5s var(--spring)}
+.task:hover .go em{transform:translateX(2px)}
+/* iOS-style switch: the knob stretches while pressed */
+.sw::after{transition:transform .45s var(--spring),width .25s var(--out)}
+.sw:active::after{width:28px}
+.sw[aria-checked="true"]:active::after{transform:translateX(12px)}
+.why-tog .sw2::after{transition:transform .45s var(--spring),width .25s var(--out)}
+.why-tog:active .sw2::after{width:21px}
+/* one sliding thumb for every segmented control */
+.seg,.segm{position:relative;isolation:isolate}
+.seg>.th,.segm>.th{position:absolute;z-index:-1;top:4px;bottom:4px;left:0;border-radius:999px;background:var(--ink);pointer-events:none;transition:transform .5s cubic-bezier(.3,1.3,.4,1),width .35s var(--out)}
+.seg.thumbed button[aria-pressed="true"],.segm.thumbed button[aria-pressed="true"]{background:none}
+.toast{transform:translate(-50%,-160%) scale(.94)}
+.toast.on{transform:translate(-50%,0) scale(1);transition:transform .6s var(--spring)}
+input,select,textarea{transition:box-shadow .2s,background-color .2s,border-color .2s}
+.steps div.just i{background:linear-gradient(90deg,var(--sign) 50%,var(--ice-2) 50%);background-size:200% 100%;background-position:100% 0;animation:fillstep .7s var(--out) .15s forwards}
+.steps div.just{animation:steppop .6s var(--spring) .15s both}
+@keyframes fillstep{to{background-position:0 0}}
+@keyframes steppop{40%{transform:translateY(-2px)}}
+.drawer.still .dr-b>*{animation:none}
+.drawer.still .dr-f>*{animation:footIn .45s var(--out) both}
+.drawer.still .dr-f>*+*{animation-delay:.06s}
+@keyframes footIn{from{opacity:0;transform:translateY(8px)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -957,7 +1008,7 @@ document.addEventListener("click",e=>{const f=e.target.closest("[data-of]");if(f
 
 /* ---------- order drawer ---------- */
 let OPEN=null;
-function openDrawer(){$("scrim").classList.add("on");$("drawer").classList.add("on");document.body.style.overflow="hidden";stagger()}
+function openDrawer(){$("drawer").classList.remove("still");$("scrim").classList.add("on");$("drawer").classList.add("on");document.body.style.overflow="hidden";stagger()}
 function stagger(){[...$("drB").children].forEach((c,i)=>c.style.setProperty("--n",i));const d=$("drawer");if(d.classList.contains("on")){$("drB").style.display="none";void $("drB").offsetWidth;$("drB").style.display=""}}
 function celebrate(){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;const b=document.createElement("div");b.className="burst";b.innerHTML='<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 25l7 7 15-16" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';$("drawer").appendChild(b);setTimeout(()=>b.remove(),1200)}
 (()=>{const d=$("drawer");let y0=null,dy=0;
@@ -989,7 +1040,7 @@ function drawOrder(){
      ${phone?`<div class="who-acts"><a class="btn b-soft b-sm" href="tel:${phone}">Call</a><a class="btn b-soft b-sm" href="sms:${phone}">Text</a><button class="btn b-soft b-sm" type="button" data-go-cust="${esc(o.phone)}">Their orders</button></div>`:""}
      ${o.notes?`<div class="memo"><b>Note:</b> ${esc(o.notes)}</div>`:""}
    </div>
-   ${o.status!=="cancelled"?`<div class="steps">${FLOW.map((s,i)=>`<div class="${i<=si?"on":""}"><i></i>${stName(s)}<small>${i<=si?stepAt(s):""}</small></div>`).join("")}</div>`:""}
+   ${o.status!=="cancelled"?`<div class="steps">${FLOW.map((s,i)=>`<div class="${i<=si?"on":""}${s===JUST?" just":""}"><i></i>${stName(s)}<small>${i<=si?stepAt(s):""}</small></div>`).join("")}</div>`:""}
    <section class="card"><ul class="lines">${o.lines.length?o.lines.map((l,i)=>{const p=linePrice(l),sug=l.price==null&&p!=null;return `<li><img src="${cat(l.id).img}" alt=""><span class="nm"><b>${cat(l.id).name}</b><small>${qtyLabel(l.unit,l.qty)} · per ${l.unit.startsWith("lobster")?"lobster":l.unit}</small></span>
        <span class="money-in${sug?" sug":""}"><input type="number" inputmode="decimal" step="0.01" min="0" data-lp="${i}" value="${p!=null?(+p).toFixed(2):""}" placeholder="Price" ${editable?"":"disabled"} aria-label="Price per ${l.unit} for ${cat(l.id).name}">${sug?"<small>From your price list</small>":""}</span>
        <span class="lt">${p!=null?fmt(p*l.qty):"..."}</span></li>`}).join(""):`<li style="grid-template-columns:1fr"><span>${esc(o.items||"No items listed")}</span></li>`}</ul>
@@ -1023,6 +1074,7 @@ function refreshTotals(){const t=totals(OPEN);$("oTot").textContent=fmt(t.tot);
   if(OPEN.status==="new"&&$("oNext"))$("oNext").textContent=`Text the price · ${fmt(t.tot)}`;
   const sub=$("drB").querySelector(".tot b");if(sub)sub.textContent=fmt(t.sub)}
 let busy=false;
+let JUST=null;
 async function advance(to){
   if(busy)return;const o=OPEN;
   if(to==="sent"){const t=totals(o);if(t.missing){toast("Add a price for every item first.");return}
@@ -1033,13 +1085,14 @@ async function advance(to){
   if(to==="paid"&&!o.paid){toast("Pick how they paid first.");return}
   if(to==="done")deduct(o);
   if(to==="new"){o.lines.forEach(l=>{})}
-  busy=true;$("drF").querySelectorAll("button").forEach(b=>b.disabled=true);setTimeout(()=>busy=false,700);
+  const pressed=lastBtn&&$("drF").contains(lastBtn)?lastBtn:null,bb=busyBtn(pressed);
+  busy=true;$("drF").querySelectorAll("button").forEach(b=>{if(b!==pressed)b.disabled=true});setTimeout(()=>busy=false,700);
   o.status=to;o.log.push({s:to,at:new Date().toISOString()});
-  try{await saveOrder(o)}catch(e){busy=false;$("drF").querySelectorAll("button").forEach(b=>b.disabled=false);return}
-  if(to!=="cancelled"&&to!=="new")celebrate();
+  try{await saveOrder(o)}catch(e){bb.fail();busy=false;$("drF").querySelectorAll("button").forEach(b=>b.disabled=false);return}
+  await bb.ok(480);JUST=to;setTimeout(()=>JUST=null,1500);
   const msgs={sent:"Price sent. Waiting for their yes.",confirmed:"Confirmed. Collect payment when you can.",paid:`Paid by ${esc(o.paid)}. Nice.`,done:"Delivered. Order closed.",cancelled:"Order cancelled.",new:"Order reopened."};
   toast(`<b>${esc(o.id)}</b> ${msgs[to]}`);
-  OPEN=JSON.parse(JSON.stringify(o));setTimeout(()=>{if(!OPEN)return;drawOrder();stagger()},to==="cancelled"||to==="new"?0:650);drawNav();if(route==="orders")drawOrders();else if(route==="today")render()
+  OPEN=JSON.parse(JSON.stringify(o));setTimeout(()=>{if(!OPEN)return;$("drawer").classList.add("still");drawOrder()},0);drawNav();if(route==="orders")drawOrders();else if(route==="today")render()
 }
 function deduct(o){ // take delivered amounts off the on-hand counts the owner tracks
   const had=!!DRAFT,S=draftOrSite();let ch=false;
@@ -1055,7 +1108,7 @@ function openQuote(id){
     <section class="card"><ul class="pays" style="padding-top:8px"><li><span>They need</span><b style="text-align:right;max-width:60%">${esc(q.need)}</b></li><li><span>How often</span><b>${esc(q.freq)}</b></li><li><span>First delivery</span><b>${esc(q.when)}</b></li></ul></section>
     <p class="muted" style="margin:0;font-size:14px">A steady weekly account is worth more than dozens of one-time orders. Reply the same day if you can.</p>`;
   $("drF").innerHTML=`<button class="btn b-soft" type="button" data-qs="sent">Mark quote sent</button><button class="btn b-green" type="button" data-qs="done">Won the account</button><button class="btn b-ghost" type="button" data-qs="lost">Didn't work out</button>`;
-  $("drF").onclick=async e=>{const b=e.target.closest("[data-qs]");if(!b)return;q.status=b.dataset.qs;if(LIVE){try{await api("saveQuote",{quote:q})}catch(err){toast("Couldn't save. Try again.");return}}else saveDB();toast("Saved");closeDrawer();drawNav();render()};
+  $("drF").onclick=async e=>{const b=e.target.closest("[data-qs]");if(!b)return;const bb=busyBtn(b);q.status=b.dataset.qs;if(LIVE){try{await api("saveQuote",{quote:q})}catch(err){bb.fail();toast("Couldn't save. Try again.");return}}else saveDB();await bb.ok(550);toast("Saved");closeDrawer();drawNav();render()};
   openDrawer();
 }
 
@@ -1070,9 +1123,9 @@ function dirtyCount(){if(!DRAFT)return 0;let n=0;const a=DRAFT,b=SITE;
 function pubBar(){const n=dirtyCount(),p=$("publish");p.classList.toggle("on",n>0);$("pubTxt").innerHTML=`<b>${n}</b> change${n===1?"":"s"} <i class="lg-l">not on the website yet</i><i class="lg-s">not live yet</i>`}
 function changed(){pubBar();preview()}
 $("pubUndo").onclick=()=>{DRAFT=null;pubBar();render();preview();toast("Changes discarded")};
-$("pubGo").onclick=async()=>{const b=$("pubGo");b.disabled=true;b.textContent="Publishing...";
-  try{await publishSite(draftOrSite());DRAFT=null;toast(`<b>Published.</b> The website now shows your changes.`);render()}catch(e){toast("Couldn't publish. Check the connection and try again.")}
-  b.disabled=false;b.textContent="Publish to website";pubBar()};
+$("pubGo").onclick=async()=>{const bb=busyBtn($("pubGo"));
+  try{await publishSite(draftOrSite());await bb.ok(650);DRAFT=null;toast(`<b>Published.</b> The website now shows your changes.`);render()}catch(e){bb.fail();toast("Couldn't publish. Check the connection and try again.")}
+  pubBar()};
 function autoStatus(id,x){if(!x.track||x.onHand==null)return;const low=+(x.low??0);x.status=x.onHand<=0?"out":x.onHand<=low?"limited":"in"}
 const ST3=[["in","In stock"],["limited","Going fast"],["out","Sold out"]];
 const chev='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
@@ -1312,10 +1365,10 @@ function pSettings(){
   $("epSave").onclick=()=>{const v=$("epIn").value.trim();if(v&&!/^https:\/\/script\.google\.com\//.test(v)){toast("That doesn't look like a Google Apps Script link.");return}try{v?localStorage.setItem("ot-admin-ep",v):localStorage.removeItem("ot-admin-ep")}catch(e){}sessionStorage.removeItem("ot-pin");location.reload()};
   if($("epOff"))$("epOff").onclick=()=>{localStorage.removeItem("ot-admin-ep");sessionStorage.removeItem("ot-pin");location.reload()};
   $("pinSave").onclick=async()=>{const a=$("pin1").value,b=$("pin2").value;if(!/^\d{4}$/.test(a)){toast("Use 4 numbers.");return}if(a!==b){toast("The two PINs don't match.");return}
-    try{if(LIVE)await api("setPin",{newPin:a});else LS.set("ot-admin-pin",a);PIN=a;sessionStorage.setItem("ot-pin",a);toast("PIN changed");$("pin1").value=$("pin2").value=""}catch(e){toast("Couldn't change the PIN.")}};
-  const repl=async(data,msg)=>{try{toast("Working on it");await api("replaceAll",{data});await loadAll();toast(msg);go("today")}catch(e){toast("Couldn't update the Sheet. "+e.message)}};
-  if($("lSeed"))$("lSeed").onclick=()=>{if(!confirm("Replace every order, quote and signup in the Google Sheet with sample data?"))return;repl(seedDB(),"Sample orders loaded into the Sheet")};
-  if($("lClear"))$("lClear").onclick=()=>{if(!confirm("Delete every order, quote and signup from the Google Sheet? This can't be undone."))return;repl({},"The Sheet is empty")};
+    const bb=busyBtn($("pinSave"));try{if(LIVE)await api("setPin",{newPin:a});else LS.set("ot-admin-pin",a);PIN=a;sessionStorage.setItem("ot-pin",a);await bb.ok(600);toast("PIN changed");$("pin1").value=$("pin2").value=""}catch(e){bb.fail();toast("Couldn't change the PIN.")}};
+  const repl=async(data,msg,b)=>{const bb=busyBtn(b);try{await api("replaceAll",{data});await loadAll();await bb.ok(600);toast(msg);go("today")}catch(e){bb.fail();toast("Couldn't update the Sheet. "+e.message)}};
+  if($("lSeed"))$("lSeed").onclick=()=>{if(!confirm("Replace every order, quote and signup in the Google Sheet with sample data?"))return;repl(seedDB(),"Sample orders loaded into the Sheet",$("lSeed"))};
+  if($("lClear"))$("lClear").onclick=()=>{if(!confirm("Delete every order, quote and signup from the Google Sheet? This can't be undone."))return;repl({},"The Sheet is empty",$("lClear"))};
   if($("sReset"))$("sReset").onclick=()=>{if(!confirm("Replace everything with fresh sample orders?"))return;DB=seedDB();saveDB();toast("Fresh sample data loaded");go("today")};
   if($("sClear"))$("sClear").onclick=()=>{if(!confirm("Clear all orders, quotes and signups in this browser?"))return;DB={orders:[],quotes:[],emails:[],texts:[]};saveDB();toast("Cleared");go("today")};
   if($("sSite"))$("sSite").onclick=()=>{if(!confirm("Put the website back to how it was built?"))return;SITE={v:1};DRAFT=null;localStorage.removeItem("ot-site");localStorage.removeItem("ot-site-draft");toast("Website back to the original");pubBar()};
@@ -1383,10 +1436,37 @@ function newOrder(){OPEN=null;let lines=[{id:"crab",unit:"dozen",qty:1}],how="De
     const when=$("nW").value?dshort($("nW").value+"T12:00"):"",biz=$("nB").value.trim(),yes=$("nYes").checked;
     const o=normOrder({id:"OT-"+(Date.now().toString(36).slice(-5)).toUpperCase(),at:new Date().toISOString(),name,phone:$("nP").value.trim(),biz,how,when,notes:$("nNote").value.trim(),channel:biz?"wholesale":"retail",lines:lines.map(l=>({...l,price:null})),status:"new"});
     if(yes){o.lines.forEach(l=>l.price=linePrice(l));o.log.push({s:"sent",at:o.at},{s:"confirmed",at:o.at});o.status="confirmed"}
-    DB.orders.unshift(o);try{await saveOrder(o)}catch(e){DB.orders.shift();return}if(!LIVE)saveDB();
+    const bb=busyBtn($("nSave"));DB.orders.unshift(o);try{await saveOrder(o)}catch(e){bb.fail();DB.orders.shift();return}if(!LIVE)saveDB();await bb.ok(500);
     toast(`Order added for <b>${esc(name)}</b>`);drawNav();if(route==="orders")oMode==="board"?drawBoard():drawOrders();else if(route==="today")render();openOrder(o.id)};
   openDrawer();if(!TOUCH)setTimeout(()=>$("nN").focus(),350)}
 
+
+/* ===== premium motion helpers ===== */
+const haptic=(p=8)=>{try{TOUCH&&navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+document.addEventListener("touchstart",()=>{},{passive:true}); // lets :active press states show on iOS
+if(!TOUCH)document.addEventListener("pointermove",e=>{const b=e.target.closest&&e.target.closest(".btn");if(!b)return;const r=b.getBoundingClientRect();b.style.setProperty("--mx",e.clientX-r.left+"px");b.style.setProperty("--my",e.clientY-r.top+"px")},{passive:true});
+let lastBtn=null;document.addEventListener("pointerdown",e=>{lastBtn=e.target.closest&&e.target.closest(".btn")},true);
+// Button morphs: label slides up, spinner, then a drawn check on green. Returns {ok, fail}.
+function busyBtn(b){
+  if(!b)return{ok:async()=>{},fail:()=>{}};
+  if(!b.querySelector(":scope>.bl")){const l=document.createElement("span");l.className="bl";while(b.firstChild)l.appendChild(b.firstChild);b.appendChild(l);
+    const x=document.createElement("span");x.className="bx";x.setAttribute("aria-hidden","true");x.innerHTML='<i class="spin"></i><svg viewBox="0 0 20 20"><path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';b.appendChild(x)}
+  const t0=performance.now();b.classList.remove("ok");b.classList.add("busy");b.setAttribute("aria-busy","true");
+  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  return{
+    async ok(hold=700){const left=380-(performance.now()-t0);if(left>0)await wait(left);b.classList.remove("busy");b.classList.add("ok");b.removeAttribute("aria-busy");haptic(10);await wait(hold);b.classList.remove("ok")},
+    fail(){b.classList.remove("busy","ok");b.removeAttribute("aria-busy");haptic([12,40,12])}
+  }}
+// Segmented controls get one thumb that slides between options, even when the page redraws them
+const SEGPOS={};
+function segThumb(g){const b=g.querySelector(":scope>button[aria-pressed=true]");if(!b)return;
+  let t=g.querySelector(":scope>.th");const key=g.id||g.getAttribute("aria-label")||"";
+  if(!t){t=document.createElement("i");t.className="th";g.prepend(t);g.classList.add("thumbed");
+    const p=SEGPOS[key];if(p){t.style.transition="none";t.style.width=p.w+"px";t.style.transform=`translateX(${p.x}px)`;t.offsetWidth;t.style.transition=""}}
+  if(!b.offsetWidth)return;t.style.width=b.offsetWidth+"px";t.style.transform=`translateX(${b.offsetLeft}px)`;SEGPOS[key]={x:b.offsetLeft,w:b.offsetWidth}}
+let segRaf=0;const segAll=()=>{cancelAnimationFrame(segRaf);segRaf=requestAnimationFrame(()=>document.querySelectorAll(".seg,.segm").forEach(segThumb))};
+new MutationObserver(segAll).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:["aria-pressed"]});
+addEventListener("resize",segAll);document.fonts&&document.fonts.ready.then(segAll);
 /* ===================== SEARCH (Ctrl K) ===================== */
 const IC={page:ICONS.today,act:'<path d="M10 3v14M3 10h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'};
 let ckItems=[],ckSel=0;
