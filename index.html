@@ -1533,7 +1533,7 @@ $("bulkForm").addEventListener("submit",async e=>{
   }
   const txt=`Hi Overnight Tider! Wholesale quote request.\nName: ${g("name")}${g("biz")?" ("+g("biz")+")":""}\nBuying for: ${g("who")}\nNeed: ${g("need")}\nHow often: ${g("freq")}\nFirst delivery: ${when}${g("phone")?"\nPhone: "+g("phone"):""}`;
   await copy(txt,m,"Request copied. Opening our messages, paste it in and send.");
-  const a=document.createElement("a");a.href="https://www.instagram.com/overnight_tider/" data-dm;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
+  const a=document.createElement("a");a.href=IGDM;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
 });
 
 /* ---------- settings-driven pieces ---------- */
