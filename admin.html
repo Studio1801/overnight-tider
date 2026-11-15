@@ -191,7 +191,7 @@ button.row:hover{background:#fafaf7}
 .dr-h{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);background:#fff}
 .dr-h .mono{font-size:15px;font-weight:500}
 .dr-x{margin-left:auto;width:38px;height:38px;border-radius:50%;border:0;background:var(--ice);font-size:22px;line-height:1}
-.dr-b{flex:1;overflow:auto;padding:18px 20px 30px;display:grid;gap:16px;align-content:start}
+.dr-b{flex:1;overflow:auto;padding:18px 20px 30px;display:grid;grid-auto-rows:max-content;gap:16px;align-content:start;min-height:0}
 .dr-f{padding:14px 20px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#fff;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .dr-f .btn{flex:1 1 auto}
 .who-card{display:grid;gap:10px}
@@ -584,6 +584,53 @@ body:has(.publish.on) .why-dock{bottom:150px}
 @keyframes whyFlash{0%{box-shadow:0 0 0 0 rgba(242,194,48,.9)}100%{box-shadow:0 0 0 14px rgba(242,194,48,0)}}
 body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:4px}
 @media (max-width:520px){.why-tog small{display:none}.why-cur .ct{max-width:40vw}}
+
+/* phone */
+.toast{visibility:hidden;transition:transform .35s var(--ease),visibility 0s .35s}
+.toast.on{visibility:visible;transition:transform .35s var(--ease)}
+.lg-s{display:none}
+.lg-l,.lg-s{font-style:normal}
+.ck-x{display:none}
+@media (max-width:640px){
+  body{-webkit-tap-highlight-color:transparent}
+  input,select,textarea{font-size:16px}
+  .main{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+  .publish{bottom:calc(82px + env(safe-area-inset-bottom))}
+  .publish span{white-space:nowrap}
+  .publish .btn{padding-left:16px;padding-right:16px}
+  .why-dock{bottom:calc(82px + env(safe-area-inset-bottom))}
+  body:has(.publish.on) .why-dock:not(.on){opacity:0;visibility:hidden;transform:translate(-50%,12px);transition:opacity .2s,transform .3s var(--ease),visibility 0s .3s}
+  body:has(.publish.on) .why-dock.on{bottom:calc(146px + env(safe-area-inset-bottom))}
+  .lg-l{display:none}.lg-s{display:inline}
+  .seg button{padding:8px 14px}
+  .dr-x{width:44px;height:44px}
+  /* order drawer becomes a bottom sheet */
+  .drawer{top:auto;left:0;width:100%;height:calc(100% - 26px - env(safe-area-inset-top));border-radius:22px 22px 0 0;overflow:hidden;transform:translateY(100%);box-shadow:0 -30px 60px -30px rgba(19,32,46,.55)}
+  .drawer.on{transform:translateY(var(--dy,0px))}
+  .drawer.drag{transition:none!important}
+  .dr-h{position:relative;padding:22px 18px 14px;touch-action:none}
+  .dr-h::before{content:"";position:absolute;top:8px;left:50%;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:#d5dbde}
+  .dr-b{padding:16px 16px 28px;overscroll-behavior:contain}
+  .dr-f{padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+  /* search goes full screen */
+  .cmdk{padding:0;align-items:stretch;justify-items:stretch}
+  .ck-box{width:100%;height:100%;border-radius:0;display:flex;flex-direction:column;animation:ckUp .35s var(--ease) both}
+  .ck-in{padding:calc(14px + env(safe-area-inset-top)) 16px 14px}
+  .ck-in input{min-width:0}
+  .ck-x{display:block;flex:none;border:0;background:var(--ice);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;color:var(--ink)}
+  .ck-list{max-height:none;flex:1;overscroll-behavior:contain}
+  .ck-list li{padding:12px 10px}
+  .ck-foot{display:none}
+  /* money */
+  .kpis.k5 .kpi:last-child{grid-column:1/-1;border-left:0;display:grid;grid-template-columns:auto 1fr;column-gap:16px;align-items:center}
+  .kpis.k5 .kpi:last-child span{grid-column:1/-1}
+  .kpis.k5 .kpi:last-child b{margin:6px 0 0}
+  .card-h{flex-wrap:wrap;row-gap:4px}
+  /* stock special */
+  #spMore>summary>span:first-child{display:grid;gap:2px}
+}
+@media (max-width:400px){.seg button{padding:8px 11px;font-size:13.5px}.kpi b{font-size:34px}}
+@keyframes ckUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @media print{.why-dock,.side,.tabbar,.top,.publish{display:none!important}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -630,9 +677,9 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:4px}
 
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-modal="true" role="dialog" aria-labelledby="drT"><div class="dr-h"><span class="mono" id="drT"></span><span id="drChip"></span><button class="dr-x" type="button" id="drX" aria-label="Close">&times;</button></div><div class="dr-b" id="drB"></div><div class="dr-f" id="drF"></div></aside>
-<div class="publish" id="publish" role="status"><span id="pubTxt"></span><button class="btn b-ghost b-sm" type="button" id="pubUndo" style="color:#b9c6d1">Discard</button><button class="btn b-band b-sm" type="button" id="pubGo">Publish to website</button></div>
+<div class="publish" id="publish" role="status"><span id="pubTxt"></span><button class="btn b-ghost b-sm" type="button" id="pubUndo" style="color:#b9c6d1">Discard</button><button class="btn b-band b-sm" type="button" id="pubGo"><i class="lg-l">Publish to website</i><i class="lg-s">Publish now</i></button></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<div class="cmdk" id="cmdk" hidden role="dialog" aria-modal="true" aria-label="Search"><div class="ck-box"><label class="ck-in"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.6"/></svg><span class="vh">Search</span><input id="ckIn" autocomplete="off" placeholder="Search orders, customers, items, or type what you want to do"></label><ul class="ck-list" id="ckList" role="listbox"></ul><div class="ck-foot"><span><kbd>↑↓</kbd>move</span><span><kbd>Enter</kbd>open</span><span><kbd>Esc</kbd>close</span></div></div></div>
+<div class="cmdk" id="cmdk" hidden role="dialog" aria-modal="true" aria-label="Search"><div class="ck-box"><label class="ck-in"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.6"/></svg><span class="vh">Search</span><input id="ckIn" autocomplete="off" placeholder="Search orders, customers, items, or type what you want to do"><button class="ck-x" type="button" id="ckX">Close</button></label><ul class="ck-list" id="ckList" role="listbox"></ul><div class="ck-foot"><span><kbd>↑↓</kbd>move</span><span><kbd>Enter</kbd>open</span><span><kbd>Esc</kbd>close</span></div></div></div>
 <input type="file" id="fileIn" accept="image/*" hidden>
 
 <script>
@@ -644,6 +691,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:4px}
      orders, quotes and signups come from the Google Sheet, and stock, prices,
      text and photos publish straight to the live website.
    ===================================================================== */
+const TOUCH=matchMedia("(hover:none)").matches;
 const CFG={endpoint:"",demoPin:"1801"};
 const EP=(()=>{try{return localStorage.getItem("ot-admin-ep")||CFG.endpoint}catch(e){return CFG.endpoint}})();
 const LIVE=!!EP;
@@ -879,14 +927,14 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-order]");i
 
 /* ===================== ORDERS ===================== */
 let oFilter="needs",oQuery="",oMode="list";
-const OF={needs:["Needs you",o=>["new","confirmed","paid"].includes(o.status),q=>q.status==="new"],wait:["Waiting on customer",o=>o.status==="sent",q=>q.status==="sent"],done:["Finished",o=>o.status==="done"||o.status==="cancelled",q=>q.status==="done"||q.status==="lost"],all:["All",()=>true,()=>true]};
+const OF={needs:["Needs you",o=>["new","confirmed","paid"].includes(o.status),q=>q.status==="new"],wait:["Waiting on customer|Waiting",o=>o.status==="sent",q=>q.status==="sent"],done:["Finished|Done",o=>o.status==="done"||o.status==="cancelled",q=>q.status==="done"||q.status==="lost"],all:["All",()=>true,()=>true]};
 function pOrders(opt){
   if(opt&&opt.q!=null){oQuery=opt.q;oFilter="all";oMode="list"}
   $("topAct").innerHTML=`<div class="segm" role="group" aria-label="View"><button type="button" data-om="list" aria-pressed="${oMode==="list"}">List</button><button type="button" data-om="board" aria-pressed="${oMode==="board"}">Board</button></div><button class="btn b-green b-sm" type="button" id="newO">+ New<span class="hide-m"> order</span></button>`;
   $("newO").onclick=newOrder;$("topAct").querySelectorAll("[data-om]").forEach(b=>b.onclick=()=>{oMode=b.dataset.om;pOrders({anim:1})});
   if(oMode==="board"&&innerWidth<640)oMode="list";
   if(oMode==="board"){$("page").innerHTML=`<div class="toolbar" id="oTools"><p class="muted" style="margin:0;font-size:14px">Drag an order to move it along. Tap it to open.</p></div><div class="board" id="olist"></div>`;drawBoard();return}
-  $("page").innerHTML=`<div class="toolbar" id="oTools"><div class="seg" role="group" aria-label="Show">${Object.entries(OF).map(([k,[l,fo,fq]])=>`<button type="button" data-of="${k}" aria-pressed="${oFilter===k}">${l} <span>${DB.orders.filter(fo).length+DB.quotes.filter(fq).length}</span></button>`).join("")}</div>
+  $("page").innerHTML=`<div class="toolbar" id="oTools"><div class="seg" role="group" aria-label="Show">${Object.entries(OF).map(([k,[l,fo,fq]])=>`<button type="button" data-of="${k}" aria-pressed="${oFilter===k}">${l.includes("|")?`<i class="lg-l">${l.split("|")[0]}</i><i class="lg-s">${l.split("|")[1]}</i>`:l} <span>${DB.orders.filter(fo).length+DB.quotes.filter(fq).length}</span></button>`).join("")}</div>
     <label class="search"><span class="vh">Search orders</span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.6"/></svg><input id="oq" type="search" placeholder="Search name, phone or item" value="${esc(oQuery)}"></label></div>
     <section class="card" id="olist"></section>`;
   $("oq").oninput=e=>{oQuery=e.target.value;drawOrders()};drawOrders();
@@ -913,6 +961,11 @@ let OPEN=null;
 function openDrawer(){$("scrim").classList.add("on");$("drawer").classList.add("on");document.body.style.overflow="hidden";stagger()}
 function stagger(){[...$("drB").children].forEach((c,i)=>c.style.setProperty("--n",i));const d=$("drawer");if(d.classList.contains("on")){$("drB").style.display="none";void $("drB").offsetWidth;$("drB").style.display=""}}
 function celebrate(){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;const b=document.createElement("div");b.className="burst";b.innerHTML='<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 25l7 7 15-16" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';$("drawer").appendChild(b);setTimeout(()=>b.remove(),1200)}
+(()=>{const d=$("drawer");let y0=null,dy=0;
+  d.addEventListener("touchstart",e=>{if(innerWidth>640||!e.target.closest(".dr-h")||e.target.closest("button"))return;y0=e.touches[0].clientY;dy=0;d.classList.add("drag")},{passive:true});
+  d.addEventListener("touchmove",e=>{if(y0==null)return;dy=Math.max(0,e.touches[0].clientY-y0);d.style.setProperty("--dy",dy+"px")},{passive:true});
+  const end=()=>{if(y0==null)return;y0=null;d.classList.remove("drag");d.style.removeProperty("--dy");if(dy>100)closeDrawer()};
+  d.addEventListener("touchend",end);d.addEventListener("touchcancel",end)})();
 function closeDrawer(){$("scrim").classList.remove("on");$("drawer").classList.remove("on");document.body.style.overflow="";OPEN=null}
 $("drX").onclick=closeDrawer;$("scrim").onclick=closeDrawer;
 addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer()});
@@ -1015,7 +1068,7 @@ function dirtyCount(){if(!DRAFT)return 0;let n=0;const a=DRAFT,b=SITE;
   const keys=new Set([...Object.keys(a),...Object.keys(b)]);keys.delete("updated");keys.delete("v");
   keys.forEach(k=>{const x=a[k]||{},y=b[k]||{};if(typeof x!=="object"||typeof y!=="object"){if(JSON.stringify(x)!==JSON.stringify(y))n++;return}
     new Set([...Object.keys(x),...Object.keys(y)]).forEach(kk=>{if(JSON.stringify(x[kk]??null)!==JSON.stringify(y[kk]??null))n++})});return n}
-function pubBar(){const n=dirtyCount(),p=$("publish");p.classList.toggle("on",n>0);$("pubTxt").innerHTML=`<b>${n}</b> change${n===1?"":"s"} not on the website yet`}
+function pubBar(){const n=dirtyCount(),p=$("publish");p.classList.toggle("on",n>0);$("pubTxt").innerHTML=`<b>${n}</b> change${n===1?"":"s"} <i class="lg-l">not on the website yet</i><i class="lg-s">not live yet</i>`}
 function changed(){pubBar();preview()}
 $("pubUndo").onclick=()=>{DRAFT=null;pubBar();render();preview();toast("Changes discarded")};
 $("pubGo").onclick=async()=>{const b=$("pubGo");b.disabled=true;b.textContent="Publishing...";
@@ -1034,7 +1087,7 @@ function pStock(){
   $("page").innerHTML=`
   <section class="card" style="margin-bottom:18px">
     <div class="spc"><div class="sp-prev" id="spPrev"></div><button class="sw" type="button" role="switch" id="spOn" aria-checked="${sp.on!==false}" aria-label="Show the weekly special on the website"></button></div>
-    <details class="wait" id="spMore"><summary><span><b>Weekly special</b> · the bar across the top of the website</span><span aria-hidden="true">Edit</span></summary><div class="spc-x">
+    <details class="wait" id="spMore"><summary><span><b>Weekly special</b> <i class="lg-l">· </i>the bar across the top of the website</span><span aria-hidden="true">Edit</span></summary><div class="spc-x">
       <div class="f2"><div class="field"><label for="spHead">Bold part</label><input id="spHead" value="${esc(sp.head||"")}" placeholder="Lobster special, Thu to Sun:"></div><div class="field"><label for="spBody">The rest</label><input id="spBody" value="${esc(sp.body||"")}" placeholder="1½ lb lobsters at $7.99/lb."></div></div>
       <div class="field"><label for="spItem">The "Add to my order" button adds</label><select id="spItem">${CAT.map(c=>c.units.map(u=>`<option value="${c.id}|${esc(u[0])}" ${sp.item===c.id&&sp.unit===u[0]?"selected":""}>${c.name}, ${u[1].toLowerCase()}</option>`).join("")).join("")}</select></div>
     </div></details>
@@ -1158,7 +1211,7 @@ let mRange=12;
 function inRange(o,w){if(w==="all")return true;const s=w==="year"?+new Date(new Date().getFullYear(),0,1):+startOfWeek(new Date())-(w-1)*7*DAY;return +new Date(o.at)>=s}
 function pMoney(){
   const R=[[4,"4 weeks"],[12,"12 weeks"],["year","This year"],["all","All time"]];
-  $("topAct").innerHTML=`<button class="btn b-soft b-sm" type="button" id="csv">Download orders</button>`;
+  $("topAct").innerHTML=`<button class="btn b-soft b-sm" type="button" id="csv"><span class="lg-l">Download orders</span><span class="lg-s">Export</span></button>`;
   const os=DB.orders.filter(o=>inRange(o,mRange)),sales=os.filter(isSale),open=os.filter(o=>o.status==="confirmed"||o.status==="sent");
   const rev=sales.reduce((t,o)=>t+orderTotal(o),0),owed=os.filter(o=>o.status==="confirmed").reduce((t,o)=>t+orderTotal(o),0);
   const byC={};sales.forEach(o=>{const k=o.phone.replace(/\D/g,"");byC[k]=(byC[k]||0)+1});const cust=Object.keys(byC).length,rep=Object.values(byC).filter(n=>n>1).length;
@@ -1177,7 +1230,7 @@ function pMoney(){
     <div class="kpi"><span>Customers</span><b>${cust}</b><small>${cust?Math.round(rep/cust*100):0}% ordered again</small></div>
     <div class="kpi"><span>Cancelled</span><b>${os.filter(o=>o.status==="cancelled").length}</b><small>of ${os.length} orders</small></div>
   </div></section>
-  <section class="card" id="cChart" style="margin-bottom:18px"><div class="card-h"><h2>Paid sales by week</h2><span class="muted" style="font-size:13px">Hover a week for the details</span></div><div class="chart" id="bigChart"></div></section>
+  <section class="card" id="cChart" style="margin-bottom:18px"><div class="card-h"><h2>Paid sales by week</h2><span class="muted" style="font-size:13px">${TOUCH?"Tap":"Hover"} a week for the details</span></div><div class="chart" id="bigChart"></div></section>
   <div class="grid2">
     <section class="card"><div class="card-h"><h2>What sells</h2><span class="muted" style="font-size:13px">Paid sales by item</span></div>
       ${top.length?`<ul class="hbars">${top.map(([id,v])=>`<li><span>${cat(id).name}</span><b>${fmt0(v)}</b><i><s style="width:${Math.max(2,v/mx*100)}%"></s></i></li>`).join("")}</ul>`:`<p class="empty">No paid orders in this range.</p>`}</section>
@@ -1207,10 +1260,10 @@ function weekChart(box,N){
     return `<g data-i="${i}">${h>0?`<path class="bar ${x.part?"part":""}" style="--i:${i}" d="M${cx-bw/2},${VH-B}V${y+r}Q${cx-bw/2},${y} ${cx-bw/2+r},${y}H${cx+bw/2-r}Q${cx+bw/2},${y} ${cx+bw/2},${y+r}V${VH-B}Z"/>`:""}<rect class="hit" x="${L+cw*i}" y="${T}" width="${cw}" height="${VH-T-B}"/>${lab}</g>`}).join("");
   box.innerHTML=`<svg viewBox="0 0 ${VW} ${VH}" role="img" aria-label="Paid sales per week">${g}${bars}</svg><div class="tip"></div>`;
   const tip=box.querySelector(".tip"),svg=box.querySelector("svg");
-  svg.addEventListener("pointermove",e=>{const gg=e.target.closest("g[data-i]");svg.querySelectorAll("g.on").forEach(x=>x.classList.remove("on"));if(!gg){tip.style.opacity=0;return}gg.classList.add("on");
+  const show=e=>{const gg=e.target.closest("g[data-i]");svg.querySelectorAll("g.on").forEach(x=>x.classList.remove("on"));if(!gg){tip.style.opacity=0;return}gg.classList.add("on");
     const x=W[+gg.dataset.i],r=svg.getBoundingClientRect(),bx=box.getBoundingClientRect(),sc=r.width/VW,cx=(L+cw*+gg.dataset.i+cw/2)*sc+(r.left-bx.left),h=(VH-T-B)*x.v/nice,y=(VH-B-h)*sc+(r.top-bx.top);
-    tip.innerHTML=`<b>${fmt(x.v)}</b>Week of ${dshort(x.s)} · ${x.n} paid order${x.n===1?"":"s"}${x.part?" · so far":""}`;tip.style.left=cx+"px";tip.style.top=y+"px";tip.style.opacity=1});
-  svg.addEventListener("pointerleave",()=>{tip.style.opacity=0;svg.querySelectorAll("g.on").forEach(x=>x.classList.remove("on"))});
+    tip.innerHTML=`<b>${fmt(x.v)}</b>Week of ${dshort(x.s)} · ${x.n} paid order${x.n===1?"":"s"}${x.part?" · so far":""}`;tip.style.left=cx+"px";tip.style.top=y+"px";tip.style.opacity=1};svg.addEventListener("pointermove",show);svg.addEventListener("pointerdown",show);
+  svg.addEventListener("pointerleave",e=>{if(e.pointerType==="touch")return;tip.style.opacity=0;svg.querySelectorAll("g.on").forEach(x=>x.classList.remove("on"))});
 }
 function downloadCSV(name,rows){const c=rows.map(r=>r.map(v=>{v=String(v??"");if(/^[=+\-@]/.test(v))v="'"+v;return /[",\n]/.test(v)?`"${v.replace(/"/g,'""')}"`:v}).join(",")).join("\n");
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([c],{type:"text/csv"}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
@@ -1329,7 +1382,7 @@ function newOrder(){OPEN=null;let lines=[{id:"crab",unit:"dozen",qty:1}],how="De
     if(yes){o.lines.forEach(l=>l.price=linePrice(l));o.log.push({s:"sent",at:o.at},{s:"confirmed",at:o.at});o.status="confirmed"}
     DB.orders.unshift(o);try{await saveOrder(o)}catch(e){DB.orders.shift();return}if(!LIVE)saveDB();
     toast(`Order added for <b>${esc(name)}</b>`);drawNav();if(route==="orders")oMode==="board"?drawBoard():drawOrders();else if(route==="today")render();openOrder(o.id)};
-  openDrawer();setTimeout(()=>$("nN").focus(),350)}
+  openDrawer();if(!TOUCH)setTimeout(()=>$("nN").focus(),350)}
 
 /* ===================== SEARCH (Ctrl K) ===================== */
 const IC={page:ICONS.today,act:'<path d="M10 3v14M3 10h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'};
@@ -1349,7 +1402,7 @@ function ckBuild(q){q=q.trim().toLowerCase();const qd=q.replace(/\D/g,""),toks=q
   return out}
 function ckDraw(){const L=$("ckList");let g="";ckItems=ckBuild($("ckIn").value);ckSel=Math.min(ckSel,Math.max(0,ckItems.length-1));
   L.innerHTML=ckItems.length?ckItems.map((it,i)=>{const head=it.grp!==g?`<li class="ckg" role="presentation">${it.grp}</li>`:"";g=it.grp;return head+`<li role="option" data-ck="${i}" aria-selected="${i===ckSel}"><span class="ci">${it.img?`<img src="${it.img}" alt="">`:`<svg viewBox="0 0 20 20" aria-hidden="true">${it.ic}</svg>`}</span><b>${esc(it.t)}</b><small>${esc(it.s||"")}</small>${it.k?`<span class="k">${it.k}</span>`:""}</li>`}).join(""):`<li class="ckg" role="presentation">Nothing found. Try a name, phone number or item.</li>`}
-function ckOpen(){$("cmdk").hidden=false;$("ckIn").value="";ckSel=0;ckDraw();setTimeout(()=>$("ckIn").focus(),20)}
+function ckOpen(){$("cmdk").hidden=false;$("ckIn").value="";ckSel=0;ckDraw();if(!TOUCH)setTimeout(()=>$("ckIn").focus(),20)}
 function ckClose(){$("cmdk").hidden=true}
 function ckRun(i){const it=ckItems[i];if(!it)return;ckClose();it.run()}
 $("ckKey").textContent=/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent)?"⌘ K":"Ctrl K";
@@ -1360,7 +1413,7 @@ $("ckIn").onkeydown=e=>{if(e.key==="ArrowDown"){e.preventDefault();ckSel=Math.mi
   if(e.key==="Enter"){e.preventDefault();ckRun(ckSel)}};
 $("ckList").onclick=e=>{const li=e.target.closest("[data-ck]");if(li)ckRun(+li.dataset.ck)};
 $("ckList").onmousemove=e=>{const li=e.target.closest("[data-ck]");if(li&&+li.dataset.ck!==ckSel){ckSel=+li.dataset.ck;$("ckList").querySelectorAll("[data-ck]").forEach(x=>x.setAttribute("aria-selected",+x.dataset.ck===ckSel))}};
-$("cmdk").onclick=e=>{if(e.target===$("cmdk"))ckClose()};
+$("cmdk").onclick=e=>{if(e.target===$("cmdk")||e.target.id==="ckX"){e.preventDefault();ckClose()}};
 addEventListener("keydown",e=>{if($("app").hidden)return;
   if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();$("cmdk").hidden?ckOpen():ckClose()}
   else if(e.key==="Escape"&&!$("cmdk").hidden)ckClose()
