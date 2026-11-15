@@ -498,6 +498,37 @@ li.open .sxi{opacity:1;transform:none;transition-delay:.08s}
 .tb-ic svg{width:17px;height:17px}
 @media (min-width:980px){.tb-ic{display:none}}
 /* board */
+/* orders: days */
+.dnav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
+.dnav p{margin:0;font-size:14px}
+.dnav>div{display:flex;align-items:center;gap:6px}
+.dn-b,.dn-t{border:0;background:#fff;box-shadow:0 0 0 1px var(--line);border-radius:999px;height:36px;display:grid;place-items:center;color:var(--ink);font-weight:600;font-size:14px}
+.dn-b{width:36px}.dn-b svg{width:16px;height:16px}.dn-t{padding:0 16px}
+.dn-b:hover,.dn-t:hover{background:var(--paper)}
+.days{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(290px,1fr);gap:14px;overflow-x:auto;padding:2px 2px 16px;scroll-snap-type:x proximity;scroll-padding:0 2px;align-items:start;overscroll-behavior-x:contain;scrollbar-width:thin}
+.days:focus-visible{outline:2px solid var(--sign);outline-offset:4px;border-radius:16px}
+.day{scroll-snap-align:start;background:#fff;border-radius:18px;box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(19,32,46,.04);display:flex;flex-direction:column;max-height:calc(100vh - 250px);min-height:180px}
+.day-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+.day-h h3{margin:0;font-family:var(--f-display);font-weight:800;font-size:30px;line-height:1;letter-spacing:.2px;color:var(--ink)}
+.day-h small{display:block;font-size:13px;color:var(--muted);margin-top:5px}
+.day-n{text-align:right}.day-n b{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink)}.day-n small{margin-top:1px}
+.day.is-today{box-shadow:0 0 0 2px var(--ink),0 8px 24px rgba(19,32,46,.08)}
+.day.is-today .day-h{background:var(--paper);border-radius:18px 18px 0 0}
+.day.is-late .day-h h3,.day.is-late .day-h small{color:var(--shell)}
+.day.is-none .day-h h3{color:var(--muted)}
+.day-b{overflow-y:auto;padding:8px;display:grid;gap:6px;align-content:start}
+.day-e{margin:0;padding:22px 10px;text-align:center;color:var(--muted);font-size:14px}
+.dc{display:grid;gap:6px;width:100%;text-align:left;border:0;background:var(--paper);border-radius:12px;padding:12px 12px 11px;color:var(--body);transition:background-color .25s,transform .5s var(--spring)}
+.dc:hover{background:var(--ice)}.dc:active{transform:scale(.985);transition-duration:.25s,.09s}
+.dc-t{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.dc-t b{font-size:15.5px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dc-t>span:not(.tag){font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);flex:none}
+.dc-i{font-size:13.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dc-f{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dc-h{font-size:12.5px;color:var(--muted)}
+.dc-a{margin-left:auto;font-style:normal;font-size:13px;font-weight:600;border-radius:999px;padding:6px 12px;background:var(--tg-b);color:var(--tg-t)}
+.dc:hover .dc-a{filter:brightness(.92)}
+@media (max-width:640px){.days{grid-auto-columns:86vw;margin:0 -16px;padding:2px 16px 16px;scroll-padding:0 16px}.day{max-height:none}.dnav p{display:none}.dnav{justify-content:flex-end}}
 .board{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);gap:14px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}
 .col{background:#eceee9;border-radius:16px;padding:10px;min-height:320px;scroll-snap-align:start;transition:background-color .2s,box-shadow .2s}
 .col.over{background:#e3ebe4;box-shadow:inset 0 0 0 2px var(--sign)}
@@ -1126,18 +1157,18 @@ function orderRow(o){const t=totals(o);return `<button class="row" type="button"
 document.addEventListener("click",e=>{const b=e.target.closest("[data-order]");if(b)openOrder(b.dataset.order);const q=e.target.closest("[data-quote]");if(q)openQuote(q.dataset.quote)});
 
 /* ===================== ORDERS ===================== */
-let oFilter="needs",oQuery="",oMode="list";
+let oFilter="needs",oQuery="",oMode=(()=>{try{return localStorage.getItem("ot-oview")||"days"}catch(e){return"days"}})();
 const OF={needs:["Needs you",o=>["new","confirmed","paid"].includes(o.status),q=>q.status==="new"],wait:["Waiting on customer|Waiting",o=>o.status==="sent",q=>q.status==="sent"],done:["Finished|Done",o=>o.status==="done"||o.status==="cancelled",q=>q.status==="done"||q.status==="lost"],all:["All",()=>true,()=>true]};
 function pOrders(opt){
   if(opt&&opt.q!=null){oQuery=opt.q;oFilter="all";oMode="list"}
-  $("topAct").innerHTML=`<div class="segm" role="group" aria-label="View"><button type="button" data-om="list" aria-pressed="${oMode==="list"}">List</button><button type="button" data-om="board" aria-pressed="${oMode==="board"}">Board</button></div><button class="btn b-green b-sm" type="button" id="newO">+ New<span class="hide-m"> order</span></button>`;
-  $("newO").onclick=newOrder;$("topAct").querySelectorAll("[data-om]").forEach(b=>b.onclick=()=>{oMode=b.dataset.om;pOrders({anim:1})});
+  $("topAct").innerHTML=`<div class="segm" role="group" aria-label="View"><button type="button" data-om="days" aria-pressed="${oMode==="days"}">Days</button><button type="button" data-om="list" aria-pressed="${oMode==="list"}">List</button><button type="button" data-om="board" aria-pressed="${oMode==="board"}">Board</button></div><button class="btn b-green b-sm" type="button" id="newO">+ New<span class="hide-m"> order</span></button>`;
+  $("newO").onclick=newOrder;$("topAct").querySelectorAll("[data-om]").forEach(b=>b.onclick=()=>{oMode=b.dataset.om;try{localStorage.setItem("ot-oview",oMode)}catch(e){}pOrders({anim:1})});
   if(oMode==="board"&&innerWidth<640)oMode="list";
   if(oMode==="board"){$("page").innerHTML=`<div class="toolbar" id="oTools"><p class="muted" style="margin:0;font-size:14px">Drag an order to move it along. Tap it to open.</p></div><div class="board" id="olist"></div>`;drawBoard();return}
   $("page").innerHTML=`<div class="toolbar" id="oTools"><div class="seg" role="group" aria-label="Show">${Object.entries(OF).map(([k,[l,fo,fq]])=>`<button type="button" data-of="${k}" aria-pressed="${oFilter===k}">${l.includes("|")?`<i class="lg-l">${l.split("|")[0]}</i><i class="lg-s">${l.split("|")[1]}</i>`:l} <span>${DB.orders.filter(fo).length+DB.quotes.filter(fq).length}</span></button>`).join("")}</div>
     ${dpHTML()}
     <label class="search"><span class="vh">Search orders</span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.6"/></svg><input id="oq" type="search" placeholder="Search name, phone or item" value="${esc(oQuery)}"></label></div>
-    <section class="card" id="olist"></section>`;
+    ${oMode==="days"?`<div id="olist"></div>`:`<section class="card" id="olist"></section>`}`;
   $("oq").oninput=e=>{oQuery=e.target.value;drawOrders()};dpWire();drawOrders();
 }
 function drawOrders(){
@@ -1150,14 +1181,44 @@ function drawOrders(){
   const rank={new:0,confirmed:1,paid:2,sent:3,done:4,cancelled:5};
   if(oFilter==="needs")os.sort((a,b)=>rank[a.status]-rank[b.status]||new Date(b.at)-new Date(a.at));
   const box=$("olist");if(!box)return;
-  if(!os.length&&!qs.length){box.innerHTML=`<p class="empty">${oDate.k!=="any"&&!q?`No orders received ${dLabel().toLowerCase().startsWith("from")||oDate.k==="custom"?"in that range":dLabel().toLowerCase()}.`:oFilter==="needs"&&!q?"Nothing needs you right now.":"No orders match."}</p>`;return}
+  if(!os.length&&!qs.length){box.innerHTML=`${oMode==="days"?'<section class="card">':""}<p class="empty">${oDate.k!=="any"&&!q?`No orders received ${dLabel().toLowerCase().startsWith("from")||oDate.k==="custom"?"in that range":dLabel().toLowerCase()}.`:oFilter==="needs"&&!q?"Nothing needs you right now.":"No orders match."}</p>${oMode==="days"?"</section>":""}`;return}
+  if(oMode==="days"){drawDays(os,qs,box);if(WHYON)whyPaint();return}
   const qrow=x=>`<tr data-quote="${esc(x.id)}"><td><span class="tag ws">Quote</span></td><td class="who"><b>${esc(x.biz||x.name)}</b><small>${esc(x.phone||"")}</small></td><td class="its">${esc(x.need)}</td><td>${esc(x.when||"")}<br><small class="muted">${esc(x.freq||"")}</small></td><td class="num"><span class="muted">Wholesale</span></td><td>${chip(x.status==="sent"?"sent":x.status==="done"?"paid":x.status==="lost"?"cancelled":"new").replace("Price sent","Quote sent").replace(">Paid<",">Won<")}</td><td class="muted">${ago(x.at)}</td></tr>`;
-  box.innerHTML=`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Needed</th><th class="num">Total</th><th>Status</th><th>Received</th></tr></thead><tbody>${qs.map(qrow).join("")}${os.slice(0,200).map(o=>`<tr data-order="${esc(o.id)}" class="${o.status==="new"?"isnew":""}"><td class="mono">${esc(o.id)}</td><td class="who"><b>${esc(o.biz||o.name)}</b><small>${o.biz?esc(o.name)+" · ":""}${esc(o.phone)}</small></td><td class="its">${esc(itemsText(o))}</td><td>${esc(o.when||"Not set")}<br><small class="muted">${esc(o.how)}</small></td><td class="num">${o.status==="new"?'<span class="muted">To price</span>':fmt(orderTotal(o))}</td><td>${chip(o.status)}</td><td class="muted">${ago(o.at)}</td></tr>`).join("")}</tbody></table></div>
+  box.innerHTML=`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Needed</th><th class="num">Total</th><th>Status</th><th>Received</th></tr></thead><tbody>${qs.map(qrow).join("")}${os.slice(0,200).map(o=>`<tr data-order="${esc(o.id)}" class="${o.status==="new"?"isnew":""}"><td class="mono">${esc(o.id)}</td><td class="who"><b>${esc(o.biz||o.name)}</b><small>${o.biz?esc(o.name)+" · ":""}${esc(o.phone)}</small></td><td class="its">${esc(itemsText(o))}</td><td>${esc(whenTxt(o))}<br><small class="muted">${esc(o.how)}</small></td><td class="num">${o.status==="new"?'<span class="muted">To price</span>':fmt(orderTotal(o))}</td><td>${chip(o.status)}</td><td class="muted">${ago(o.at)}</td></tr>`).join("")}</tbody></table></div>
   <ul class="tasks ocards">${qs.filter(x=>x.status==="new").map(quoteRow).join("")}${os.slice(0,200).map(o=>ACT[o.status]?taskRow(o):`<li>${orderRow(o)}</li>`).join("")}</ul>`;
   if(WHYON)whyPaint();
 }
 document.addEventListener("click",e=>{const f=e.target.closest("[data-of]");if(f){oFilter=f.dataset.of;document.querySelectorAll("[data-of]").forEach(b=>b.setAttribute("aria-pressed",b===f));drawOrders();softSwap($("olist"))}});
 
+
+
+/* ---------- orders: days view (by day needed) ---------- */
+const MON={jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+function whenDate(o){const w=String(o.when||"").trim();let m=w.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(m)return new Date(+m[1],m[2]-1,+m[3]);
+  m=w.match(/\b([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2})(?!\d)/);if(m&&MON[m[1].toLowerCase()]!=null){const a=new Date(o.at||Date.now());const d=new Date(a.getFullYear(),MON[m[1].toLowerCase()],+m[2]);if(+d<+a-120*DAY)d.setFullYear(d.getFullYear()+1);return d}return null}
+const whenTxt=o=>{const d=whenDate(o);return d?d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}):(o.when||"Not set")};
+const DACT={new:["price","Price it"],confirmed:["pay","Collect payment"],paid:["deliver","Deliver"]};
+function drawDays(os,qs,box){
+  const d0=new Date();d0.setHours(0,0,0,0);const tk=iso10(d0),tmk=iso10(new Date(+d0+DAY));
+  const by=new Map([[tk,[]],[tmk,[]]]),none=[];
+  os.forEach(o=>{const d=whenDate(o);if(!d){none.push(o);return}const k=iso10(d);if(!by.has(k))by.set(k,[]);by.get(k).push(o)});
+  const keys=[...by.keys()].sort(),rank={new:0,confirmed:1,paid:2,sent:3,done:4,cancelled:5};
+  const card=o=>{const a=DACT[o.status];return `<button class="dc" type="button" data-order="${esc(o.id)}"><span class="dc-t"><b>${esc(o.biz||o.name||"No name")}</b>${o.status==="new"?"":`<span>${fmt(orderTotal(o))}</span>`}</span><span class="dc-i">${esc(itemsText(o))}</span><span class="dc-f">${chip(o.status)}<span class="dc-h">${esc(o.how||"")}</span>${a?`<em class="dc-a tg-${a[0]}">${a[1]}</em>`:""}</span></button>`};
+  const qcard=x=>`<button class="dc" type="button" data-quote="${esc(x.id)}"><span class="dc-t"><b>${esc(x.biz||x.name)}</b><span class="tag ws">Wholesale</span></span><span class="dc-i">${esc(x.need)}</span><span class="dc-f"><span class="dc-h">${esc([x.when,x.freq].filter(Boolean).join(" · "))}</span>${x.status==="new"?`<em class="dc-a tg-reply">Reply</em>`:""}</span></button>`;
+  const panel=(k,list,quotes)=>{const d=k?new Date(k+"T12:00"):null,diff=d?Math.round((d-d0-12*36e5)/DAY):0;
+    const open=list.filter(o=>DACT[o.status]).length,late=d&&diff<0&&open>0;
+    const title=!d?"No date yet":diff===0?"Today":diff===1?"Tomorrow":diff===-1?"Yesterday":diff>1&&diff<7?d.toLocaleDateString("en-US",{weekday:"long"}):d.toLocaleDateString("en-US",{month:"short",day:"numeric"});
+    const sub=!d?"Ask when they need it":late?`Was due ${d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})}`:d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
+    const tot=list.filter(o=>o.status!=="new"&&o.status!=="cancelled").reduce((t,o)=>t+orderTotal(o),0),n=list.length+(quotes||[]).length;
+    list.sort((a,b)=>rank[a.status]-rank[b.status]);
+    return `<section class="day${diff===0&&d?" is-today":""}${late?" is-late":""}${!d?" is-none":""}" data-day="${k||"none"}"><header class="day-h"><div><h3>${title}</h3><small>${sub}</small></div><div class="day-n"><b>${n}</b><small>${n===1?"order":"orders"}${tot?` · ${fmt0(tot)}`:""}</small></div></header><div class="day-b">${(quotes||[]).map(qcard).join("")}${list.map(card).join("")}${n?"":`<p class="day-e">Nothing due${diff===0?" today":""}.</p>`}</div></section>`};
+  box.innerHTML=`<div class="dnav"><p class="muted">One panel per day, by the day the customer needs it.</p><div><button type="button" class="dn-b" data-dn="-1" aria-label="Earlier days"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" class="dn-t" data-dn="0">Today</button><button type="button" class="dn-b" data-dn="1" aria-label="Later days"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+  <div class="days" id="days" tabindex="0" aria-label="Orders by day">${keys.map(k=>panel(k,by.get(k))).join("")}${none.length||qs.length?panel("",none,qs):""}</div>`;
+  const strip=$("days"),td=strip.querySelector(".is-today"),to=el=>el?el.offsetLeft-parseFloat(getComputedStyle(strip).paddingLeft):0;
+  strip.scrollLeft=to(strip.querySelector(".is-late")||td);
+  box.querySelectorAll("[data-dn]").forEach(b=>b.onclick=()=>{const v=+b.dataset.dn,w=strip.querySelector(".day").offsetWidth+14;
+    strip.scrollTo({left:v===0?to(strip.querySelector(".is-today")):strip.scrollLeft+v*w*(innerWidth<640?1:2),behavior:RM?"auto":"smooth"})});
+}
 
 /* ---------- orders: date filter (by date received) ---------- */
 let oDate=(()=>{try{return JSON.parse(sessionStorage.getItem("ot-odate"))||{k:"any"}}catch(e){return{k:"any"}}})();
@@ -1790,6 +1851,7 @@ const WHY_D=[
  ["today","#cPrep","A shopping list from real orders","Adds up every open order by item and size, so the morning buy at the market matches what's already sold. One tap prints it.","Less waste, and no promising orders you can't fill."],
  ["today","#cBack","Regulars worth a text","Customers who ordered at least twice but went quiet for three weeks, each with a ready-to-send text about their favorite item.","Repeat orders from people who already trust you, at zero ad cost."],
  ["today","#cWeek","This week against last week","Compared at the same point in the week, so Tuesday isn't measured against a full week.","Spot a slow week early enough to run a special."],
+ ["orders","#days","One panel per day","Orders sit under the day the customer needs them, so the owner plans the week the way they already think about it: what goes out today, what goes out tomorrow. Late ones turn red and come first.","Nothing gets delivered a day late because it was buried in a list."],
  ["orders","#oTools","Three tabs, not eight","Needs you, Waiting on customer, Finished. That's how an owner thinks about the day. A search box finds any order by name, phone or item.","Nothing slips through the cracks."],
  ["orders","#olist","Price once, text in one tap","Open an order and prices fill in from the price list. One button opens Messages with every item and the total written out.","Replies in under a minute instead of typing each order by hand."],
  ["orders","#olist","Nothing is charged until they say yes","The same promise the website makes. Orders move from price sent to confirmed to paid, and the payment method is recorded.","No chargebacks or refund fights over market-price seafood."],
