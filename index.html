@@ -686,6 +686,14 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
 .why-note b{font-size:15.5px}
 .why-note p{margin:0;color:var(--body)}
 .why-note .roi{color:var(--sign-dk);font-weight:600}
+.why-note .wn{grid-row:span 4}
+.why-note .wd{grid-column:2;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;margin:8px 0 2px;padding:12px 14px;background:#fff;border-radius:8px;box-shadow:0 0 0 1px #ecd27a}
+.why-note .wd strong{font-family:var(--f-display);font-weight:800;font-size:38px;line-height:.9;color:var(--sign);letter-spacing:.2px;font-variant-numeric:tabular-nums}
+.why-note .wd strong.w{font-size:24px}
+.why-note .wd span{font-size:14px;line-height:1.45;color:var(--body)}
+.why-note .wd a{display:block;margin-top:3px;font-size:12.5px;font-weight:600;color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.why-note .wd a::after{content:" ↗"}
+
 #bulk .why-note,#how .why-note{background:#fff8dc}
 .why-wrap{padding-top:22px}
 .why-roi{background:var(--ink);color:var(--ice);padding:28px 0}
@@ -1779,6 +1787,24 @@ function welcomeCode(){try{return SHOP.welcome&&localStorage.getItem("ot-code")|
 })();
 
 /* ---------- "why we built it this way" (pitch mode) ---------- */
+
+/* research behind the notes: each one names the source, so the owner can check it */
+const WHY_DATA={
+ "A headline that says what you sell":["10 sec","is about how long visitors give a page before deciding to stay or leave. What you sell has to be clear by then.","Nielsen Norman Group","https://www.nngroup.com/articles/how-long-do-users-stay-on-web-pages/"],
+ "Written for Google too":["76%","of people who search for something nearby on their phone visit a related business within a day, and 28% of those searches end in a purchase.","Think with Google","https://www.thinkwithgoogle.com/data/mobile-near-me-searches/"],
+ "One line that answers the basics":["48%","of seafood shoppers say there isn't enough information available to them about seafood.","FMI, Power of Seafood survey","https://www.seafoodsource.com/news/foodservice-retail/survey-on-us-seafood-consumption-contains-surprises"],
+ "Proof right under the buttons":["78%","of shoppers worry about the freshness of food they buy online. Showing the real business answers that before they ask.","Mintel","https://www.foodnavigator.com/Article/2018/05/22/Consumers-have-trust-issues-when-it-comes-to-online-shopping-that-can-be-remedied-says-Mintel/"],
+ "Three facts, no hype":["19%","of US shoppers who quit a checkout didn't trust the site with their card, and 18% quit because it forced an account. This site asks for neither.","Baymard Institute","https://baymard.com/lists/cart-abandonment-rate"],
+ "Your real crates, not stock photos":["69%","of shoppers hesitate to buy food they can't see or touch first. Your real crates are the closest thing to seeing it in person.","Mintel","https://www.foodnavigator.com/Article/2018/05/22/Consumers-have-trust-issues-when-it-comes-to-online-shopping-that-can-be-remedied-says-Mintel/"],
+ "The first photo already sells":["56%","of shoppers start by looking at the photos, before reading anything about the product.","Baymard Institute","https://baymard.com/blog/product-images-descriptive-text"],
+ "Order button that remembers the cart":["70%","of online carts are abandoned on average, across 50 studies. Keeping the order one tap away wins some of them back.","Baymard Institute","https://baymard.com/lists/cart-abandonment-rate"],
+ "Who already buys here":["270%","higher purchase likelihood for a product with five reviews than for one with none.","Spiegel Research Center, Northwestern","https://spiegel.medill.northwestern.edu/How-Online-Reviews-Influence-Sales"],
+ "A real photo on every product":["Eye-tracking","shows people skip stock photos but study real product photos closely.","Nielsen Norman Group","https://www.nngroup.com/articles/photos-as-web-content/"],
+ "Honest about market prices":["40%","of shoppers who abandon a checkout do it because extra costs were too high. Confirming the total before anyone pays means no surprises.","Baymard Institute","https://baymard.com/lists/cart-abandonment-rate"],
+ "No account, no card":["18%","of US shoppers who abandoned a checkout did it because the site wanted them to create an account.","Baymard Institute","https://baymard.com/lists/cart-abandonment-rate"],
+ "Care and cooking guides":["26%","of shoppers say they know how to judge seafood freshness and quality. Teaching them builds trust in you.","FMI, Power of Seafood survey","https://www.seafoodsource.com/news/foodservice-retail/survey-on-us-seafood-consumption-contains-surprises"],
+ "Fast on a weak signal":["53%","of mobile visits are abandoned if a page takes longer than 3 seconds to load.","Google","https://www.thinkwithgoogle.com/consumer-insights/consumer-trends/mobile-site-load-time-statistics/"]
+};
 const WHY=[
  ["#special","Weekly special bar","Gives every visitor a reason to order this week instead of someday. You change the text from your dashboard in seconds.","Specials move stock you already bought before it loses value.","top"],
  ["#special","The special adds itself","\"Add to my order\" in the top bar jumps to the lobster card and highlights it. No hunting for the deal.","Turns a glance at the special into an item in the cart.","top"],
@@ -1805,7 +1831,7 @@ const WHY=[
  [".tcard","Answering the three doubts before they're asked","Are you a real business? Will I get charged online? Is there a person? Your real building, direct contact, nothing charged online, and real Instagram posts as proof settle all three.","Trust is the cheapest way to raise how many visitors order."],
  [".tc-copy h2","A claim anyone can check","\"Our name is on the building\" can be verified by driving past. Checkable beats impressive.","Trust you don't have to argue for."],
  [".tc-copy .tc-acts","Message us, not a contact form","The button opens your Instagram messages, where you already answer customers. No new inbox to watch.","Leads land where you already work."],
- [".tc-copy .tc-acts","Three promises you can keep","Straight from us, price before you pay, only our own photos. All three are true today, so none of them can backfire.","Promises that hold build repeat customers."],
+ [".tc-copy .tc-acts","Three promises you can keep","Straight from us, price before you pay, 1 lb or a whole case. All three are true today, so none of them can backfire.","Promises that hold build repeat customers."],
  [".tfeed","Instagram as live proof","Five recent posts, each opening the real post. People can check dates, likes and comments themselves.","Social proof you never have to fake."],
  ["#again","Order again in one tap","Returning customers see their last order and can add it back with one button. Most seafood buyers order the same things again.","Repeat orders with zero effort from you."],
  [".shop-head","Honest about market prices","Where you haven't set a price, cards say \"Market price, confirmed before you pay\" instead of hiding it. Seafood buyers know prices move.","Honesty keeps people ordering instead of leaving to ask."],
@@ -1867,7 +1893,9 @@ const WHY=[
     WHY.forEach(([sel,title,text,roiLine,pos])=>{
       const el=document.querySelector(sel);if(!el)return;const i=el.closest("dialog")?-1:k++;
       const n=document.createElement("div");n.className="why-note";n.setAttribute("role","note");
-      n.innerHTML=`<span class="wn">${i<0?"+":i+1}</span><b>${esc(title)}</b><p>${esc(text)}</p><p class="roi">${esc(roiLine)}</p>`;
+      const D=WHY_DATA[title];
+      n.innerHTML=`<span class="wn">${i<0?"+":i+1}</span><b>${esc(title)}</b><p>${esc(text)}</p><p class="roi">${esc(roiLine)}</p>`+(D?`<p class="wd"><strong${D[0].length>5?' class="w"':""}>${esc(D[0])}</strong><span>${esc(D[1])}<a href="${D[3]}" target="_blank" rel="noopener">${esc(D[2])}</a></span></p>`:"");
+      if(D)n.classList.add("has-data");
       el.setAttribute("data-why-on","");
       if(pos==="top"){topBox.appendChild(n)}
       else if(pos==="how"){document.querySelector("#how .wrap").appendChild(n)}
