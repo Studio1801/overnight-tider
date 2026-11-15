@@ -38,7 +38,7 @@ function textCols_(sh, t) { [t.text, t.text2].forEach(a => a && sh.getRange(a).s
 
 function clean(v) {
   v = String(v == null ? "" : v).slice(0, 5000);
-  return /^[=+\-@]/.test(v) ? "'" + v : v; // stop spreadsheet formula injection
+  return v === "" ? v : "'" + v; // store as typed: no formulas, no 08104 -> 8104, no "Nov 20" -> a date
 }
 function json(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 function out(t) { return ContentService.createTextOutput(t); }
