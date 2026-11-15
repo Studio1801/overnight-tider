@@ -737,6 +737,58 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
   .fly{display:none}
 }
 
+
+/* how ordering works: three steps you can see */
+#how{background:var(--ice);overflow:hidden}
+.hw-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:40px}
+.hw-head .head{margin:0}
+.hw-head .btn{flex:none}
+.hw-steps>li.hw-card{grid-template-columns:1fr;gap:0}
+.hw-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:0;padding:0;list-style:none;position:relative;counter-reset:none}
+.hw-card{background:#fff;border-radius:22px;box-shadow:0 0 0 1px rgba(19,32,46,.06),0 30px 60px -40px rgba(19,32,46,.45);display:grid;grid-template-rows:230px auto;overflow:hidden;opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .9s cubic-bezier(.16,1,.3,1)}
+.hw-card:nth-child(2){transition-delay:.12s}.hw-card:nth-child(3){transition-delay:.24s}
+#how.go .hw-card{opacity:1;transform:none}
+.hw-art{background:linear-gradient(180deg,#f3f6f5,#e9efed);display:grid;place-items:center;padding:22px;position:relative}
+.hw-txt{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:22px 24px 26px;align-items:start}
+.hw-txt .num{font-family:var(--f-display);font-weight:800;font-size:58px;line-height:.78;color:var(--sign);transform:skewX(-9deg)}
+.hw-txt h3{margin:0 0 6px;font-size:20px;line-height:1.2}
+.hw-txt p{margin:0;color:var(--body);font-size:16px;line-height:1.5}
+/* step 1: a little order list */
+.mini-list{width:min(250px,100%);background:#fff;border-radius:16px;box-shadow:0 18px 36px -22px rgba(19,32,46,.5);padding:8px;display:grid;gap:2px;font-size:13.5px}
+.ml-row{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:6px;border-radius:10px;opacity:0;transform:translateX(-10px);transition:opacity .45s,transform .6s cubic-bezier(.34,1.56,.64,1)}
+.ml-row img{width:34px;height:34px;border-radius:8px;object-fit:cover}
+.ml-row b{font-weight:600;color:var(--ink)}
+.ml-foot{display:flex;justify-content:space-between;align-items:center;margin-top:4px;padding:9px 10px;border-radius:10px;background:var(--ink);color:var(--paper);font-size:13px;opacity:0;transition:opacity .5s .9s}
+.ml-foot b{color:var(--band)}
+#how.go .ml-row{opacity:1;transform:none}
+#how.go .ml-row:nth-child(1){transition-delay:.35s}#how.go .ml-row:nth-child(2){transition-delay:.5s}#how.go .ml-row:nth-child(3){transition-delay:.65s}
+#how.go .ml-foot{opacity:1}
+/* step 2: the send button and the confirmation */
+.mini-send{display:grid;justify-items:center;gap:16px}
+.ms-btn{position:relative;display:inline-flex;align-items:center;background:var(--sign);color:#fff;font-weight:600;font-size:16px;padding:14px 30px;border-radius:999px;box-shadow:0 16px 30px -16px rgba(47,107,61,.9)}
+.ms-tap{position:absolute;right:16px;bottom:-12px;width:26px;height:26px;border-radius:50%;background:rgba(19,32,46,.18);box-shadow:0 0 0 2px #fff;opacity:0}
+#how.go .ms-tap{animation:tap 2.8s 1s ease-in-out infinite}
+@keyframes tap{0%,100%{opacity:0;transform:scale(1.3)}12%{opacity:1;transform:scale(1)}22%{transform:scale(.8)}34%{opacity:0;transform:scale(1.6)}}
+.ms-ok{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);border-radius:999px;padding:9px 14px 9px 10px;font-size:13.5px;font-weight:600;box-shadow:0 12px 26px -16px rgba(19,32,46,.5);opacity:0;transform:translateY(8px) scale(.94);transition:opacity .4s 1.3s,transform .6s cubic-bezier(.34,1.56,.64,1) 1.3s}
+.ms-ok svg{width:18px;height:18px;padding:3px;border-radius:50%;background:var(--sign);color:#fff;box-sizing:content-box}
+#how.go .ms-ok{opacity:1;transform:none}
+/* step 3: the text conversation */
+.mini-text{width:min(260px,100%);display:grid;gap:6px}
+.mt-from{font-size:12px;font-weight:600;color:var(--sign);margin-left:4px}
+.mt-b{max-width:88%;padding:9px 13px;border-radius:16px;font-size:13.5px;line-height:1.38;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .55s cubic-bezier(.34,1.56,.64,1)}
+.mt-b.o{background:#fff;color:var(--ink);border-bottom-left-radius:5px;box-shadow:0 10px 24px -16px rgba(19,32,46,.5)}
+.mt-b.c{justify-self:end;background:var(--sign);color:#fff;border-bottom-right-radius:5px}
+.mt-chip{justify-self:center;margin-top:6px;font-size:12.5px;font-weight:600;color:var(--ink);background:var(--band);border-radius:999px;padding:6px 12px;opacity:0;transform:scale(.9);transition:opacity .4s,transform .55s cubic-bezier(.34,1.56,.64,1)}
+#how.go .mt-b.o{opacity:1;transform:none;transition-delay:.6s}
+#how.go .mt-b.c{opacity:1;transform:none;transition-delay:1.3s}
+#how.go .mt-chip{opacity:1;transform:none;transition-delay:1.8s}
+@media (max-width:900px){
+  .hw-head{flex-direction:column;align-items:flex-start}
+  .hw-steps{grid-template-columns:1fr;gap:16px}
+  .hw-card{grid-template-rows:auto auto}
+  .hw-art{padding:26px 20px}
+}
+@media (prefers-reduced-motion:reduce){.hw-card,.ml-row,.ml-foot,.ms-ok,.mt-b,.mt-chip{opacity:1!important;transform:none!important;transition:none!important}.ms-tap{animation:none!important}}
 /* ---------- website chat ---------- */
 .chat-btn{position:fixed;right:24px;bottom:24px;z-index:45;display:flex;align-items:center;gap:10px;border:0;border-radius:999px;background:var(--ink);color:var(--paper);padding:13px 20px 13px 15px;font:600 15.5px/1 var(--f-body);cursor:pointer;box-shadow:0 18px 40px -16px rgba(19,32,46,.6);transition:bottom .45s var(--ease),transform .5s cubic-bezier(.34,1.56,.64,1),opacity .25s,background-color .25s}
 .chat-btn svg{width:22px;height:22px;flex:none}
@@ -906,7 +958,7 @@ body:has(.obar.show) .chat-peek{bottom:164px}
       <ul class="tc-pledge">
         <li class="io"><b>Straight from us</b><span>The people who answer your message buy, pack and deliver your order.</span></li>
         <li class="io" style="--d:90ms"><b>Price before you pay</b><span>We text your total. Nothing is charged until you say yes.</span></li>
-        <li class="io" style="--d:180ms"><b>Only our own photos</b><span>Every product photo links to the Instagram post it came from.</span></li>
+        <li class="io" style="--d:180ms"><b>1 lb or a whole case</b><span>Two lobsters for dinner get the same care as a restaurant's weekly order.</span></li>
       </ul>
     </div>
   </div>
@@ -996,17 +1048,6 @@ body:has(.obar.show) .chat-peek{bottom:164px}
   </div>
 </section>
 
-<section class="sec" id="how">
-  <div class="wrap">
-    <div class="head io"><p class="eyebrow">Three steps</p><h2 data-k="how.h">How ordering works</h2></div>
-    <ol class="steps io">
-      <li><span class="num">1</span><div><h3>Build your list</h3><p>Add seafood from what's on ice this week, or start from a party size.</p></div></li>
-      <li><span class="num">2</span><div><h3>Send it in one tap</h3><p>Your order comes straight to us with your number. No account, no card online.</p></div></li>
-      <li><span class="num">3</span><div><h3>We confirm and deliver</h3><p>A real person replies with your price and sets delivery or shipping for the day you need it.</p></div></li>
-    </ol>
-    <p class="sched" id="sched" hidden></p>
-  </div>
-</section>
 
 <section class="sec" id="photos">
   <div class="wrap">
@@ -1023,6 +1064,48 @@ body:has(.obar.show) .chat-peek{bottom:164px}
       <img src="img/tails.webp" alt="Red shrimp tails" loading="lazy" width="401" height="540">
       <img src="img/crabs.webp" alt="Blue crabs" loading="lazy" width="655" height="655">
     </div>
+  </div>
+</section>
+<section class="sec" id="how">
+  <div class="wrap hw">
+    <div class="hw-head">
+      <div class="head io"><p class="eyebrow">Three steps</p><h2 data-k="how.h">How ordering works</h2><p>No account and no card online. You only pay once you've seen the price and said yes.</p></div>
+      <a class="btn btn-green" href="#shop">Start your list</a>
+    </div>
+    <ol class="steps hw-steps" id="hwSteps">
+      <li class="hw-card">
+        <div class="hw-art" aria-hidden="true">
+          <div class="mini-list">
+            <div class="ml-row"><img src="img/crabs.webp" alt=""><span>Blue crabs</span><b>2 dozen</b></div>
+            <div class="ml-row"><img src="img/p-shrimp.webp" alt=""><span>Head-on shrimp</span><b>3 lb</b></div>
+            <div class="ml-row"><img src="img/lobster.webp" alt=""><span>Live lobster</span><b>2</b></div>
+            <div class="ml-foot"><span>Your order</span><b>3 items</b></div>
+          </div>
+        </div>
+        <div class="hw-txt"><span class="num">1</span><div><h3>Build your list</h3><p>Pick from what's on ice this week, or let the party planner do the math for you.</p></div></div>
+      </li>
+      <li class="hw-card">
+        <div class="hw-art" aria-hidden="true">
+          <div class="mini-send">
+            <span class="ms-btn">Send order<i class="ms-tap"></i></span>
+            <span class="ms-ok"><svg viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Sent to Overnight Tider</span>
+          </div>
+        </div>
+        <div class="hw-txt"><span class="num">2</span><div><h3>Send it in one tap</h3><p>It comes straight to us with your number. No sign-up, no card, nothing charged.</p></div></div>
+      </li>
+      <li class="hw-card">
+        <div class="hw-art" aria-hidden="true">
+          <div class="mini-text">
+            <span class="mt-from">Overnight Tider</span>
+            <span class="mt-b o">Hi! Your total is $86.50 with delivery Saturday. Reply YES to confirm.</span>
+            <span class="mt-b c">Yes please!</span>
+            <span class="mt-chip">Delivery set for Saturday</span>
+          </div>
+        </div>
+        <div class="hw-txt"><span class="num">3</span><div><h3>Say yes, we bring it</h3><p>We text you the total. Reply yes, pay the way that suits you, and it arrives on the day you picked.</p></div></div>
+      </li>
+    </ol>
+    <p class="sched" id="sched" hidden></p>
   </div>
 </section>
 
@@ -1111,11 +1194,11 @@ body:has(.obar.show) .chat-peek{bottom:164px}
     </div>
     <div class="faq io" style="--d:80ms">
       <details open><summary><span data-k="faq0.q">Do you deliver or ship?</span><i aria-hidden="true"></i></summary><div class="fa"><p data-k="faq0.a">Yes, both. Tell us your ZIP when you send your order and we'll confirm the options, cost and day.</p><a class="fa-go" href="#shop">See what's on ice</a></div></details>
-      <detailsNone><summary><span data-k="faq1.q">Can I buy a small amount, or is it wholesale only?</span><i aria-hidden="true"></i></summary><div class="fa"><p data-k="faq1.a">Both. Two lobsters for dinner is as welcome as a case of shrimp for a restaurant.</p><a class="fa-go" href="#bulk">Buying for a business? Get a quote</a></div></details>
-      <detailsNone><summary><span data-k="faq2.q">Why don't you list every price?</span><i aria-hidden="true"></i></summary><div class="fa"><p data-k="faq2.a">Seafood prices move with the market and the season. Rather than post a number that's wrong by Friday, we confirm your price when you order. Specials are posted at the top of this page.</p></div></details>
-      <detailsNone><summary><span data-k="faq3.q">How do I pay?</span><i aria-hidden="true"></i></summary><div class="fa"><p data-k="faq3.a">Nothing is charged on this site. Send your order, we confirm the items and the total with you, then tell you how to pay. You only pay once you've said yes.</p><a class="fa-go" href="#how">How ordering works</a></div></details>
-      <detailsNone><summary><span data-k="faq4.q">Fresh or frozen?</span><i aria-hidden="true"></i></summary><div class="fa"><p data-k="faq4.a">We carry both. Lobsters and crabs come live, shrimp come fresh head-on or as tails, and frozen is there when you want to stock up. Say which you want in your order notes.</p></div></details>
-      <detailsNone><summary><span data-k="faq5.q">How much should I order for a party?</span><i aria-hidden="true"></i></summary><div class="fa"><p data-k="faq5.a">Use the party planner and it does the math per guest. If you're unsure, send what you have and we'll help you size it.</p><a class="fa-go" href="#bundles">Open the party planner</a></div></details>
+      <details><summary><span data-k="faq1.q">Can I buy a small amount, or is it wholesale only?</span><i aria-hidden="true"></i></summary><div class="fa"><p data-k="faq1.a">Both. Two lobsters for dinner is as welcome as a case of shrimp for a restaurant.</p><a class="fa-go" href="#bulk">Buying for a business? Get a quote</a></div></details>
+      <details><summary><span data-k="faq2.q">Why don't you list every price?</span><i aria-hidden="true"></i></summary><div class="fa"><p data-k="faq2.a">Seafood prices move with the market and the season. Rather than post a number that's wrong by Friday, we confirm your price when you order. Specials are posted at the top of this page.</p></div></details>
+      <details><summary><span data-k="faq3.q">How do I pay?</span><i aria-hidden="true"></i></summary><div class="fa"><p data-k="faq3.a">Nothing is charged on this site. Send your order, we confirm the items and the total with you, then tell you how to pay. You only pay once you've said yes.</p><a class="fa-go" href="#how">How ordering works</a></div></details>
+      <details><summary><span data-k="faq4.q">Fresh or frozen?</span><i aria-hidden="true"></i></summary><div class="fa"><p data-k="faq4.a">We carry both. Lobsters and crabs come live, shrimp come fresh head-on or as tails, and frozen is there when you want to stock up. Say which you want in your order notes.</p></div></details>
+      <details><summary><span data-k="faq5.q">How much should I order for a party?</span><i aria-hidden="true"></i></summary><div class="fa"><p data-k="faq5.a">Use the party planner and it does the math per guest. If you're unsure, send what you have and we'll help you size it.</p><a class="fa-go" href="#bundles">Open the party planner</a></div></details>
     </div>
   </div>
 </section>
@@ -2018,6 +2101,10 @@ else if(DEMO)addEventListener("storage",e=>{if(e.key==="ot-site"){try{liveApply(
   const top=$("top-bar");addEventListener("scroll",()=>top.classList.toggle("scrolled",scrollY>8),{passive:true});
 })();
 
+
+/* how ordering works: play the three little scenes when the section comes into view */
+(()=>{const h=document.getElementById("how");if(!h)return;if(!("IntersectionObserver" in window)){h.classList.add("go");return}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){h.classList.add("go");io.disconnect()}}),{threshold:.25});io.observe(h)})();
 /* ---------- website chat: customers message, the owner replies from the dashboard ---------- */
 (()=>{
   if(PREVIEW||!(EP||DEMO))return;
