@@ -581,11 +581,29 @@ dialog[open]{animation:pop .3s var(--ease)}
 /* first-order offer */
 #offer,#promo{width:min(780px,100% - 24px);max-height:none;overflow:hidden;border-radius:10px}
 .pro h2{font-size:clamp(40px,7vw,54px)}
+.pro .off-in{display:grid;align-content:center}
+.pro .pro-tag{display:inline-flex;align-items:center;gap:8px;justify-self:start;margin:0 0 14px;padding:6px 12px 6px 10px;border-radius:999px;background:rgba(47,107,61,.1);color:var(--sign);font-size:13.5px;font-weight:600}
+.pro-tag i{width:8px;height:8px;border-radius:50%;background:var(--sign);box-shadow:0 0 0 0 rgba(47,107,61,.5);animation:proPulse 2s ease-out infinite}
+@keyframes proPulse{0%{box-shadow:0 0 0 0 rgba(47,107,61,.45)}70%,100%{box-shadow:0 0 0 9px rgba(47,107,61,0)}}
+.pro-buy{display:grid;gap:12px;margin-top:22px;padding:14px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px rgba(19,32,46,.07),0 10px 24px -16px rgba(19,32,46,.35)}
+.pro-item{display:flex;align-items:center;gap:12px}
+.pro-item img{width:48px;height:48px;border-radius:10px;object-fit:cover;flex:none}
+.pro-item b{display:block;font-size:16px;font-weight:600;color:var(--ink)}
+.pro-item small{display:block;font-size:13.5px;color:var(--sign);font-weight:600;margin-top:1px}
+.pro-item small.ask{color:var(--muted);font-weight:500}
+.pro-qty{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--paper);border-radius:12px;padding:4px}
+.pro-qty button{border:0;background:none;border-radius:9px;padding:9px 6px;font:inherit;font-size:14px;font-weight:600;color:var(--muted);transition:background-color .2s,color .2s,box-shadow .2s}
+.pro-qty button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(19,32,46,.15)}
+.pro .pro-buy .btn{margin-top:0}
+.pro .btn.pro-link{background:none;color:var(--ink);padding:10px 0 0;margin-top:4px;text-decoration:underline;text-decoration-color:var(--band);text-decoration-thickness:2px;text-underline-offset:6px}
+.pro-trust{display:flex;align-items:center;justify-content:center;gap:6px;max-width:none!important;margin:14px 0 0!important;font-size:13.5px!important;color:var(--muted)!important}
+.pro-trust svg{width:15px;height:15px;color:var(--sign);flex:none}
+@media (prefers-reduced-motion:reduce){.pro-tag i{animation:none}}
 .pro h2:focus{outline:none}
 .pro .btn{width:100%;justify-content:center;margin-top:24px}
 .pro .off-no{display:block;margin:14px auto 0}
 .pro .off-ph img{object-position:50% 40%}
-@media (max-width:699px){.pro .off-ph{height:230px}}
+@media (max-width:699px){.pro .off-ph{height:200px}.pro .off-in{padding-top:22px}}
 .off{display:grid;position:relative}
 .off-ph{margin:0;height:150px;overflow:hidden;background:var(--frost)}
 .off-ph img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1353,10 +1371,16 @@ body:has(.obar.show) .chat-peek{bottom:164px}
     <figure class="off-ph"><img data-kimg="popup" src="img/crate.webp" alt="Live lobsters in a crate, one of them a bright orange calico" width="1080" height="1080"></figure>
     <div class="off-in">
       <button class="x" type="button" data-close aria-label="Close">&times;</button>
-      <p class="off-k" id="proTag" data-pk="tag">This weekend</p>
+      <p class="pro-tag" id="proTag"><i aria-hidden="true"></i><span data-pk="tag" id="proTagT">This weekend</span></p>
       <h2 id="proT" data-pk="head" tabindex="-1" autofocus>Live lobsters are in</h2>
       <p id="proBody" data-pk="body">Hard-shell, banded and lively. Two for dinner or a case for your kitchen, while this week&rsquo;s crate lasts.</p>
+      <div class="pro-buy" id="proBuy" hidden>
+        <div class="pro-item"><img id="proThumb" src="img/lobster.webp" alt=""><span><b id="proName">Live lobster</b><small id="proPrice">Market price, confirmed before you pay</small></span></div>
+        <div class="pro-qty" id="proQty" role="group" aria-label="How many"></div>
+        <button class="btn btn-green" type="button" id="proAdd">Add to my order</button>
+      </div>
       <a class="btn btn-green" id="proBtn" data-pk="btn" href="#shop">Show me the lobsters</a>
+      <p class="pro-trust"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Nothing charged online. We text your total first.</p>
       <button class="off-no" type="button" data-close>Not now</button>
     </div>
   </div>
@@ -1797,9 +1821,17 @@ window.OTpop=(function(){
   const dlg=$("promo");if(!dlg)return{sync(){}};
   const force=/[?&]popup\b/.test(location.search);let armed=false,shown=false,D=popData(SITE);
   let PH=(SITE&&SITE.photos)||{};const sig=d=>{const P=PH;let h=0;const t=JSON.stringify([d.tag,d.head,d.body,d.btn,d.act,d.item,P.popup||""]);for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return String(h)};
-  function fill(d){D=d;$("proTag").textContent=d.tag;$("proTag").hidden=!d.tag;$("proT").textContent=d.head;$("proBody").textContent=d.body;$("proBody").hidden=!d.body;
+  let QN=2;const QOPT=u=>u==="lb"?[2,5,10]:/bushel|sack|case|box/.test(u)?[1,2,3]:[1,2,4];
+  function buyDraw(){const it=D.act==="item"&&item(D.item),ok=it&&it.status!=="out";$("proBuy").hidden=!ok;$("proBtn").classList.toggle("pro-link",!!ok);if(!ok)return;
+    const un=it.units[0],opts=QOPT(un.u);if(!opts.includes(QN))QN=opts[1];
+    $("proThumb").src=it.thumb||it.img;$("proName").textContent=it.name;$("proPrice").textContent=un.price||"Market price, confirmed before you pay";$("proPrice").classList.toggle("ask",!un.price);
+    $("proQty").innerHTML=opts.map(n=>`<button type="button" data-q="${n}" aria-pressed="${n===QN}">${esc(label(un.u,n).replace(" (1½ lb)",""))}</button>`).join("");
+    $("proAdd").textContent=`Add ${label(un.u,QN).replace(" (1½ lb)","")} to my order`}
+  $("proQty").addEventListener("click",e=>{const b=e.target.closest("[data-q]");if(!b)return;QN=+b.dataset.q;buyDraw()});
+  $("proAdd").addEventListener("click",()=>{if(PREVIEW)return;const it=item(D.item);if(!it)return;add(it.id,it.units[0].u,QN,$("proAdd"));track("popup_add",{item_id:it.id,quantity:QN});dlg.close()});
+  function fill(d){D=d;$("proTagT").textContent=d.tag;$("proTag").hidden=!d.tag;$("proT").textContent=d.head;$("proBody").textContent=d.body;$("proBody").hidden=!d.body;
     const b=$("proBtn");b.textContent=d.btn||"Start my order";b.removeAttribute("target");b.removeAttribute("rel");
-    if(d.act==="dm"){b.href=IGDM;b.target="_blank";b.rel="noopener"}else b.href=d.act==="bulk"?"#bulk":"#shop"}
+    if(d.act==="dm"){b.href=IGDM;b.target="_blank";b.rel="noopener"}else b.href=d.act==="bulk"?"#bulk":"#shop";buyDraw()}
   $("proBtn").addEventListener("click",e=>{if(PREVIEW)return;track("popup_click",{act:D.act});if(D.act==="dm"){dlg.close();return}
     e.preventDefault();dlg.close();
     if(D.act==="item"&&item(D.item)){if(shopTab!=="all"){shopTab="all";renderShop()}drawDetail()}
