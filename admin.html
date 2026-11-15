@@ -371,7 +371,7 @@ button.row:hover{background:#fafaf7}
 .nav button{position:relative;z-index:1}
 .nav button[aria-current="true"]{background:none}
 .tab-ind{position:absolute;top:6px;left:0;border-radius:12px;background:rgba(255,255,255,.1);transition:transform .5s cubic-bezier(.3,1.3,.4,1),width .3s;pointer-events:none}
-.tabbar{grid-template-columns:repeat(5,1fr)}
+.tabbar{grid-template-columns:repeat(6,1fr)}
 .tabbar button{z-index:1}
 .tabbar button[aria-current="true"]{background:none}
 .tabbar button svg{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
@@ -710,11 +710,71 @@ input,select,textarea{transition:box-shadow .2s,background-color .2s,border-colo
 .dp-go{width:100%}
 @media (max-width:640px){.dp-pop{width:calc(100vw - 32px);max-width:380px}.dp-btn{padding:9px 14px;font-size:14px}.dpick.on .dp-btn{padding-right:38px}}
 
+
+/* messages */
+.task.k-chat>i{background:var(--band)}
+.tag.chat{background:var(--band);color:var(--ink)}
+.msgs{display:grid;grid-template-columns:340px minmax(0,1fr);gap:16px;align-items:start}
+.th-list{padding-bottom:8px}
+.th-list ul{list-style:none;margin:0;padding:0 8px 4px}
+.th{width:100%;display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;border:0;background:none;text-align:left;padding:11px 10px;border-radius:12px;cursor:pointer;color:var(--ink);transition:background-color .2s,transform .5s var(--spring)}
+.th:hover{background:var(--ice)}
+.th:active{transform:scale(.985);transition-duration:.2s,.09s}
+.th.on{background:var(--ice-2)}
+.th .av{width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:13.5px;font-weight:600}
+.th.un .av{background:var(--sign)}
+.th .tx{min-width:0;display:grid;gap:2px}
+.th .tx b{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.th .tx span{font-size:13.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.th.un .tx span{color:var(--ink);font-weight:500}
+.th .tm{display:grid;justify-items:end;gap:5px;font-size:12px;color:var(--muted);white-space:nowrap}
+.th .tm i{font-style:normal;min-width:20px;height:20px;border-radius:10px;background:var(--band);color:var(--ink);font-size:11.5px;font-weight:700;display:grid;place-items:center;padding:0 6px}
+.th-view{display:flex;flex-direction:column;height:calc(100vh - 150px);}
+body:has(.why-dock) .th-view{height:calc(100vh - 200px)}
+.th-view{min-height:480px;position:sticky;top:96px;overflow:hidden;padding:0}
+.tv-h{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.tv-back{display:none;width:38px;height:38px;border:0;border-radius:50%;background:var(--ice);color:var(--ink);place-items:center;flex:none}
+.tv-back svg{width:16px;height:16px}
+.tv-who{min-width:0}
+.tv-who b{display:block;font-size:17px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tv-who span{font-size:13px;color:var(--muted)}
+.tv-act{margin-left:auto;display:flex;gap:8px;flex:none}
+.tv-log{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:18px;display:flex;flex-direction:column;gap:4px;background:var(--paper)}
+.bub{max-width:72%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.42;white-space:pre-wrap;overflow-wrap:anywhere;animation:bubIn .38s var(--out) both}
+@keyframes bubIn{from{opacity:0;transform:translateY(8px) scale(.98)}}
+.bub.c{align-self:flex-start;background:#fff;box-shadow:0 0 0 1px var(--line);border-bottom-left-radius:6px}
+.bub.o{align-self:flex-end;background:var(--sign);color:#fff;border-bottom-right-radius:6px}
+.bub.pending{opacity:.7}
+.bub-t{font-size:11.5px;color:var(--muted);margin:2px 6px 10px}
+.bub-t.o{align-self:flex-end}
+.tv-q{display:flex;gap:6px;overflow-x:auto;padding:10px 14px 2px;scrollbar-width:none}
+.tv-q::-webkit-scrollbar{display:none}
+.tv-q button{flex:none;border:0;background:var(--ice);border-radius:999px;padding:8px 13px;font-size:13.5px;font-weight:600;color:var(--ink);transition:background-color .2s,transform .45s var(--spring)}
+.tv-q button:hover{background:var(--ice-2)}.tv-q button:active{transform:scale(.95);transition-duration:.2s,.09s}
+.tv-f{display:flex;gap:10px;align-items:flex-end;padding:10px 14px 14px}
+.tv-f textarea{flex:1;resize:none;border:0;border-radius:14px;background:var(--ice);padding:12px 14px;font:inherit;font-size:15px;line-height:1.4;color:var(--ink);min-height:46px;max-height:160px}
+.tv-f textarea:focus{outline:none;box-shadow:0 0 0 2px var(--sign)}
+@media (max-width:860px){
+  .msgs{grid-template-columns:1fr}
+  .msgs.has-open .th-list{display:none}
+  .msgs:not(.has-open) .th-view{display:none}
+  .th-view{position:fixed;inset:0;z-index:35;border-radius:0;height:auto;top:0;bottom:calc(64px + env(safe-area-inset-bottom));animation:tvIn .4s var(--out)}
+  .tv-back{display:grid}
+  .tv-h{padding:calc(12px + env(safe-area-inset-top)) 12px 12px;gap:10px}
+  .tv-who{flex:1}
+  .tv-who b{font-size:16px}
+  .tv-act{gap:6px}
+  .tv-act .btn{padding:8px 12px;font-size:13.5px}
+  .tv-act .hide-m{display:none}
+  .bub{max-width:84%}
+  body:has(.msgs.has-open) .why-dock{opacity:0;visibility:hidden;pointer-events:none}
+  @keyframes tvIn{from{transform:translateX(24px);opacity:0}}
+}
 /* ===== seamless pass ===== */
 .ghost{position:fixed;z-index:15;pointer-events:none;overflow:hidden}
 .g-page{animation:gOut .22s cubic-bezier(.4,0,.2,1) forwards}
 @keyframes gOut{to{opacity:0;transform:translateY(-10px);filter:blur(1.5px)}}
-.enter>*{animation:rise .62s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(70ms + var(--n,0)*55ms)}
+.enter>*{animation:rise .62s cubic-bezier(.16,1,.3,1) backwards;animation-delay:calc(70ms + var(--n,0)*55ms)}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 #title.t-in{animation:tIn .5s cubic-bezier(.16,1,.3,1) both}
 @keyframes tIn{from{opacity:0;transform:translateY(8px);filter:blur(2px)}}
@@ -838,7 +898,7 @@ const ago=iso=>{const t=new Date(iso),s=(Date.now()-t)/1e3;if(s<60)return"just n
 const dshort=d=>new Date(d).toLocaleDateString("en-US",{month:"short",day:"numeric"});
 
 /* ---------- state ---------- */
-let DB={orders:[],quotes:[],emails:[],texts:[]};
+let DB={orders:[],quotes:[],emails:[],texts:[],chats:[]};
 let SITE={v:1};          // published site state
 let DRAFT=null;          // unpublished edits (stock + website)
 let PIN="";
@@ -915,10 +975,11 @@ function mergeInbox(){
   });
   localStorage.removeItem("ot-inbox");saveDB();return n;
 }
-function saveDB(){if(!LIVE)LS.set("ot-db",DB)}
+function saveDB(){if(!LIVE){const c=DB.chats;delete DB.chats;LS.set("ot-db",DB);DB.chats=c}}
 async function loadAll(){
-  if(LIVE){const j=await api("load");DB={orders:(j.orders||[]).map(normOrder),quotes:j.quotes||[],emails:j.emails||[],texts:j.texts||[]};SITE=j.site&&j.site.v?j.site:{v:1}}
-  else{DB=LS.get("ot-db",null);if(!DB||!DB.orders||(DB.sample&&DB.seedV!==2)){DB=seedDB();saveDB()}SITE=LS.get("ot-site",null)||{v:1};mergeInbox()}
+  if(LIVE){const j=await api("load");DB={orders:(j.orders||[]).map(normOrder),quotes:j.quotes||[],emails:j.emails||[],texts:j.texts||[],chats:j.chats||[]};SITE=j.site&&j.site.v?j.site:{v:1}}
+  else{DB=LS.get("ot-db",null);if(!DB||!DB.orders||(DB.sample&&DB.seedV!==2)){DB=seedDB();saveDB()}SITE=LS.get("ot-site",null)||{v:1};mergeInbox();
+    if(DB.sample&&!LS.get("ot-chats-seeded",false)){LS.set("ot-chats",seedChats().concat(LS.get("ot-chats",[])));LS.set("ot-chats-seeded",true)}DB.chats=LS.get("ot-chats",[])}
   DB.orders.sort((a,b)=>new Date(b.at)-new Date(a.at));
 }
 async function saveOrder(o){
@@ -947,19 +1008,20 @@ const ICONS={
  orders:'<path d="M4 3.5h12v13l-2-1.3-2 1.3-2-1.3-2 1.3-2-1.3-2 1.3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 8h6M7 11h4" stroke="currentColor" stroke-width="1.6"/>',
  stock:'<path d="M3 7.5 10 4l7 3.5-7 3.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 7.5V13l7 3.5 7-3.5V7.5M10 11v5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>',
  website:'<rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 7.5h14" stroke="currentColor" stroke-width="1.6"/>',
+ messages:'<path d="M3.5 9.5c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5S13.6 15 10 15c-.8 0-1.6-.1-2.3-.3L4 16l1-2.8C4.1 12.2 3.5 10.9 3.5 9.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>',
  money:'<path d="M3 16h14" stroke="currentColor" stroke-width="1.6"/><path d="M5 13V9M9 13V5M13 13V8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>',
  customers:'<circle cx="8" cy="7" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 16c.8-3 3-4.5 5.5-4.5s4.7 1.5 5.5 4.5M13 4.2a3 3 0 0 1 0 5.6M15 11.8c1.3.6 2.1 2 2.5 4.2" fill="none" stroke="currentColor" stroke-width="1.6"/>',
  settings:'<circle cx="10" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5v2.2M10 15.3v2.2M2.5 10h2.2M15.3 10h2.2M4.7 4.7l1.6 1.6M13.7 13.7l1.6 1.6M4.7 15.3l1.6-1.6M13.7 6.3l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
  more:'<circle cx="5" cy="10" r="1.6" fill="currentColor"/><circle cx="10" cy="10" r="1.6" fill="currentColor"/><circle cx="15" cy="10" r="1.6" fill="currentColor"/>'};
-const PAGES=[["today","Today"],["orders","Orders"],["stock","Stock"],["website","Website"],["money","Money"]];
+const PAGES=[["today","Today"],["orders","Orders"],["messages","Messages"],["stock","Stock"],["website","Website"],["money","Money"]];
 let route="today";
 const ico=k=>`<svg viewBox="0 0 20 20" aria-hidden="true">${ICONS[k]}</svg>`;
 const needsYou=()=>DB.orders.filter(o=>["new","confirmed","paid"].includes(o.status)).length+DB.quotes.filter(q=>q.status==="new").length;
 function drawNav(){
-  const n=needsYou();document.title=(n?`(${n}) `:"")+"Owner dashboard | Overnight Tider";
+  const nOrders=needsYou(),n=nOrders+unreadThreads().length;document.title=(n?`(${n}) `:"")+"Owner dashboard | Overnight Tider";
   [["nav","nav-ind","navInd"],["tabbar","tab-ind","tabInd"]].forEach(([box,cls,id])=>{const B=$(box);
     if(!B.querySelector("[data-go]"))B.innerHTML=`<i class="${cls}" id="${id}"></i>`+PAGES.map(([k,l])=>`<button type="button" data-go="${k}" aria-current="${route===k}">${ico(k)}${l}</button>`).join("");
-    B.querySelectorAll("[data-go]").forEach(b=>{b.setAttribute("aria-current",b.dataset.go===route);if(b.dataset.go!=="orders")return;let c=b.querySelector(".ct");
+    B.querySelectorAll("[data-go]").forEach(b=>{b.setAttribute("aria-current",b.dataset.go===route);const k=b.dataset.go;if(k!=="orders"&&k!=="messages")return;const n=k==="orders"?nOrders:unreadThreads().length;let c=b.querySelector(".ct");
       if(!n){if(c){c.classList.add("ct-out");setTimeout(()=>c.remove(),260)}return}
       if(!c){c=document.createElement("span");c.className="ct ct-in";b.appendChild(c)}else if(c.textContent!==String(n)){c.classList.remove("pop");void c.offsetWidth;c.classList.add("pop")}
       c.classList.remove("ct-out");c.textContent=n})});
@@ -987,13 +1049,13 @@ function ghost(el,cls){if(!el||RM.matches)return null;const r=el.getBoundingClie
   w.addEventListener("animationend",()=>w.remove());setTimeout(()=>w.remove(),700);return w}
 function go(k,opt){const changing=k!==route;if(changing){ghost($("page"),"g-page");const t=$("title");t.classList.remove("t-in");void t.offsetWidth;t.classList.add("t-in")}
   setRoute(k);closeDrawer();render(opt);scrollTo({top:0})}
-const T={today:"Today",orders:"Orders",stock:"Stock",website:"Website",money:"Money",settings:"Settings"};
+const T={today:"Today",orders:"Orders",messages:"Messages",stock:"Stock",website:"Website",money:"Money",settings:"Settings"};
 function render(opt){
   $("title").textContent=T[route]||"Today";
   $("when").textContent=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
   $("topAct").innerHTML="";
   if(route===lastRoute&&!(opt&&opt.anim))$("page").classList.remove("enter"); // redraw in place: no re-entrance
-  ({today:pToday,orders:pOrders,stock:pStock,website:pWebsite,money:pMoney,settings:pSettings}[route]||pToday)(opt);
+  ({today:pToday,orders:pOrders,messages:pMessages,stock:pStock,website:pWebsite,money:pMoney,settings:pSettings}[route]||pToday)(opt);
   const pg=$("page");if(route!==lastRoute||(opt&&opt.anim)){pg.classList.remove("enter");[...pg.children].forEach((c,i)=>c.style.setProperty("--n",i));void pg.offsetWidth;pg.classList.add("enter")}
   lastRoute=route;countUp();pubBar();if(WHYON)whyPaint();
 }
@@ -1022,12 +1084,12 @@ function pToday(){
   const parts=[];if(nw.length)parts.push(`<b>${nw.length} order${nw.length>1?"s":""}</b> to price`);if(conf.length)parts.push(`<b>${conf.length}</b> to collect payment for`);if(paid.length)parts.push(`<b>${paid.length}</b> to deliver`);if(qn.length)parts.push(`<b>${qn.length} wholesale request${qn.length>1?"s":""}</b>`);
   const list=parts.length>1?parts.slice(0,-1).join(", ")+" and "+parts.slice(-1):parts[0];
   const p=b.booked?Math.round((a.booked-b.booked)/b.booked*100):0;
-  const todo=[...nw,...conf,...paid];
+  const todo=[...nw,...conf,...paid],uc=unreadThreads();
   $("page").innerHTML=`
-  <section class="hello" id="cHello"><p>${todo.length+qn.length?`<b>${todo.length+qn.length} thing${todo.length+qn.length>1?"s":""}</b> need${todo.length+qn.length>1?"":"s"} you today.`:`You're all caught up.`} <span class="hl">${fmt0(a.booked)}</span> in orders this week${b.booked?`, ${p>=0?"up":"down"} ${Math.abs(p)}% on last week`:""}.</p>${DB.sample&&!LIVE?`<span class="sample"><i></i>Sample data. Orders you place on the <a class="lnk" href="./" target="_blank" rel="noopener">website</a> in this browser land here.</span>`:""}</section>
+  <section class="hello" id="cHello"><p>${todo.length+qn.length+uc.length?`<b>${todo.length+qn.length+uc.length} thing${todo.length+qn.length+uc.length>1?"s":""}</b> need${todo.length+qn.length+uc.length>1?"":"s"} you today.`:`You're all caught up.`} <span class="hl">${fmt0(a.booked)}</span> in orders this week${b.booked?`, ${p>=0?"up":"down"} ${Math.abs(p)}% on last week`:""}.</p>${DB.sample&&!LIVE?`<span class="sample"><i></i>Sample data. Orders you place on the <a class="lnk" href="./" target="_blank" rel="noopener">website</a> in this browser land here.</span>`:""}</section>
   <div class="grid2">
-    <section class="card" id="cNeeds"><div class="card-h"><h2>Needs you</h2>${todo.length+qn.length?`<span class="muted" style="font-size:13px">${todo.length+qn.length} to do</span>`:""}</div>
-      ${todo.length||qn.length?`<ul class="tasks">${nw.map(taskRow).join("")}${qn.map(quoteRow).join("")}${conf.map(taskRow).join("")}${paid.map(taskRow).join("")}</ul>`:`<p class="empty">Nothing to do right now. New orders show up here.</p>`}
+    <section class="card" id="cNeeds"><div class="card-h"><h2>Needs you</h2>${todo.length+qn.length+uc.length?`<span class="muted" style="font-size:13px">${todo.length+qn.length+uc.length} to do</span>`:""}</div>
+      ${todo.length||qn.length||uc.length?`<ul class="tasks">${uc.map(chatTask).join("")}${nw.map(taskRow).join("")}${qn.map(quoteRow).join("")}${conf.map(taskRow).join("")}${paid.map(taskRow).join("")}</ul>`:`<p class="empty">Nothing to do right now. New orders show up here.</p>`}
       ${sent.length?`<details class="wait"><summary><span>Waiting on <b>${sent.length} customer${sent.length>1?"s":""}</b> to say yes</span><span aria-hidden="true">›</span></summary><ul class="rows">${sent.map(o=>`<li>${orderRow(o)}</li>`).join("")}</ul></details>`:""}
     </section>
     <div class="stack">
@@ -1101,6 +1163,67 @@ function dpWire(){const w=$("dpick"),pop=$("dpPop");if(!w)return;
 document.addEventListener("click",e=>{const w=$("dpick");if(w&&w.classList.contains("open")&&!w.contains(e.target)){w.classList.remove("open");$("dpBtn").setAttribute("aria-expanded","false")}});
 addEventListener("keydown",e=>{const w=$("dpick");if(e.key==="Escape"&&w&&w.classList.contains("open")){w.classList.remove("open");$("dpBtn").focus()}});
 function dpCounts(){document.querySelectorAll("[data-of]").forEach(b=>{const s=b.querySelector(":scope>span");if(!s)return;const[,fo,fq]=OF[b.dataset.of];s.textContent=DB.orders.filter(fo).filter(o=>inDates(o.at)).length+DB.quotes.filter(fq).filter(x=>inDates(x.at)).length})}
+
+
+/* ===================== MESSAGES (website chat) ===================== */
+function seedChats(){const now=Date.now(),M=6e4,H=36e5,D=864e5,a=[];
+  const add=(chat,from,text,ago,name,phone,read)=>a.push({id:chat+"-"+a.length,chat,from,name:name||"",phone:phone||"",text,at:new Date(now-ago).toISOString(),read:from==="o"||!!read});
+  add("sampletanya000001","c","Hi! Do you have blue crabs this Saturday? Need about 2 dozen for a cookout",14*M,"Tanya R.","(215) 555-0141");
+  add("sampletanya000001","c","Delivery to 19143 if that works",13*M,"Tanya R.","(215) 555-0141");
+  add("samplemarlow00001","c","Hey, I run the kitchen at Marlow's. Can you do 3 boxes of oysters every Thursday?",3*H,"Dev, Marlow's Oyster Bar","(267) 555-0224",true);
+  add("samplemarlow00001","o","Yes we can. Blue Points or Wellfleets? I'll send a weekly price by text.",2.8*H);
+  add("samplemarlow00001","c","Blue Points. Perfect, send the quote",2.6*H,"Dev, Marlow's Oyster Bar","(267) 555-0224",true);
+  add("samplechris00001","c","Do you ship to New Jersey?",1.2*D,"Chris","",true);
+  add("samplechris00001","o","We do. Send your order with your ZIP and we'll confirm the shipping cost and day.",1.15*D);
+  add("samplechris00001","c","Great, thanks!",1.1*D,"Chris","",true);
+  return a}
+function threads(){const by={};(DB.chats||[]).forEach(m=>{(by[m.chat]=by[m.chat]||[]).push(m)});
+  return Object.entries(by).map(([id,ms])=>{ms.sort((a,b)=>new Date(a.at)-new Date(b.at));const cs=ms.filter(m=>m.from==="c"),nm=[...cs].reverse().find(m=>m.name),ph=[...cs].reverse().find(m=>m.phone);
+    return {id,msgs:ms,name:nm?nm.name:"Website visitor",phone:ph?ph.phone:"",last:ms[ms.length-1],unread:cs.filter(m=>!m.read).length}}).sort((a,b)=>new Date(b.last.at)-new Date(a.last.at))}
+const unreadThreads=()=>threads().filter(t=>t.unread);
+function chatTask(t){return `<li><button class="task k-chat" type="button" data-chat="${esc(t.id)}"><i></i><b>${esc(t.name)} <span class="tag chat">Website chat</span></b><span class="sub">${esc(t.last.text)} · ${ago(t.last.at)}</span><span class="go"><em>Reply</em></span></button></li>`}
+let OPENCHAT=null;
+function pMessages(opt){if(opt&&opt.chat)OPENCHAT=opt.chat;const ts=threads();if(OPENCHAT&&!ts.find(t=>t.id===OPENCHAT))OPENCHAT=null;
+  if(!OPENCHAT&&ts.length&&innerWidth>860)OPENCHAT=ts[0].id;
+  $("page").innerHTML=`<div class="msgs${OPENCHAT?" has-open":""}" id="msgs"><section class="card th-list" id="thList"><div class="card-h"><h2>Conversations</h2>${unreadThreads().length?`<span class="muted" style="font-size:13px">${unreadThreads().length} unread</span>`:""}</div><ul id="thUl"></ul></section><section class="card th-view" id="thView"></section></div>`;
+  drawThreads();drawThread(false)}
+function drawThreads(){const ul=$("thUl");if(!ul)return;const ts=threads();
+  ul.innerHTML=ts.length?ts.map(t=>`<li><button type="button" class="th${t.id===OPENCHAT?" on":""}${t.unread?" un":""}" data-th="${esc(t.id)}"><span class="av">${esc((t.name.match(/\b\w/g)||["?"]).slice(0,2).join("").toUpperCase())}</span><span class="tx"><b>${esc(t.name)}</b><span>${t.last.from==="o"?"You: ":""}${esc(t.last.text)}</span></span><span class="tm">${ago(t.last.at).replace(" ago","")}${t.unread?`<i>${t.unread}</i>`:""}</span></button></li>`).join(""):`<li class="empty">No messages yet. When someone uses the chat on the website, it shows up here.</li>`}
+const QUICK=["Yes, we have it this week.","What's your ZIP code?","I'll text you the total shortly.","Want me to put the order in for you?"];
+function drawThread(anim=true){const v=$("thView");if(!v)return;const t=threads().find(x=>x.id===OPENCHAT);$("msgs").classList.toggle("has-open",!!t);
+  if(!t){v.innerHTML=`<p class="empty" style="margin:auto">Pick a conversation.</p>`;return}
+  const tel=t.phone.replace(/[^\d+]/g,"");
+  v.innerHTML=`<header class="tv-h"><button type="button" class="tv-back" id="tvBack" aria-label="All conversations"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="tv-who"><b>${esc(t.name)}</b><span>${t.phone?esc(t.phone):"No number yet"}<i class="lg-l"> · Website chat</i></span></div><div class="tv-act">${tel?`<a class="btn b-soft b-sm" href="tel:${esc(tel)}">Call</a><a class="btn b-soft b-sm hide-m" href="sms:${esc(tel)}">Text</a>`:""}<button class="btn b-ink b-sm" type="button" id="tvOrder">New order</button></div></header>
+    <div class="tv-log" id="tvLog">${t.msgs.map((m,i)=>{const nx=t.msgs[i+1];return `<div class="bub ${m.from}${m.pending?" pending":""}" data-k="${esc(m.id)}">${esc(m.text)}</div>${!nx||nx.from!==m.from||new Date(nx.at)-new Date(m.at)>6e5?`<span class="bub-t ${m.from}">${m.pending?"Sending":new Date(m.at).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}</span>`:""}`}).join("")}</div>
+    <div class="tv-q">${QUICK.map(q=>`<button type="button" data-q="${esc(q)}">${esc(q)}</button>`).join("")}</div>
+    <form class="tv-f" id="tvForm"><label class="vh" for="tvIn">Reply</label><textarea id="tvIn" rows="1" placeholder="Reply to ${esc(t.name.split(/[ ,]/)[0])}" maxlength="2000"></textarea><button class="btn b-green" type="submit" id="tvSend">Send</button></form>`;
+  const lg=$("tvLog");lg.scrollTop=lg.scrollHeight;if(!anim)lg.querySelectorAll(".bub").forEach(b=>b.style.animation="none");
+  $("tvBack").onclick=()=>{OPENCHAT=null;$("msgs").classList.remove("has-open");drawThreads()};
+  $("tvOrder").onclick=()=>newOrder({name:t.name,phone:t.phone});
+  const inp=$("tvIn"),grow=()=>{inp.style.height="auto";inp.style.height=Math.min(160,inp.scrollHeight)+"px"};inp.oninput=grow;
+  inp.onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing&&!TOUCH){e.preventDefault();$("tvForm").requestSubmit()}};
+  v.querySelector(".tv-q").onclick=e=>{const q=e.target.closest("[data-q]");if(!q)return;inp.value=(inp.value?inp.value.trim()+" ":"")+q.dataset.q;grow();inp.focus()};
+  $("tvForm").onsubmit=async e=>{e.preventDefault();const text=inp.value.trim();if(!text)return;inp.value="";grow();
+    const m={id:"o"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),chat:t.id,from:"o",name:"",phone:"",text,at:new Date().toISOString(),pending:true};
+    DB.chats.push(m);drawThread(false);const b=lg.parentNode&&$("tvLog").lastElementChild;
+    const nb=[...$("tvLog").querySelectorAll(".bub")].pop();if(nb)nb.style.animation="";
+    try{if(LIVE)await api("chatReply",{chat:t.id,text,id:m.id});else{const all=LS.get("ot-chats",[]);all.push({...m,pending:undefined});LS.set("ot-chats",all)}m.pending=false;haptic(8)}
+    catch(err){DB.chats.splice(DB.chats.indexOf(m),1);inp.value=text;toast("Couldn't send. Check the connection and try again.")}
+    drawThread(false);drawThreads();if(!TOUCH)$("tvIn").focus()};
+  markRead(t)}
+function markRead(t){if(!t.unread)return;t.msgs.forEach(m=>{if(m.from==="c")m.read=true});
+  if(LIVE)api("chatRead",{chat:t.id}).catch(()=>{});else{const all=LS.get("ot-chats",[]);all.forEach(m=>{if(m.chat===t.id&&m.from==="c")m.read=true});LS.set("ot-chats",all)}
+  setTimeout(()=>{drawThreads();drawNav()},250)}
+document.addEventListener("click",e=>{const th=e.target.closest("[data-th]");if(th){OPENCHAT=th.dataset.th;drawThreads();drawThread();return}
+  const c=e.target.closest("[data-chat]");if(c)go("messages",{chat:c.dataset.chat})});
+// new chat messages: chime, toast, redraw what's on screen
+function chatsChanged(prev){const before=new Set(prev.map(m=>m.id)),fresh=DB.chats.filter(m=>m.from==="c"&&!before.has(m.id));
+  if(fresh.length){const t=threads().find(x=>x.id===fresh[fresh.length-1].chat);toast(`New message from <b>${esc(t?t.name:"a visitor")}</b>`);chime()}
+  drawNav();if(route==="messages"){const lg=$("tvLog"),keep=lg&&lg.scrollHeight-lg.scrollTop-lg.clientHeight<60;drawThreads();const t=threads().find(x=>x.id===OPENCHAT);if(t&&fresh.some(m=>m.chat===t.id)){drawThread(false);const nb=[...$("tvLog").querySelectorAll(".bub")].slice(-fresh.filter(m=>m.chat===t.id).length);nb.forEach(b=>b.style.animation="")}}
+  else if(route==="today"&&fresh.length)flip(render)}
+async function pollChats(){if(document.hidden)return;const prev=DB.chats.slice();
+  try{if(LIVE){const j=await api("chats");const pend=DB.chats.filter(m=>m.pending);DB.chats=(j.chats||[]).concat(pend)}else DB.chats=LS.get("ot-chats",[])}catch(e){return}
+  const sig=a=>a.map(m=>m.id+(m.read?1:0)).join();if(sig(prev)!==sig(DB.chats))chatsChanged(prev)}
 
 /* ---------- order drawer ---------- */
 let OPEN=null;
@@ -1464,7 +1587,7 @@ function pSettings(){
   $("pinSave").onclick=async()=>{const a=$("pin1").value,b=$("pin2").value;if(!/^\d{4}$/.test(a)){toast("Use 4 numbers.");return}if(a!==b){toast("The two PINs don't match.");return}
     const bb=busyBtn($("pinSave"));try{if(LIVE)await api("setPin",{newPin:a});else LS.set("ot-admin-pin",a);PIN=a;sessionStorage.setItem("ot-pin",a);await bb.ok(600);toast("PIN changed");$("pin1").value=$("pin2").value=""}catch(e){bb.fail();toast("Couldn't change the PIN.")}};
   const repl=async(data,msg,b)=>{const bb=busyBtn(b);try{await api("replaceAll",{data});await loadAll();await bb.ok(600);toast(msg);go("today")}catch(e){bb.fail();toast("Couldn't update the Sheet. "+e.message)}};
-  if($("lSeed"))$("lSeed").onclick=()=>{if(!confirm("Replace every order, quote and signup in the Google Sheet with sample data?"))return;repl(seedDB(),"Sample orders loaded into the Sheet",$("lSeed"))};
+  if($("lSeed"))$("lSeed").onclick=()=>{if(!confirm("Replace every order, quote and signup in the Google Sheet with sample data?"))return;repl({...seedDB(),chats:seedChats()},"Sample orders loaded into the Sheet",$("lSeed"))};
   if($("lClear"))$("lClear").onclick=()=>{if(!confirm("Delete every order, quote and signup from the Google Sheet? This can't be undone."))return;repl({},"The Sheet is empty",$("lClear"))};
   if($("sReset"))$("sReset").onclick=()=>{if(!confirm("Replace everything with fresh sample orders?"))return;DB=seedDB();saveDB();toast("Fresh sample data loaded");go("today")};
   if($("sClear"))$("sClear").onclick=()=>{if(!confirm("Clear all orders, quotes and signups in this browser?"))return;DB={orders:[],quotes:[],emails:[],texts:[]};saveDB();toast("Cleared");go("today")};
@@ -1509,7 +1632,7 @@ async function moveTo(id,to){const o=DB.orders.find(x=>x.id===id);if(!o||o.statu
   landed=id;flip(drawBoard);drawNav();toast(`<b>${esc(o.biz||o.name)}</b> moved to ${stName(to)}`)}
 
 /* ===================== PHONE / DM ORDER ===================== */
-function newOrder(){OPEN=null;let lines=[{id:"crab",unit:"dozen",qty:1}],how="Delivery";
+function newOrder(pre){OPEN=null;let lines=[{id:"crab",unit:"dozen",qty:1}],how="Delivery";
   $("drT").textContent="New order";$("drChip").innerHTML="";
   const opts=()=>CAT.map(c=>c.units.map(u=>`<option value="${c.id}|${esc(u[0])}">${c.name}, ${u[1].toLowerCase()}</option>`).join("")).join("");
   const draw=()=>{$("nl").innerHTML=lines.map((l,i)=>`<div class="nl-row"><select data-ni="${i}" aria-label="Item">${opts()}</select><input type="number" min="0.5" step="0.5" inputmode="decimal" data-nq="${i}" value="${l.qty}" aria-label="Amount"><button type="button" data-nx="${i}" aria-label="Remove">&times;</button></div>`).join("");
@@ -1535,7 +1658,7 @@ function newOrder(){OPEN=null;let lines=[{id:"crab",unit:"dozen",qty:1}],how="De
     if(yes){o.lines.forEach(l=>l.price=linePrice(l));o.log.push({s:"sent",at:o.at},{s:"confirmed",at:o.at});o.status="confirmed"}
     const bb=busyBtn($("nSave"));DB.orders.unshift(o);try{await saveOrder(o)}catch(e){bb.fail();DB.orders.shift();return}if(!LIVE)saveDB();await bb.ok(500);
     toast(`Order added for <b>${esc(name)}</b>`);drawNav();flip(()=>{if(route==="orders")oMode==="board"?drawBoard():drawOrders();else if(route==="today")render()});openOrder(o.id)};
-  openDrawer();if(!TOUCH)setTimeout(()=>$("nN").focus(),350)}
+  if(pre){$("nN").value=pre.name&&pre.name!=="Website visitor"?pre.name:"";$("nP").value=pre.phone||""}openDrawer();if(!TOUCH)setTimeout(()=>$("nN").focus(),350)}
 
 
 /* ===== premium motion helpers ===== */
@@ -1566,9 +1689,9 @@ new MutationObserver(segAll).observe(document.body,{subtree:true,childList:true,
 addEventListener("resize",segAll);document.fonts&&document.fonts.ready.then(segAll);
 
 /* ===== seamless updates: FLIP for lists, animated details, softer swaps ===== */
-function rowKey(e){return (e.dataset.order||e.dataset.quote||e.dataset.bc||e.dataset.sid||"")+"|"+e.tagName+"|"+(e.closest("table")?"t":e.closest(".board")?"b":"c")}
+function rowKey(e){return (e.dataset.order||e.dataset.quote||e.dataset.chat||e.dataset.bc||e.dataset.sid||"")+"|"+e.tagName+"|"+(e.closest("table")?"t":e.closest(".board")?"b":"c")}
 function flip(fn,root){root=root||$("page");if(RM.matches||!root){fn();return}
-  const sel="[data-order],[data-quote],[data-bc],[data-sid]",before=new Map();
+  const sel="[data-order],[data-quote],[data-chat],[data-bc],[data-sid]",before=new Map();
   root.querySelectorAll(sel).forEach(e=>{if(!e.offsetParent)return;const r=e.getBoundingClientRect();if(r.bottom<-40||r.top>innerHeight+40)return;before.set(rowKey(e),{r,e})});
   const gone=[];before.forEach((v,k)=>gone.push([k,v]));
   fn();
@@ -1611,6 +1734,7 @@ function ckBuild(q){q=q.trim().toLowerCase();const qd=q.replace(/\D/g,""),toks=q
   PAGES.forEach(([k,l])=>{if(q&&hit("go "+l))add("Go to",{t:l,s:"Page",ic:ICONS[k],run:()=>go(k)})});
   if(q){
     DB.orders.filter(o=>hit(o.name+" "+o.biz+" "+o.id+" "+itemsText(o))||(qd.length>=3&&o.phone.replace(/\D/g,"").includes(qd))).slice(0,6).forEach(o=>add("Orders",{t:`${o.biz||o.name} · ${o.id}`,s:`${stName(o.status)} · ${itemsText(o)}`,img:cat((o.lines[0]||{}).id).img,k:o.status==="new"?"":fmt0(orderTotal(o)),run:()=>{go("orders");openOrder(o.id)}}));
+    threads().filter(t=>hit(t.name+" "+t.msgs.map(m=>m.text).join(" "))||(qd.length>=3&&t.phone.replace(/\D/g,"").includes(qd))).slice(0,3).forEach(t=>add("Messages",{t:t.name,s:t.last.text,ic:ICONS.messages,run:()=>go("messages",{chat:t.id})}));
     DB.quotes.filter(x=>hit(x.name+" "+x.biz+" "+x.need)).slice(0,3).forEach(x=>add("Orders",{t:`${x.biz||x.name} · wholesale request`,s:x.need,ic:IC.act,run:()=>openQuote(x.id)}));
     CAT.filter(c=>hit(c.name)).slice(0,4).forEach(c=>{const x=(cur().stock||{})[c.id]||{};add("Stock",{t:c.name,s:`${(ST3.find(z=>z[0]===(x.status||"in"))||[])[1]} · ${stSummary(c,x).replace(/<[^>]+>/g,"")}`,img:c.img,run:()=>{openStock=c.id;go("stock");setTimeout(()=>{const li=document.querySelector(`[data-sid="${c.id}"]`);if(li)li.scrollIntoView({behavior:"smooth",block:"center"})},120)}})});
     const seen=new Set();DB.orders.filter(o=>hit(o.name+" "+o.biz)||(qd.length>=3&&o.phone.replace(/\D/g,"").includes(qd))).forEach(o=>{const k=o.phone;if(seen.has(k)||seen.size>=3)return;seen.add(k);const n=DB.orders.filter(x=>x.phone===k).length;add("Customers",{t:o.biz||o.name,s:`${o.phone} · ${n} order${n>1?"s":""}`,ic:ICONS.customers,run:()=>go("orders",{q:o.phone,anim:1})})});
@@ -1651,6 +1775,8 @@ const WHY_D=[
  ["orders","#olist","A board for busy days","Switch to Board and drag orders from New to Delivered. Marking delivered takes the amounts off the stock counts.","The whole day's pipeline at a glance on a Friday rush."],
  ["orders","#olist","Phone and Instagram orders go in too","+ New order records orders taken outside the website, with the same pricing, texts and history.","Every sale counted in one place, so the money numbers are real."],
  ["orders","#oTools","Find anything with one box","Press Ctrl K (or the search button) and type a name, phone number, item or what you want to do.","Answer a customer on the phone in seconds."],
+ ["messages","#thList","Website chat, answered from here","Anyone on the website can ask a question without leaving the page. Every conversation lands here, newest first, with unread ones marked.","Questions get answered while the customer is still deciding, which is when they buy."],
+ ["messages","#thView","Reply, call, or turn it into an order","Quick replies for the common answers, one tap to call or text, and New order fills in their name and number.","A question becomes an order in one step instead of a lost DM."],
  ["stock",".spc","The weekly special is a switch","Turn the special bar on the website on or off, and choose what its Add button puts in the cart.","Moves extra stock before it loses value."],
  ["stock","#cStock","Three words, one tap","In stock, Going fast or Sold out, straight onto the website. Sold out items stay visible so customers know you carry them.","No more \"do you have crabs?\" messages, and no selling what's gone."],
  ["stock","#cStock","Counts that go down by themselves","Optional on-hand counts. Delivered orders subtract automatically and the item flips to Going fast, then Sold out.","The website never sells what's not in the cooler."],
@@ -1712,6 +1838,8 @@ async function tryPin(p){
 }
 function enter(anim){$("lock").hidden=true;$("app").hidden=false;if(!$("wDock"))whyDock();if(anim)$("app").classList.add("in");const h=location.hash.slice(1);route=T[h]?h:"today";drawNav();render();requestAnimationFrame(placeInd);
   if(!LIVE)addEventListener("storage",e=>{if(e.key==="ot-inbox"&&e.newValue){const n=mergeInbox();if(n){DB.orders.sort((a,b)=>new Date(b.at)-new Date(a.at));const o=DB.orders[0];toast(`New order from <b>${esc(o.name||"a customer")}</b>`);chime();drawNav();if(route==="today"||route==="orders")render()}}});
+  if(!LIVE)addEventListener("storage",e=>{if(e.key==="ot-chats")pollChats()});
+  setInterval(pollChats,LIVE?12000:5000);document.addEventListener("visibilitychange",()=>{if(!document.hidden)pollChats()});
   if(LIVE)setInterval(async()=>{if(document.hidden||OPEN)return;try{const before=DB.orders.filter(o=>o.status==="new").length;await loadAll();const after=DB.orders.filter(o=>o.status==="new").length;if(after>before){toast(`<b>${after-before}</b> new order${after-before>1?"s":""}`);chime()}drawNav();if(["today","orders"].includes(route))render()}catch(e){}},60000);
 }
 function lock(){sessionStorage.removeItem("ot-pin");PIN="";location.hash="";location.reload()}

@@ -736,6 +736,68 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
   .js .rv,.js .h1-anim .ln>span,.js .band-u::after,.js .hero-fig .frame,.js .io{opacity:1!important;transform:none!important}
   .fly{display:none}
 }
+
+/* ---------- website chat ---------- */
+.chat-btn{position:fixed;right:24px;bottom:24px;z-index:45;display:flex;align-items:center;gap:10px;border:0;border-radius:999px;background:var(--ink);color:var(--paper);padding:13px 20px 13px 15px;font:600 15.5px/1 var(--f-body);cursor:pointer;box-shadow:0 18px 40px -16px rgba(19,32,46,.6);transition:bottom .45s var(--ease),transform .5s cubic-bezier(.34,1.56,.64,1),opacity .25s,background-color .25s}
+.chat-btn svg{width:22px;height:22px;flex:none}
+.chat-btn:hover{background:var(--ink-3)}
+.chat-btn:active{transform:scale(.95);transition-duration:.45s,.09s,.25s,.25s}
+.chat-btn.gone{opacity:0;transform:scale(.6) translateY(10px);pointer-events:none}
+.chat-btn .chat-dot{position:absolute;top:-3px;right:-3px;min-width:20px;height:20px;border-radius:10px;background:var(--band);color:var(--ink);font:700 11.5px/20px var(--f-body);text-align:center;padding:0 6px;box-shadow:0 0 0 3px var(--paper);animation:dotIn .45s cubic-bezier(.34,1.56,.64,1)}
+@keyframes dotIn{from{transform:scale(0)}}
+body:has(.obar.show) .chat-btn,body:has(.obar.show) .chat-peek{bottom:104px}
+.chat-peek{position:fixed;right:24px;bottom:84px;z-index:45;max-width:280px;background:#fff;color:var(--ink);border-radius:16px 16px 4px 16px;padding:12px 15px;font-size:14.5px;line-height:1.4;box-shadow:0 20px 44px -18px rgba(19,32,46,.45),0 0 0 1px rgba(19,32,46,.06);cursor:pointer;animation:peekIn .5s cubic-bezier(.34,1.56,.64,1) both;transition:bottom .45s var(--ease)}
+body:has(.obar.show) .chat-peek{bottom:164px}
+.chat-peek b{display:block;font-size:12.5px;color:var(--sign);margin-bottom:2px}
+@keyframes peekIn{from{opacity:0;transform:translateY(10px) scale(.94);transform-origin:100% 100%}}
+.chat{position:fixed;right:24px;bottom:24px;z-index:60;width:380px;height:min(600px,calc(100vh - 48px));background:var(--paper);border-radius:20px;box-shadow:0 40px 90px -30px rgba(19,32,46,.6),0 0 0 1px rgba(19,32,46,.08);display:flex;flex-direction:column;overflow:hidden;transform-origin:calc(100% - 40px) 100%;transition:opacity .2s,transform .45s cubic-bezier(.34,1.3,.5,1),visibility 0s}
+.chat[hidden]{display:flex;visibility:hidden;opacity:0;transform:translateY(14px) scale(.9);pointer-events:none;transition:opacity .18s,transform .25s var(--ease),visibility 0s .25s}
+.chat-h{display:flex;align-items:center;gap:12px;padding:16px 14px 14px 18px;background:var(--ink);color:var(--paper)}
+.chat-av{width:40px;height:40px;border-radius:12px;background:var(--paper);display:grid;place-items:center;flex:none}
+.chat-av img{width:28px;height:28px}
+.chat-h b{display:block;font-family:var(--f-display);font-weight:800;font-size:22px;line-height:1;transform:skewX(-9deg);transform-origin:left bottom;letter-spacing:.3px;color:#fff}
+.chat-h small{display:block;font-size:13px;color:#b9c6d1;margin-top:4px}
+.chat-x{margin-left:auto;width:38px;height:38px;border:0;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;display:grid;place-items:center;cursor:pointer;transition:background-color .2s,transform .4s cubic-bezier(.34,1.56,.64,1)}
+.chat-x:hover{background:rgba(255,255,255,.18)}.chat-x:active{transform:scale(.88)}
+.chat-x svg{width:14px;height:14px}
+.chat-log{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:18px 16px 8px;display:flex;flex-direction:column;gap:4px;scroll-behavior:smooth}
+.cm{max-width:82%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.42;white-space:pre-wrap;overflow-wrap:anywhere;animation:cmIn .38s cubic-bezier(.16,1,.3,1) both}
+@keyframes cmIn{from{opacity:0;transform:translateY(8px) scale(.98)}}
+.cm.o{align-self:flex-start;background:#fff;color:var(--ink);border-bottom-left-radius:6px;box-shadow:0 0 0 1px var(--line)}
+.cm.c{align-self:flex-end;background:var(--sign);color:#fff;border-bottom-right-radius:6px}
+.cm.c.pending{opacity:.7}
+.cm-meta{font-size:11.5px;color:var(--muted);margin:2px 6px 10px}
+.cm-meta.c{align-self:flex-end}
+.cm-who{font-size:12px;font-weight:600;color:var(--sign);margin:6px 6px 2px}
+.chat-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+.chat-chips button{border:0;background:#fff;box-shadow:0 0 0 1px var(--line);border-radius:999px;padding:8px 13px;font:600 13.5px/1.2 var(--f-body);color:var(--ink);cursor:pointer;transition:background-color .2s,transform .4s cubic-bezier(.34,1.56,.64,1)}
+.chat-chips button:hover{background:var(--ice)}.chat-chips button:active{transform:scale(.95)}
+.chat-me{align-self:stretch;background:#fff;border-radius:16px;padding:14px;margin:8px 0;box-shadow:0 0 0 1px var(--line);display:grid;gap:8px;animation:cmIn .45s cubic-bezier(.16,1,.3,1) both}
+.chat-me p{margin:0;font-size:14px;color:var(--body);line-height:1.4}
+.chat-me .r{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chat-me input{width:100%;min-width:0;border:0;border-radius:10px;background:var(--ice);padding:10px 11px;font:15px var(--f-body);color:var(--ink)}
+.chat-me input:focus{outline:2px solid var(--sign);outline-offset:0}
+.chat-me .a{display:flex;gap:8px;justify-content:flex-end}
+.chat-me .a button{border:0;border-radius:999px;padding:9px 15px;font:600 14px/1 var(--f-body);cursor:pointer}
+.chat-me .a .skip{background:none;color:var(--muted)}
+.chat-me .a .save{background:var(--ink);color:var(--paper)}
+.chat-f{display:flex;align-items:flex-end;gap:8px;padding:10px 12px calc(12px + env(safe-area-inset-bottom));background:var(--paper);border-top:1px solid var(--line)}
+.chat-f textarea{flex:1;resize:none;border:0;border-radius:20px;background:#fff;box-shadow:0 0 0 1px var(--line);padding:11px 15px;font:16px/1.35 var(--f-body);color:var(--ink);max-height:120px;min-height:44px;transition:box-shadow .2s}
+.chat-f textarea:focus{outline:none;box-shadow:0 0 0 2px var(--sign)}
+.chat-f button{width:44px;height:44px;flex:none;border:0;border-radius:50%;background:var(--sign);color:#fff;display:grid;place-items:center;cursor:pointer;transition:background-color .2s,transform .45s cubic-bezier(.34,1.56,.64,1),opacity .2s}
+.chat-f button:disabled{opacity:.35;cursor:default}
+.chat-f button:not(:disabled):active{transform:scale(.88)}
+.chat-f button svg{width:18px;height:18px}
+@media (max-width:700px){
+  .chat-btn{right:14px;bottom:14px;padding:13px 16px 13px 13px}
+  body:has(.obar.show) .chat-btn{bottom:84px}
+  .chat-peek{right:14px;bottom:76px}
+  body:has(.obar.show) .chat-peek{bottom:146px}
+  .chat{inset:0;right:0;bottom:0;width:auto;height:100%;height:100dvh;border-radius:0;transform-origin:50% 100%}
+  .chat-h{padding-top:calc(16px + env(safe-area-inset-top))}
+}
+@media (prefers-reduced-motion:reduce){.chat,.chat[hidden],.cm,.chat-peek,.chat-btn{animation:none!important;transition:none!important}}
+@media print{.chat,.chat-btn,.chat-peek{display:none!important}}
 </style>
 </head>
 <body>
@@ -832,7 +894,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
         <p class="tc-lede" data-k="trust.lede">Overnight Tider buys, packs and delivers its own seafood. Your order goes straight to us, not to a reseller or a call center.</p>
         <p class="tc-where" id="tsWhere" hidden><span id="usAddr"></span></p>
         <div class="tc-acts">
-          <a class="btn btn-band" href="https://ig.me/m/overnight_tider" target="_blank" rel="noopener">Message us directly</a>
+          <a class="btn btn-band" href="https://www.instagram.com/overnight_tider/" data-dm target="_blank" rel="noopener">Message us directly</a>
           <a class="btn tc-call" id="tcCall" href="#" hidden></a>
           <a class="tc-link" href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener">See all our posts</a>
         </div>
@@ -1041,7 +1103,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
         <li><b>$0</b><span>Charged online. Pay after you say yes</span></li>
         <li><b>2 ways</b><span>Delivery or shipping, set by your ZIP</span></li>
       </ul>
-      <a class="faq-ask" href="https://ig.me/m/overnight_tider" target="_blank" rel="noopener">
+      <a class="faq-ask" href="https://www.instagram.com/overnight_tider/" data-dm target="_blank" rel="noopener">
         <img src="img/building.webp" alt="" width="56" height="56" loading="lazy">
         <span><b>Still wondering?</b><small>Ask us on Instagram. A real person answers.</small></span>
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
@@ -1093,7 +1155,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
       </div>
       <div class="fcols">
         <div><b>Order</b><a href="#shop">This week</a><a href="#bundles">Party sizes</a><a href="#bulk">Wholesale quotes</a><a href="#faq">Questions</a></div>
-        <div><b>Talk to us</b><a href="https://ig.me/m/overnight_tider" target="_blank" rel="noopener">Message on Instagram</a><a href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener">@overnight_tider</a><a id="fCall" href="#" hidden></a></div>
+        <div><b>Talk to us</b><a href="https://www.instagram.com/overnight_tider/" data-dm target="_blank" rel="noopener">Message on Instagram</a><a href="https://www.instagram.com/overnight_tider/" target="_blank" rel="noopener">@overnight_tider</a><a id="fCall" href="#" hidden></a></div>
         <div id="fWhere" hidden><b>Find us</b><span id="fAddr"></span><span id="fHours"></span></div>
       </div>
     </div>
@@ -1129,7 +1191,7 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
       <pre class="prev" id="prev"></pre>
       <div class="acts">
         <button class="btn btn-green" type="button" id="sendDirect" hidden>Send order</button>
-        <a class="btn btn-green" id="sendIG" href="https://ig.me/m/overnight_tider" target="_blank" rel="noopener">Copy order &amp; open Instagram</a>
+        <a class="btn btn-green" id="sendIG" href="https://www.instagram.com/overnight_tider/" data-dm target="_blank" rel="noopener">Copy order &amp; open Instagram</a>
         <a class="btn btn-ink" id="sendSMS" href="#" hidden>Text the order instead</a>
         <button class="btn btn-ice" type="button" id="copyOnly">Just copy the text</button>
       </div>
@@ -1176,6 +1238,15 @@ body.why [data-why-on]{outline:2px dashed var(--band);outline-offset:6px;border-
 </dialog>
 <dialog id="legal"><div class="legal" id="legalBody"></div></dialog>
 
+
+<!-- website chat -->
+<button class="chat-btn gone" id="chatBtn" type="button" aria-controls="chat" aria-expanded="false" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5C4 7.4 7.6 4.5 12 4.5s8 2.9 8 7-3.6 7-8 7c-1 0-2-.1-2.9-.4L5 19.5l1.1-3.4C4.8 14.9 4 13.3 4 11.5z" fill="var(--band)"/><circle cx="8.6" cy="11.5" r="1.2" fill="var(--ink)"/><circle cx="12" cy="11.5" r="1.2" fill="var(--ink)"/><circle cx="15.4" cy="11.5" r="1.2" fill="var(--ink)"/></svg><span>Chat with us</span><i class="chat-dot" id="chatDot" hidden></i></button>
+<div class="chat-peek" id="chatPeek" hidden role="button" tabindex="0"><b>Overnight Tider replied</b><span id="chatPeekT"></span></div>
+<section class="chat" id="chat" role="dialog" aria-labelledby="chatH" hidden>
+  <header class="chat-h"><span class="chat-av"><img src="brand/mark.svg" alt=""></span><div><b id="chatH">Overnight Tider</b><small>A real person on our team answers here</small></div><button class="chat-x" id="chatX" type="button" aria-label="Close chat"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="m2 2 10 10M12 2 2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></header>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <form class="chat-f" id="chatForm" autocomplete="off"><label class="vh" for="chatIn">Your message</label><textarea id="chatIn" rows="1" maxlength="1000" placeholder="Type a message" enterkeyhint="send"></textarea><button type="submit" id="chatSend" aria-label="Send message" disabled><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 15V3.5M4 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></form>
+</section>
 <script>
 /* ============================================================
    SHOP SETTINGS. Fill these in once the owner confirms them.
@@ -1246,6 +1317,8 @@ const REAL={lobster:{src:"img/lobster.webp",post:"DffXxxrFr2q"},crab:{src:"img/c
    The dashboard (admin.html) saves one JSON "site state": stock, prices, the special, text, photos and contact details.
    Live: read from the Apps Script endpoint (cached for instant loads). Pitch demo without an endpoint: read from this browser. */
 const PREVIEW=/[?&]preview\b/.test(location.search);
+const IGDM=matchMedia("(hover:none) and (pointer:coarse)").matches?"https://ig.me/m/overnight_tider":"https://www.instagram.com/overnight_tider/";
+document.querySelectorAll("a[data-dm]").forEach(a=>a.href=IGDM);
 const DEMO=!EP&&SHOP.pitch;
 if(PREVIEW)SHOP.pitch=false;
 function demoSave(type,data){try{const a=JSON.parse(localStorage.getItem("ot-inbox")||"[]");a.push({type,...data,ts:new Date().toISOString()});localStorage.setItem("ot-inbox",JSON.stringify(a.slice(-200)))}catch(e){}}
@@ -1460,7 +1533,7 @@ $("bulkForm").addEventListener("submit",async e=>{
   }
   const txt=`Hi Overnight Tider! Wholesale quote request.\nName: ${g("name")}${g("biz")?" ("+g("biz")+")":""}\nBuying for: ${g("who")}\nNeed: ${g("need")}\nHow often: ${g("freq")}\nFirst delivery: ${when}${g("phone")?"\nPhone: "+g("phone"):""}`;
   await copy(txt,m,"Request copied. Opening our messages, paste it in and send.");
-  const a=document.createElement("a");a.href="https://ig.me/m/overnight_tider";a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
+  const a=document.createElement("a");a.href="https://www.instagram.com/overnight_tider/" data-dm;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
 });
 
 /* ---------- settings-driven pieces ---------- */
@@ -1943,6 +2016,76 @@ else if(DEMO)addEventListener("storage",e=>{if(e.key==="ot-site"){try{liveApply(
     targets.forEach(el=>io.observe(el));
   }else targets.forEach(el=>el.classList.add("in"))
   const top=$("top-bar");addEventListener("scroll",()=>top.classList.toggle("scrolled",scrollY>8),{passive:true});
+})();
+
+/* ---------- website chat: customers message, the owner replies from the dashboard ---------- */
+(()=>{
+  if(PREVIEW||!(EP||DEMO))return;
+  const g=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}},sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+  const RMQ=matchMedia("(prefers-reduced-motion:reduce)");
+  const btn=$("chatBtn"),box=$("chat"),log=$("chatLog"),form=$("chatForm"),inp=$("chatIn"),send=$("chatSend"),peek=$("chatPeek");
+  let me=g("ot-chat-me",{}),msgs=g("ot-chat-log",[]),isOpen=false,pollT=0,lastSeen=g("ot-chat-seen",0),drawn=new Set();
+  if(!me.id){me.id=((crypto.randomUUID&&crypto.randomUUID())||Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2)).replace(/-/g,"").slice(0,24)}
+  const saveMe=()=>sv("ot-chat-me",me);
+  const t=a=>{const d=new Date(a),n=new Date();return d.toDateString()===n.toDateString()?d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}):d.toLocaleDateString("en-US",{month:"short",day:"numeric"})+", "+d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})};
+  const asked=()=>msgs.some(m=>m.from==="c");
+  const CHIPS=["What came in this week?","Do you deliver to my ZIP?","How much for a party of 20?","Wholesale prices for my restaurant"];
+  function draw(){
+    const atBottom=log.scrollHeight-log.scrollTop-log.clientHeight<60;
+    let h=`<p class="cm-who">Overnight Tider</p><div class="cm o" data-k="hi">Hi! Ask us anything: what came in this week, a price, delivery to your ZIP, or a big order.</div>`;
+    if(!asked())h+=`<div class="chat-chips">${CHIPS.map(c=>`<button type="button" data-chip="${esc(c)}">${esc(c)}</button>`).join("")}</div>`;
+    msgs.forEach((m,i)=>{const nx=msgs[i+1],pv=msgs[i-1];
+      if(m.from==="o"&&(!pv||pv.from!=="o"))h+=`<p class="cm-who">Overnight Tider</p>`;
+      h+=`<div class="cm ${m.from}${m.pending?" pending":""}" data-k="${esc(m.id)}">${esc(m.text)}</div>`;
+      if(!nx||nx.from!==m.from||new Date(nx.at)-new Date(m.at)>6e5)h+=`<span class="cm-meta ${m.from}">${m.pending?"Sending":t(m.at)}</span>`;
+      if(m.from==="c"&&(!nx||nx.from!=="c")&&msgs.filter(x=>x.from==="c").indexOf(m)===msgs.filter(x=>x.from==="c").length-1&&!me.phone&&!me.skip&&!msgs.some(x=>x.from==="o"))h+=`<div class="chat-me" id="chatMe"><p>So we can text you back if you leave this page:</p><div class="r"><input id="cmN" placeholder="Name" autocomplete="name" value="${esc(me.name||"")}"><input id="cmP" type="tel" placeholder="Mobile" autocomplete="tel" inputmode="tel"></div><div class="a"><button type="button" class="skip" id="cmSkip">Not now</button><button type="button" class="save" id="cmSave">Save</button></div></div>`});
+    log.innerHTML=h;
+    // only new bubbles animate
+    log.querySelectorAll("[data-k]").forEach(el=>{const k=el.dataset.k;if(drawn.has(k))el.style.animation="none";drawn.add(k)});
+    if(atBottom||!isOpen)log.scrollTop=log.scrollHeight;
+    const unread=msgs.filter(m=>m.from==="o"&&new Date(m.at)>lastSeen).length,dot=$("chatDot");
+    dot.hidden=!unread||isOpen;dot.textContent=unread;
+    if($("cmSave"))$("cmSave").onclick=()=>{const n=$("cmN").value.trim(),p=$("cmP").value.trim();if(p.replace(/\D/g,"").length<10){$("cmP").focus();$("cmP").style.outline="2px solid var(--shell)";return}me.name=n;me.phone=p;saveMe();track("chat_contact");
+      sendMsg(`My name is ${n||"(not given)"} and my mobile is ${p}.`,true)};
+    if($("cmSkip"))$("cmSkip").onclick=()=>{me.skip=true;saveMe();draw()};
+  }
+  function setOpen(v){isOpen=v;box.hidden=!v;btn.classList.toggle("gone",v);btn.setAttribute("aria-expanded",v);peek.hidden=true;
+    if(v){lastSeen=Date.now();sv("ot-chat-seen",lastSeen);draw();log.scrollTop=log.scrollHeight;if(!matchMedia("(hover:none)").matches)setTimeout(()=>inp.focus(),120);track("chat_open");fetchNow()}
+    else btn.focus({preventScroll:true});
+    schedule()}
+  btn.onclick=()=>setOpen(true);$("chatX").onclick=()=>setOpen(false);
+  peek.onclick=()=>setOpen(true);peek.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();setOpen(true)}};
+  addEventListener("keydown",e=>{if(e.key==="Escape"&&isOpen&&!document.querySelector("dialog[open]"))setOpen(false)});
+  log.addEventListener("click",e=>{const c=e.target.closest("[data-chip]");if(c)sendMsg(c.dataset.chip)});
+  const grow=()=>{inp.style.height="auto";inp.style.height=Math.min(120,inp.scrollHeight)+"px";send.disabled=!inp.value.trim()};
+  inp.addEventListener("input",grow);
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();form.requestSubmit()}});
+  form.onsubmit=e=>{e.preventDefault();const v=inp.value.trim();if(!v)return;inp.value="";grow();sendMsg(v)};
+  async function sendMsg(text,quiet){
+    const m={id:"c"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),from:"c",text,at:new Date().toISOString(),pending:true};
+    msgs.push(m);sv("ot-chat-log",msgs);saveMe();draw();log.scrollTop=log.scrollHeight;if(!quiet)track("chat_send");
+    try{
+      if(EP)await fetch(EP,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({type:"chat",chat:me.id,id:m.id,text,name:me.name||"",phone:me.phone||"",page:location.href})});
+      else{const all=g("ot-chats",[]);all.push({id:m.id,chat:me.id,from:"c",name:me.name||"",phone:me.phone||"",text,at:m.at});sv("ot-chats",all)}
+      m.pending=false;m.sentAt=Date.now()
+    }catch(err){m.pending=false;m.failed=true}
+    sv("ot-chat-log",msgs);draw();setTimeout(fetchNow,EP?1500:50)}
+  function merge(list){
+    const ids=new Set(list.map(x=>x.id)),keep=msgs.filter(x=>!ids.has(x.id)&&x.from==="c"&&Date.now()-(x.sentAt||Date.now())<90000);
+    const before=msgs.filter(x=>x.from==="o").length;
+    msgs=list.map(x=>({id:x.id,from:x.from,text:x.text,at:x.at})).concat(keep).sort((a,b)=>new Date(a.at)-new Date(b.at));
+    const after=msgs.filter(x=>x.from==="o");sv("ot-chat-log",msgs);
+    if(after.length>before){const last=after[after.length-1];if(!isOpen){$("chatPeekT").textContent=last.text.length>90?last.text.slice(0,88)+"…":last.text;peek.hidden=false;btn.classList.remove("gone");btn.hidden=false}else{lastSeen=Date.now();sv("ot-chat-seen",lastSeen)}}
+    draw()}
+  async function fetchNow(){
+    if(!asked())return;
+    try{if(EP){const r=await fetch(EP+"?action=chat&id="+encodeURIComponent(me.id)+"&t="+Date.now());merge(await r.json())}else merge(g("ot-chats",[]).filter(x=>x.chat===me.id))}catch(e){}}
+  function schedule(){clearTimeout(pollT);if(!asked())return;pollT=setTimeout(async()=>{if(!document.hidden)await fetchNow();schedule()},isOpen?(EP?4000:1500):(EP?25000:4000))}
+  if(!EP)addEventListener("storage",e=>{if(e.key==="ot-chats")fetchNow()});
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden&&asked())fetchNow()});
+  // show the launcher once the page has settled, so it doesn't compete with the first impression
+  setTimeout(()=>{btn.hidden=false;requestAnimationFrame(()=>btn.classList.remove("gone"))},RMQ.matches?0:1200);
+  draw();if(asked()){fetchNow();schedule()}
 })();
 </script>
 </body>

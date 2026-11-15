@@ -2,6 +2,7 @@
 //
 // What it does
 // - Website orders, wholesale quotes, text-list and email-list signups land in tabs of this Sheet.
+// - Website chat: customers message from the site, the owner replies from the dashboard (Chats tab).
 // - The owner dashboard (/admin) reads orders, prices them, moves them along, and publishes
 //   stock, prices, the special, text and photos to the website. Everything is PIN protected.
 //
@@ -23,7 +24,8 @@ const TABS = {
   order: { name: "Orders", text: "B:L", text2: "P:S", head: ["Received", "Order #", "Name", "Phone", "Items", "How", "Date needed", "ZIP", "Notes", "Status", "Code", "Lines", "Fee", "Discount %", "Total", "Paid by", "History", "Business", "Channel"] },
   quote: { name: "Wholesale quotes", text: "B:I", head: ["Received", "Name", "Business", "Buying for", "Phone", "Need", "How often", "First delivery", "Status"] },
   alert: { name: "Text list", text: "B:B", head: ["Signed up", "Phone"] },
-  email: { name: "Email list", text: "B:C", head: ["Signed up", "Email", "Code given"] }
+  email: { name: "Email list", text: "B:C", head: ["Signed up", "Email", "Code given"] },
+  chat: { name: "Chats", text: "B:H", head: ["Time", "Chat", "From", "Name", "Phone", "Message", "Read", "Msg id"] }
 };
 const STATUS = { new: "New", sent: "Price sent", confirmed: "Confirmed", paid: "Paid", done: "Delivered", cancelled: "Cancelled" };
 const STATUS_BACK = Object.keys(STATUS).reduce((m, k) => (m[STATUS[k].toLowerCase()] = k, m), { priced: "sent", done: "done" });
@@ -64,6 +66,11 @@ function site_() {
 /* ---------- public: the website reads its published settings ---------- */
 function doGet(e) {
   const action = (e && e.parameter && e.parameter.action) || "";
+  if (action === "chat") {
+    const id = String((e.parameter && e.parameter.id) || "");
+    if (!/^[a-z0-9]{12,40}$/i.test(id)) return json([]);
+    return json(chatMsgs_(id).map(m => ({ id: m.id, from: m.from, text: m.text, at: m.at })));
+  }
   if (action === "site") {
     const cache = CacheService.getScriptCache(), hit = cache.get("site");
     if (hit) return ContentService.createTextOutput(hit).setMimeType(ContentService.MimeType.JSON);
@@ -78,6 +85,7 @@ function doPost(e) {
   let d = {};
   try { d = JSON.parse(e.postData.contents); } catch (err) { return out("bad request"); }
   if (d.type === "admin") return admin(d);
+  if (d.type === "chat") return chatIn_(d);
   const t = TABS[d.type];
   if (!t) return out("unknown type");
 
@@ -134,7 +142,20 @@ function admin(d) {
   const lock = LockService.getScriptLock();
   lock.waitLock(15000);
   try {
-    if (d.op === "load") return json({ orders: readOrders(), quotes: readQuotes(), emails: readList("email"), texts: readList("alert"), site: JSON.parse(String(site_().getRange("A1").getValue() || "{}")) });
+    if (d.op === "chats") return json({ chats: readChats_() });
+    if (d.op === "chatReply") {
+      const id = String(d.chat || ""), text = String(d.text || "").trim().slice(0, 2000);
+      if (!/^[a-z0-9]{12,40}$/i.test(id) || !text) return json({ error: "Empty message" });
+      const m = { id: String(d.id || "o" + Date.now()), chat: id, from: "o", name: "", phone: "", text: text, at: new Date().toISOString() };
+      tab("chat").appendRow(chatRow_(m)); chatCache_(id, m);
+      return json({ ok: true, msg: m });
+    }
+    if (d.op === "chatRead") {
+      const sh = tab("chat"), n = sh.getLastRow() - 1;
+      if (n > 0) { const v = sh.getRange(2, 2, n, 6).getValues(); v.forEach((r, i) => { if (String(r[0]).replace(/^'/, "") === String(d.chat) && r[1] === "Customer" && r[5] !== "yes") sh.getRange(i + 2, 7).setValue("yes"); }); }
+      return json({ ok: true });
+    }
+    if (d.op === "load") return json({ chats: readChats_(), orders: readOrders(), quotes: readQuotes(), emails: readList("email"), texts: readList("alert"), site: JSON.parse(String(site_().getRange("A1").getValue() || "{}")) });
     if (d.op === "saveOrder") { writeOrder(d.order); return json({ ok: true }); }
     if (d.op === "saveQuote") {
       const sh = tab("quote"), r = +String(d.quote.id).replace(/\D/g, "");
@@ -167,6 +188,9 @@ function admin(d) {
       put("quote", (D.quotes || []).slice(0, 500).map(q => [new Date(q.at)].concat([q.name, q.biz, q.who, q.phone, q.need, q.freq, q.when, QSTATUS[q.status] || "New"].map(clean))));
       put("email", (D.emails || []).slice(0, 5000).map(x => [new Date(x.at), clean(x.email), clean(x.code)]));
       put("alert", (D.texts || []).slice(0, 5000).map(x => [new Date(x.at), clean(x.phone)]));
+      const oldChat = rows("chat").map(r => "chat:" + String(r[1]).replace(/^'/, ""));
+      put("chat", (D.chats || []).slice(0, 5000).map(chatRow_));
+      CacheService.getScriptCache().removeAll(oldChat.concat((D.chats || []).map(m => "chat:" + m.chat)).filter((k, i, a) => a.indexOf(k) === i));
       return json({ ok: true });
     }
     if (d.op === "setPin") {
@@ -207,4 +231,41 @@ function writeOrder(o) {
   const r = ids.indexOf(String(o.id));
   if (r === -1) sh.appendRow(orderRow_(o));
   else sh.getRange(r + 2, 10, 1, 10).setValues([orderVals_(o)]);
+}
+
+/* ---------- website chat ---------- */
+function chatRow_(m) { return [new Date(m.at || Date.now())].concat([m.chat, m.from === "o" ? "You" : "Customer", m.name || "", m.phone || "", m.text, m.read ? "yes" : "", m.id || ""].map(clean)); }
+function chatParse_(r) { return { at: iso(r[0]), chat: String(r[1]).replace(/^'/, ""), from: r[2] === "You" ? "o" : "c", name: String(r[3] || ""), phone: String(r[4] || "").replace(/^'/, ""), text: String(r[5] || "").replace(/^'/, ""), read: r[6] === "yes", id: String(r[7] || "") }; }
+function readChats_() { const since = Date.now() - 120 * 864e5; return rows("chat").map(chatParse_).filter(m => m.chat && new Date(m.at) > since); }
+function chatMsgs_(id) {
+  const c = CacheService.getScriptCache(), hit = c.get("chat:" + id);
+  if (hit) try { return JSON.parse(hit); } catch (e) {}
+  const list = rows("chat").map(chatParse_).filter(m => m.chat === id).map(m => ({ id: m.id, from: m.from, text: m.text, at: m.at }));
+  try { c.put("chat:" + id, JSON.stringify(list.slice(-80)), 21600); } catch (e) {}
+  return list;
+}
+function chatCache_(id, m) {
+  const c = CacheService.getScriptCache(), list = chatMsgs_(id);
+  if (!list.some(x => x.id === m.id)) list.push({ id: m.id, from: m.from, text: m.text, at: m.at });
+  try { c.put("chat:" + id, JSON.stringify(list.slice(-80)), 21600); } catch (e) {}
+}
+function chatIn_(d) {
+  const id = String(d.chat || ""), text = String(d.text || "").trim().slice(0, 1000);
+  if (!/^[a-z0-9]{12,40}$/i.test(id) || !text) return out("bad chat");
+  const c = CacheService.getScriptCache(), k = "chatn:" + id, n = +(c.get(k) || 0);
+  if (n > 40) return out("slow down");
+  c.put(k, String(n + 1), 600);
+  const lock = LockService.getScriptLock(); lock.waitLock(10000);
+  let first = false;
+  try {
+    first = !chatMsgs_(id).some(m => m.from === "c");
+    const m = { id: String(d.id || "c" + Date.now()).slice(0, 40), chat: id, from: "c", name: String(d.name || "").slice(0, 60), phone: String(d.phone || "").slice(0, 30), text: text, at: new Date().toISOString() };
+    tab("chat").appendRow(chatRow_(m)); chatCache_(id, m);
+  } finally { lock.releaseLock(); }
+  const quiet = !c.get("chatmail:" + id);
+  if (OWNER_EMAIL && (first || quiet)) {
+    c.put("chatmail:" + id, "1", 7200);
+    MailApp.sendEmail(OWNER_EMAIL, "Website chat from " + (d.name || "a visitor"), text + "\n\n" + (d.phone ? "Mobile: " + d.phone + "\n" : "") + "Reply from the dashboard, under Messages.");
+  }
+  return out("ok");
 }
