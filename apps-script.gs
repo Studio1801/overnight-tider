@@ -124,7 +124,7 @@ function doPost(e) {
     const subject = d.type === "order" ? "New order " + d.id + " from " + (d.name || "a customer") : "Wholesale quote request from " + (d.biz || d.name);
     const skip = ["type", "page", "lines"];
     const body = Object.keys(d).filter(k => skip.indexOf(k) === -1).map(k => k + ": " + d[k]).join("\n");
-    MailApp.sendEmail(OWNER_EMAIL, subject, body + "\n\nOpen the dashboard to price it, or see the Google Sheet.");
+    MailApp.sendEmail(OWNER_EMAIL, subject, body + "\n\nOpen the dashboard to price it.");
   }
   return out("ok");
 }

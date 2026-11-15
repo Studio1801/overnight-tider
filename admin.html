@@ -864,7 +864,7 @@ const $=id=>document.getElementById(id);
 const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt=n=>"$"+(+n||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
 const fmt0=n=>"$"+Math.round(+n||0).toLocaleString("en-US");
-const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){toast("This browser is out of space. Use smaller photos or connect the Google Sheet.");return false}}};
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){toast("This browser is out of space. Use smaller photos.");return false}}};
 
 /* ---------- catalog (same items as the website) ---------- */
 const CAT=[
@@ -987,7 +987,7 @@ async function loadAll(){
 }
 async function saveOrder(o){
   const i=DB.orders.findIndex(x=>x.id===o.id);if(i>-1)DB.orders[i]=o;
-  if(LIVE){try{await api("saveOrder",{order:o})}catch(e){toast("Couldn't save to the sheet. Check your connection and try again.");throw e}}else saveDB();
+  if(LIVE){try{await api("saveOrder",{order:o})}catch(e){toast("Couldn't save. Check your connection and try again.");throw e}}else saveDB();
 }
 async function publishSite(S){
   S.v=1;S.updated=new Date().toISOString();
@@ -1029,7 +1029,7 @@ function drawNav(){
       if(!c){c=document.createElement("span");c.className="ct ct-in";b.appendChild(c)}else if(c.textContent!==String(n)){c.classList.remove("pop");void c.offsetWidth;c.classList.add("pop")}
       c.classList.remove("ct-out");c.textContent=n})});
   $("modeBox").className="mode"+(LIVE?" live":"");
-  $("modeBox").innerHTML=LIVE?`<b><i></i>Connected</b>Changes go to your Google Sheet and the live website.`:`<b><i></i>Sample data</b>Orders placed on the website in this browser show up here.`;
+  $("modeBox").innerHTML=LIVE?`<b><i></i>Connected</b>Changes go straight to the live website.`:`<b><i></i>Sample data</b>Orders placed on the website in this browser show up here.`;
   placeInd();
 }
 function placeInd(){
@@ -1571,8 +1571,8 @@ function pMore(){$("page").innerHTML=`<div class="more-sheet">${[["customers","C
 function pSettings(){
   $("page").innerHTML=`<div class="grid2"><div class="stack">
    <section class="card"><div class="card-h"><h2>Connection</h2></div><div class="card-b" style="display:grid;gap:14px">
-     <p style="margin:0">${LIVE?"Connected to your Google Sheet. Orders, quotes and signups come from there, and when you publish, the live website updates within a minute.":"Running on sample data in this browser. Connect the Google Sheet to see real orders and publish to the live website."}</p>
-     <div class="field"><label for="epIn">Google Sheet web app link</label><input id="epIn" value="${esc(EP)}" placeholder="https://script.google.com/macros/s/.../exec"></div>
+     <p style="margin:0">${LIVE?"Connected. Orders, quotes and signups come in live, and when you publish, the website updates within a minute.":"Running on sample data in this browser. Connect it to see real orders and publish to the live website."}</p>
+     <div class="field"><label for="epIn">Connection link</label><input id="epIn" value="${esc(EP)}" placeholder="https://script.google.com/macros/s/.../exec"></div>
      <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn b-ink b-sm" type="button" id="epSave">Save and reload</button>${LIVE?`<button class="btn b-ghost b-sm" type="button" id="epOff">Disconnect this browser</button>`:""}</div>
      <p class="muted" style="margin:0;font-size:13.5px">Setup steps are in apps-script.gs. It takes about 5 minutes.</p></div></section>
    <section class="card"><div class="card-h"><h2>PIN</h2></div><div class="card-b" style="display:grid;gap:14px">
@@ -1580,17 +1580,17 @@ function pSettings(){
      <div><button class="btn b-ink b-sm" type="button" id="pinSave">Change PIN</button></div>
      <p class="muted" style="margin:0;font-size:13.5px">After 10 wrong tries the dashboard locks for 15 minutes.</p></div></section>
   </div><div class="stack">
-   ${LIVE?`<section class="card"><div class="card-h"><h2>Orders in the Sheet</h2></div><div class="card-b" style="display:grid;gap:12px"><p style="margin:0">For a demo, fill the Sheet with sample orders. Clear it before real customers start ordering.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn b-soft b-sm" type="button" id="lSeed">Load sample orders</button><button class="btn b-ghost b-sm" type="button" id="lClear">Clear all orders</button></div></div></section>`:""}
+   ${LIVE?`<section class="card"><div class="card-h"><h2>Sample orders</h2></div><div class="card-b" style="display:grid;gap:12px"><p style="margin:0">For a demo, fill the dashboard with sample orders. Clear it before real customers start ordering.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn b-soft b-sm" type="button" id="lSeed">Load sample orders</button><button class="btn b-ghost b-sm" type="button" id="lClear">Clear all orders</button></div></div></section>`:""}
    ${LIVE?"":`<section class="card"><div class="card-h"><h2>Sample data</h2></div><div class="card-b" style="display:grid;gap:12px"><p style="margin:0">Start over with fresh sample orders, or clear everything to see the dashboard empty.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn b-soft b-sm" type="button" id="sReset">Fresh sample data</button><button class="btn b-ghost b-sm" type="button" id="sClear">Start empty</button><button class="btn b-ghost b-sm" type="button" id="sSite">Undo all website edits</button></div></div></section>`}
-   <section class="card"><div class="card-h"><h2>Good to know</h2></div><ul class="pays" style="padding-top:6px"><li><span>Prices you set</span><b>Fill in new orders for you</b></li><li><span>Counting stock</span><b>Goes down when you mark delivered</b></li><li><span>Customer data</span><b>Stays in your own Google Sheet</b></li><li><span>Payments</span><b>Never taken online</b></li></ul></section>
+   <section class="card"><div class="card-h"><h2>Good to know</h2></div><ul class="pays" style="padding-top:6px"><li><span>Prices you set</span><b>Fill in new orders for you</b></li><li><span>Counting stock</span><b>Goes down when you mark delivered</b></li><li><span>Customer data</span><b>Stays in your own account</b></li><li><span>Payments</span><b>Never taken online</b></li></ul></section>
   </div></div>`;
   $("epSave").onclick=()=>{const v=$("epIn").value.trim();if(v&&!/^https:\/\/script\.google\.com\//.test(v)){toast("That doesn't look like a Google Apps Script link.");return}try{v?localStorage.setItem("ot-admin-ep",v):localStorage.removeItem("ot-admin-ep")}catch(e){}sessionStorage.removeItem("ot-pin");location.reload()};
   if($("epOff"))$("epOff").onclick=()=>{localStorage.removeItem("ot-admin-ep");sessionStorage.removeItem("ot-pin");location.reload()};
   $("pinSave").onclick=async()=>{const a=$("pin1").value,b=$("pin2").value;if(!/^\d{4}$/.test(a)){toast("Use 4 numbers.");return}if(a!==b){toast("The two PINs don't match.");return}
     const bb=busyBtn($("pinSave"));try{if(LIVE)await api("setPin",{newPin:a});else LS.set("ot-admin-pin",a);PIN=a;sessionStorage.setItem("ot-pin",a);await bb.ok(600);toast("PIN changed");$("pin1").value=$("pin2").value=""}catch(e){bb.fail();toast("Couldn't change the PIN.")}};
-  const repl=async(data,msg,b)=>{const bb=busyBtn(b);try{await api("replaceAll",{data});await loadAll();await bb.ok(600);toast(msg);go("today")}catch(e){bb.fail();toast("Couldn't update the Sheet. "+e.message)}};
-  if($("lSeed"))$("lSeed").onclick=()=>{if(!confirm("Replace every order, quote and signup in the Google Sheet with sample data?"))return;repl({...seedDB(),chats:seedChats()},"Sample orders loaded into the Sheet",$("lSeed"))};
-  if($("lClear"))$("lClear").onclick=()=>{if(!confirm("Delete every order, quote and signup from the Google Sheet? This can't be undone."))return;repl({},"The Sheet is empty",$("lClear"))};
+  const repl=async(data,msg,b)=>{const bb=busyBtn(b);try{await api("replaceAll",{data});await loadAll();await bb.ok(600);toast(msg);go("today")}catch(e){bb.fail();toast("Couldn't update. "+e.message)}};
+  if($("lSeed"))$("lSeed").onclick=()=>{if(!confirm("Replace every order, quote, chat and signup with sample data?"))return;repl({...seedDB(),chats:seedChats()},"Sample orders loaded",$("lSeed"))};
+  if($("lClear"))$("lClear").onclick=()=>{if(!confirm("Delete every order, quote, chat and signup? This can't be undone."))return;repl({},"Everything is cleared",$("lClear"))};
   if($("sReset"))$("sReset").onclick=()=>{if(!confirm("Replace everything with fresh sample orders?"))return;DB=seedDB();saveDB();toast("Fresh sample data loaded");go("today")};
   if($("sClear"))$("sClear").onclick=()=>{if(!confirm("Clear all orders, quotes and signups in this browser?"))return;DB={orders:[],quotes:[],emails:[],texts:[]};saveDB();toast("Cleared");go("today")};
   if($("sSite"))$("sSite").onclick=()=>{if(!confirm("Put the website back to how it was built?"))return;SITE={v:1};DRAFT=null;localStorage.removeItem("ot-site");localStorage.removeItem("ot-site-draft");toast("Website back to the original");pubBar()};
@@ -1790,7 +1790,7 @@ const WHY_D=[
  ["money","#cChart","Week by week","Hover any week for the total and the number of paid orders.","See the seasons and buy ahead for holidays and crab season."],
  ["money",".grid2","What actually earns","Sales by item, home cooks against wholesale, and how people pay.","Put specials and photos behind the items that make the money."],
  ["money",".grid2","The customer list is yours","Best customers, plus the full customer, email and text lists, download any time.","No platform owns the relationships. Ready for promotions."],
- ["settings",".grid2","Runs on the owner's Google Sheet","Orders, stock and website text live in a Sheet the owner owns. No monthly software and no cut of each order.","Lower running costs than any ordering platform."],
+ ["settings",".grid2","No monthly software","Orders, stock and website text are stored in an account the owner controls. No monthly ordering software and no cut of each order.","Lower running costs than any ordering platform."],
  ["settings",".grid2","A PIN with a lockout","Four digits for the owner. Ten wrong tries locks it for 15 minutes.","Simple for the owner, closed to guessers."]];
 const WHYSHOW=CFG.pitch||!LIVE||/[?&#]why\b/.test(location.search+location.hash);
 let WHYON=false,wCur=0;
@@ -1835,7 +1835,7 @@ async function tryPin(p){
     if(LIVE){PIN=p;await loadAll()}
     else{const want=LS.get("ot-admin-pin",CFG.demoPin);if(p!==want)throw new Error("Wrong PIN");PIN=p;await loadAll()}
     sessionStorage.setItem("ot-pin",p);$("lock").classList.add("out");pinBoxes.forEach(b=>b.blur());setTimeout(()=>enter(true),450);
-  }catch(e){PIN="";$("lockMsg").textContent=/locked/i.test(e.message)?"Too many tries. Wait 15 minutes and try again.":/Wrong|pin/i.test(e.message)?"That PIN isn't right. Try again.":"Couldn't reach your Google Sheet. Check your connection.";
+  }catch(e){PIN="";$("lockMsg").textContent=/locked/i.test(e.message)?"Too many tries. Wait 15 minutes and try again.":/Wrong|pin/i.test(e.message)?"That PIN isn't right. Try again.":"Couldn't connect. Check your internet and try again.";
     const g=$("pin");g.classList.remove("bad");void g.offsetWidth;g.classList.add("bad");pinBoxes.forEach(b=>b.value="");pinBoxes[0].focus()}
 }
 function enter(anim){$("lock").hidden=true;$("app").hidden=false;if(!$("wDock"))whyDock();if(anim)$("app").classList.add("in");const h=location.hash.slice(1);route=T[h]?h:"today";drawNav();render();requestAnimationFrame(placeInd);
