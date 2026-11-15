@@ -574,7 +574,12 @@ dialog[open]{animation:pop .3s var(--ease)}
 .sheet h2{font-family:var(--f-display);font-weight:800;font-size:40px;line-height:1;margin:0}
 .x{position:absolute;top:14px;right:14px;border:0;background:var(--ice-2);width:40px;height:40px;border-radius:50%;font-size:22px;line-height:1}
 /* first-order offer */
-#offer{width:min(780px,100% - 24px);max-height:none;overflow:hidden;border-radius:10px}
+#offer,#promo{width:min(780px,100% - 24px);max-height:none;overflow:hidden;border-radius:10px}
+.pro h2{font-size:clamp(40px,7vw,54px)}
+.pro h2:focus{outline:none}
+.pro .btn{width:100%;justify-content:center;margin-top:24px}
+.pro .off-no{display:block;margin:14px auto 0}
+.pro .off-ph img{object-position:center}
 .off{display:grid;position:relative}
 .off-ph{margin:0;height:150px;overflow:hidden;background:var(--frost)}
 .off-ph img{width:100%;height:100%;object-fit:cover;display:block}
@@ -597,7 +602,7 @@ dialog[open]{animation:pop .3s var(--ease)}
 .off-code button{background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 16px;font-weight:600;font-size:14px}
 .off .msg{font-size:14px;color:var(--shell-dk);margin:0;min-height:0}
 @media (min-width:700px){.off{grid-template-columns:1fr 1.15fr}.off-ph{height:auto;min-height:440px}.off-in{padding:44px 40px 34px;align-self:center}}
-@media (max-width:699px){#offer[open]{margin:auto 0 0;width:100%;max-width:100%;border-radius:14px 14px 0 0;animation:offUp .35s var(--ease)}}
+@media (max-width:699px){#promo[open]{margin:auto 0 0;width:100%;max-width:100%;border-radius:14px 14px 0 0;animation:offUp .35s var(--ease)}#offer[open]{margin:auto 0 0;width:100%;max-width:100%;border-radius:14px 14px 0 0;animation:offUp .35s var(--ease)}}
 @keyframes offUp{from{transform:translateY(100%)}to{transform:none}}
 .code-line{margin:0;font-size:14.5px;background:#fff;border:1px dashed var(--sign);border-radius:8px;padding:10px 12px;color:var(--body)}
 .code-line b{font-family:var(--f-mono);color:var(--ink)}
@@ -1327,6 +1332,19 @@ body:has(.obar.show) .chat-peek{bottom:164px}
     </div>
   </div>
 </dialog>
+<dialog id="promo" aria-labelledby="proT">
+  <div class="off pro">
+    <figure class="off-ph"><img data-kimg="popup" src="img/ig-crawfish.webp" alt="" width="720" height="720"></figure>
+    <div class="off-in">
+      <button class="x" type="button" data-close aria-label="Close">&times;</button>
+      <p class="off-k" id="proTag" data-pk="tag">This weekend</p>
+      <h2 id="proT" data-pk="head" tabindex="-1" autofocus>Live crawfish are in</h2>
+      <p id="proBody" data-pk="body">Louisiana crawfish by the pound or by the sack. Order by Thursday for Saturday delivery.</p>
+      <a class="btn btn-green" id="proBtn" data-pk="btn" href="#shop">Show me the crawfish</a>
+      <button class="off-no" type="button" data-close>Not now</button>
+    </div>
+  </div>
+</dialog>
 <dialog id="legal"><div class="legal" id="legalBody"></div></dialog>
 
 
@@ -1710,7 +1728,7 @@ function applyContent(S){
   const on=document.querySelector("#show .sl.on");if(on){const i=+on.dataset.i;$("sbName").textContent=HERO_S[i][0];$("sbSub").textContent=HERO_S[i][2]}
 }
 function liveApply(S){
-  mergeSite(S);applyContent(S);
+  mergeSite(S);applyContent(S);if(window.OTpop)OTpop.sync(S);
   const sp=SHOP.special;$("special").hidden=!(sp&&sp.on);if(sp&&sp.on)$("specialText").innerHTML=sp.text;
   renderCarry();renderShop();
 }
@@ -1751,6 +1769,36 @@ function liveApply(S){
   schedule();
 })();
 
+/* ---------- owner pop-up announcement ---------- */
+const POP0={on:false,tag:"This weekend",head:"Live crawfish are in",body:"Louisiana crawfish by the pound or by the sack. Order by Thursday for Saturday delivery.",act:"item",item:"crawfish",btn:"Show me the crawfish",when:"5"};
+const popData=S=>{const p=(S&&S.popup)||{},d={...POP0};Object.keys(p).forEach(k=>{if(p[k]!==""&&p[k]!=null)d[k]=p[k]});return d};
+window.OTpop=(function(){
+  const dlg=$("promo");if(!dlg)return{sync(){}};
+  const force=/[?&]popup\b/.test(location.search);let armed=false,shown=false,D=popData(SITE);
+  let PH=(SITE&&SITE.photos)||{};const sig=d=>{const P=PH;let h=0;const t=JSON.stringify([d.tag,d.head,d.body,d.btn,d.act,d.item,P.popup||""]);for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return String(h)};
+  function fill(d){D=d;$("proTag").textContent=d.tag;$("proTag").hidden=!d.tag;$("proT").textContent=d.head;$("proBody").textContent=d.body;$("proBody").hidden=!d.body;
+    const b=$("proBtn");b.textContent=d.btn||"Start my order";b.removeAttribute("target");b.removeAttribute("rel");
+    if(d.act==="dm"){b.href=IGDM;b.target="_blank";b.rel="noopener"}else b.href=d.act==="bulk"?"#bulk":"#shop"}
+  $("proBtn").addEventListener("click",e=>{if(PREVIEW)return;track("popup_click",{act:D.act});if(D.act==="dm"){dlg.close();return}
+    e.preventDefault();dlg.close();
+    if(D.act==="item"&&item(D.item)){if(shopTab!=="all"){shopTab="all";renderShop()}drawDetail()}
+    const t=$(D.act==="bulk"?"bulk":"shop");if(t)t.scrollIntoView({behavior:calm?"auto":"smooth"});
+    if(D.act==="item"&&item(D.item))setTimeout(()=>select(D.item),calm?0:500)});
+  dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+  dlg.addEventListener("close",()=>{if(!PREVIEW)track("popup_close")});
+  function open(){if(shown)return;if(document.querySelector("dialog[open]")){setTimeout(open,4000);return}
+    shown=true;dlg.showModal();try{sessionStorage.setItem("ot-pop-shown","1");localStorage.setItem("ot-pop",sig(D))}catch(e){}track("popup_view")}
+  function arm(){if(armed||PREVIEW)return;if(!D.on&&!force)return;
+    try{if(!force&&localStorage.getItem("ot-pop")===sig(D))return}catch(e){}
+    armed=true;const t0=Date.now();
+    if(D.when==="scroll"&&!force){const on=()=>{const h=document.documentElement;if(Date.now()-t0>2500&&(scrollY+innerHeight)/h.scrollHeight>.3){removeEventListener("scroll",on);open()}};addEventListener("scroll",on,{passive:true})}
+    else setTimeout(open,force?700:(+D.when||5)*1000)}
+  fill(D);arm();
+  if(PREVIEW)addEventListener("message",e=>{if(e.origin!==location.origin||!e.data||e.data.type!=="ot-popup")return;
+    if(e.data.show){if(!dlg.open){dlg.showModal();dlg.querySelector(".off-in").scrollTop=0}}else if(dlg.open)dlg.close()});
+  return{sync(S){PH=(S&&S.photos)||{};fill(popData(S));if(!PREVIEW)arm()}};
+})();
+
 /* ---------- first-order email offer ---------- */
 function welcomeCode(){try{return SHOP.welcome&&localStorage.getItem("ot-code")||""}catch(e){return""}}
 (function offer(){
@@ -1762,7 +1810,7 @@ function welcomeCode(){try{return SHOP.welcome&&localStorage.getItem("ot-code")|
   if(!force&&(st.done||(st.closed&&Date.now()-st.closed<14*864e5)||welcomeCode()))return;
   let shown=false;const t0=Date.now();
   function open(why){
-    if(shown)return;if(document.querySelector("dialog[open]")){setTimeout(()=>open(why),4000);return}
+    if(shown)return;try{if(!force&&sessionStorage.getItem("ot-pop-shown")){shown=true;cleanup();return}}catch(e){}if(document.querySelector("dialog[open]")){setTimeout(()=>open(why),4000);return}
     shown=true;dlg.showModal();if(matchMedia("(pointer:fine)").matches)$("offEmail").focus();track("offer_view",{trigger:why});cleanup();
   }
   const onScroll=()=>{const h=document.documentElement;if(Date.now()-t0>6000&&(scrollY+innerHeight)/h.scrollHeight>.45)open("scroll")};
@@ -2112,8 +2160,9 @@ if(PREVIEW){addEventListener("message",e=>{if(e.origin!==location.origin||!e.dat
     const d=el.closest("details");if(d)d.open=true;const sl=el.matches(".sl")&&el.dataset.i;if(sl&&window.OTgo)window.OTgo(+sl);
     el.scrollIntoView({block:"center"});el.style.outline="3px solid #f2c230";el.style.outlineOffset="4px";clearTimeout(el._t);el._t=setTimeout(()=>{el.style.outline=""},1400)}});
   document.addEventListener("click",e=>{const a=e.target.closest("a[href]");if(a&&!a.getAttribute("href").startsWith("#"))e.preventDefault()},true);
-  const pk=document.createElement("style");pk.textContent='[data-k],[data-kimg],.pcard .pc-photo,#special{cursor:pointer}[data-k]:hover,[data-kimg]:hover,.pcard .pc-photo:hover,#special:hover{outline:2px dashed #f2c230;outline-offset:4px}';document.head.appendChild(pk);
+  const pk=document.createElement("style");pk.textContent='[data-pk]{cursor:pointer}[data-pk]:hover{outline:2px dashed #f2c230;outline-offset:4px}[data-k],[data-kimg],.pcard .pc-photo,#special{cursor:pointer}[data-k]:hover,[data-kimg]:hover,.pcard .pc-photo:hover,#special:hover{outline:2px dashed #f2c230;outline-offset:4px}';document.head.appendChild(pk);
   document.addEventListener("click",e=>{const t=e.target;let k=null;
+    const pk=t.closest("[data-pk]");if(pk){e.preventDefault();e.stopPropagation();parent.postMessage({type:"ot-pick",k:"popup."+pk.dataset.pk},location.origin);return}
     const d=t.closest("[data-k]"),im=t.closest("[data-kimg]"),pc=t.closest(".pcard .pc-photo"),sp=t.closest("#special");
     if(d)k=d.dataset.k;else if(im)k=im.dataset.kimg;else if(pc)k="item."+pc.closest(".pcard").dataset.sid;else if(sp)k="special";
     if(!k)return;e.preventDefault();e.stopPropagation();parent.postMessage({type:"ot-pick",k},location.origin)},true);}

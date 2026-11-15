@@ -261,6 +261,7 @@ button.row:hover{background:#fafaf7}
 .sw[aria-checked="true"]{background:var(--sign)}
 .sw[aria-checked="true"]::after{transform:translateX(18px)}
 .sw-row{display:flex;align-items:center;gap:12px;font-weight:600}
+.pp-acts{display:flex;flex-wrap:wrap;gap:8px}
 .stk{list-style:none;margin:0;padding:0}
 .stk>li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;padding:16px 20px;border-top:1px solid var(--line)}
 .stk>li:first-child{border-top:0}
@@ -845,6 +846,32 @@ body:has(.why-dock) .th-view{height:calc(100vh - 200px)}
 details>summary{transition:background-color .2s}
 .tbl tbody tr,button.row,.task{will-change:auto}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* premium finish: softer depth, quieter hairlines, a little light on the dark */
+:root{--hair:rgba(19,32,46,.075);--sh-1:0 0 0 1px rgba(19,32,46,.065),0 1px 2px rgba(19,32,46,.04),0 14px 34px -22px rgba(19,32,46,.22);--sh-2:0 0 0 1px rgba(19,32,46,.08),0 2px 6px rgba(19,32,46,.05),0 22px 44px -24px rgba(19,32,46,.3)}
+body{background:radial-gradient(1200px 600px at 70% -10%,#fbfaf6,transparent 60%),var(--paper);background-attachment:fixed;text-rendering:optimizeLegibility}
+::selection{background:rgba(242,194,48,.45);color:var(--ink)}
+*{scrollbar-color:rgba(19,32,46,.2) transparent}
+.card{border-radius:18px;box-shadow:var(--sh-1)}
+.card-h h2{letter-spacing:.35px}
+.tasks .task:hover,.dc:hover{box-shadow:inset 0 0 0 1px var(--hair)}
+.tg+.tg,.wait,.stk2>li+li{border-color:var(--hair)}
+.top{background:rgba(247,246,241,.8);-webkit-backdrop-filter:saturate(1.5) blur(16px);backdrop-filter:saturate(1.5) blur(16px);border-bottom-color:var(--hair)}
+.top h1{letter-spacing:.4px}
+.side{background:linear-gradient(180deg,#1a2b3d 0%,var(--ink) 34%,#0e1824 100%);box-shadow:inset -1px 0 0 rgba(255,255,255,.04)}
+.brand{border-bottom-color:rgba(255,255,255,.06)}
+.nav-ind{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.065));box-shadow:inset 0 1px 0 rgba(255,255,255,.09),inset 0 0 0 1px rgba(255,255,255,.05),0 8px 18px -10px rgba(0,0,0,.6)}
+.nav .ct,.tabbar .ct{box-shadow:0 0 0 2px rgba(19,32,46,.35),0 2px 6px rgba(242,194,48,.25)}
+.mode{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+.mode.live b i{box-shadow:0 0 0 3px rgba(127,208,143,.18)}
+.btn.b-ink,.btn.b-green{box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 2px rgba(19,32,46,.2),0 8px 16px -10px rgba(19,32,46,.55)}
+.btn.b-soft{box-shadow:inset 0 0 0 1px rgba(19,32,46,.05)}
+.task .go em,.dc-a{box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 1px 2px rgba(19,32,46,.16)}
+.seg,.segm,.dp-btn,.search input,.dn-b,.dn-t{box-shadow:0 0 0 1px var(--hair),0 1px 2px rgba(19,32,46,.04)}
+.seg button[aria-pressed="true"],.segm button[aria-pressed="true"]{box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 2px 6px -2px rgba(19,32,46,.45)}
+.day{box-shadow:var(--sh-1)}.day.is-today{box-shadow:0 0 0 2px var(--ink),0 18px 40px -22px rgba(19,32,46,.4)}
+.kpi b,.amt,.num,.task .go span,.dc-t>span,.day-n b,.prep b{font-variant-numeric:tabular-nums}
+.chip{box-shadow:inset 0 0 0 1px rgba(19,32,46,.04)}
+@media (min-width:980px){.page{padding-top:32px}}
 </style>
 </head>
 <body>
@@ -1484,6 +1511,7 @@ addEventListener("resize",()=>document.querySelectorAll(".st3").forEach(placeThu
 /* ===================== WEBSITE ===================== */
 const GROUPS=[
  {t:"Front page headline",s:"The first thing every visitor reads",f:[["hero.l1","First line"],["hero.l2","Second line"],["hero.u","Underlined word"],["hero.lede","Intro under the headline","area"]]},
+ {t:"Pop-up",s:"An announcement you can switch on and off",popup:true},
  {t:"Slideshow",s:"The five photos at the top",slides:true},
  {t:"Product photos",s:"The photo on each item in the store",items:true},
  {t:"Who you're buying from",s:"The dark trust section",f:[["trust.h","Headline","area"],["trust.lede","Text","area"],["@building","Building photo"]]},
@@ -1494,6 +1522,10 @@ const GROUPS=[
  {t:"First-order offer",s:"The email popup",offer:true}];
 const SLIDE0=[["Live lobster","This week\u2019s crate"],["Head-on shrimp","Fresh, shell-on"],["Red porgy","Whole, on ice"],["Squid","Whole, fresh"],["Calico lobster","Ask for the odd colored ones"]];
 let pvMode="desktop",defs={},defImg={};
+const POP0={tag:"This weekend",head:"Live crawfish are in",body:"Louisiana crawfish by the pound or by the sack. Order by Thursday for Saturday delivery.",act:"item",item:"crawfish",btn:"Show me the crawfish",when:"5"};
+const POPACT=[["item","Show one item"],["shop","Open the store"],["bulk","Wholesale form"],["dm","Instagram messages"]];
+const POPWHEN=[["3","After 3 seconds"],["5","After 5 seconds"],["15","After 15 seconds"],["scroll","Once they start scrolling"]];
+function popPost(show){const f=$("pvF");if(f&&f.contentWindow)f.contentWindow.postMessage({type:"ot-popup",show},location.origin)}
 function frameDoc(){const f=$("pvF");try{return f&&f.contentDocument}catch(e){return null}}
 function readDefaults(){const d=frameDoc();if(!d)return;const tmp=document.createElement("div");
   d.querySelectorAll("[data-k]").forEach(el=>{tmp.innerHTML=(el.dataset.orig??el.innerHTML).replace(/<br\s*\/?>/gi,"\n");defs[el.dataset.k]=tmp.textContent.trim()});
@@ -1501,18 +1533,27 @@ function readDefaults(){const d=frameDoc();if(!d)return;const tmp=document.creat
   document.querySelectorAll("[data-ck]").forEach(i=>{if(!i.value)i.placeholder=defs[i.dataset.ck]||""});
   document.querySelectorAll("[data-imgk]").forEach(im=>{const k=im.dataset.imgk;if(!(cur().photos||{})[k]&&defImg[k])im.src=defImg[k]})}
 function pWebsite(){
-  const S=cur(),C=S.content||{},P=S.photos||{},K=S.contact||{},O=S.offer||{on:true,pct:10,code:"TIDE10"};
+  const S=cur(),C=S.content||{},P=S.photos||{},K=S.contact||{},O=S.offer||{on:true,pct:10,code:"TIDE10"},PP=S.popup||{};
   $("topAct").innerHTML=`<button class="btn b-soft b-sm pv-open" type="button" id="pvOpen">Preview</button><a class="btn b-soft b-sm hide-m" href="./" target="_blank" rel="noopener">Open website</a>`;
   const fld=([k,l,t])=>{if(k==="@building")return photoSlot("building","Building photo",P.building||defImg.building||"img/building-wide.webp",!!P.building);
     const v=C[k]||"";return `<div class="field ${v?"chg":""}"><div class="fh"><label for="f-${k}">${l}</label>${v?`<button class="rs" type="button" data-reset="${k}">Use original</button>`:""}</div>${t==="area"?`<textarea id="f-${k}" data-ck="${k}" placeholder="${esc(defs[k]||"")}">${esc(v)}</textarea>`:`<input id="f-${k}" data-ck="${k}" value="${esc(v)}" placeholder="${esc(defs[k]||"")}">`}</div>`};
   const photoSlot=(k,l,src,chg)=>`<div class="ph"><div class="ph-img ${chg?"chg":""}"><img data-imgk="${k}" src="${esc(src)}" alt=""><button type="button" data-up="${k}">Replace</button></div><div class="grid" style="display:grid;gap:6px"><b style="font-size:14.5px">${l}</b><span class="muted" style="font-size:13px">A clear phone photo works. We resize it for you.</span>${chg?`<button class="rs lnk" style="justify-self:start;font-size:13px" type="button" data-imgreset="${k}">Use original</button>`:""}</div></div>`;
   $("page").innerHTML=`<div class="ed"><div>
-    ${GROUPS.map((g,gi)=>`<details class="grp" ${gi===0?"open":""}><summary><span><b>${g.t}</b><small>${g.s}</small></span><i aria-hidden="true"></i></summary><div class="grp-b">
+    ${GROUPS.map((g,gi)=>`<details class="grp" ${gi===0?"open":""}${g.popup?' id="gPopup"':""}><summary><span><b>${g.t}</b><small>${g.s}</small></span><i aria-hidden="true"></i></summary><div class="grp-b">
       ${g.f?g.f.map(fld).join(""):""}
       ${g.slides?SLIDE0.map((d,i)=>`${photoSlot("slide"+i,"Slide "+(i+1),P["slide"+i]||defImg["slide"+i]||"",!!P["slide"+i])}<div class="f2">${fld([`slide${i}.name`,"Name under the photo"]).replace(`placeholder="${esc(defs[`slide${i}.name`]||"")}"`,`placeholder="${esc(d[0])}"`)}${fld([`slide${i}.sub`,"Small line"]).replace(`placeholder="${esc(defs[`slide${i}.sub`]||"")}"`,`placeholder="${esc(d[1])}"`)}</div>`).join(""):""}
       ${g.items?`<div class="ph-grid">${CAT.map(c=>{const k="item."+c.id,chg=!!P[k];return `<figure><div class="ph-img ${chg?"chg":""}"><img data-imgk="${k}" src="${esc(P[k]||c.img)}" alt=""><button type="button" data-up="${k}">Replace</button></div><figcaption>${c.name}${chg?` <button class="rs" type="button" data-imgreset="${k}">reset</button>`:""}</figcaption></figure>`}).join("")}</div>`:""}
       ${g.contact?`<div class="f2">${[["phone","Phone","(555) 123-4567"],["city","City","Philadelphia"]].map(([k,l,ph])=>`<div class="field"><label for="c-${k}">${l}</label><input id="c-${k}" data-cc="${k}" value="${esc(K[k]||"")}" placeholder="${ph}"></div>`).join("")}</div>
         ${[["address","Address","123 Dock St, Philadelphia, PA"],["hours","Hours","Thu to Sun, 9 AM to 6 PM"],["bulkTerms","Wholesale terms","Restaurant delivery Tue and Fri. $150 minimum."]].map(([k,l,ph])=>`<div class="field"><label for="c-${k}">${l}</label><input id="c-${k}" data-cc="${k}" value="${esc(K[k]||"")}" placeholder="${ph}"></div>`).join("")}`:""}
+      ${g.popup?`<div class="sw-row"><button class="sw" type="button" role="switch" id="ppOn" aria-checked="${!!PP.on}" aria-label="Show the pop-up on the website"></button><span id="ppState">${PP.on?"On. Visitors see it once":"Off. Only you can see it here"}</span></div>
+        ${photoSlot("popup","Pop-up photo",P.popup||defImg.popup||"img/ig-crawfish.webp",!!P.popup)}
+        ${[["tag","Small line on top"],["head","Headline"],["body","Text","area"]].map(([k,l,t])=>`<div class="field"><label for="pp-${k}">${l}</label>${t?`<textarea id="pp-${k}" data-pp="${k}" placeholder="${esc(POP0[k])}">${esc(PP[k]||"")}</textarea>`:`<input id="pp-${k}" data-pp="${k}" value="${esc(PP[k]||"")}" placeholder="${esc(POP0[k])}">`}</div>`).join("")}
+        <div class="f2"><div class="field"><label for="pp-act">The button</label><select id="pp-act" data-pp="act">${POPACT.map(([v,l])=>`<option value="${v}" ${(PP.act||POP0.act)===v?"selected":""}>${l}</option>`).join("")}</select></div>
+          <div class="field" id="ppItemF" ${(PP.act||POP0.act)==="item"?"":"hidden"}><label for="pp-item">Which item</label><select id="pp-item" data-pp="item">${CAT.map(c=>`<option value="${c.id}" ${(PP.item||POP0.item)===c.id?"selected":""}>${c.name}</option>`).join("")}</select></div></div>
+        <div class="f2"><div class="field"><label for="pp-btn">Button words</label><input id="pp-btn" data-pp="btn" value="${esc(PP.btn||"")}" placeholder="${esc(POP0.btn)}"></div>
+          <div class="field"><label for="pp-when">When it shows</label><select id="pp-when" data-pp="when">${POPWHEN.map(([v,l])=>`<option value="${v}" ${(PP.when||POP0.when)===v?"selected":""}>${l}</option>`).join("")}</select></div></div>
+        <div class="pp-acts"><button class="btn b-ink b-sm" type="button" id="ppShow">Show it in the preview</button><a class="btn b-soft b-sm" href="./?popup" target="_blank" rel="noopener">Try it on the website</a></div>
+        <p class="muted" style="margin:0;font-size:13.5px">Each visitor sees it once. Change the words or the photo and everyone sees it again. It never shows on top of the email offer. Publish to put your changes on the website.</p>`:""}
       ${g.offer?`<div class="sw-row"><button class="sw" type="button" role="switch" id="ofOn" aria-checked="${O.on!==false}" aria-label="Show the first-order offer"></button>Show the offer popup</div><div class="f2"><div class="field"><label for="ofPct">Percent off</label><input id="ofPct" type="number" min="1" max="50" value="${esc(O.pct??10)}"></div><div class="field"><label for="ofCode">Code</label><input id="ofCode" value="${esc(O.code||"TIDE10")}" style="text-transform:uppercase"></div></div><p class="muted" style="margin:0;font-size:13.5px">Orders that use the code show it, and the discount is already taken off when you price them.</p>`:""}
     </div></details>`).join("")}
   </div>
@@ -1523,23 +1564,30 @@ function pWebsite(){
   pg.addEventListener("input",e=>{const t=e.target;
     if(t.dataset.ck){setC(t.dataset.ck,t.value);t.closest(".field").classList.toggle("chg",!!t.value)}
     if(t.dataset.cc){const s=edit();s.contact=s.contact||{};s.contact[t.dataset.cc]=t.value.trim();changed()}
-    if(t.id==="ofPct"||t.id==="ofCode")offSync()});
+    if(t.id==="ofPct"||t.id==="ofCode")offSync();
+    if(t.dataset.pp)ppSync()});
+  pg.addEventListener("change",e=>{if(e.target.dataset&&e.target.dataset.pp)ppSync()});
+  const ppSync=()=>{const s=edit(),o={on:$("ppOn").getAttribute("aria-checked")==="true"};pg.querySelectorAll("[data-pp]").forEach(i=>{o[i.dataset.pp]=i.value.trim()});
+    if(o.act!=="item")delete o.item;s.popup=o;$("ppItemF").hidden=o.act!=="item";$("ppState").textContent=o.on?"On. Visitors see it once":"Off. Only you can see it here";changed();setTimeout(()=>popPost(true),180)};
+  if($("ppOn")){$("ppOn").onclick=()=>{$("ppOn").setAttribute("aria-checked",$("ppOn").getAttribute("aria-checked")!=="true");ppSync()};
+    $("ppShow").onclick=()=>popPost(true);
+    $("gPopup").addEventListener("toggle",e=>popPost(e.target.open))}
   pg.addEventListener("focusin",e=>{const k=e.target.dataset&&(e.target.dataset.ck||"");if(k)scrollPv(k.replace(/\.(name|sub)$/,"").replace(/^slide(\d)$/,"slide$1"))});
   pg.addEventListener("click",e=>{const r=e.target.closest("[data-reset]");if(r){setC(r.dataset.reset,"");pWebsite();return}
     const u=e.target.closest("[data-up]");if(u){upKey=u.dataset.up;$("fileIn").click();scrollPv(upKey);return}
-    const ir=e.target.closest("[data-imgreset]");if(ir){const s=edit();if(s.photos)delete s.photos[ir.dataset.imgreset];changed();pWebsite();return}
+    const ir=e.target.closest("[data-imgreset]");if(ir){const s=edit();if(s.photos)delete s.photos[ir.dataset.imgreset];changed();popKeep=ir.dataset.imgreset==="popup";pWebsite();return}
     const m=e.target.closest("[data-pvm]");if(m&&m.dataset.pvm!==pvMode){pvMode=m.dataset.pvm;pg.querySelectorAll("[data-pvm]").forEach(x=>x.setAttribute("aria-pressed",x===m));const f=$("pvF");
       if(f&&!RM.matches){const a=f.animate([{opacity:1},{opacity:0,transform:(f.style.transform||"")+" translateY(6px)"}],{duration:150,easing:"ease-in",fill:"forwards"});a.onfinish=()=>{fitPv();a.cancel();f.animate([{opacity:0,transform:(f.style.transform||"")+" translateY(10px)"},{opacity:1,transform:f.style.transform||"none"}],{duration:420,easing:"cubic-bezier(.16,1,.3,1)"})}}else fitPv()}});
   const offSync=()=>{const s=edit();s.offer={on:$("ofOn").getAttribute("aria-checked")==="true",pct:+$("ofPct").value||10,code:($("ofCode").value||"TIDE10").toUpperCase().replace(/\s/g,"")};changed()};
   if($("ofOn"))$("ofOn").onclick=()=>{$("ofOn").setAttribute("aria-checked",$("ofOn").getAttribute("aria-checked")!=="true");offSync()};
   $("pvOpen").onclick=()=>{$("pv").classList.add("full");fitPv()};$("pvClose").onclick=()=>$("pv").classList.remove("full");
-  $("pvF").onload=()=>{readDefaults();preview();fitPv()};
+  $("pvF").onload=()=>{readDefaults();preview();fitPv();if(popKeep){const g=$("gPopup");g.open=true;setTimeout(()=>popPost(true),300)}popKeep=false};
   fitPv();
 }
 addEventListener("message",e=>{if(e.origin!==location.origin||!e.data||e.data.type!=="ot-pick")return;const k=e.data.k;
   if(k==="special"){go("stock");setTimeout(()=>{const m=$("spMore");if(m){m.open=true;$("spHead").focus()}},350);return}
   if(route!=="website")return;
-  const el=document.querySelector(`[data-ck="${k}"]`)||document.querySelector(`[data-imgk="${k}"]`);if(!el)return;
+  const el=document.querySelector(`[data-ck="${k}"]`)||document.querySelector(`[data-imgk="${k}"]`)||(k.startsWith("popup.")&&document.querySelector(`[data-pp="${k.slice(6)}"]`));if(!el)return;
   const g=el.closest("details");if(g&&!g.open){document.querySelectorAll(".grp[open]").forEach(x=>{if(x!==g)x.open=false});g.open=true}
   setTimeout(()=>{el.scrollIntoView({behavior:"smooth",block:"center"});const f=el.closest(".field");
     if(f){f.classList.remove("flash");void f.offsetWidth;f.classList.add("flash");el.focus({preventScroll:true})}
@@ -1551,12 +1599,12 @@ function fitPv(){const box=$("pvBox"),f=$("pvF");if(!box||!f)return;const W=box.
 let rzT;addEventListener("resize",()=>{if(route==="website")fitPv();clearTimeout(rzT);rzT=setTimeout(()=>{if(route==="money")pMoney();if(route==="today")weekChart($("miniChart"),8)},200)});
 let pvT;function preview(){clearTimeout(pvT);pvT=setTimeout(()=>{const s=cur();LS.set("ot-site-draft",s);const f=$("pvF");if(f&&f.contentWindow)f.contentWindow.postMessage({type:"ot-preview",site:JSON.parse(JSON.stringify(s))},location.origin)},120)}
 function scrollPv(k){const f=$("pvF");if(f&&f.contentWindow)f.contentWindow.postMessage({type:"ot-scroll",k},location.origin)}
-let upKey="";
+let upKey="",popKeep=false;
 $("fileIn").onchange=async e=>{const file=e.target.files[0];e.target.value="";if(!file||!upKey)return;
   toast("Getting your photo ready...");
   try{const data=await shrink(file,upKey.startsWith("item.")?900:1400);let url=data;
     if(LIVE){const j=await api("upload",{name:upKey.replace(/\W/g,"-")+".webp",data:data.split(",")[1],mime:data.slice(5,data.indexOf(";"))});url=j.url}
-    const s=edit();s.photos=s.photos||{};s.photos[upKey]=url;changed();if(route==="website")pWebsite();else render();toast("Photo added. Publish to put it on the website.")}
+    const s=edit();s.photos=s.photos||{};s.photos[upKey]=url;changed();popKeep=upKey==="popup";if(route==="website")pWebsite();else render();toast("Photo added. Publish to put it on the website.")}
   catch(err){toast("That photo didn't work. Try a JPG or PNG.")}};
 function shrink(file,max){return new Promise((res,rej)=>{const img=new Image();img.onload=()=>{const s=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext("2d").drawImage(img,0,0,c.width,c.height);let d=c.toDataURL("image/webp",.8);if(!d.startsWith("data:image/webp"))d=c.toDataURL("image/jpeg",.82);URL.revokeObjectURL(img.src);res(d)};img.onerror=rej;img.src=URL.createObjectURL(file)})}
 
@@ -1851,6 +1899,7 @@ const WHY_D=[
  ["today","#cPrep","A shopping list from real orders","Adds up every open order by item and size, so the morning buy at the market matches what's already sold. One tap prints it.","Less waste, and no promising orders you can't fill."],
  ["today","#cBack","Regulars worth a text","Customers who ordered at least twice but went quiet for three weeks, each with a ready-to-send text about their favorite item.","Repeat orders from people who already trust you, at zero ad cost."],
  ["today","#cWeek","This week against last week","Compared at the same point in the week, so Tuesday isn't measured against a full week.","Spot a slow week early enough to run a special."],
+ ["website","#gPopup","A pop-up you switch on in seconds","Crawfish season, a holiday closing, a big weekend special. Write it, pick a photo, flip the switch. Each visitor sees it once, and it never stacks on top of the email offer.","One message in front of every visitor this week, without paying for ads."],
  ["orders","#days","One panel per day","Orders sit under the day the customer needs them, so the owner plans the week the way they already think about it: what goes out today, what goes out tomorrow. Late ones turn red and come first.","Nothing gets delivered a day late because it was buried in a list."],
  ["orders","#oTools","Three tabs, not eight","Needs you, Waiting on customer, Finished. That's how an owner thinks about the day. A search box finds any order by name, phone or item.","Nothing slips through the cracks."],
  ["orders","#olist","Price once, text in one tap","Open an order and prices fill in from the price list. One button opens Messages with every item and the total written out.","Replies in under a minute instead of typing each order by hand."],
